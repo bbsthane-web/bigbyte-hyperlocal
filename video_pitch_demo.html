@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigByte Lead Radar - Interactive Video Sales Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #070a13;
+            --surface: rgba(17, 24, 39, 0.7);
+            --surface-solid: #0f172a;
+            --border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --wa-green: #25d366;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #171638 0%, var(--bg) 80%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-nav {
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(7, 10, 19, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .badge-pill {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Presentation Stage */
+        .main-stage {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 24px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cinema-viewport {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(99, 102, 241, 0.15);
+            aspect-ratio: 16 / 9;
+            min-height: 540px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Slide Scenes */
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.97) translateY(10px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slide-step {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #818cf8;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .slide-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 8px;
+        }
+
+        .gradient-text-red {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-green {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Slide Content Grids */
+        .slide-body {
+            flex: 1;
+            margin: 24px 0;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .body-desc {
+            font-size: 18px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .stat-callouts {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .callout-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            flex: 1;
+        }
+
+        .callout-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .callout-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Mockup Phone & Visual Cards */
+        .phone-mockup {
+            background: #090d16;
+            border: 3px solid #334155;
+            border-radius: 36px;
+            padding: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 320px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .phone-notch {
+            width: 100px;
+            height: 16px;
+            background: #1e293b;
+            border-radius: 0 0 12px 12px;
+            margin: -16px auto 8px auto;
+        }
+
+        .phone-screen {
+            background: #111827;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .bubble {
+            padding: 10px 14px;
+            border-radius: 14px;
+            max-width: 85%;
+            line-height: 1.4;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .bubble-in {
+            background: #1f2937;
+            color: #e2e8f0;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .bubble-out {
+            background: #059669;
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .pulsing-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.5); }
+        }
+
+        /* Control Bar */
+        .controls-deck {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            gap: 20px;
+        }
+
+        .timeline-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timeline-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .timeline-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #a855f7);
+            border-radius: 999px;
+            transition: width 0.15s linear;
+        }
+
+        .btn-ctl {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ctl:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .btn-play {
+            background: #3b82f6;
+            border: none;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .btn-play:hover {
+            background: #2563eb;
+        }
+
+        .btn-whatsapp-cta {
+            background: var(--wa-green);
+            color: #052e16;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-whatsapp-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Calculator Styles */
+        .calculator-card {
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .slider-val {
+            color: #60a5fa;
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: #334155;
+            outline: none;
+            cursor: pointer;
+            accent-color: #3b82f6;
+        }
+
+        .roi-result {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .roi-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="brand-logo">
+            <span>📡</span> BigByte Lead Radar | Video Sales Catalog
+        </div>
+        <div class="nav-actions">
+            <a href="voice_agent_demo.html" class="badge-pill" style="text-decoration: none; color: #a78bfa; border-color: rgba(167, 139, 250, 0.4);">
+                🎙️ VoiceAI Receptionist Demo
+            </a>
+            <span class="badge-pill">🎙️ Neural Voiceover Active</span>
+            <a href="https://wa.me/919167463807?text=Hi%2C%20I%20watched%20your%20BigByte%20Lead%20Radar%20Demo%20and%20want%20to%20see%20a%20free%20preview%20for%20my%20business." target="_blank" class="btn-whatsapp-cta">
+                📲 WhatsApp +91 9167463807
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-stage">
+        
+        <div class="cinema-viewport" id="viewport">
+
+            <!-- Slide 1: The Invisible Daily Leak -->
+            <section class="slide active" id="slide-0">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 01 / 06 • THE HIDDEN BOTTLENECK</span>
+                    <span class="badge-pill" style="border-color: rgba(239, 68, 68, 0.4); color: #f87171;">Silent Cash Bleed</span>
+                </div>
+                <div class="slide-body">
+                    <div>
+                        <h2 class="slide-title">The <span class="gradient-text-red">Unanswered Call</span> That Costs You ₹15,000</h2>
+                        <p class="body-desc" style="margin-top: 14px;">
+                            A potential client searches for you on Google Maps at <strong>8:45 PM</strong>. They tap "Call". Your clinic or office is closed, or staff is busy attending someone else. 
+                        </p>
+                        <p class="body-desc" style="margin-top: 10px;">
+                            In 2026, <strong>nobody leaves voicemails</strong>. Within 6 seconds, they tap back and book with the next competitor on Maps.
+                        </p>
+                        <div class="stat-callouts">
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #f87171;">42%</div>
+                                <div class="callout-label">After-Hours Inquiries Missed</div>
+                            </div>
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #fbbf24;">₹60,000+</div>
+                                <div class="callout-label">Monthly Lost Revenue</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div style="display: flex; justify-content: space-between; color: var(--text-muted); font-size: 11px;">
+                                    <span>8:45 PM • Google Search</span>
+                                    <span>LTE 5G</span>
+                                </div>
+                                <div style="padding: 12px; background: #1e293b; border-radius: 12px; margin-top: 8px;">
+                                    <div style="font-weight: 700; font-size: 14px;">Dr. Smiles Dental Clinic</div>
+                                    <div style="color: #94a3b8; font-size: 12px;">Calling... (Ringing 6x)</div>
+                                </div>
+                                <div class="pulsing-alert">
+                                    ⚠️ No Answer • Call Ended
+                                </div>
+                                <div style="font-size: 12px; color: #fca5a5; text-align: center; margin-top: 6px;">
+                                    Patient bounced to competitor in 4 seconds.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: The Google 3-Pack Reality -->
+            <section class="slide" id="slide-1">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 02 / 06 • THE SEARCH PACK TRAP</span>
+                    <span class="badge-pill" style="border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">Competitive Blindspot</span>
+                </div>
+                <div class="slide-body">
+                    <div>
+                        <h2 class="slide-title">Why Competitors <span class="gradient-text-red">Steal 70%</span> of Your Local Clicks</h2>
+                        <p class="body-desc" style="margin-top: 14px;">
+                            If your listing has <strong>fewer than 35 reviews</strong> or lacks a direct WhatsApp booking link, Google algorithm automatically buries you below competing businesses.
+                        </p>
+                        <p class="body-desc" style="margin-top: 10px;">
+                            Competitors with 150+ reviews and instant chat buttons scoop up almost all high-ticket inquiries in Thane.
+                        </p>
+                        <div class="stat-callouts">
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #60a5fa;">78%</div>
+                                <div class="callout-label">Choose Top 3 Google Pack Only</div>
+                            </div>
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #c084fc;">9/10</div>
+                                <div class="callout-label">Prefer WhatsApp Over Phone Calls</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background: #111827; border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Google Maps Local Pack (Thane West)</div>
+                            
+                            <!-- Competitor -->
+                            <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); padding: 12px; border-radius: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong>Competitor Practice</strong>
+                                    <span style="color: #22c55e; font-size: 12px; font-weight: 700;">Rank #1</span>
+                                </div>
+                                <div style="color: #f59e0b; font-size: 12px;">⭐⭐⭐⭐⭐ 4.9 (340 reviews)</div>
+                                <div style="margin-top: 6px; font-size: 12px; color: #4ade80;">✅ Instant WhatsApp Consultation Active</div>
+                            </div>
+
+                            <!-- Target Business -->
+                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px; border-radius: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <strong>Your Current Profile</strong>
+                                    <span style="color: #ef4444; font-size: 12px; font-weight: 700;">Buried Below</span>
+                                </div>
+                                <div style="color: #f59e0b; font-size: 12px;">⭐⭐⭐⭐ 4.5 (22 reviews)</div>
+                                <div style="margin-top: 6px; font-size: 12px; color: #f87171;">❌ No WhatsApp Hook • Phone Unanswered</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: The BigByte Solution -->
+            <section class="slide" id="slide-2">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 03 / 06 • THE 24/7 WHATSAPP GATEWAY</span>
+                    <span class="badge-pill" style="border-color: rgba(34, 197, 94, 0.4); color: #4ade80;">100% Capture</span>
+                </div>
+                <div class="slide-body">
+                    <div>
+                        <h2 class="slide-title">Enter <span class="gradient-text-green">BigByte Lead Radar</span></h2>
+                        <p class="body-desc" style="margin-top: 14px;">
+                            We install an intelligent 1-tap WhatsApp booking gateway on your local profile. Inquiries are greeted in <strong>3 seconds</strong>, qualified automatically, and booked without you lifting a finger.
+                        </p>
+                        <p class="body-desc" style="margin-top: 10px;">
+                            Works 24 hours a day, 7 days a week, even when your clinic is closed or you are performing surgeries/client meetings.
+                        </p>
+                        <div class="stat-callouts">
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #4ade80;">3 Sec</div>
+                                <div class="callout-label">Instant Response Time</div>
+                            </div>
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #60a5fa;">0</div>
+                                <div class="callout-label">Staff Intervention Required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen" style="background: #0b141a;">
+                                <div style="background: #1f2c34; padding: 8px 12px; border-radius: 8px; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 28px; height: 28px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; font-size: 14px;">🤖</div>
+                                    <div>
+                                        <div style="font-weight: 700; color: white;">Dr. Assistant</div>
+                                        <div style="font-size: 10px; color: #25d366;">Online • Instant Booking</div>
+                                    </div>
+                                </div>
+                                <div class="bubble bubble-in" style="margin-top: 6px;">
+                                    Hi, I need to check appointment for root canal tomorrow.
+                                </div>
+                                <div class="bubble bubble-out">
+                                    Hello! Dr. Vora is in treatment. We have slots at 11:30 AM or 5:30 PM. Which works best?
+                                </div>
+                                <div class="bubble bubble-in">
+                                    11:30 AM please!
+                                </div>
+                                <div class="bubble bubble-out">
+                                    ✅ Locked in! Slot reserved for 11:30 AM tomorrow.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Review Multiplier Engine -->
+            <section class="slide" id="slide-3">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 04 / 06 • THE GOOGLE RANK BOOSTER</span>
+                    <span class="badge-pill" style="border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">Organic Dominance</span>
+                </div>
+                <div class="slide-body">
+                    <div>
+                        <h2 class="slide-title">From 20 Reviews to <span class="gradient-text-blue">150+ In 60 Days</span></h2>
+                        <p class="body-desc" style="margin-top: 14px;">
+                            Happy clients rarely leave reviews unless asked at the exact right moment. Our system sends an automated polite thank-you message after their visit with a 1-tap direct Google review link.
+                        </p>
+                        <p class="body-desc" style="margin-top: 10px;">
+                            Within weeks, your review count skyrockets, propelling your listing straight into the Google Maps Top 3 Pack permanently.
+                        </p>
+                        <div class="stat-callouts">
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #c084fc;">4.8x</div>
+                                <div class="callout-label">More 5-Star Google Reviews</div>
+                            </div>
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #4ade80;">Top 3</div>
+                                <div class="callout-label">Google Maps Pack Guaranteed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="background: #111827; border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; display: flex; flex-direction: column; gap: 16px;">
+                            <div style="font-size: 14px; color: var(--text-muted);">60-DAY REPUTATION TRAJECTORY</div>
+                            <div style="display: flex; justify-content: space-around; align-items: flex-end; height: 140px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                                    <div style="font-size: 12px; color: var(--text-muted);">Day 1</div>
+                                    <div style="width: 40px; height: 30px; background: #475569; border-radius: 6px 6px 0 0;"></div>
+                                    <div style="font-weight: 700; font-size: 13px;">22 Revs</div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                                    <div style="font-size: 12px; color: var(--text-muted);">Day 30</div>
+                                    <div style="width: 40px; height: 80px; background: #818cf8; border-radius: 6px 6px 0 0;"></div>
+                                    <div style="font-weight: 700; font-size: 13px;">78 Revs</div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                                    <div style="font-size: 12px; color: #4ade80;">Day 60</div>
+                                    <div style="width: 40px; height: 130px; background: linear-gradient(180deg, #4ade80, #10b981); border-radius: 6px 6px 0 0; box-shadow: 0 0 20px rgba(74, 222, 128, 0.4);"></div>
+                                    <div style="font-weight: 800; font-size: 14px; color: #4ade80;">165 Revs</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 13px; color: #cbd5e1;">⭐ Top 3 Local Rank Achieved • Inquiries up 210%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: The ROI Math & Live Calculator -->
+            <section class="slide" id="slide-4">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 05 / 06 • PURE PROFIT MATH</span>
+                    <span class="badge-pill" style="border-color: rgba(34, 197, 94, 0.4); color: #4ade80;">Interactive ROI Engine</span>
+                </div>
+                <div class="slide-body">
+                    <div>
+                        <h2 class="slide-title">Calculate Your <span class="gradient-text-green">Recovered Revenue</span></h2>
+                        <p class="body-desc" style="margin-top: 14px;">
+                            See how much revenue you are losing right now to unanswered calls and buried listings, and what you get back by capturing just 3 extra clients a month.
+                        </p>
+                        <div class="stat-callouts">
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #4ade80;">10x - 25x</div>
+                                <div class="callout-label">Estimated First Month ROI</div>
+                            </div>
+                            <div class="callout-box">
+                                <div class="callout-val" style="color: #60a5fa;">7 Days</div>
+                                <div class="callout-label">Time To Payback Setup Cost</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="calculator-card">
+                            <div class="slider-group">
+                                <div class="slider-header">
+                                    <span>Average Patient / Client Value</span>
+                                    <span class="slider-val" id="valLabel">₹10,000</span>
+                                </div>
+                                <input type="range" id="valSlider" min="2000" max="50000" step="1000" value="10000" oninput="updateRoi()">
+                            </div>
+
+                            <div class="slider-group">
+                                <div class="slider-header">
+                                    <span>Missed Calls / Inquiries Per Week</span>
+                                    <span class="slider-val" id="callLabel">4 calls</span>
+                                </div>
+                                <input type="range" id="callSlider" min="1" max="15" step="1" value="4" oninput="updateRoi()">
+                            </div>
+
+                            <div class="roi-result">
+                                <div style="font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Estimated Monthly Cash Bleed Recoverable</div>
+                                <div class="roi-number" id="roiTotal">₹1,60,000 / mo</div>
+                                <div style="font-size: 13px; color: #a7f3d0; margin-top: 4px;">
+                                    💡 Setup Cost: ₹15,000 (100% recovered on client #2)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: The No-Brainer Offer -->
+            <section class="slide" id="slide-5">
+                <div class="slide-header">
+                    <span class="slide-step">SCENE 06 / 06 • ZERO-RISK IMPLEMENTATION</span>
+                    <span class="badge-pill" style="border-color: rgba(59, 130, 246, 0.4); color: #60a5fa;">48-Hour Turnkey Launch</span>
+                </div>
+                <div class="slide-body" style="grid-template-columns: 1fr;">
+                    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                        <h2 class="slide-title" style="font-size: 44px;">
+                            Ready to Turn Google Maps into a <span class="gradient-text-green">24/7 Client Magnet</span>?
+                        </h2>
+                        <p class="body-desc" style="margin-top: 16px; font-size: 20px;">
+                            Zero complicated software. Zero per-month SaaS charges. We build and deploy your entire 1-tap WhatsApp booking engine and review booster in <strong>48 hours</strong>.
+                        </p>
+                        
+                        <div style="margin: 32px 0 24px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <a href="https://wa.me/919167463807?text=Hi%2C%20I%20want%20to%20see%20a%2030-sec%20preview%20of%20the%201-tap%20WhatsApp%20Booking%20Engine%20for%20my%20business." target="_blank" class="btn-whatsapp-cta" style="font-size: 18px; padding: 16px 36px;">
+                                📲 Claim Your Free 30-Sec Business Preview
+                            </a>
+                        </div>
+                        <div style="color: var(--text-muted); font-size: 14px;">
+                            🔒 No contracts • No monthly lock-in • 100% money-back satisfaction guarantee
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Presentation Controls -->
+        <div class="controls-deck">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button class="btn-ctl" onclick="prevSlide()">⏮️ Prev</button>
+                <button class="btn-ctl btn-play" id="playBtn" onclick="togglePlay()">▶️ Play Narration</button>
+                <button class="btn-ctl" onclick="nextSlide()">Next ⏭️</button>
+            </div>
+
+            <div class="timeline-container">
+                <span id="timeCurrent" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted);">00:00</span>
+                <div class="timeline-bar">
+                    <div class="timeline-fill" id="timelineFill"></div>
+                </div>
+                <span id="slideIndicator" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #818cf8;">Slide 1 / 6</span>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-ctl" id="voiceToggle" onclick="toggleMute()">🔊 Voice On</button>
+                <a href="dashboard.html" class="btn-ctl" style="text-decoration: none;">📊 Open Radar</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Hidden Audio Player for Narration -->
+    <audio id="audioPlayer" preload="auto"></audio>
+
+    <script>
+        const audioTracks = [
+            "assets/audio/scene1_the_invisible_leak.mp3",
+            "assets/audio/scene2_the_google_trap.mp3",
+            "assets/audio/scene3_the_solution.mp3",
+            "assets/audio/scene4_the_review_multiplier.mp3",
+            "assets/audio/scene5_the_roi_math.mp3",
+            "assets/audio/scene6_the_call_to_action.mp3"
+        ];
+
+        let currentSlide = 0;
+        let isPlaying = false;
+        let isMuted = false;
+        const totalSlides = 6;
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const timelineFill = document.getElementById('timelineFill');
+        const timeCurrent = document.getElementById('timeCurrent');
+        const slideIndicator = document.getElementById('slideIndicator');
+        const voiceToggle = document.getElementById('voiceToggle');
+
+        function loadSlide(index, autoStartAudio = true) {
+            document.querySelectorAll('.slide').forEach((s, idx) => {
+                s.classList.toggle('active', idx === index);
+            });
+
+            currentSlide = index;
+            slideIndicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+            timelineFill.style.width = '0%';
+
+            // Load corresponding audio track
+            audio.src = audioTracks[currentSlide];
+            audio.muted = isMuted;
+
+            if (autoStartAudio && isPlaying) {
+                audio.play().catch(e => console.log('Audio autoplay blocked until user click'));
+            }
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playBtn.innerHTML = '▶️ Play Narration';
+            } else {
+                isPlaying = true;
+                playBtn.innerHTML = '⏸️ Pause';
+                if (!audio.src || audio.ended) {
+                    audio.src = audioTracks[currentSlide];
+                }
+                audio.play().catch(e => console.error(e));
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            audio.muted = isMuted;
+            voiceToggle.innerHTML = isMuted ? '🔇 Voice Muted' : '🔊 Voice On';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                loadSlide(currentSlide + 1, isPlaying);
+            } else {
+                loadSlide(0, false);
+                isPlaying = false;
+                playBtn.innerHTML = '▶️ Play Again';
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                loadSlide(currentSlide - 1, isPlaying);
+            }
+        }
+
+        // Audio progress tracking
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                timelineFill.style.width = `${pct}%`;
+
+                const curM = Math.floor(audio.currentTime / 60);
+                const curS = Math.floor(audio.currentTime % 60).toString().padStart(2, '0');
+                timeCurrent.textContent = `${curM}:${curS}`;
+            }
+        });
+
+        // Auto advance to next slide when audio completes
+        audio.addEventListener('ended', () => {
+            if (currentSlide < totalSlides - 1) {
+                setTimeout(() => {
+                    nextSlide();
+                }, 1000);
+            } else {
+                isPlaying = false;
+                playBtn.innerHTML = '▶️ Replay';
+            }
+        });
+
+        // Interactive ROI Calculator Logic
+        function updateRoi() {
+            const clientVal = parseInt(document.getElementById('valSlider').value);
+            const callsPerWk = parseInt(document.getElementById('callSlider').value);
+
+            document.getElementById('valLabel').textContent = `₹${clientVal.toLocaleString('en-IN')}`;
+            document.getElementById('callLabel').textContent = `${callsPerWk} calls`;
+
+            // 4 weeks per month
+            const monthlyLoss = clientVal * callsPerWk * 4;
+            document.getElementById('roiTotal').textContent = `₹${monthlyLoss.toLocaleString('en-IN')} / mo`;
+        }
+
+        // Initialize first slide
+        loadSlide(0, false);
+    </script>
+</body>
+</html>

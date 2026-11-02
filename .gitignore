@@ -1,0 +1,9 @@
+# Git ignore for BigByte Systems Lead Radar
+__pycache__/
+*.pyc
+bin/gmaps_scraper.exe
+bin/ffmpeg.exe
+data/raw/*.json
+data/queries/*.txt
+.system_generated/
+test_results.json

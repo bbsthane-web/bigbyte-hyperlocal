@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigByte VoiceAI - Autonomous Receptionist & Booking Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060913;
+            --surface: rgba(15, 23, 42, 0.7);
+            --surface-hover: rgba(30, 41, 59, 0.8);
+            --border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --wa-green: #25d366;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: radial-gradient(circle at 15% 15%, #18153b 0%, var(--bg) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(6, 9, 19, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .pill-tag {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #c084fc;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn-wa-header {
+            background: var(--wa-green);
+            color: #052e16;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-wa-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Container Layout */
+        .workspace {
+            flex: 1;
+            max-width: 1440px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 24px;
+        }
+
+        /* Left Panel: Animated Voice Orb & Telemetry */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .orb-stage-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Glowing Voice Orb */
+        .orb-container {
+            width: 160px;
+            height: 160px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .orb-core {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #818cf8 0%, #4f46e5 60%, #312e81 100%);
+            box-shadow: 0 0 35px #6366f1, inset 0 0 20px rgba(255, 255, 255, 0.4);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .orb-halo {
+            position: absolute;
+            inset: -15px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.3) 0%, transparent 70%);
+            animation: haloPulse 3s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .orb-waves {
+            position: absolute;
+            inset: -30px;
+            border: 2px dashed rgba(168, 85, 247, 0.35);
+            border-radius: 50%;
+            animation: rotateWaves 12s linear infinite;
+        }
+
+        @keyframes haloPulse {
+            0%, 100% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 0.9; }
+        }
+
+        @keyframes rotateWaves {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Speaking State Animation */
+        .speaking .orb-core {
+            transform: scale(1.18);
+            background: radial-gradient(circle, #34d399 0%, #059669 60%, #064e3b 100%);
+            box-shadow: 0 0 50px #10b981, inset 0 0 25px rgba(255, 255, 255, 0.6);
+        }
+
+        .speaking .orb-halo {
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.4) 0%, transparent 75%);
+            animation: speakingHalo 0.8s infinite alternate;
+        }
+
+        @keyframes speakingHalo {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.3); }
+        }
+
+        /* Waveform Bars */
+        .wave-visualizer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            height: 36px;
+            margin-top: 10px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            height: 8px;
+            background: #64748b;
+            border-radius: 999px;
+            transition: height 0.1s ease, background 0.2s ease;
+        }
+
+        .speaking .wave-bar {
+            background: linear-gradient(180deg, #34d399, #3b82f6);
+            animation: waveBounce 0.6s infinite alternate ease-in-out;
+        }
+
+        .speaking .wave-bar:nth-child(1) { animation-delay: 0.1s; }
+        .speaking .wave-bar:nth-child(2) { animation-delay: 0.25s; }
+        .speaking .wave-bar:nth-child(3) { animation-delay: 0.05s; }
+        .speaking .wave-bar:nth-child(4) { animation-delay: 0.35s; }
+        .speaking .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+        .speaking .wave-bar:nth-child(6) { animation-delay: 0.4s; }
+        .speaking .wave-bar:nth-child(7) { animation-delay: 0.15s; }
+
+        @keyframes waveBounce {
+            0% { height: 6px; }
+            100% { height: 32px; }
+        }
+
+        .agent-status-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #94a3b8;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        /* Telemetry Log Box */
+        .telemetry-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .telemetry-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #818cf8;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .log-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #3b82f6;
+            padding: 8px 12px;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.4;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .log-entry.success { border-color: #10b981; color: #a7f3d0; }
+        .log-entry.highlight { border-color: #f59e0b; color: #fde68a; }
+
+        /* Right Panel: Simulated Phone Call & Live Transcript */
+        .right-panel {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Scenario Switcher Tabs */
+        .scenario-tabs {
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px;
+            border-radius: 14px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Call Header / Caller ID */
+        .call-card {
+            background: #090e1a;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .caller-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .caller-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: 2px solid #334155;
+        }
+
+        .caller-name {
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .caller-time {
+            font-size: 12px;
+            color: #f87171;
+            margin-top: 2px;
+        }
+
+        .call-timer {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        /* Live Scrolling Chat Transcript */
+        .transcript-stream {
+            flex: 1;
+            min-height: 280px;
+            max-height: 340px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 4px;
+        }
+
+        .msg-bubble {
+            max-width: 82%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        .msg-caller {
+            background: #1e293b;
+            color: #f1f5f9;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg-agent {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .speaker-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            display: block;
+            opacity: 0.8;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Interactive Call Actions Bar */
+        .call-action-bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-call-trigger {
+            flex: 1;
+            background: #10b981;
+            color: #064e3b;
+            font-weight: 700;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-call-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-mic-live {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            color: white;
+            font-weight: 600;
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mic-live:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-mic-live.recording {
+            background: #ef4444;
+            color: white;
+            animation: pulseGlow 1.2s infinite;
+        }
+
+        /* Bottom Commercial & Selling Box */
+        .selling-strip {
+            max-width: 1440px;
+            width: 100%;
+            margin: 0 auto 30px auto;
+            padding: 0 24px;
+        }
+
+        .offer-card {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .offer-text h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .offer-text p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .pricing-callout {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .price-badge {
+            text-align: right;
+        }
+
+        .price-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #4ade80;
+        }
+
+        .price-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <span style="font-size: 24px;">🎙️</span>
+            <div>
+                <h1>BigByte VoiceAI Receptionist</h1>
+                <p style="font-size: 12px; color: var(--text-muted);">Autonomous Inbound Call Handler & Slot Scheduler</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <span class="pill-tag">⚡ Edge Neural TTS Active</span>
+            <a href="https://wa.me/919167463807?text=Hi%2C%20I%20tested%20your%20VoiceAI%20Receptionist%20Demo%20and%20want%20to%20deploy%20this%20for%20my%20business." target="_blank" class="btn-wa-header">
+                📲 WhatsApp +91 9167463807
+            </a>
+        </div>
+    </header>
+
+    <main class="workspace">
+        
+        <!-- Left Column: Neural Orb & Realtime Backend Telemetry -->
+        <section class="left-panel">
+            
+            <div class="orb-stage-card" id="orbCard">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #818cf8; text-transform: uppercase; letter-spacing: 1px;">
+                    Neural Voice Synthesis Engine
+                </div>
+
+                <div class="orb-container" id="orbContainer">
+                    <div class="orb-halo"></div>
+                    <div class="orb-waves"></div>
+                    <div class="orb-core"></div>
+                </div>
+
+                <div class="wave-visualizer" id="waveVisualizer">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+
+                <div class="agent-status-label" id="agentStatus">
+                    <span class="status-dot"></span>
+                    <span id="statusText">STANDBY • 24/7 CALL RADAR READY</span>
+                </div>
+            </div>
+
+            <div class="telemetry-card">
+                <div class="telemetry-header">
+                    <span>Autonomous Backend Telemetry</span>
+                    <span style="color: #10b981;">● SYNCED</span>
+                </div>
+                <div class="log-stream" id="logStream">
+                    <div class="log-entry">[00:00] VoiceAI Listener initialized on loopback 127.0.0.1</div>
+                    <div class="log-entry">[00:00] Google Calendar Slot Connector: ACTIVE</div>
+                    <div class="log-entry">[00:00] WhatsApp Dispatch Gateway: +91 9167463807 READY</div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Column: Smartphone Simulator & Call Transcript -->
+        <section class="right-panel">
+            
+            <div class="scenario-tabs">
+                <button class="tab-btn active" id="tabDental" onclick="switchScenario('dental')">
+                    🦷 Dental Clinic (Dr. Vora's Smiles)
+                </button>
+                <button class="tab-btn" id="tabInterior" onclick="switchScenario('interior')">
+                    🏡 Interior Studio (Majiwada Studio)
+                </button>
+            </div>
+
+            <!-- Call ID Header -->
+            <div class="call-card">
+                <div class="caller-meta">
+                    <div class="caller-avatar" id="callerAvatar">👤</div>
+                    <div>
+                        <div class="caller-name" id="callerName">Rajesh Sharma</div>
+                        <div class="caller-time" id="callerTime">⚠️ Incoming Call at 9:15 PM (Clinic Closed)</div>
+                    </div>
+                </div>
+                <div class="call-timer" id="callTimer">00:00</div>
+            </div>
+
+            <!-- Live Streaming Chat Transcript -->
+            <div class="transcript-stream" id="transcriptStream">
+                <div style="text-align: center; color: var(--text-muted); font-size: 13px; margin: auto;">
+                    Tap <strong>"📞 Simulate Inbound Call"</strong> to hear Maya answer in real-time.
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="call-action-bar">
+                <button class="btn-call-trigger" id="startCallBtn" onclick="toggleCallSimulation()">
+                    📞 Simulate Inbound Call
+                </button>
+                <button class="btn-mic-live" id="micBtn" onclick="toggleLiveMic()">
+                    🎤 Speak to Maya (Live Mic)
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Commercial Offer Banner -->
+    <section class="selling-strip">
+        <div class="offer-card">
+            <div class="offer-text">
+                <h3>💼 How You Sell This Next-Level Automation to Local Clients</h3>
+                <p>Replace expensive night receptionists (₹18,000/mo) with an AI Voice Assistant that never misses a call, books slots directly, and recovers ₹1,50,000+ in lost patients.</p>
+            </div>
+            <div class="pricing-callout">
+                <div class="price-badge">
+                    <div class="price-num">₹25,000 + ₹4,999/mo</div>
+                    <div class="price-sub">Recommended Client Retainer</div>
+                </div>
+                <a href="dashboard.html" class="btn-mic-live" style="text-decoration: none;">
+                    📊 Back to Lead Radar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Element -->
+    <audio id="dialogueAudio" preload="auto"></audio>
+
+    <script>
+        const scenarios = {
+            dental: {
+                name: "Rajesh Sharma",
+                timeText: "⚠️ Incoming Call at 9:15 PM (Clinic Closed)",
+                callerAvatar: "👤",
+                tracks: [
+                    { file: "assets/audio/voice_agent/dental_1_maya.mp3", speaker: "Maya (AI Receptionist)", text: "Hello! Thank you for calling Dr. Vora's Smiles and Beyond in Naupada. I am Maya, the clinic's automated assistant. How may I help you this evening?", isAgent: true, log: "[00:02] Inbound call picked up on 1st ring. Greeted caller." },
+                    { file: "assets/audio/voice_agent/dental_2_caller.mp3", speaker: "Rajesh Sharma (Caller)", text: "Hi Maya, I have severe pain in my lower molar since yesterday. Can I see Dr. Vora tomorrow morning?", isAgent: false, log: "[00:09] Intent Extracted: EMERGENCY_MOLAR_PAIN. Urgency: HIGH." },
+                    { file: "assets/audio/voice_agent/dental_3_maya.mp3", speaker: "Maya (AI Receptionist)", text: "I'm so sorry to hear you're in pain! Dr. Vora has emergency consultation slots available tomorrow at 10:30 AM and 11:45 AM. Which time works best for you?", isAgent: true, log: "[00:18] Querying Dr. Vora's Live Calendar: 2 slots proposed." },
+                    { file: "assets/audio/voice_agent/dental_4_caller.mp3", speaker: "Rajesh Sharma (Caller)", text: "10:30 AM works perfectly for me.", isAgent: false, log: "[00:23] Caller selected: 10:30 AM slot." },
+                    { file: "assets/audio/voice_agent/dental_5_maya.mp3", speaker: "Maya (AI Receptionist)", text: "Great, 10:30 AM is reserved for your molar consultation. May I please have your full name?", isAgent: true, log: "[00:27] Requesting patient contact credentials." },
+                    { file: "assets/audio/voice_agent/dental_6_caller.mp3", speaker: "Rajesh Sharma (Caller)", text: "Sure, it is Rajesh Sharma.", isAgent: false, log: "[00:30] Contact Verified: Rajesh Sharma (+91 98219 70746)." },
+                    { file: "assets/audio/voice_agent/dental_7_maya.mp3", speaker: "Maya (AI Receptionist)", text: "Thank you, Mr. Sharma! Your appointment with Dr. Vora is locked in for tomorrow at 10:30 AM. I have just sent your booking confirmation and clinic directions to your WhatsApp. Have a restful night!", isAgent: true, log: "[00:36] SUCCESS: Slot confirmed, WhatsApp notification dispatched, ₹12,000 treatment locked!", isHighlight: true }
+                ]
+            },
+            interior: {
+                name: "Vikram Malhotra",
+                timeText: "⚠️ Weekend Search Lead (Saturday 8:00 PM)",
+                callerAvatar: "🏠",
+                tracks: [
+                    { file: "assets/audio/voice_agent/interior_1_maya.mp3", speaker: "Rhea (Design Assistant)", text: "Hello! Welcome to Majiwada Interior Studio. I am Rhea, your automated design assistant. Are you looking for a residential or commercial renovation consultation?", isAgent: true, log: "[00:02] Lead Call Connected. Qualifying project category." },
+                    { file: "assets/audio/voice_agent/interior_2_caller.mp3", speaker: "Vikram Malhotra (Caller)", text: "Hi, I just bought a new 3BHK in Majiwada. We need complete turnkey interiors starting next month. Can someone visit our flat for site measurements?", isAgent: false, log: "[00:11] High-Ticket Lead: 3BHK Turnkey Interior (Budget Est: ₹6,00,000+)." },
+                    { file: "assets/audio/voice_agent/interior_3_maya.mp3", speaker: "Rhea (Design Assistant)", text: "Congratulations on your new home! Our senior interior architect can visit your flat this Saturday at 2:00 PM for a free 3D layout consultation. Shall I schedule that for you?", isAgent: true, log: "[00:21] Scheduling Senior Designer Site Measurement for Saturday." },
+                    { file: "assets/audio/voice_agent/interior_4_caller.mp3", speaker: "Vikram Malhotra (Caller)", text: "Yes please, Saturday at 2 PM is great.", isAgent: false, log: "[00:26] Slot Confirmed: Saturday 2:00 PM." },
+                    { file: "assets/audio/voice_agent/interior_5_maya.mp3", speaker: "Rhea (Design Assistant)", text: "Wonderful! Saturday 2:00 PM is confirmed. I've sent our portfolio catalog and designer contact details to your WhatsApp. We look forward to creating your dream space!", isAgent: true, log: "[00:34] SUCCESS: Site Visit Booked + WhatsApp Portfolio Catalog Dispatched!", isHighlight: true }
+                ]
+            }
+        };
+
+        let currentScenario = "dental";
+        let isCalling = false;
+        let currentStep = 0;
+        let callSeconds = 0;
+        let timerInterval = null;
+
+        const audio = document.getElementById('dialogueAudio');
+        const startBtn = document.getElementById('startCallBtn');
+        const orbCard = document.getElementById('orbCard');
+        const statusText = document.getElementById('statusText');
+        const transcriptStream = document.getElementById('transcriptStream');
+        const logStream = document.getElementById('logStream');
+        const callTimer = document.getElementById('callTimer');
+
+        function switchScenario(key) {
+            if (isCalling) endCall();
+            currentScenario = key;
+            document.getElementById('tabDental').classList.toggle('active', key === 'dental');
+            document.getElementById('tabInterior').classList.toggle('active', key === 'interior');
+
+            const s = scenarios[key];
+            document.getElementById('callerName').textContent = s.name;
+            document.getElementById('callerTime').textContent = s.timeText;
+            document.getElementById('callerAvatar').textContent = s.callerAvatar;
+
+            transcriptStream.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-size: 13px; margin: auto;">Tap <strong>"📞 Simulate Inbound Call"</strong> to hear Maya answer in real-time.</div>`;
+        }
+
+        function toggleCallSimulation() {
+            if (isCalling) {
+                endCall();
+            } else {
+                startCall();
+            }
+        }
+
+        function startCall() {
+            isCalling = true;
+            currentStep = 0;
+            callSeconds = 0;
+            startBtn.innerHTML = '🔴 End Call';
+            startBtn.style.background = '#ef4444';
+            startBtn.style.color = '#fff';
+            transcriptStream.innerHTML = '';
+
+            timerInterval = setInterval(() => {
+                callSeconds++;
+                const m = Math.floor(callSeconds / 60).toString().padStart(2, '0');
+                const s = (callSeconds % 60).toString().padStart(2, '0');
+                callTimer.textContent = `${m}:${s}`;
+            }, 1000);
+
+            addLogEntry("[00:01] ⚡ INCOMING CALL DETECTED from " + scenarios[currentScenario].name);
+            playNextStep();
+        }
+
+        function playNextStep() {
+            const list = scenarios[currentScenario].tracks;
+            if (currentStep >= list.length) {
+                endCall(true);
+                return;
+            }
+
+            const step = list[currentStep];
+            audio.src = step.file;
+            audio.play().catch(e => console.log('Audio play blocked'));
+
+            // Visualizer Orb state
+            if (step.isAgent) {
+                orbCard.classList.add('speaking');
+                statusText.textContent = `MAYA SPEAKING (${step.speaker.toUpperCase()})`;
+            } else {
+                orbCard.classList.remove('speaking');
+                statusText.textContent = `LISTENING TO CALLER (${step.speaker.toUpperCase()})`;
+            }
+
+            // Append Transcript
+            const msg = document.createElement('div');
+            msg.className = `msg-bubble ${step.isAgent ? 'msg-agent' : 'msg-caller'}`;
+            msg.innerHTML = `
+                <span class="speaker-tag">${step.speaker}</span>
+                ${step.text}
+            `;
+            transcriptStream.appendChild(msg);
+            transcriptStream.scrollTop = transcriptStream.scrollHeight;
+
+            // Telemetry log
+            if (step.log) {
+                addLogEntry(step.log, step.isHighlight ? 'success' : '');
+            }
+
+            audio.onended = () => {
+                currentStep++;
+                setTimeout(playNextStep, 500);
+            };
+        }
+
+        function endCall(isCompleted = false) {
+            isCalling = false;
+            audio.pause();
+            clearInterval(timerInterval);
+            orbCard.classList.remove('speaking');
+            statusText.textContent = 'STANDBY • 24/7 CALL RADAR READY';
+            startBtn.innerHTML = '📞 Simulate Inbound Call';
+            startBtn.style.background = '#10b981';
+            startBtn.style.color = '#064e3b';
+
+            if (isCompleted) {
+                addLogEntry("[CALL SUMMARY] ✅ 100% of intent captured. Slot locked into Google Calendar. ₹0 lost revenue.", "success");
+            } else {
+                addLogEntry("[CALL TERMINATED] Session ended by user.", "highlight");
+            }
+        }
+
+        function addLogEntry(text, type = '') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = text;
+            logStream.appendChild(entry);
+            logStream.scrollTop = logStream.scrollHeight;
+        }
+
+        // Live Mic SpeechRecognition Mode (Web Speech API)
+        let recognition = null;
+        let isMicRecording = false;
+
+        function toggleLiveMic() {
+            const micBtn = document.getElementById('micBtn');
+
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('Live mic speech recognition is not supported in this browser. Please use Chrome/Edge or use the Simulated Call button!');
+                return;
+            }
+
+            if (isMicRecording) {
+                if (recognition) recognition.stop();
+                micBtn.classList.remove('recording');
+                micBtn.innerHTML = '🎤 Speak to Maya (Live Mic)';
+                isMicRecording = false;
+                orbCard.classList.remove('speaking');
+                statusText.textContent = 'STANDBY • 24/7 CALL RADAR READY';
+            } else {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'en-IN';
+                recognition.interimResults = false;
+
+                recognition.onstart = () => {
+                    isMicRecording = true;
+                    micBtn.classList.add('recording');
+                    micBtn.innerHTML = '🛑 Listening... (Speak Now)';
+                    statusText.textContent = 'LISTENING TO YOUR MICROPHONE...';
+                    addLogEntry("[MIC LIVE] Listening for speech input from user...");
+                };
+
+                recognition.onresult = (e) => {
+                    const speech = e.results[0][0].transcript;
+                    addLogEntry(`[USER SPOKE]: "${speech}"`);
+                    
+                    // Display in transcript
+                    const msg = document.createElement('div');
+                    msg.className = 'msg-bubble msg-caller';
+                    msg.innerHTML = `<span class="speaker-tag">You (Live Caller)</span>${speech}`;
+                    transcriptStream.appendChild(msg);
+                    transcriptStream.scrollTop = transcriptStream.scrollHeight;
+
+                    // AI Response synthesis via SpeechSynthesis
+                    replyToUserSpeech(speech);
+                };
+
+                recognition.onerror = (e) => {
+                    console.error(e);
+                    micBtn.classList.remove('recording');
+                    micBtn.innerHTML = '🎤 Speak to Maya (Live Mic)';
+                    isMicRecording = false;
+                };
+
+                recognition.onend = () => {
+                    micBtn.classList.remove('recording');
+                    micBtn.innerHTML = '🎤 Speak to Maya (Live Mic)';
+                    isMicRecording = false;
+                };
+
+                recognition.start();
+            }
+        }
+
+        function replyToUserSpeech(input) {
+            let replyText = "Hello! I heard your request. Dr. Vora has emergency appointments available tomorrow at 10:30 AM or 11:45 AM. Would you like me to reserve a slot for you?";
+            
+            if (input.toLowerCase().includes("cost") || input.toLowerCase().includes("price")) {
+                replyText = "General consultation starts from 500 rupees, and treatment plans are finalized following a digital X-ray. Would you like me to book your diagnostic slot?";
+            } else if (input.toLowerCase().includes("interior") || input.toLowerCase().includes("home")) {
+                replyText = "Congratulations on your home! Our senior design architect can visit your flat this Saturday at 2:00 PM for free 3D planning. Shall I confirm that?";
+            }
+
+            orbCard.classList.add('speaking');
+            statusText.textContent = 'MAYA RESPONDING LIVE...';
+
+            const replyMsg = document.createElement('div');
+            replyMsg.className = 'msg-bubble msg-agent';
+            replyMsg.innerHTML = `<span class="speaker-tag">Maya (AI Receptionist)</span>${replyText}`;
+            transcriptStream.appendChild(replyMsg);
+            transcriptStream.scrollTop = transcriptStream.scrollHeight;
+
+            addLogEntry(`[MAYA REPLIED]: "${replyText}"`, "success");
+
+            // Web SpeechSynthesis
+            const synth = window.speechSynthesis;
+            const utter = new SpeechSynthesisUtterance(replyText);
+            utter.rate = 1.0;
+            utter.onend = () => {
+                orbCard.classList.remove('speaking');
+                statusText.textContent = 'STANDBY • 24/7 CALL RADAR READY';
+            };
+            synth.speak(utter);
+        }
+    </script>
+</body>
+</html>
