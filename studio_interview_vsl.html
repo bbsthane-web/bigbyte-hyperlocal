@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigByte Systems | Studio Interview VSL - 360° Hyperlocal Growth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070a14;
+            --surface: #0f172a;
+            --surface-card: #1e293b;
+            --border: rgba(255, 255, 255, 0.12);
+            --primary: #3b82f6;
+            --accent: #a855f7;
+            --wa-green: #25d366;
+            --wa-glow: rgba(37, 211, 102, 0.35);
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Header */
+        .studio-topbar {
+            height: 64px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .studio-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .broadcast-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 999px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .pulse-live {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse-red 1.4s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Main Studio Canvas */
+        .studio-stage {
+            flex: 1;
+            max-width: 1360px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* Studio Video Container (Left Pane) */
+        .video-broadcast-card {
+            background: radial-gradient(circle at 10% 20%, #171b30 0%, #0c1020 70%, #060913 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Dual Camera Studio Switcher */
+        .camera-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 16px;
+            background: #020617;
+            position: relative;
+        }
+
+        .camera-frame {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            background: #0b0f19;
+        }
+
+        .camera-frame.speaking {
+            border-color: #3b82f6;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
+            transform: scale(1.01);
+        }
+
+        .camera-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .camera-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(2, 6, 23, 0.95) 100%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 12px;
+        }
+
+        .speaker-tag {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wave-indicator {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 16px;
+        }
+
+        .wave-bar {
+            width: 3px;
+            background: #3b82f6;
+            border-radius: 999px;
+            animation: wave 1s infinite ease-in-out;
+        }
+
+        .wave-bar:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(2) { height: 14px; animation-delay: 0.25s; }
+        .wave-bar:nth-child(3) { height: 10px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { height: 16px; animation-delay: 0.15s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* Subtitle Teleprompter */
+        .teleprompter-box {
+            padding: 20px 24px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--border);
+            min-height: 105px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .teleprompter-speaker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: #60a5fa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .teleprompter-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f1f5f9;
+            font-weight: 500;
+        }
+
+        /* Video Controls Footer */
+        .video-footer-bar {
+            padding: 16px 24px;
+            background: #020617;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-play-interview {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-play-interview:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .segment-pills {
+            display: flex;
+            gap: 6px;
+        }
+
+        .seg-dot {
+            width: 28px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .seg-dot.active {
+            background: #60a5fa;
+            width: 40px;
+        }
+
+        /* Proof & Competitor Features Console (Right Pane) */
+        .console-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .console-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+        }
+
+        .console-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .console-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #a855f7;
+            font-weight: 700;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        /* Proof Feature Panes */
+        .proof-pane {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .proof-pane.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Feature 1: Podium MCTB Phone Simulator */
+        .phone-mockup-box {
+            background: #020617;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .call-missed-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 10px 14px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .whatsapp-reply-bubble {
+            background: #075e54;
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 14px 14px 4px 14px;
+            font-size: 13px;
+            line-height: 1.45;
+            align-self: flex-end;
+            max-width: 90%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            animation: popMsg 0.4s ease;
+        }
+
+        @keyframes popMsg {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Feature 2: Birdeye Negative Review Shield */
+        .review-shield-demo {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .star-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .shield-outcome {
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.45;
+            text-align: center;
+        }
+
+        /* Feature 3: Geo-Grid 5km Radar */
+        .geogrid-map {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 14px;
+            background: #020617;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .grid-pin {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .grid-pin.competitor {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #f87171;
+        }
+
+        /* CTA Button */
+        .btn-whatsapp-consult {
+            background: var(--wa-green);
+            color: #052e16;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px var(--wa-glow);
+            transition: all 0.2s ease;
+        }
+
+        .btn-whatsapp-consult:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+        }
+
+        @media (max-width: 968px) {
+            .studio-stage {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="studio-topbar">
+        <a href="index.html" class="studio-logo">
+            <span>📡</span> BigByte Systems &bull; Studio Podcast VSL
+        </a>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="broadcast-badge">
+                <span class="pulse-live"></span>
+                <span>Hyperlocal Broadcast</span>
+            </div>
+            <a href="mobile_vsd.html" style="font-size: 12px; color: #94a3b8; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); padding: 5px 10px; border-radius: 8px;">
+                📱 Mobile VSD
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Studio Screen -->
+    <main class="studio-stage">
+
+        <!-- Left Column: Video Broadcast & Subtitles -->
+        <section class="video-broadcast-card">
+            <div class="camera-grid">
+                <!-- Camera 1: Interviewer Ananya -->
+                <div class="camera-frame speaking" id="camAnanya">
+                    <img src="assets/images/interviewer_ananya.jpg" alt="Interviewer Ananya" class="camera-img">
+                    <div class="camera-overlay">
+                        <div class="speaker-tag">
+                            <span>🎙️</span> Ananya (Host)
+                        </div>
+                        <div class="wave-indicator" id="waveAnanya">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera 2: Growth Specialist Vikram -->
+                <div class="camera-frame" id="camVikram">
+                    <img src="assets/images/expert_vikram.jpg" alt="Specialist Vikram" class="camera-img">
+                    <div class="camera-overlay">
+                        <div class="speaker-tag">
+                            <span>🚀</span> Vikram (Growth Architect)
+                        </div>
+                        <div class="wave-indicator" id="waveVikram" style="display: none;">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-Time Teleprompter Subtitles -->
+            <div class="teleprompter-box">
+                <div class="teleprompter-speaker" id="teleprompterSpeaker">ANANYA (HOST)</div>
+                <div class="teleprompter-text" id="teleprompterText">
+                    "Vikram, business owners in Thane and Mumbai often tell me: 'We are already busy during the day. Why should I care if someone calls my clinic or office after 8 PM?' What are they actually missing?"
+                </div>
+            </div>
+
+            <!-- Footer Controls -->
+            <div class="video-footer-bar">
+                <button class="btn-play-interview" id="playBtn" onclick="togglePlay()">
+                    <span id="playIcon">▶️</span> <span id="playLabel">Play Studio Interview</span>
+                </button>
+                <div class="segment-pills">
+                    <div class="seg-dot active" onclick="loadSegment(0)"></div>
+                    <div class="seg-dot" onclick="loadSegment(1)"></div>
+                    <div class="seg-dot" onclick="loadSegment(2)"></div>
+                    <div class="seg-dot" onclick="loadSegment(3)"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Interactive Competitor Proof Console -->
+        <section class="console-card">
+            <div class="console-header">
+                <div>
+                    <h2 class="console-title" id="proofTitle">4-Second Missed-Call Recovery</h2>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                        Inspired by Podium &bull; Powered by Indian WhatsApp
+                    </div>
+                </div>
+                <span class="console-tag" id="proofTag">SEGMENT 01</span>
+            </div>
+
+            <!-- Proof 1: Missed Call Text Back -->
+            <div class="proof-pane active" id="proof-0">
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                    When your clinic or office phone rings busy at 8:45 PM, traditional businesses lose that patient forever. Our autonomous bot triggers an immediate WhatsApp conversation in 4 seconds:
+                </p>
+                <div class="phone-mockup-box">
+                    <div class="call-missed-alert">
+                        <span style="font-size: 18px;">📵</span>
+                        <div>
+                            <strong>Missed Call (8:45 PM)</strong>
+                            <div style="font-size: 11px; color: #fca5a5;">Prospect searched 'Best root canal Naupada'</div>
+                        </div>
+                    </div>
+                    <div class="whatsapp-reply-bubble">
+                        <strong>Dr. Sanjeev's Clinic AI:</strong><br>
+                        "Hello ji! Saw we just missed your call while attending a patient. Are you experiencing dental pain or need to book an urgent consultation slot?"
+                    </div>
+                    <div style="font-size: 11px; color: #4ade80; text-align: right;">
+                        ✅ Sent in 3.8s • Patient Saved Before Calling Competitor
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proof 2: Negative Review Shield -->
+            <div class="proof-pane" id="proof-1">
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                    The Birdeye-Style Negative Review Shield: 4–5 star ratings are propelled to Google Maps Top 3, while 1–3 star ratings are intercepted privately.
+                </p>
+                <div class="review-shield-demo">
+                    <div style="text-align: center; font-size: 13px; font-weight: 600;">
+                        Tap a rating to test the shield:
+                    </div>
+                    <div class="star-row">
+                        <span onclick="testShield(1)">⭐</span>
+                        <span onclick="testShield(2)">⭐</span>
+                        <span onclick="testShield(3)">⭐</span>
+                        <span onclick="testShield(4)">⭐</span>
+                        <span onclick="testShield(5)">⭐</span>
+                    </div>
+                    <div class="shield-outcome" id="shieldResult" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd;">
+                        👈 Tap any star above to see how bad reviews are blocked!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proof 3: 5km Geo-Grid Radar -->
+            <div class="proof-pane" id="proof-2">
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                    Hyperlocal Geo-Grid Map over Thane & Mumbai. We turn red competitor pins into green Top-3 rankings block by block:
+                </p>
+                <div class="geogrid-map">
+                    <div class="grid-pin">📍 Naupada<br>#1 Rank</div>
+                    <div class="grid-pin">📍 Majiwada<br>#2 Rank</div>
+                    <div class="grid-pin">📍 Panch Pakhadi<br>#1 Rank</div>
+                    <div class="grid-pin">📍 Wagle Estate<br>#2 Rank</div>
+                    <div class="grid-pin">📍 Ghodbunder<br>#3 Rank</div>
+                    <div class="grid-pin">📍 Mulund West<br>#2 Rank</div>
+                </div>
+                <div style="font-size: 12px; color: #94a3b8; text-align: center;">
+                    ✅ LLM Schemas + AEO for Perplexity, ChatGPT Search, and Google Gemini
+                </div>
+            </div>
+
+            <!-- Proof 4: ROI & Action -->
+            <div class="proof-pane" id="proof-3">
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                    One-time implementation + affordable retainer. Recovering just one high-ticket consultation or client pays for the entire package.
+                </p>
+                <div style="background: #020617; border-radius: 16px; padding: 18px; border: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Average Client Value:</span>
+                        <strong style="color: #60a5fa;">₹25,000 – ₹1,50,000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>System Setup (One-Time):</span>
+                        <strong style="color: #34d399;">₹15,000 – ₹28,000</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <span>Break-Even Requirement:</span>
+                        <strong style="color: #facc15;">Only 1 Client Recovered</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direct 1-Tap Consultation CTA -->
+            <a href="https://wa.me/919167463807?text=Hi%2C%20I%20watched%20your%20Studio%20Interview%20VSL%20and%20want%20to%20claim%20my%20Free%2048-Hour%20Audit." target="_blank" class="btn-whatsapp-consult">
+                <span>📲</span> Claim Free 48-Hour Audit on WhatsApp
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Audio Element -->
+    <audio id="interviewAudio" preload="auto"></audio>
+
+    <script>
+        const segments = [
+            {
+                audio: "assets/audio/interview_vsl/seg1_missed_calls.mp3",
+                title: "4-Second Missed-Call Recovery",
+                tag: "SEGMENT 01",
+                speaker: "ANANYA (HOST)",
+                text: "Vikram, business owners in Thane and Mumbai often tell me: 'We are already busy during the day. Why should I care if someone calls my clinic or office after 8 PM?' What are they actually missing?"
+            },
+            {
+                audio: "assets/audio/interview_vsl/seg2_review_shield.mp3",
+                title: "Birdeye Negative Review Shield",
+                tag: "SEGMENT 02",
+                speaker: "ANANYA (HOST)",
+                text: "Doctors and luxury designers have a huge fear of bad reviews online. How does BigByte Systems protect them from unfair 1-star reviews while propelling them into the Google 3-Pack?"
+            },
+            {
+                audio: "assets/audio/interview_vsl/seg3_omnichannel_geogrid.mp3",
+                title: "5km Geo-Grid & Omnichannel",
+                tag: "SEGMENT 03",
+                speaker: "ANANYA (HOST)",
+                text: "Most marketing agencies give clients complicated software dashboards that nobody has time to check. How simple is this for a busy business owner to manage?"
+            },
+            {
+                audio: "assets/audio/interview_vsl/seg4_roi_action.mp3",
+                title: "Transparent ROI & 48-Hr Pilot",
+                tag: "SEGMENT 04",
+                speaker: "ANANYA (HOST)",
+                text: "And what about the commercial investment? How quickly does a local clinic or contractor break even?"
+            }
+        ];
+
+        let currentSeg = 0;
+        let isPlaying = false;
+        const audio = document.getElementById('interviewAudio');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const playLabel = document.getElementById('playLabel');
+        const dots = document.querySelectorAll('.seg-dot');
+        const camAnanya = document.getElementById('camAnanya');
+        const camVikram = document.getElementById('camVikram');
+        const waveAnanya = document.getElementById('waveAnanya');
+        const waveVikram = document.getElementById('waveVikram');
+
+        function loadSegment(index, autoPlay = true) {
+            currentSeg = index;
+            const data = segments[currentSeg];
+
+            dots.forEach((d, idx) => d.classList.toggle('active', idx === currentSeg));
+            document.querySelectorAll('.proof-pane').forEach((p, idx) => p.classList.toggle('active', idx === currentSeg));
+
+            document.getElementById('proofTitle').textContent = data.title;
+            document.getElementById('proofTag').textContent = data.tag;
+            document.getElementById('teleprompterSpeaker').textContent = data.speaker;
+            document.getElementById('teleprompterText').textContent = data.text;
+
+            // Ananya speaks first in each segment
+            setSpeaker('ananya');
+
+            audio.src = data.audio;
+            if (autoPlay && isPlaying) {
+                audio.play().catch(e => console.log('Audio deferred'));
+            }
+        }
+
+        function setSpeaker(speaker) {
+            if (speaker === 'ananya') {
+                camAnanya.classList.add('speaking');
+                camVikram.classList.remove('speaking');
+                waveAnanya.style.display = 'flex';
+                waveVikram.style.display = 'none';
+            } else {
+                camVikram.classList.add('speaking');
+                camAnanya.classList.remove('speaking');
+                waveVikram.style.display = 'flex';
+                waveAnanya.style.display = 'none';
+            }
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                playIcon.textContent = '▶️';
+                playLabel.textContent = 'Resume Interview';
+            } else {
+                isPlaying = true;
+                playIcon.textContent = '⏸️';
+                playLabel.textContent = 'Pause Interview';
+                if (!audio.src || audio.ended) {
+                    audio.src = segments[currentSeg].audio;
+                }
+                audio.play().catch(e => console.error(e));
+            }
+        }
+
+        // Switch active speaker camera based on timeline in the audio
+        audio.addEventListener('timeupdate', () => {
+            // In our segments, Ananya asks question for first ~7-8 seconds, then Vikram answers
+            if (audio.currentTime > 7.5) {
+                setSpeaker('vikram');
+                document.getElementById('teleprompterSpeaker').textContent = 'VIKRAM (GROWTH ARCHITECT)';
+            } else {
+                setSpeaker('ananya');
+                document.getElementById('teleprompterSpeaker').textContent = 'ANANYA (HOST)';
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            if (currentSeg < segments.length - 1) {
+                setTimeout(() => {
+                    loadSegment(currentSeg + 1, isPlaying);
+                }, 1000);
+            } else {
+                isPlaying = false;
+                playIcon.textContent = '▶️';
+                playLabel.textContent = 'Replay Interview';
+            }
+        });
+
+        function testShield(rating) {
+            const res = document.getElementById('shieldResult');
+            if (rating >= 4) {
+                res.style.background = 'rgba(16, 185, 129, 0.2)';
+                res.style.color = '#34d399';
+                res.innerHTML = `🌟 <strong>${rating}-Star Rating:</strong> Customer is guided straight to <strong>Google Maps 3-Pack</strong> to publish their 5-star review!`;
+            } else {
+                res.style.background = 'rgba(239, 68, 68, 0.2)';
+                res.style.color = '#f87171';
+                res.innerHTML = `🛡️ <strong>${rating}-Star Rating:</strong> <strong>SHIELD ACTIVATED!</strong> Customer routed to private owner feedback form. <em>Zero damage to Google Maps score!</em>`;
+            }
+        }
+
+        // Initialize Segment 0
+        loadSegment(0, false);
+    </script>
+</body>
+</html>
