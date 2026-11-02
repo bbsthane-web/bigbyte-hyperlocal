@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigByte Systems | 360° Hyperlocal Growth Suite - Pitch Deck & Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070a14;
+            --surface: #0f172a;
+            --surface-elevated: #1e293b;
+            --border: rgba(255, 255, 255, 0.12);
+            --primary: #3b82f6;
+            --accent: #a855f7;
+            --wa-green: #25d366;
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Top Presentation Controls Bar */
+        .deck-topbar {
+            height: 64px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .deck-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-deck {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-deck:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-audio-toggle {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+        }
+
+        .btn-audio-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-wa-cta {
+            background: var(--wa-green);
+            color: #064e3b;
+            font-weight: 700;
+            border: none;
+        }
+
+        .btn-wa-cta:hover {
+            background: #22c55e;
+            color: #022c22;
+        }
+
+        /* Presentation Workspace Canvas */
+        .presentation-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        /* 16:9 Slide Frame */
+        .slide-frame {
+            width: 100%;
+            max-width: 1140px;
+            aspect-ratio: 16 / 9;
+            background: radial-gradient(circle at 10% 20%, #171c35 0%, #0a0e1c 70%, #060913 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 44px 56px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Slide Components */
+        .slide-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: #60a5fa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+        }
+
+        .slide-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+
+        .slide-heading span.gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #c084fc, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 860px;
+        }
+
+        /* Grid Cards */
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .cards-grid-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(96, 165, 250, 0.4);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card-icon {
+            font-size: 26px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .card-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* Niche Tabs Inside Slide 3 */
+        .niche-pills-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .niche-pill-btn {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .niche-pill-btn.active {
+            background: #2563eb;
+            border-color: #60a5fa;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Slide Footer Timeline */
+        .slide-bottombar {
+            height: 64px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(6, 9, 19, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        .audio-bar-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .audio-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #c084fc);
+            transition: width 0.15s linear;
+        }
+
+        .slide-nav-arrows {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arrow-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #60a5fa;
+        }
+
+        .slide-indicator-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slide-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .slide-dot.active {
+            width: 24px;
+            background: #60a5fa;
+        }
+
+        /* Printable PDF Styling */
+        @media print {
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+            .deck-topbar, .slide-bottombar, .arrow-btn, .btn-deck {
+                display: none !important;
+            }
+            .presentation-container {
+                padding: 0 !important;
+                display: block !important;
+            }
+            .slide-frame {
+                max-width: 100% !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                aspect-ratio: auto !important;
+            }
+            .slide {
+                display: flex !important;
+                opacity: 1 !important;
+                transform: none !important;
+                page-break-after: always;
+                min-height: 100vh;
+                background: #fff !important;
+                color: #000 !important;
+                border-bottom: 2px solid #ccc;
+            }
+            .slide-heading span.gradient-text {
+                color: #1e3a8a !important;
+                -webkit-text-fill-color: initial !important;
+            }
+            .glass-card {
+                border: 1px solid #ddd !important;
+                background: #f8fafc !important;
+                color: #000 !important;
+            }
+            .card-title {
+                color: #0f172a !important;
+            }
+            .card-text, .slide-desc {
+                color: #475569 !important;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .slide-frame {
+                aspect-ratio: auto;
+                min-height: 620px;
+            }
+            .slide {
+                padding: 24px 20px;
+            }
+            .slide-heading {
+                font-size: 26px;
+            }
+            .cards-grid-5 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cards-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .slide-bottombar {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar Controls -->
+    <header class="deck-topbar">
+        <div class="brand-logo">
+            <span>📡</span> BigByte Systems &bull; 360° Hyperlocal Deck
+        </div>
+        <div class="deck-actions">
+            <button class="btn-deck btn-audio-toggle" id="audioToggleBtn" onclick="toggleAudio()">
+                <span id="audioIcon">▶️</span> <span id="audioLabel">Play Neerja AI Voice</span>
+            </button>
+            <a href="mobile_vsd.html" target="_blank" class="btn-deck" title="Open Mobile Video Sales Demo">
+                📱 Mobile VSD
+            </a>
+            <button class="btn-deck" onclick="window.print()" title="Save as PDF or Print Pitch Deck">
+                🖨️ Export PDF
+            </button>
+            <a href="https://wa.me/919167463807?text=Hi%2C%20I%20reviewed%20your%20BigByte%20Pitch%20Deck%20and%20want%20to%20discuss%20hyperlocal%20growth." target="_blank" class="btn-deck btn-wa-cta">
+                💬 WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Slide Stage -->
+    <main class="presentation-container">
+        <div class="slide-frame">
+
+            <!-- SLIDE 1: The Problem & The Bleed -->
+            <section class="slide active" id="slide-0">
+                <div>
+                    <span class="slide-tag">01 / The Local Market Reality</span>
+                    <h1 class="slide-heading">
+                        Stop The <span class="gradient-text">40% After-Hours Revenue Bleed</span> in Thane & Mumbai.
+                    </h1>
+                    <p class="slide-desc">
+                        Every evening after 7:30 PM, high-intent local clients search Google Maps for trusted dentists, interior designers, and contractors. When calls go unanswered or websites lag, <strong>90% book with competitors within 6 seconds</strong>.
+                    </p>
+
+                    <div class="cards-grid-3">
+                        <div class="glass-card" style="border-left: 4px solid var(--danger);">
+                            <div class="card-icon">📵</div>
+                            <h3 class="card-title">Missed Calls = Lost Cash</h3>
+                            <p class="card-text">₹25,000 to ₹1,50,000 in monthly high-ticket consultations lost because clinic or office lines shut down at 8 PM.</p>
+                        </div>
+                        <div class="glass-card" style="border-left: 4px solid #f59e0b;">
+                            <div class="card-icon">⏳</div>
+                            <h3 class="card-title">Sluggish Websites</h3>
+                            <p class="card-text">Heavy, outdated websites take 4+ seconds to load on mobile. 53% of Indian mobile users bounce before seeing your services.</p>
+                        </div>
+                        <div class="glass-card" style="border-left: 4px solid var(--primary);">
+                            <div class="card-icon">⭐</div>
+                            <h3 class="card-title">Review Deficit</h3>
+                            <p class="card-text">Competitors with 150+ reviews capture 82% of Google 3-Pack clicks even if your actual craftsmanship is superior.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted);">
+                    <span>📍 Hyperlocal Target: Thane (Naupada, Majiwada, Ghodbunder Rd) & Mumbai</span>
+                    <span>Use [Space] or [→] to advance</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: 5-Prong Multi-Approach -->
+            <section class="slide" id="slide-1">
+                <div>
+                    <span class="slide-tag">02 / The End-to-End Solution</span>
+                    <h2 class="slide-heading">
+                        Our <span class="gradient-text">5-Pillar Autonomous Engine</span> for Total Dominance.
+                    </h2>
+                    <p class="slide-desc">
+                        We don't sell disconnected services. We plug a unified, 360-degree client acquisition ecosystem directly into your business.
+                    </p>
+
+                    <div class="cards-grid-5">
+                        <div class="glass-card">
+                            <div class="card-icon">⚡</div>
+                            <h3 class="card-title">1. Lead Rescue</h3>
+                            <p class="card-text">24/7 WhatsApp & VoiceAI agent answers missed calls in 3s and confirms calendar slots automatically.</p>
+                        </div>
+                        <div class="glass-card">
+                            <div class="card-icon">🌟</div>
+                            <h3 class="card-title">2. Review Booster</h3>
+                            <p class="card-text">1-Tap WhatsApp review trigger propels your Google Business profile straight into the Google 3-Pack.</p>
+                        </div>
+                        <div class="glass-card">
+                            <div class="card-icon">🚀</div>
+                            <h3 class="card-title">3. Speed Website</h3>
+                            <p class="card-text">Sub-second loading, mobile-first web presence engineered specifically to convert local visitors.</p>
+                        </div>
+                        <div class="glass-card">
+                            <div class="card-icon">📍</div>
+                            <h3 class="card-title">4. Local SEO & AEO</h3>
+                            <p class="card-text">Geo coordinates and LLM schemas so ChatGPT, Perplexity, and Google Gemini recommend you first.</p>
+                        </div>
+                        <div class="glass-card">
+                            <div class="card-icon">📱</div>
+                            <h3 class="card-title">5. Social Engine</h3>
+                            <p class="card-text">Weekly Instagram Reels, Facebook local groups, and GMB updates to keep you omnipresent.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted);">
+                    <span>⚙️ 100% Managed For You &bull; Zero technical effort required</span>
+                    <span>Pillars 1 to 5</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: Domain / Industry Blueprints -->
+            <section class="slide" id="slide-2">
+                <div>
+                    <span class="slide-tag">03 / Industry Blueprints</span>
+                    <h2 class="slide-heading">
+                        Customized For <span class="gradient-text">Your Exact Industry & Ticket Size</span>.
+                    </h2>
+
+                    <!-- Interactive Niche Selector -->
+                    <div class="niche-pills-bar">
+                        <button class="niche-pill-btn active" onclick="selectDeckNiche('dentist')">🦷 Dentists</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('interior')">🛋️ Interior Designers</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('contractor')">🏗️ Civil Contractors</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('realestate')">🏢 Real Estate Brokers</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('dermat')">✨ Dermatologists</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('ca')">📊 CAs & Tax</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('salon')">💇 Luxury Salons</button>
+                        <button class="niche-pill-btn" onclick="selectDeckNiche('gym')">🏋️ Gyms & Fitness</button>
+                    </div>
+
+                    <div class="glass-card" style="padding: 24px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(59, 130, 246, 0.3);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <div>
+                                <h3 id="deckNicheTitle" style="font-size: 20px; font-weight: 700; color: #fff;">Dental Clinics & Implant Centers</h3>
+                                <div id="deckNichePain" style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Patients suffering toothache at 10 PM call competing 24/7 clinics.</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 11px; text-transform: uppercase; color: #60a5fa; font-weight: 700;">Average Bleed</div>
+                                <div id="deckNicheBleed" style="font-size: 18px; font-weight: 800; color: #f87171;">₹45,000 / month</div>
+                            </div>
+                        </div>
+
+                        <div class="cards-grid-3" style="margin: 0;">
+                            <div style="background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                                <div style="color: #60a5fa; font-size: 11px; font-weight: 700; margin-bottom: 4px;">STEP 1: DISCOVERY</div>
+                                <div id="deckJourney1" style="font-size: 12px; color: #e2e8f0;">Searches 'Best root canal near me' on Google Maps Thane.</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                                <div style="color: #c084fc; font-size: 11px; font-weight: 700; margin-bottom: 4px;">STEP 2: RESCUE</div>
+                                <div id="deckJourney2" style="font-size: 12px; color: #e2e8f0;">Calls clinic at 9 PM &bull; VoiceAI receptionist answers immediately.</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                                <div style="color: #4ade80; font-size: 11px; font-weight: 700; margin-bottom: 4px;">STEP 3: OUTCOME</div>
+                                <div id="deckJourney3" style="font-size: 12px; color: #e2e8f0;">Appointment booked into calendar + WhatsApp directions sent.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted);">
+                    <span>🎯 Tailored workflows for 12+ Thane & Mumbai micro-niches</span>
+                    <span>Click any chip above</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Pricing & Break-Even Math -->
+            <section class="slide" id="slide-3">
+                <div>
+                    <span class="slide-tag">04 / Clear Pricing & High ROI</span>
+                    <h2 class="slide-heading">
+                        Engineered For <span class="gradient-text">Immediate Break-Even & Profit</span>.
+                    </h2>
+                    <p class="slide-desc">
+                        No confusing agency retainers or hidden markups. Setup your entire client magnet once, then keep lead flows expanding on autopilot.
+                    </p>
+
+                    <div class="cards-grid-3">
+                        <div class="glass-card">
+                            <div style="font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Tier 1: Starter</div>
+                            <h3 style="font-size: 20px; font-weight: 800; margin: 6px 0;">Google 3-Pack Speed</h3>
+                            <div style="font-size: 24px; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">₹15,000 <span style="font-size: 12px; color: #94a3b8; font-weight: 400;">One-Time</span></div>
+                            <ul style="font-size: 12px; color: #cbd5e1; list-style: none; line-height: 1.8;">
+                                <li>✅ Sub-second mobile conversion website</li>
+                                <li>✅ GMB profile overhaul & AEO schema</li>
+                                <li>✅ WhatsApp 1-tap review booster</li>
+                                <li>❌ No inbound VoiceAI receptionist</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card" style="border: 2px solid #3b82f6; position: relative; background: rgba(59, 130, 246, 0.08);">
+                            <div style="position: absolute; top: -10px; right: 16px; background: #3b82f6; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px;">MOST POPULAR</div>
+                            <div style="font-size: 11px; color: #60a5fa; font-weight: 700; text-transform: uppercase;">Tier 2: Growth Engine</div>
+                            <h3 style="font-size: 20px; font-weight: 800; margin: 6px 0;">360° Client Acquisition</h3>
+                            <div style="font-size: 24px; font-weight: 800; color: #a855f7; margin-bottom: 12px;">₹28,000 <span style="font-size: 12px; color: #94a3b8; font-weight: 400;">Setup + ₹3,999/mo</span></div>
+                            <ul style="font-size: 12px; color: #cbd5e1; list-style: none; line-height: 1.8;">
+                                <li>✅ Complete Sub-second Website + GMB</li>
+                                <li>✅ 24/7 WhatsApp AI booking assistant</li>
+                                <li>✅ Missed-call instant recovery system</li>
+                                <li>✅ Monthly local SEO ranking expansion</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card">
+                            <div style="font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase;">Tier 3: Market Leader</div>
+                            <h3 style="font-size: 20px; font-weight: 800; margin: 6px 0;">Autonomous Omnichannel</h3>
+                            <div style="font-size: 24px; font-weight: 800; color: #34d399; margin-bottom: 12px;">₹45,000 <span style="font-size: 12px; color: #94a3b8; font-weight: 400;">Setup + ₹6,999/mo</span></div>
+                            <ul style="font-size: 12px; color: #cbd5e1; list-style: none; line-height: 1.8;">
+                                <li>✅ Everything in Growth Engine</li>
+                                <li>✅ Autonomous VoiceAI Receptionist (Inbound)</li>
+                                <li>✅ Bi-weekly Instagram Reels & FB content</li>
+                                <li>✅ Priority VIP 24/7 support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted);">
+                    <span>💡 Just 1 retained client completely covers your entire annual investment</span>
+                    <span>100% Tax Deductible</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: Next Steps & Zero Risk CTA -->
+            <section class="slide" id="slide-4">
+                <div style="text-align: center; max-width: 760px; margin: 0 auto;">
+                    <span class="slide-tag">05 / Zero Risk Action</span>
+                    <h2 class="slide-heading" style="font-size: 42px;">
+                        Ready To <span class="gradient-text">Dominate Your Hyperlocal Market</span>?
+                    </h2>
+                    <p class="slide-desc" style="margin: 0 auto 28px auto; text-align: center;">
+                        Get your free <strong>48-Hour Live Hyperlocal Audit</strong>. We will show you exactly how many calls your competitors are stealing and deploy a live preview of your AI booking flow.
+                    </p>
+
+                    <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 30px;">
+                        <a href="https://wa.me/919167463807?text=Hi%2C%20I%20want%20to%20claim%20my%20Free%2048-Hour%20Hyperlocal%20Audit%20for%20my%20business." target="_blank" class="btn-deck btn-wa-cta" style="padding: 14px 28px; font-size: 16px; border-radius: 12px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);">
+                            📲 Claim Free 48-Hour Audit on WhatsApp
+                        </a>
+                        <a href="mobile_vsd.html" target="_blank" class="btn-deck" style="padding: 14px 24px; font-size: 15px; border-radius: 12px;">
+                            📱 Launch Interactive Mobile VSD
+                        </a>
+                    </div>
+
+                    <div style="display: flex; justify-content: center; gap: 32px; font-size: 13px; color: var(--text-muted);">
+                        <span>🔒 Zero Lock-in Contracts</span>
+                        <span>🚀 48-Hour Delivery</span>
+                        <span>📍 Dedicated Thane & Mumbai Team</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted);">
+                    <span>Direct Call / WhatsApp: +91 9167463807</span>
+                    <span>BigByte Systems</span>
+                </div>
+            </section>
+
+            <!-- Bottom Presentation Controls -->
+            <footer class="slide-bottombar">
+                <div class="audio-bar-wrapper">
+                    <div class="audio-bar-fill" id="audioBarFill"></div>
+                </div>
+
+                <div class="slide-nav-arrows">
+                    <button class="arrow-btn" onclick="prevSlide()" title="Previous Slide (Left Arrow)">◀</button>
+                    <button class="arrow-btn" onclick="nextSlide()" title="Next Slide (Right Arrow or Space)">▶</button>
+                    <span id="slideCounter" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; margin-left: 8px;">1 / 5</span>
+                </div>
+
+                <div class="slide-indicator-dots" id="dotsContainer">
+                    <div class="slide-dot active" onclick="goToSlide(0)"></div>
+                    <div class="slide-dot" onclick="goToSlide(1)"></div>
+                    <div class="slide-dot" onclick="goToSlide(2)"></div>
+                    <div class="slide-dot" onclick="goToSlide(3)"></div>
+                    <div class="slide-dot" onclick="goToSlide(4)"></div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: #94a3b8;">
+                    <span id="voiceTag">🎙️ Neerja AI Voice (Edge Neural)</span>
+                </div>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- Audio Element -->
+    <audio id="deckAudio" preload="auto"></audio>
+
+    <script>
+        const audioTracks = [
+            'assets/audio/vsd_v2/scene1_hook.mp3',
+            'assets/audio/vsd_v2/scene2_pillars.mp3',
+            'assets/audio/vsd_v2/scene3_niches.mp3',
+            'assets/audio/vsd_v2/scene4_pricing.mp3',
+            'assets/audio/vsd_v2/scene5_cta.mp3'
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let isAudioPlaying = false;
+        const audio = document.getElementById('deckAudio');
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const audioIcon = document.getElementById('audioIcon');
+        const audioLabel = document.getElementById('audioLabel');
+        const audioBarFill = document.getElementById('audioBarFill');
+        const slideCounter = document.getElementById('slideCounter');
+        const dots = document.querySelectorAll('.slide-dot');
+
+        function goToSlide(index, playVoice = true) {
+            document.querySelectorAll('.slide').forEach((s, idx) => {
+                s.classList.toggle('active', idx === index);
+            });
+
+            dots.forEach((d, idx) => {
+                d.classList.toggle('active', idx === index);
+            });
+
+            currentSlide = index;
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            audioBarFill.style.width = '0%';
+
+            audio.src = audioTracks[currentSlide];
+            if (playVoice && isAudioPlaying) {
+                audio.play().catch(e => console.log('Autoplay deferred'));
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                goToSlide(currentSlide + 1, isAudioPlaying);
+            } else {
+                goToSlide(0, isAudioPlaying);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1, isAudioPlaying);
+            }
+        }
+
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                audio.pause();
+                isAudioPlaying = false;
+                audioIcon.textContent = '▶️';
+                audioLabel.textContent = 'Resume Neerja AI Voice';
+            } else {
+                isAudioPlaying = true;
+                audioIcon.textContent = '⏸️';
+                audioLabel.textContent = 'Pause Narration';
+                if (!audio.src || audio.ended) {
+                    audio.src = audioTracks[currentSlide];
+                }
+                audio.play().catch(e => console.error(e));
+            }
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                audioBarFill.style.width = `${pct}%`;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            if (currentSlide < totalSlides - 1) {
+                setTimeout(() => { nextSlide(); }, 800);
+            } else {
+                isAudioPlaying = false;
+                audioIcon.textContent = '▶️';
+                audioLabel.textContent = 'Replay Presentation';
+            }
+        });
+
+        // Keyboard Controls
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'p' || e.key === 'P') {
+                toggleAudio();
+            }
+        });
+
+        // Niche data for Slide 3
+        const deckNiches = {
+            dentist: {
+                title: "Dental Clinics & Implant Centers",
+                pain: "Patients suffering toothache at 10 PM call competing 24/7 clinics.",
+                bleed: "₹45,000 / month",
+                journey1: "Searches 'Best root canal near me' on Google Maps Thane.",
+                journey2: "Calls clinic at 9 PM • VoiceAI receptionist answers immediately.",
+                journey3: "Appointment booked into calendar + WhatsApp directions sent."
+            },
+            interior: {
+                title: "Interior Designers & Architects",
+                pain: "Homeowners looking for 2BHK/3BHK interiors bounce off slow portfolio sites.",
+                bleed: "₹1,50,000 / lead",
+                journey1: "Homeowner lands on Google Business profile or Instagram Ad.",
+                journey2: "Interactive WhatsApp bot shares portfolio catalog in 3 seconds.",
+                journey3: "Direct phone site-visit consultation booked automatically."
+            },
+            contractor: {
+                title: "Civil & Waterproofing Contractors",
+                pain: "Building societies and homeowners need urgent quotes but get busy dials.",
+                bleed: "₹75,000 / tender",
+                journey1: "Society secretary searches 'Painting contractor Majiwada'.",
+                journey2: "AI triggers instant WhatsApp reply with quotation calculator.",
+                journey3: "Site inspection confirmed straight to your personal calendar."
+            },
+            realestate: {
+                title: "Real Estate Brokers & Channel Partners",
+                pain: "High ad spend on 99acres/MagicBricks wasted due to delayed call-backs.",
+                bleed: "₹1,20,000 / deal",
+                journey1: "Buyer searches '2BHK Pokhran Road 2'.",
+                journey2: "Instant WhatsApp brochure & pricing sent in 5 seconds.",
+                journey3: "Weekend site visit confirmed with Google Maps location."
+            },
+            dermat: {
+                title: "Dermatologists & Cosmetology Clinics",
+                pain: "Aesthetic treatment inquiries after work hours bounce to retail chains.",
+                bleed: "₹50,000 / month",
+                journey1: "Patient searches 'Acne laser treatment Thane West'.",
+                journey2: "24/7 AI Receptionist clarifies pricing and slots.",
+                journey3: "Token confirmed on WhatsApp with pre-procedure instructions."
+            },
+            ca: {
+                title: "Chartered Accountants & Tax Consultants",
+                pain: "ITR & GST clients wait till last week and flood lines.",
+                bleed: "₹35,000 / season",
+                journey1: "Business owner needs urgent GST filing assistance.",
+                journey2: "WhatsApp assistant collects basic document checklist automatically.",
+                journey3: "Scheduled video/in-person consultation booked."
+            },
+            salon: {
+                title: "Luxury Salons & Spas",
+                pain: "Weekend bridal and haircut slots sit unfilled due to booking friction.",
+                bleed: "₹30,000 / month",
+                journey1: "Customer checks Google Maps reviews for bridal makeup.",
+                journey2: "1-Tap WhatsApp menu displays stylists and slots.",
+                journey3: "Instant confirmation with automated reminder before slot."
+            },
+            gym: {
+                title: "Gyms & Personal Fitness Studios",
+                pain: "Walk-ins drop because phone numbers are unattended during peak workout hours.",
+                bleed: "₹25,000 / month",
+                journey1: "Resident searches 'Best gym near Ghodbunder Road'.",
+                journey2: "AI sends free 1-Day Trial Pass on WhatsApp immediately.",
+                journey3: "Trial slot booked and follow-up automated after visit."
+            }
+        };
+
+        function selectDeckNiche(key) {
+            document.querySelectorAll('.niche-pill-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const item = deckNiches[key];
+            if (!item) return;
+
+            document.getElementById('deckNicheTitle').textContent = item.title;
+            document.getElementById('deckNichePain').textContent = item.pain;
+            document.getElementById('deckNicheBleed').textContent = item.bleed;
+            document.getElementById('deckJourney1').textContent = item.journey1;
+            document.getElementById('deckJourney2').textContent = item.journey2;
+            document.getElementById('deckJourney3').textContent = item.journey3;
+        }
+
+        // Initialize slide 0 without auto voice
+        goToSlide(0, false);
+    </script>
+</body>
+</html>

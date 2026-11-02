@@ -1,0 +1,40 @@
+name: "Cloud Lead Harvester (Laptop Off, Zero Cost)"
+
+on:
+  schedule:
+    # Runs daily at 04:00 UTC (09:30 AM IST)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    # Allows manual trigger anytime from GitHub web UI
+
+permissions:
+  contents: write
+
+jobs:
+  harvest-leads:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python Runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install PDF & Scraping Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pdfplumber
+
+      - name: Run Cloud PDF & Directory Harvester
+        run: |
+          python cloud_pdf_lead_harvester.py
+
+      - name: Commit & Push Newly Discovered Leads
+        run: |
+          git config --global user.name "BigByte Cloud Prospector Bot"
+          git config --global user.email "bot@bigbytesystems.in"
+          git add data/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Cloud Harvester: Update leads database and dispatch queue [skip ci]" && git push)

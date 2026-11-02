@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BigByte 360° Hyperlocal Growth Suite | Mobile VSD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060913;
+            --surface: rgba(15, 23, 42, 0.85);
+            --surface-card: #0f172a;
+            --border: rgba(255, 255, 255, 0.12);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.35);
+            --accent: #a855f7;
+            --wa-green: #25d366;
+            --wa-glow: rgba(37, 211, 102, 0.35);
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #020617;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+
+        /* Mobile Container Frame */
+        .mobile-shell {
+            width: 100%;
+            max-width: 480px;
+            background: radial-gradient(circle at 10% 15%, #18153b 0%, var(--bg) 75%);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 35px rgba(99, 102, 241, 0.25);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header */
+        .vsd-header {
+            padding: 18px 20px 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(6, 9, 19, 0.9);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .brand-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            color: #4ade80;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* Slide Viewport */
+        .viewport {
+            min-height: 520px;
+            position: relative;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .slide-pane {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide-pane.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #818cf8;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .headline {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.25;
+            color: #fff;
+        }
+
+        .gradient-red {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-green {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-blue {
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .body-p {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.55;
+        }
+
+        /* Industry / Niche Selector Bar */
+        .niche-scroller {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 6px 2px 10px 2px;
+            scrollbar-width: none;
+        }
+
+        .niche-scroller::-webkit-scrollbar {
+            display: none;
+        }
+
+        .niche-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .niche-chip.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #60a5fa;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Dynamic Niche Card */
+        .niche-dynamic-box {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .niche-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-badge {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* 5 Pillars Grid */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .pillar-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .pillar-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .pillar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .pillar-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+
+        /* Pricing Cards */
+        .pricing-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .plan-card {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .plan-card.featured {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+        }
+
+        .plan-tag {
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            background: #3b82f6;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        .plan-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .plan-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #4ade80;
+            text-align: right;
+        }
+
+        .plan-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* Control Footer Bar */
+        .vsd-footer {
+            padding: 14px 20px 20px 20px;
+            background: rgba(6, 9, 19, 0.95);
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .audio-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-audio-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #a855f7);
+            border-radius: 999px;
+            transition: width 0.15s linear;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav-primary {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .btn-whatsapp-direct {
+            background: var(--wa-green);
+            color: #052e16;
+            border: none;
+            box-shadow: 0 4px 16px var(--wa-glow);
+        }
+
+        .btn-whatsapp-direct:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-shell">
+
+        <!-- Top Header Bar -->
+        <header class="vsd-header">
+            <a href="index.html" class="brand-pill" style="text-decoration: none;">
+                <span>📡</span> BigByte 360° Studio
+            </a>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <a href="presentation_deck.html" style="font-size: 11px; color: #94a3b8; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); padding: 3px 8px; border-radius: 6px;">📊 Deck</a>
+                <div class="live-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="voiceStatus">Neerja Voice</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Niche Selector Scroller -->
+        <div style="padding: 12px 20px 0 20px; background: rgba(6, 9, 19, 0.8);">
+            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px;">
+                Select Your Industry Domain:
+            </div>
+            <div class="niche-scroller" id="nicheScroller">
+                <div class="niche-chip active" onclick="setNiche('dental')">🦷 Dentists & Clinics</div>
+                <div class="niche-chip" onclick="setNiche('interior')">🏡 Interior Designers</div>
+                <div class="niche-chip" onclick="setNiche('contractor')">🏗️ Civil Contractors</div>
+                <div class="niche-chip" onclick="setNiche('realestate')">🏢 Real Estate Brokers</div>
+                <div class="niche-chip" onclick="setNiche('dermat')">🩺 Dermatologists & Skin</div>
+                <div class="niche-chip" onclick="setNiche('ca')">📊 CA & Tax Consultants</div>
+                <div class="niche-chip" onclick="setNiche('salon')">💇 Luxury Salons & Spas</div>
+                <div class="niche-chip" onclick="setNiche('gym')">🏋️ Gyms & Fitness Studios</div>
+                <div class="niche-chip" onclick="setNiche('lab')">🧪 Diagnostic Pathology</div>
+                <div class="niche-chip" onclick="setNiche('car')">🚗 Car Detailing Care</div>
+                <div class="niche-chip" onclick="setNiche('banquet')">🍽️ Banquets & Catering</div>
+                <div class="niche-chip" onclick="setNiche('coaching')">📚 Coaching & Tutors</div>
+            </div>
+        </div>
+
+        <!-- Viewport Slides -->
+        <div class="viewport">
+
+            <!-- Slide 0: The Hook & Silent Bleed -->
+            <div class="slide-pane active" id="pane-0">
+                <div>
+                    <span class="step-label">PHASE 01 • THE SILENT CLIENT BLEED</span>
+                    <h2 class="headline" style="margin-top: 6px;">
+                        Where <span class="gradient-red">High-Paying Clients</span> Disappear in Thane
+                    </h2>
+                    <p class="body-p" style="margin-top: 10px;">
+                        Across Thane and Mumbai, over 40% of local searches happen after 7:30 PM. When prospects call, your line rings busy or unanswered. Nobody leaves voicemails. They tap back and book with the next competitor in 6 seconds.
+                    </p>
+                </div>
+
+                <div class="niche-dynamic-box" id="nicheCard">
+                    <div class="niche-meta-row">
+                        <strong id="nicheTitle" style="color: #60a5fa; font-size: 15px;">Dental Clinic Practice</strong>
+                        <span class="stat-badge" id="nicheBleed">Avg Loss: ₹60,000 / mo</span>
+                    </div>
+                    <div style="font-size: 13px; color: #cbd5e1;" id="nichePain">
+                        Missing 4–6 calls a month while attending patients loses you ₹12,000 root canal and implant treatments.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 1: The 5-Pillar Growth Engine -->
+            <div class="slide-pane" id="pane-1">
+                <div>
+                    <span class="step-label">PHASE 02 • THE 360° HYPERLOCAL SUITE</span>
+                    <h2 class="headline" style="margin-top: 6px;">
+                        Our <span class="gradient-blue">5-Pillar Engine</span> Replaces Lost Revenue
+                    </h2>
+                </div>
+
+                <div class="pillars-grid">
+                    <div class="pillar-card">
+                        <div class="pillar-icon">📲</div>
+                        <div>
+                            <div class="pillar-title">1. 24/7 WhatsApp & VoiceAI Capture</div>
+                            <div class="pillar-desc">Answers every missed call and GMB click in 3 sec; books slots automatically.</div>
+                        </div>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="pillar-icon">⭐</div>
+                        <div>
+                            <div class="pillar-title">2. 5-Star Review Multiplier</div>
+                            <div class="pillar-desc">Automated post-service WhatsApp prompts rocket your profile into Google 3-Pack.</div>
+                        </div>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="pillar-icon">⚡</div>
+                        <div>
+                            <div class="pillar-title">3. Sub-Second Conversion Website</div>
+                            <div class="pillar-desc">Rebuild sluggish sites into mobile-first booking magnets with SSL and speed.</div>
+                        </div>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="pillar-icon">📍</div>
+                        <div>
+                            <div class="pillar-title">4. Local SEO, Geo & AEO Schema</div>
+                            <div class="pillar-desc">Rank on Google Maps, Google SGE, Perplexity, and ChatGPT local intent queries.</div>
+                        </div>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="pillar-icon">📱</div>
+                        <div>
+                            <div class="pillar-title">5. Social Visibility & Reels Engine</div>
+                            <div class="pillar-desc">Consistent Instagram reels, Facebook community, and GMB updates.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Dynamic Niche Showcase -->
+            <div class="slide-pane" id="pane-2">
+                <div>
+                    <span class="step-label">PHASE 03 • TAILORED WORKFLOWS</span>
+                    <h2 class="headline" style="margin-top: 6px;">
+                        Customized for <span class="gradient-green" id="nicheTargetText">Your Domain</span>
+                    </h2>
+                    <p class="body-p" style="margin-top: 10px;">
+                        You don't need technical skills or complicated software. We deploy your specific client qualification questions, emergency booking slots, and review flows within 48 hours.
+                    </p>
+                </div>
+
+                <div style="background: rgba(17, 24, 39, 0.85); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+                    <div style="font-size: 13px; color: var(--text-muted); text-transform: uppercase;">Simulated Client Journey</div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="font-size: 20px;">1️⃣</span>
+                        <div style="font-size: 13px;" id="journey1">Patient searches Google Maps in Naupada/Thane.</div>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="font-size: 20px;">2️⃣</span>
+                        <div style="font-size: 13px;" id="journey2">1-Tap WhatsApp opens with emergency slot options.</div>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="font-size: 20px;">3️⃣</span>
+                        <div style="font-size: 13px;" id="journey3">Slot locked into Google Calendar; WhatsApp confirms directions.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Pricing & ROI -->
+            <div class="slide-pane" id="pane-3">
+                <div>
+                    <span class="step-label">PHASE 04 • TRANSPARENT PRICING</span>
+                    <h2 class="headline" style="margin-top: 6px;">
+                        One-Time Setup <span class="gradient-green">+ Retainer</span>
+                    </h2>
+                    <p class="body-p" style="margin-top: 8px;">
+                        Recovering just <strong>one extra client</strong> pays for the entire package.
+                    </p>
+                </div>
+
+                <div class="pricing-deck">
+                    <div class="plan-card">
+                        <div>
+                            <div class="plan-name">1-Tap Lead Accelerator</div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">GMB Hook + WhatsApp Bot + Review Booster</div>
+                        </div>
+                        <div>
+                            <div class="plan-price">₹15,000</div>
+                            <div class="plan-sub">One-Time Setup</div>
+                        </div>
+                    </div>
+
+                    <div class="plan-card featured">
+                        <span class="plan-tag">Most Popular</span>
+                        <div>
+                            <div class="plan-name">360° Growth Engine</div>
+                            <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">Full Setup + Website + Local SEO & AEO</div>
+                        </div>
+                        <div>
+                            <div class="plan-price">₹28,000</div>
+                            <div class="plan-sub">+ ₹3,999/mo Retainer</div>
+                        </div>
+                    </div>
+
+                    <div class="plan-card">
+                        <div>
+                            <div class="plan-name">Total Dominance & VoiceAI</div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">All Above + 24/7 Voice AI Phone Receptionist</div>
+                        </div>
+                        <div>
+                            <div class="plan-price">₹45,000</div>
+                            <div class="plan-sub">+ ₹6,999/mo Retainer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: 48-Hour Guarantee & CTA -->
+            <div class="slide-pane" id="pane-4">
+                <div style="text-align: center;">
+                    <span class="step-label">PHASE 05 • ZERO-RISK ACTION</span>
+                    <h2 class="headline" style="margin-top: 8px; font-size: 28px;">
+                        Turn Your Profile Into a <span class="gradient-green">Client Magnet</span>
+                    </h2>
+                    <p class="body-p" style="margin-top: 12px;">
+                        We deploy your custom 360° growth engine in <strong>48 hours</strong>. No monthly contracts, no technical headaches.
+                    </p>
+                </div>
+
+                <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 16px; padding: 18px; text-align: center;">
+                    <div style="font-weight: 700; color: #4ade80; font-size: 15px;">🔒 100% Risk-Free Guarantee</div>
+                    <div style="font-size: 13px; color: #cbd5e1; margin-top: 4px;">
+                        If your system does not capture its first qualified appointment in 30 days, we work for free until it does.
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="https://wa.me/919167463807?text=Hi%2C%20I%20saw%20your%20BigByte%20360%20Growth%20Suite%20Demo%20and%20want%20a%20free%2048-hr%20preview%20for%20my%20business." target="_blank" class="btn-nav btn-whatsapp-direct" style="padding: 16px; font-size: 16px;">
+                        📲 Claim Your Free 48-Hr Preview
+                    </a>
+                    <div style="text-align: center; color: var(--text-muted); font-size: 12px;">
+                        Direct Line: +91 9167463807 | Thane & Mumbai
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Controls Bar -->
+        <footer class="vsd-footer">
+            <div class="audio-bar">
+                <button class="btn-audio-toggle" id="audioToggleBtn" onclick="toggleAudio()">
+                    ▶️ Play Voiceover
+                </button>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span id="slideCounter" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted);">1 / 5</span>
+            </div>
+
+            <div class="footer-nav">
+                <button class="btn-nav" onclick="prevSlide()">⏮️ Back</button>
+                <button class="btn-nav btn-nav-primary" id="nextBtn" onclick="nextSlide()">Next ⏭️</button>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Hidden Audio Player -->
+    <audio id="vsdAudio" preload="auto"></audio>
+
+    <script>
+        const audioTracks = [
+            "assets/audio/vsd_v2/scene1_hook.mp3",
+            "assets/audio/vsd_v2/scene2_pillars.mp3",
+            "assets/audio/vsd_v2/scene3_niches.mp3",
+            "assets/audio/vsd_v2/scene4_pricing.mp3",
+            "assets/audio/vsd_v2/scene5_cta.mp3"
+        ];
+
+        const nicheData = {
+            dental: {
+                title: "Dental Clinic Practice",
+                bleed: "Avg Loss: ₹60,000 / mo",
+                pain: "Missing 4–6 calls a month while attending patients loses you ₹12,000 root canal and implant treatments.",
+                targetText: "Dental Clinics",
+                journey1: "Patient searches for toothache relief in Thane/Naupada at 8:30 PM.",
+                journey2: "1-Tap WhatsApp opens with emergency slot options (10:30 AM / 5:30 PM).",
+                journey3: "Slot locked in Dr. Vora's Google Calendar; directions sent to patient."
+            },
+            interior: {
+                title: "Interior Design & Architecture",
+                bleed: "Avg Loss: ₹4,00,000 / mo",
+                pain: "Weekend inquiries for new 2BHK/3BHK flats bounce to competitors if nobody answers with a portfolio in 5 minutes.",
+                targetText: "Interior Designers",
+                journey1: "Homeowner searches for 3BHK turnkey interiors in Majiwada/Ghodbunder.",
+                journey2: "Instant WhatsApp bot shares project 3D portfolio & site visit calendar.",
+                journey3: "Senior designer site measurement booked for Saturday 2:00 PM."
+            },
+            contractor: {
+                title: "Civil Contractor & Builders",
+                bleed: "Avg Loss: ₹5,00,000 / mo",
+                pain: "Renovation and commercial tender inquiries slip away when site engineers are busy on construction sites.",
+                targetText: "Civil Contractors",
+                journey1: "Society chairman searches for waterproofing & structural repair contractor.",
+                journey2: "WhatsApp bot instantly requests carpet area & shares previous project licenses.",
+                journey3: "Site inspection booked automatically without interrupting on-site labor."
+            },
+            realestate: {
+                title: "Real Estate Agents & Brokers",
+                bleed: "Avg Loss: ₹1,50,000 / mo",
+                pain: "High-intent buyer inquiries for Thane high-rises go cold if not engaged within 60 seconds.",
+                targetText: "Real Estate Brokers",
+                journey1: "NRI or Mumbai buyer searches for ready-to-move flats in Thane West.",
+                journey2: "Automated brochure & virtual video walkthrough delivered to their WhatsApp.",
+                journey3: "Sunday property site visit confirmed directly to the broker's diary."
+            },
+            dermat: {
+                title: "Dermatologists & Cosmetology",
+                bleed: "Avg Loss: ₹80,000 / mo",
+                pain: "High-ticket skin, laser, and hair transplant clients hesitate on phone calls and prefer discreet WhatsApp chat.",
+                targetText: "Skin & Hair Clinics",
+                journey1: "Client searches for laser skin treatment or hair PRP in Thane.",
+                journey2: "Discreet 1-tap WhatsApp consultation flow answers pricing FAQs.",
+                journey3: "Doctor's diagnostic consultation slot reserved with zero phone friction."
+            },
+            ca: {
+                title: "Chartered Accountants & Tax",
+                bleed: "Avg Loss: ₹45,000 / mo",
+                pain: "Business owners seeking GST, ITR, and audit advice bounce to other firms when phones ring busy during tax season.",
+                targetText: "CA & Tax Consultants",
+                journey1: "SME owner in Wagle Estate searches for GST audit & tax filing firm.",
+                journey2: "WhatsApp assistant collects turnover bracket & schedules discovery call.",
+                journey3: "Consultation slot added to CA's Google Calendar."
+            },
+            salon: {
+                title: "Luxury Salons & Spas",
+                bleed: "Avg Loss: ₹50,000 / mo",
+                pain: "Weekend bridal makeover packages and spa bookings bounce when hair stylists are occupied with clients.",
+                targetText: "Luxury Salons",
+                journey1: "Customer searches for bridal makeup or hair spa on Ghodbunder Road.",
+                journey2: "WhatsApp menu shows instant service rates & available chair times.",
+                journey3: "Booking confirmed with reminder ping sent 2 hours before appointment."
+            },
+            gym: {
+                title: "Gyms & Fitness Studios",
+                bleed: "Avg Loss: ₹35,000 / mo",
+                pain: "New Year and seasonal fitness seekers click away if they cannot see class schedules and trial pass links immediately.",
+                targetText: "Fitness & Yoga Gyms",
+                journey1: "Local resident searches for personal training gym near Panch Pakhadi.",
+                journey2: "Instant 1-day free VIP trial pass generated and sent to their WhatsApp.",
+                journey3: "Lead details pushed to trainer's WhatsApp to welcome them at the door."
+            },
+            lab: {
+                title: "Diagnostic Labs & Pathology",
+                bleed: "Avg Loss: ₹40,000 / mo",
+                pain: "Patients needing early morning fasting blood tests or home sample collection book with the first lab that answers.",
+                targetText: "Diagnostic Labs",
+                journey1: "Patient searches for full body checkup or home sample collection.",
+                journey2: "WhatsApp bot accepts prescription photo & confirms home visit time.",
+                journey3: "Phlebotomist schedule updated with patient address."
+            },
+            car: {
+                title: "Auto Detailing & Car Care",
+                bleed: "Avg Loss: ₹75,000 / mo",
+                pain: "Car owners seeking ceramic coating and deep detailing want visual proof and quotes before committing.",
+                targetText: "Car Detailing Studios",
+                journey1: "Car owner searches for ceramic coating studio in Thane.",
+                journey2: "WhatsApp bot sends before/after video reel and packages.",
+                journey3: "Weekend studio bay slot reserved for car inspection."
+            },
+            banquet: {
+                title: "Banquets & Caterers",
+                bleed: "Avg Loss: ₹3,00,000 / mo",
+                pain: "Family wedding and corporate event managers inquire at night and book whoever provides hall availability first.",
+                targetText: "Banquets & Caterers",
+                journey1: "Event organizer searches for 200-person banquet hall in Thane.",
+                journey2: "WhatsApp bot shares rate card per plate and open calendar dates.",
+                journey3: "Manager site walkthrough scheduled for Sunday."
+            },
+            coaching: {
+                title: "Coaching Classes & Tutors",
+                bleed: "Avg Loss: ₹90,000 / mo",
+                pain: "Parents searching for 10th/12th or IIT-JEE coaching want syllabus details and demo class seats instantly.",
+                targetText: "Coaching Institutes",
+                journey1: "Parent searches for top science/maths coaching in Thane West.",
+                journey2: "Free demo lecture seat pass sent to parent's WhatsApp with timetable.",
+                journey3: "Student enrollment confirmed for Saturday demo."
+            }
+        };
+
+        let currentSlide = 0;
+        const totalSlides = 5;
+        let isAudioPlaying = false;
+        const audio = document.getElementById('vsdAudio');
+        const audioBtn = document.getElementById('audioToggleBtn');
+        const progressFill = document.getElementById('progressFill');
+        const slideCounter = document.getElementById('slideCounter');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function loadSlide(index, playAudio = true) {
+            document.querySelectorAll('.slide-pane').forEach((p, idx) => {
+                p.classList.toggle('active', idx === index);
+            });
+
+            currentSlide = index;
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            progressFill.style.width = '0%';
+
+            nextBtn.textContent = currentSlide === totalSlides - 1 ? 'WhatsApp Me 📲' : 'Next ⏭️';
+
+            audio.src = audioTracks[currentSlide];
+            if (playAudio && isAudioPlaying) {
+                audio.play().catch(e => console.log('Audio autoplay blocked'));
+            }
+        }
+
+        function toggleAudio() {
+            if (isAudioPlaying) {
+                audio.pause();
+                isAudioPlaying = false;
+                audioBtn.textContent = '▶️ Play Voiceover';
+            } else {
+                isAudioPlaying = true;
+                audioBtn.textContent = '⏸️ Pause';
+                if (!audio.src || audio.ended) {
+                    audio.src = audioTracks[currentSlide];
+                }
+                audio.play().catch(e => console.error(e));
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                loadSlide(currentSlide + 1, isAudioPlaying);
+            } else {
+                window.open('https://wa.me/919167463807?text=Hi%2C%20I%20saw%20your%20BigByte%20360%20Growth%20Suite%20Demo%20and%20want%20to%20get%20started.', '_blank');
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                loadSlide(currentSlide - 1, isAudioPlaying);
+            }
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = `${pct}%`;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            if (currentSlide < totalSlides - 1) {
+                setTimeout(() => { nextSlide(); }, 800);
+            } else {
+                isAudioPlaying = false;
+                audioBtn.textContent = '▶️ Replay';
+            }
+        });
+
+        function setNiche(key) {
+            document.querySelectorAll('.niche-chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const data = nicheData[key];
+            if (!data) return;
+
+            document.getElementById('nicheTitle').textContent = data.title;
+            document.getElementById('nicheBleed').textContent = data.bleed;
+            document.getElementById('nichePain').textContent = data.pain;
+            document.getElementById('nicheTargetText').textContent = data.targetText;
+            document.getElementById('journey1').textContent = data.journey1;
+            document.getElementById('journey2').textContent = data.journey2;
+            document.getElementById('journey3').textContent = data.journey3;
+        }
+
+        // Init
+        loadSlide(0, false);
+    </script>
+</body>
+</html>
