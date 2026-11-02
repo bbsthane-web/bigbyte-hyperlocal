@@ -646,40 +646,47 @@
     <audio id="interviewAudio" preload="auto"></audio>
 
     <script>
-        const segments = [
+        const interviewData = [
             {
-                audio: "assets/audio/interview_vsl/seg1_missed_calls.mp3",
                 title: "4-Second Missed-Call Recovery",
                 tag: "SEGMENT 01",
-                speaker: "ANANYA (HOST)",
-                text: "Vikram, business owners in Thane and Mumbai often tell me: 'We are already busy during the day. Why should I care if someone calls my clinic or office after 8 PM?' What are they actually missing?"
+                ananyaAudio: "assets/audio/interview_vsl/seg1_ananya.mp3",
+                ananyaText: "Vikram, business owners in Thane and Mumbai often tell me: 'We are already busy during the day. Why should I care if someone calls my clinic or office after 8 PM?' What are they actually missing?",
+                vikramAudio: "assets/audio/interview_vsl/seg1_vikram.mp3",
+                vikramText: "Ananya, over 40% of local Google Maps searches in Thane happen after 7:30 PM. When someone with an urgent toothache or a homeowner looking for 3BHK interiors calls and gets no answer, 90% don't wait. They book with a competitor in 6 seconds. Our system deploys an instant 4-second WhatsApp recovery bot that saves that customer before they can even dial competitor number two."
             },
             {
-                audio: "assets/audio/interview_vsl/seg2_review_shield.mp3",
                 title: "Birdeye Negative Review Shield",
                 tag: "SEGMENT 02",
-                speaker: "ANANYA (HOST)",
-                text: "Doctors and luxury designers have a huge fear of bad reviews online. How does BigByte Systems protect them from unfair 1-star reviews while propelling them into the Google 3-Pack?"
+                ananyaAudio: "assets/audio/interview_vsl/seg2_ananya.mp3",
+                ananyaText: "Doctors and luxury designers have a huge fear of bad reviews online. How does BigByte Systems protect them from unfair 1-star reviews while propelling them into the Google 3-Pack?",
+                vikramAudio: "assets/audio/interview_vsl/seg2_vikram.mp3",
+                vikramText: "We engineered a proprietary Negative Review Shield. When an automated review request is triggered on WhatsApp, 4 and 5-star happy clients are guided straight to public Google Maps. But if a client taps 1, 2, or 3 stars, it routes to a private owner feedback form. The owner resolves it privately, and the negative review never touches Google Maps."
             },
             {
-                audio: "assets/audio/interview_vsl/seg3_omnichannel_geogrid.mp3",
                 title: "5km Geo-Grid & Omnichannel",
                 tag: "SEGMENT 03",
-                speaker: "ANANYA (HOST)",
-                text: "Most marketing agencies give clients complicated software dashboards that nobody has time to check. How simple is this for a busy business owner to manage?"
+                ananyaAudio: "assets/audio/interview_vsl/seg3_ananya.mp3",
+                ananyaText: "Most marketing agencies give clients complicated software dashboards that nobody has time to check. How simple is this for a busy business owner to manage?",
+                vikramAudio: "assets/audio/interview_vsl/seg3_vikram.mp3",
+                vikramText: "Zero complex software, Ananya. We consolidate Google Maps messages, WhatsApp inquiries, and phone calls into a single, structured WhatsApp feed directly on the owner's phone. Plus, our live 5-kilometer Geo-Grid radar actively expands their Google rankings block by block across Naupada, Majiwada, and Ghodbunder Road."
             },
             {
-                audio: "assets/audio/interview_vsl/seg4_roi_action.mp3",
                 title: "Transparent ROI & 48-Hr Pilot",
                 tag: "SEGMENT 04",
-                speaker: "ANANYA (HOST)",
-                text: "And what about the commercial investment? How quickly does a local clinic or contractor break even?"
+                ananyaAudio: "assets/audio/interview_vsl/seg4_ananya.mp3",
+                ananyaText: "And what about the commercial investment? How quickly does a local clinic or contractor break even?",
+                vikramAudio: "assets/audio/interview_vsl/seg4_vikram.mp3",
+                vikramText: "Just one single high-ticket client or dental implant covers their entire annual investment. We deploy the full system within 48 hours with zero lock-in contracts. To claim your free 48-hour hyperlocal audit, tap the WhatsApp button below right now."
             }
         ];
 
         let currentSeg = 0;
         let isPlaying = false;
-        const audio = document.getElementById('interviewAudio');
+        let activeSpeaker = 'ananya'; // 'ananya' or 'vikram'
+        const audioPlayer = new Audio();
+        audioPlayer.preload = 'auto';
+
         const playBtn = document.getElementById('playBtn');
         const playIcon = document.getElementById('playIcon');
         const playLabel = document.getElementById('playLabel');
@@ -688,45 +695,51 @@
         const camVikram = document.getElementById('camVikram');
         const waveAnanya = document.getElementById('waveAnanya');
         const waveVikram = document.getElementById('waveVikram');
+        const teleprompterSpeaker = document.getElementById('teleprompterSpeaker');
+        const teleprompterText = document.getElementById('teleprompterText');
+
+        function setSpeakerUI(speaker) {
+            activeSpeaker = speaker;
+            const data = interviewData[currentSeg];
+            if (speaker === 'ananya') {
+                camAnanya.classList.add('speaking');
+                camVikram.classList.remove('speaking');
+                waveAnanya.style.display = 'flex';
+                waveVikram.style.display = 'none';
+                teleprompterSpeaker.textContent = "ANANYA (HOST)";
+                teleprompterText.textContent = `"${data.ananyaText}"`;
+            } else {
+                camVikram.classList.add('speaking');
+                camAnanya.classList.remove('speaking');
+                waveVikram.style.display = 'flex';
+                waveAnanya.style.display = 'none';
+                teleprompterSpeaker.textContent = "VIKRAM (GROWTH ARCHITECT)";
+                teleprompterText.textContent = `"${data.vikramText}"`;
+            }
+        }
 
         function loadSegment(index, autoPlay = true) {
             currentSeg = index;
-            const data = segments[currentSeg];
+            const data = interviewData[currentSeg];
 
             dots.forEach((d, idx) => d.classList.toggle('active', idx === currentSeg));
             document.querySelectorAll('.proof-pane').forEach((p, idx) => p.classList.toggle('active', idx === currentSeg));
 
             document.getElementById('proofTitle').textContent = data.title;
             document.getElementById('proofTag').textContent = data.tag;
-            document.getElementById('teleprompterSpeaker').textContent = data.speaker;
-            document.getElementById('teleprompterText').textContent = data.text;
 
-            // Ananya speaks first in each segment
-            setSpeaker('ananya');
+            // Start with Ananya
+            setSpeakerUI('ananya');
+            audioPlayer.src = data.ananyaAudio;
 
-            audio.src = data.audio;
             if (autoPlay && isPlaying) {
-                audio.play().catch(e => console.log('Audio deferred'));
-            }
-        }
-
-        function setSpeaker(speaker) {
-            if (speaker === 'ananya') {
-                camAnanya.classList.add('speaking');
-                camVikram.classList.remove('speaking');
-                waveAnanya.style.display = 'flex';
-                waveVikram.style.display = 'none';
-            } else {
-                camVikram.classList.add('speaking');
-                camAnanya.classList.remove('speaking');
-                waveVikram.style.display = 'flex';
-                waveAnanya.style.display = 'none';
+                audioPlayer.play().catch(e => console.log('Audio autoplay prevented'));
             }
         }
 
         function togglePlay() {
             if (isPlaying) {
-                audio.pause();
+                audioPlayer.pause();
                 isPlaying = false;
                 playIcon.textContent = '▶️';
                 playLabel.textContent = 'Resume Interview';
@@ -734,34 +747,37 @@
                 isPlaying = true;
                 playIcon.textContent = '⏸️';
                 playLabel.textContent = 'Pause Interview';
-                if (!audio.src || audio.ended) {
-                    audio.src = segments[currentSeg].audio;
+                if (!audioPlayer.src || audioPlayer.ended) {
+                    loadSegment(currentSeg, true);
+                } else {
+                    audioPlayer.play().catch(e => console.error(e));
                 }
-                audio.play().catch(e => console.error(e));
             }
         }
 
-        // Switch active speaker camera based on timeline in the audio
-        audio.addEventListener('timeupdate', () => {
-            // In our segments, Ananya asks question for first ~7-8 seconds, then Vikram answers
-            if (audio.currentTime > 7.5) {
-                setSpeaker('vikram');
-                document.getElementById('teleprompterSpeaker').textContent = 'VIKRAM (GROWTH ARCHITECT)';
-            } else {
-                setSpeaker('ananya');
-                document.getElementById('teleprompterSpeaker').textContent = 'ANANYA (HOST)';
-            }
-        });
-
-        audio.addEventListener('ended', () => {
-            if (currentSeg < segments.length - 1) {
+        // Seamless transition when Ananya finishes -> Vikram speaks
+        audioPlayer.addEventListener('ended', () => {
+            const data = interviewData[currentSeg];
+            if (activeSpeaker === 'ananya') {
+                // Smoothly switch to Vikram
                 setTimeout(() => {
-                    loadSegment(currentSeg + 1, isPlaying);
-                }, 1000);
+                    setSpeakerUI('vikram');
+                    audioPlayer.src = data.vikramAudio;
+                    if (isPlaying) {
+                        audioPlayer.play().catch(e => console.error(e));
+                    }
+                }, 400); // 400ms natural conversational breath
             } else {
-                isPlaying = false;
-                playIcon.textContent = '▶️';
-                playLabel.textContent = 'Replay Interview';
+                // Vikram finished -> Next segment or loop
+                if (currentSeg < interviewData.length - 1) {
+                    setTimeout(() => {
+                        loadSegment(currentSeg + 1, isPlaying);
+                    }, 1200);
+                } else {
+                    isPlaying = false;
+                    playIcon.textContent = '▶️';
+                    playLabel.textContent = 'Replay Interview';
+                }
             }
         });
 
