@@ -2,6 +2,7 @@
  * 24/7 Autonomous Zero-Expense Cloud Dispatcher
  * Runs via GitHub Actions Cron (or cPanel Linux Cron)
  * 100% Free, Zero Hosting Cost, 100% Laptop-Off / Sleep-Proof
+ * Direct Native Meta Graph API & Instagram Reels Video Publishing
  */
 
 const https = require('https');
@@ -11,6 +12,10 @@ const path = require('path');
 const ROOT_DIR = path.resolve(__dirname, '..');
 const CONFIG_FILE = path.join(ROOT_DIR, 'data', 'config.json');
 const POSTS_FILE = path.join(ROOT_DIR, 'data', 'posts.json');
+
+const { uploadToFreeCdn } = require('./cdn_relay.js');
+const { generateReelVideoFromImage } = require('./reel_generator.js');
+const { cleanCaptionForInstagram, cleanCaptionForFacebook } = require('./seo_aeo_geo_engine.js');
 
 function readJson(file, fallback) {
   try {
@@ -29,62 +34,6 @@ function writeJson(file, data) {
   }
 }
 
-// 100% Free Zero-Cost Instant Fast CDN Relay (Catbox)
-function uploadToFreeCdn(filePath) {
-  return new Promise((resolve) => {
-    try {
-      const boundary = '----NodeFormBoundary' + Math.random().toString(36).substring(2);
-      const crlf = '\r\n';
-      const fileBuf = fs.readFileSync(filePath);
-      const filename = path.basename(filePath);
-      const ext = path.extname(filename).toLowerCase();
-      let mime = 'image/jpeg';
-      if (ext === '.mp4') mime = 'video/mp4';
-      else if (ext === '.webm') mime = 'video/webm';
-      else if (ext === '.png') mime = 'image/png';
-
-      const parts = [
-        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="reqtype"${crlf}${crlf}fileupload${crlf}`),
-        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="fileToUpload"; filename="${filename}"${crlf}Content-Type: ${mime}${crlf}${crlf}`),
-        fileBuf,
-        Buffer.from(crlf),
-        Buffer.from(`--${boundary}--${crlf}`)
-      ];
-      const payload = Buffer.concat(parts);
-
-      const req = https.request({
-        hostname: 'catbox.moe',
-        port: 443,
-        path: '/user/api.php',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=' + boundary,
-          'Content-Length': payload.length,
-          'User-Agent': 'BigByteStudioCloud/2.0'
-        }
-      }, (res) => {
-        let body = '';
-        res.on('data', d => body += d);
-        res.on('end', () => {
-          const url = body.trim();
-          if (url.startsWith('http')) {
-            console.log(`🌐 [CLOUD CDN] ${filename} hosted at: ${url}`);
-            resolve(url);
-          } else {
-            resolve(null);
-          }
-        });
-      });
-      req.on('error', () => resolve(null));
-      req.setTimeout(12000, () => { req.destroy(); resolve(null); });
-      req.write(payload);
-      req.end();
-    } catch (e) {
-      resolve(null);
-    }
-  });
-}
-
 function resolveAsset(imagePath) {
   if (!imagePath) return null;
   let clean = imagePath.trim().split('?')[0];
@@ -100,6 +49,7 @@ function resolveAsset(imagePath) {
 function dispatchFacebook(post, pageId, token, imageUrl, caption) {
   return new Promise((resolve) => {
     const localFile = resolveAsset(imageUrl || post.image);
+    const cleanCaption = cleanCaptionForFacebook(caption);
 
     // Direct Multipart Buffer
     if (localFile && fs.existsSync(localFile)) {
@@ -110,7 +60,7 @@ function dispatchFacebook(post, pageId, token, imageUrl, caption) {
       const filename = path.basename(localFile);
 
       const parts = [
-        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="message"${crlf}${crlf}${caption}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="message"${crlf}${crlf}${cleanCaption}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${token}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: image/jpeg${crlf}${crlf}`),
         fileBuf,
@@ -153,7 +103,7 @@ function dispatchFacebook(post, pageId, token, imageUrl, caption) {
     // Remote URL fallback
     const photoPayload = new URLSearchParams({
       url: imageUrl || 'https://bigbytesystems.co.in/assets/hero.jpg',
-      message: caption,
+      message: cleanCaption,
       access_token: token
     }).toString();
 
@@ -188,26 +138,56 @@ function dispatchFacebook(post, pageId, token, imageUrl, caption) {
   });
 }
 
-// Direct Instagram Dispatcher
+// Direct Instagram Reel Video Dispatcher
 function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
   return new Promise(async (resolve) => {
     let targetMediaUrl = null;
-    const localFile = resolveAsset(imageUrl || post.image);
-    const isVideo = Boolean(
+    let localFile = resolveAsset(imageUrl || post.image);
+    let filename = localFile ? path.basename(localFile) : '';
+
+    // Convert any image into a true 9:16 vertical MP4 video with stereo AAC audio track
+    let isVideo = Boolean(
       (localFile && (localFile.endsWith('.mp4') || localFile.endsWith('.webm'))) ||
       (post.image && (post.image.endsWith('.mp4') || post.image.endsWith('.webm'))) ||
-      post.mediaFormat === 'VIDEO' || post.mediaFormat === 'REELS'
+      post.mediaFormat === 'VIDEO' ||
+      post.mediaFormat === 'REELS' ||
+      true // Instagram always defaults to Interactive Video Reel
     );
 
-    if (localFile && fs.existsSync(localFile)) {
-      targetMediaUrl = await uploadToFreeCdn(localFile);
-    }
-    if (!targetMediaUrl) {
-      targetMediaUrl = 'https://bigbytesystems.co.in/assets/hero.jpg';
+    if (localFile && (localFile.endsWith('.jpg') || localFile.endsWith('.jpeg') || localFile.endsWith('.png'))) {
+      try {
+        const reelDir = path.join(ROOT_DIR, 'public', 'assets', 'reels');
+        if (!fs.existsSync(reelDir)) fs.mkdirSync(reelDir, { recursive: true });
+        const cleanBase = path.basename(localFile, path.extname(localFile));
+        const reelVideoPath = path.join(reelDir, `reel_${cleanBase}.mp4`);
+        if (!fs.existsSync(reelVideoPath) || fs.statSync(reelVideoPath).size < 1000) {
+          console.log(`🎬 [CLOUD IG] Converting "${filename}" to interactive 9:16 vertical Reel MP4 video via FFmpeg...`);
+          generateReelVideoFromImage(localFile, reelVideoPath, 15);
+        }
+        localFile = reelVideoPath;
+        filename = path.basename(localFile);
+        isVideo = true;
+      } catch (err) {
+        console.warn(`⚠️ [CLOUD IG REEL NOTICE] Video compilation skipped: ${err.message}. Proceeding with photo.`);
+        isVideo = false;
+      }
     }
 
-    let safeCaption = (caption || post.content || '').trim();
-    if (safeCaption.length > 2150) safeCaption = safeCaption.substring(0, 2145) + '...';
+    if (localFile && fs.existsSync(localFile)) {
+      console.log(`🌐 [CLOUD IG] Uploading local ${isVideo ? 'video Reel' : 'graphic'} "${filename}" to zero-cost fast CDN relay...`);
+      targetMediaUrl = await uploadToFreeCdn(localFile);
+    }
+
+    if (!targetMediaUrl) {
+      console.error(`❌ [CLOUD IG ERROR] Failed to upload media to free CDN relay.`);
+      return resolve({ success: false, error: 'Could not upload media to free CDN relay.' });
+    }
+
+    // STRICT SANITIZATION: Never leak raw WhatsApp URLs on Instagram! Mask as "Tap Link in Bio"
+    const rawCaption = (caption || post.content || post.title || '').trim();
+    const safeCaption = cleanCaptionForInstagram(rawCaption);
+
+    console.log(`📸 [CLOUD IG] Initiating ${isVideo ? 'REEL VIDEO' : 'PHOTO POST'} container (URL: ${targetMediaUrl}, Caption: ${safeCaption.length} chars)`);
 
     const containerParams = { caption: safeCaption, access_token: token };
     if (isVideo) {
@@ -236,14 +216,15 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
         try {
           const parsed = JSON.parse(body);
           if (!parsed.id) {
-            console.error(`❌ [CLOUD IG ERROR]`, parsed.error ? parsed.error.message : body);
+            console.error(`❌ [CLOUD IG CONTAINER ERROR]`, parsed.error ? parsed.error.message : body);
             return resolve({ success: false, error: parsed.error?.message || body });
           }
 
           const containerId = parsed.id;
-          console.log(`📸 [CLOUD IG] Container created (${containerId}). Waiting 3s for publish...`);
+          console.log(`📸 [CLOUD IG] Container created (${containerId}). Checking processing status...`);
 
-          setTimeout(() => {
+          // Polling helper
+          const executePublish = () => {
             const pubPayload = new URLSearchParams({
               creation_id: containerId,
               access_token: token
@@ -265,8 +246,8 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
                 try {
                   const pubParsed = JSON.parse(pBody);
                   if (pubParsed.id) {
-                    console.log(`🚀 [CLOUD IG SUCCESS] Published! Media ID: ${pubParsed.id}`);
-                    return resolve({ success: true, id: pubParsed.id });
+                    console.log(`🚀 [CLOUD IG SUCCESS] "${post.title}" published live to Instagram! (${isVideo ? 'Interactive Reel' : 'Photo Post'} Media ID: ${pubParsed.id})`);
+                    return resolve({ success: true, id: pubParsed.id, isVideo });
                   }
                   resolve({ success: false, error: pubParsed.error?.message || pBody });
                 } catch (e) {
@@ -277,7 +258,51 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
             pubReq.on('error', e => resolve({ success: false, error: e.message }));
             pubReq.write(pubPayload);
             pubReq.end();
-          }, 3500);
+          };
+
+          if (isVideo) {
+            let attempts = 0;
+            const maxAttempts = 10;
+            const statusInterval = setInterval(() => {
+              attempts++;
+              const statusReq = https.get(`https://graph.facebook.com/v26.0/${encodeURIComponent(containerId)}?fields=status_code&access_token=${encodeURIComponent(token)}`, (sRes) => {
+                let sBody = '';
+                sRes.on('data', d => sBody += d);
+                sRes.on('end', () => {
+                  try {
+                    const sParsed = JSON.parse(sBody);
+                    const statusCode = sParsed.status_code;
+                    console.log(`⏳ [CLOUD REEL STATUS] Attempt ${attempts}/${maxAttempts}: ${statusCode}`);
+
+                    if (statusCode === 'FINISHED') {
+                      clearInterval(statusInterval);
+                      executePublish();
+                    } else if (statusCode === 'ERROR' || attempts >= maxAttempts) {
+                      clearInterval(statusInterval);
+                      if (statusCode === 'ERROR') {
+                        resolve({ success: false, error: 'Instagram Reel video processing error on Meta servers' });
+                      } else {
+                        executePublish();
+                      }
+                    }
+                  } catch (e) {
+                    if (attempts >= maxAttempts) {
+                      clearInterval(statusInterval);
+                      executePublish();
+                    }
+                  }
+                });
+              });
+              statusReq.on('error', () => {
+                if (attempts >= maxAttempts) {
+                  clearInterval(statusInterval);
+                  executePublish();
+                }
+              });
+            }, 3000);
+          } else {
+            setTimeout(executePublish, 3500);
+          }
 
         } catch (e) {
           resolve({ success: false, error: e.message });
@@ -317,7 +342,7 @@ async function runCloudCycle() {
       const [h, m] = p.time.split(':').map(Number);
       const postTime = new Date(year, month - 1, day, h || 10, m || 0).getTime();
 
-      // If scheduled time has arrived (or is within past 2 hours)
+      // If scheduled time has arrived
       if (now.getTime() >= postTime) {
         console.log(`🎯 [TIME MATCH] Dispatching post: "${p.title}" [${p.platform.toUpperCase()}]`);
 
@@ -354,4 +379,12 @@ async function runCloudCycle() {
   console.log(`======================================================\n`);
 }
 
-runCloudCycle();
+if (require.main === module) {
+  runCloudCycle();
+}
+
+module.exports = {
+  dispatchFacebook,
+  dispatchInstagram,
+  runCloudCycle
+};

@@ -58,28 +58,10 @@ try {
   console.log('Notice: using fallback compliance checker');
 }
 
-// Reliable CDN images for Meta scrapers (prevents crawler blocks from private host firewalls)
-const META_SAFE_IMAGE_CDN = {
-  macbook: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=1080&h=1080&fit=crop',
-  micro: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1080&h=1080&fit=crop',
-  thermal: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=1080&h=1080&fit=crop',
-  printer: 'https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=1080&h=1080&fit=crop',
-  recovery: 'https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=1080&h=1080&fit=crop',
-  default: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1080&h=1080&fit=crop'
-};
-
-function resolveMetaSafeImage(imageUrl, title) {
-  if (imageUrl && imageUrl.startsWith('http') && !imageUrl.includes('bigbytesystems.co.in')) {
-    return imageUrl;
-  }
-  const t = (title || '').toLowerCase();
-  if (t.includes('macbook') || t.includes('apple') || t.includes('laptop')) return META_SAFE_IMAGE_CDN.macbook;
-  if (t.includes('printer') || t.includes('ecotank') || t.includes('ink')) return META_SAFE_IMAGE_CDN.printer;
-  if (t.includes('data') || t.includes('drive') || t.includes('recovery')) return META_SAFE_IMAGE_CDN.recovery;
-  if (t.includes('fan') || t.includes('thermal') || t.includes('heating')) return META_SAFE_IMAGE_CDN.thermal;
-  if (t.includes('solder') || t.includes('chip') || t.includes('pcb')) return META_SAFE_IMAGE_CDN.micro;
-  return META_SAFE_IMAGE_CDN.default;
-}
+// Zero-Cost Relay, Video Reel Engine, and SEO/AEO/GEO Integrations
+const { uploadToFreeCdn } = require('./scripts/cdn_relay.js');
+const { generateReelVideoFromImage } = require('./scripts/reel_generator.js');
+const { cleanCaptionForInstagram, cleanCaptionForFacebook } = require('./scripts/seo_aeo_geo_engine.js');
 
 // Helper to resolve local disk path for an asset
 function resolveLocalAssetPath(imageUrl) {
@@ -93,62 +75,6 @@ function resolveLocalAssetPath(imageUrl) {
   return null;
 }
 
-// 100% Free Zero-Cost Instant Fast CDN Relay for Instagram & Meta (Catbox)
-function uploadToFreeCdn(filePath) {
-  return new Promise((resolve) => {
-    try {
-      const https = require('https');
-      const boundary = '----NodeFormBoundary' + Math.random().toString(36).substring(2);
-      const crlf = '\r\n';
-      const fileBuf = fs.readFileSync(filePath);
-      const filename = path.basename(filePath);
-      const ext = path.extname(filename).toLowerCase();
-      let mime = 'image/jpeg';
-      if (ext === '.mp4') mime = 'video/mp4';
-      else if (ext === '.webm') mime = 'video/webm';
-      else if (ext === '.png') mime = 'image/png';
-
-      const parts = [
-        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="reqtype"${crlf}${crlf}fileupload${crlf}`),
-        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="fileToUpload"; filename="${filename}"${crlf}Content-Type: ${mime}${crlf}${crlf}`),
-        fileBuf,
-        Buffer.from(crlf),
-        Buffer.from(`--${boundary}--${crlf}`)
-      ];
-      const payload = Buffer.concat(parts);
-
-      const req = https.request({
-        hostname: 'catbox.moe',
-        port: 443,
-        path: '/user/api.php',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=' + boundary,
-          'Content-Length': payload.length,
-          'User-Agent': 'BigByteStudio/2.0'
-        }
-      }, (res) => {
-        let body = '';
-        res.on('data', d => body += d);
-        res.on('end', () => {
-          const url = body.trim();
-          if (url.startsWith('http')) {
-            console.log(`🌐 [FREE CDN RELAY] Local asset ${filename} hosted instantly at: ${url}`);
-            resolve(url);
-          } else {
-            resolve(null);
-          }
-        });
-      });
-      req.on('error', () => resolve(null));
-      req.setTimeout(12000, () => { req.destroy(); resolve(null); });
-      req.write(payload);
-      req.end();
-    } catch (e) {
-      resolve(null);
-    }
-  });
-}
 
 // Direct Native Meta Graph API Publisher (100% Free, Zero Third-Party Tools, Postiz/Mixpost Pattern)
 function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
@@ -250,7 +176,7 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
   });
 }
 
-// Direct Native Instagram Graph API Publisher (2-Step Media Container Flow, Postiz/Mixpost Pattern)
+// Direct Native Instagram Graph API Publisher (Interactive Reel Video Flow)
 function dispatchDirectToInstagram(post, igConfig, publicImageUrl, caption) {
   const igAccountId = igConfig.instagramAccountId || igConfig.pageId;
   const pageAccessToken = igConfig.pageAccessToken || igConfig.accessToken;
@@ -260,30 +186,50 @@ function dispatchDirectToInstagram(post, igConfig, publicImageUrl, caption) {
     const https = require('https');
 
     let targetMediaUrl = null;
-    const localFile = resolveLocalAssetPath(publicImageUrl || post.image);
-    const filename = localFile ? path.basename(localFile) : '';
-    const isVideo = Boolean(
+    let localFile = resolveLocalAssetPath(publicImageUrl || post.image);
+    let filename = localFile ? path.basename(localFile) : '';
+
+    // Convert any image into a true 9:16 vertical MP4 video with stereo AAC audio track
+    let isVideo = Boolean(
       (localFile && (localFile.endsWith('.mp4') || localFile.endsWith('.webm'))) ||
       (post.image && (post.image.endsWith('.mp4') || post.image.endsWith('.webm'))) ||
-      (publicImageUrl && (publicImageUrl.endsWith('.mp4') || publicImageUrl.endsWith('.webm'))) ||
       post.mediaFormat === 'VIDEO' ||
-      post.mediaFormat === 'REELS'
+      post.mediaFormat === 'REELS' ||
+      true // Instagram always defaults to Interactive Video Reel
     );
 
+    if (localFile && (localFile.endsWith('.jpg') || localFile.endsWith('.jpeg') || localFile.endsWith('.png'))) {
+      try {
+        const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+        if (!fs.existsSync(reelDir)) fs.mkdirSync(reelDir, { recursive: true });
+        const cleanBase = path.basename(localFile, path.extname(localFile));
+        const reelVideoPath = path.join(reelDir, `reel_${cleanBase}.mp4`);
+        if (!fs.existsSync(reelVideoPath) || fs.statSync(reelVideoPath).size < 1000) {
+          console.log(`🎬 [DIRECT INSTAGRAM] Converting "${filename}" to interactive 9:16 vertical video Reel via FFmpeg...`);
+          generateReelVideoFromImage(localFile, reelVideoPath, 15);
+        }
+        localFile = reelVideoPath;
+        filename = path.basename(localFile);
+        isVideo = true;
+      } catch (err) {
+        console.warn(`⚠️ [REEL NOTICE] Video compilation skipped: ${err.message}. Proceeding with high-res photo.`);
+        isVideo = false;
+      }
+    }
+
     if (localFile && fs.existsSync(localFile)) {
-      console.log(`🌐 [DIRECT INSTAGRAM] Uploading local ${isVideo ? 'video Reel' : 'graphic'} "${filename}" to instant free CDN relay...`);
+      console.log(`🌐 [DIRECT INSTAGRAM] Uploading local ${isVideo ? 'video Reel' : 'graphic'} "${filename}" to zero-cost fast CDN relay...`);
       targetMediaUrl = await uploadToFreeCdn(localFile);
     }
 
     if (!targetMediaUrl) {
-      targetMediaUrl = resolveMetaSafeImage(publicImageUrl, post.title);
+      console.error(`❌ [DIRECT INSTAGRAM ERROR] Failed to upload local asset to CDN relay.`);
+      return resolve({ success: false, error: 'Could not upload media to free CDN relay. Please retry in a moment.' });
     }
 
-    // Ensure caption is safe, non-empty, and under Instagram's 2,200 character limit
-    let safeCaption = (caption || post.content || '').trim();
-    if (safeCaption.length > 2150) {
-      safeCaption = safeCaption.substring(0, 2145) + '...';
-    }
+    // STRICT SANITIZATION: Never leak raw WhatsApp URLs on Instagram! Mask as "Tap Link in Bio"
+    const rawCaption = (caption || post.content || post.title || '').trim();
+    const safeCaption = cleanCaptionForInstagram(rawCaption);
 
     console.log(`📸 [DIRECT INSTAGRAM] Initiating ${isVideo ? 'REEL VIDEO' : 'PHOTO POST'} container (URL: ${targetMediaUrl}, Caption: ${safeCaption.length} chars)`);
 
@@ -1191,7 +1137,7 @@ const server = http.createServer((req, res) => {
       }
 
       const testCaption = `⚡ Live Direct Meta Graph API Connection Verified!\nBig Byte Systems Social Studio v2.2.\nTimestamp: ${new Date().toLocaleString()}`;
-      const testImage = META_SAFE_IMAGE_CDN.macbook;
+      const testImage = '/assets/reel_macbook_soldering.jpg';
       const result = await dispatchDirectToFacebook(
         { title: "Direct Meta API Connectivity Verification" },
         { pageId, pageAccessToken },
@@ -1219,10 +1165,10 @@ const server = http.createServer((req, res) => {
         return res.end(JSON.stringify({ success: false, error: 'Both Instagram Account ID and Access Token are required.' }));
       }
 
-      const testCaption = `⚡ Live Direct Instagram API Connection Verified!\nBig Byte Systems Social Studio v2.2 (Postiz Pattern).\nTimestamp: ${new Date().toLocaleString()}`;
-      const testImage = META_SAFE_IMAGE_CDN.macbook;
+      const testCaption = `⚡ Live Direct Instagram API Connection Verified!\nBig Byte Systems Social Studio v2.2 (Reel Flow).\nTimestamp: ${new Date().toLocaleString()}`;
+      const testImage = '/assets/reel_macbook_soldering.jpg';
       const result = await dispatchDirectToInstagram(
-        { title: "Direct Instagram API Connectivity Verification" },
+        { title: "Direct Instagram API Connectivity Verification", mediaFormat: 'REELS' },
         { instagramAccountId, pageAccessToken },
         testImage,
         testCaption

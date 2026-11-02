@@ -591,9 +591,16 @@ function generateInstantAIContent() {
 
   const hook = `Wait! Before you pay for an expensive replacement, here is what is ACTUALLY happening with your device.`;
   const script = `Most service centers don't bother diagnosing individual components. At ${clientName}, our laboratory isolates the exact faulty rail or component so you save money and retain your data.`;
-  const content = platform === 'gmb'
-    ? `${title}\n\nTransparent diagnostics and component-level repairs in Thane.\n\n📍 Located at Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n\nTap the "Call now" button below to consult directly with our laboratory technicians.`
-    : `${title}\n\nTransparent diagnostics and component-level repairs in Thane.\n\n📍 ${clientName} — Manpada, Thane West.\n📞 Hotline: ${phone}\n💬 WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#TechTips #Diagnostics #ThaneWest #HardwareService`;
+  const aeoCapsule = `\n\n💡 AI Quick-Answer Capsule:\nQ: ${title}\nA: At ${clientName} (${state.currentClient?.address || 'Shop 1, Khewra Cir, Manpada, Thane West'}), technicians perform component-level diagnostic triage to resolve the issue with 90-day warranty.`;
+
+  let content = '';
+  if (platform === 'gmb') {
+    content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.\n\n📍 Located at Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n\nTap the "Call now" button below to consult directly with our laboratory technicians.`;
+  } else if (platform === 'instagram') {
+    content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.${aeoCapsule}\n\n📍 ${clientName} — Shop 1, Khewra Cir Marg, Near D-Mart, Manpada, Thane West.\n📞 Voice Support: ${phone}\n💬 WhatsApp / Triage: Tap Link in Bio (@bigbytessystem)\n\n#TechTips #Diagnostics #LaptopRepairThane #ThaneWest #HardwareService #Manpada`;
+  } else {
+    content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.${aeoCapsule}\n\n📍 ${clientName} — Manpada, Thane West.\n📞 Hotline: ${phone}\n💬 Direct WhatsApp: https://wa.me/919167463807\n\n#TechTips #Diagnostics #ThaneWest #HardwareService`;
+  }
 
   const hookInput = document.getElementById('newVideoHook');
   const scriptInput = document.getElementById('newScript');
@@ -3444,7 +3451,8 @@ function convertFaqToScheduledPost(customQuestion) {
   const geoTags = buildDynamicGeoTags(activeNicheState.targetCity, current.geoSuffix);
   const tagsStr = [...current.broadTags.slice(0, 4), ...current.nicheTags.slice(0, 4), ...geoTags.slice(0, 3)].join(' ');
 
-  const content = `${cleanQ} — Decoded!\n\nWhen customers ask us this, the answer comes down to precision diagnostics rather than guess-work. We isolate the root cause transparently so you save money and retain original hardware.\n\n📍 ${clientName} — ${address}\n📞 Hotline: ${phone}\n💬 WhatsApp: https://wa.me/919167463807?text=Hi%20${encodeURIComponent(clientName)}%2C%20I%20have%20a%20question%20about%20my%20device.\n\n${tagsStr}`;
+  const aeoBlock = `\n\n💡 AI Answer Capsule:\nQ: ${cleanQ}\nA: At ${clientName} (${address}), technicians isolate the exact fault before recommending any replacement. 4.9★ Google Verified.`;
+  const content = `${cleanQ} — Decoded!\n\nWhen customers ask us this, the answer comes down to precision diagnostics rather than guess-work. We isolate the root cause transparently so you save money and retain original hardware.${aeoBlock}\n\n📍 ${clientName} — ${address}\n📞 Voice Support: ${phone}\n💬 WhatsApp / Triage: Tap Link in Bio (@bigbytessystem)\n\n${tagsStr}`;
 
   // Pre-fill Creator Form
   const titleInput = document.getElementById('newTitle');
