@@ -24,11 +24,11 @@ VOICE = "en-IN-NeerjaExpressiveNeural"  # Expressive, warm, highly natural India
 SCRIPTS = [
     {
         "file": "scene1_hook.mp3",
-        "text": "Every day across Thane and Mumbai, high-paying clients search Google Maps, Instagram, and local search for trusted professionals. But if your phone rings busy, your website is sluggish, or competitors have three times your reviews, those clients vanish in seconds. At BigByte Systems, we stop this leak permanently."
+        "text": "Every day across Thane and Mumbai, high-paying clients search Google Maps, Instagram, and local search for trusted professionals. But if your phone rings busy, your website is sluggish, or competitors have three times your reviews, those clients vanish in seconds. At BigByte Systems, we stop this customer drop permanently and plug your revenue drain completely."
     },
     {
         "file": "scene2_pillars.mp3",
-        "text": "We provide a complete, three-hundred-and-sixty degree growth engine. First, our twenty-four-seven WhatsApp and Voice AI captures every missed call within three seconds. Second, our automated review multiplier boosts your Google profile into the top three local pack. Third, we build lightning-fast mobile websites that convert visitors into paying clients. And fourth, our hyperlocal SEO and social content engine keeps your brand visible across Facebook, Instagram, and AI search engines."
+        "text": "We provide a complete, three-hundred-and-sixty degree growth engine across five distinct pillars. First, our twenty-four-seven WhatsApp and Voice AI captures every missed call within three seconds. Second, our automated review multiplier propels your profile into the Google three-pack. Third, we build sub-second mobile websites that convert visitors into paying clients. Fourth, our hyperlocal SEO and AI search schemas get you recommended on ChatGPT and Google. And fifth, our social media management keeps your brand visible across Instagram Reels, Facebook, and Google updates."
     },
     {
         "file": "scene3_niches.mp3",
