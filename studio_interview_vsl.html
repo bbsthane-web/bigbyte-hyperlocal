@@ -485,7 +485,7 @@
             <div class="camera-grid">
                 <!-- Camera 1: Interviewer Ananya -->
                 <div class="camera-frame speaking" id="camAnanya">
-                    <img src="assets/images/interviewer_ananya.jpg" alt="Interviewer Ananya" class="camera-img">
+                    <video id="vidAnanya" class="camera-img" src="assets/video/ananya_podcast.mp4" playsinline muted loop poster="assets/images/interviewer_ananya.jpg"></video>
                     <div class="camera-overlay">
                         <div class="speaker-tag">
                             <span>🎙️</span> Ananya (Host)
@@ -501,7 +501,7 @@
 
                 <!-- Camera 2: Growth Specialist Vikram -->
                 <div class="camera-frame" id="camVikram">
-                    <img src="assets/images/expert_vikram.jpg" alt="Specialist Vikram" class="camera-img">
+                    <video id="vidVikram" class="camera-img" src="assets/video/vikram_podcast.mp4" playsinline muted loop poster="assets/images/expert_vikram.jpg"></video>
                     <div class="camera-overlay">
                         <div class="speaker-tag">
                             <span>🚀</span> Vikram (Growth Architect)
@@ -693,6 +693,8 @@
         const dots = document.querySelectorAll('.seg-dot');
         const camAnanya = document.getElementById('camAnanya');
         const camVikram = document.getElementById('camVikram');
+        const vidAnanya = document.getElementById('vidAnanya');
+        const vidVikram = document.getElementById('vidVikram');
         const waveAnanya = document.getElementById('waveAnanya');
         const waveVikram = document.getElementById('waveVikram');
         const teleprompterSpeaker = document.getElementById('teleprompterSpeaker');
@@ -708,6 +710,8 @@
                 waveVikram.style.display = 'none';
                 teleprompterSpeaker.textContent = "ANANYA (HOST)";
                 teleprompterText.textContent = `"${data.ananyaText}"`;
+                if (isPlaying && vidAnanya) vidAnanya.play().catch(() => {});
+                if (vidVikram) vidVikram.pause();
             } else {
                 camVikram.classList.add('speaking');
                 camAnanya.classList.remove('speaking');
@@ -715,6 +719,8 @@
                 waveAnanya.style.display = 'none';
                 teleprompterSpeaker.textContent = "VIKRAM (GROWTH ARCHITECT)";
                 teleprompterText.textContent = `"${data.vikramText}"`;
+                if (isPlaying && vidVikram) vidVikram.play().catch(() => {});
+                if (vidAnanya) vidAnanya.pause();
             }
         }
 
@@ -734,12 +740,15 @@
 
             if (autoPlay && isPlaying) {
                 audioPlayer.play().catch(e => console.log('Audio autoplay prevented'));
+                if (vidAnanya) vidAnanya.play().catch(() => {});
             }
         }
 
         function togglePlay() {
             if (isPlaying) {
                 audioPlayer.pause();
+                if (vidAnanya) vidAnanya.pause();
+                if (vidVikram) vidVikram.pause();
                 isPlaying = false;
                 playIcon.textContent = '▶️';
                 playLabel.textContent = 'Resume Interview';
@@ -751,6 +760,8 @@
                     loadSegment(currentSeg, true);
                 } else {
                     audioPlayer.play().catch(e => console.error(e));
+                    if (activeSpeaker === 'ananya' && vidAnanya) vidAnanya.play().catch(() => {});
+                    if (activeSpeaker === 'vikram' && vidVikram) vidVikram.play().catch(() => {});
                 }
             }
         }
