@@ -1,0 +1,70 @@
+{
+  "activePlan": "trial",
+  "trial": {
+    "daysTotal": 14,
+    "daysRemaining": 12,
+    "postsLimit": 15,
+    "postsUsed": 3,
+    "status": "Active Trial"
+  },
+  "currencies": {
+    "INR": { "symbol": "₹", "rateFromUSD": 83.5 },
+    "USD": { "symbol": "$", "rateFromUSD": 1.0 },
+    "EUR": { "symbol": "€", "rateFromUSD": 0.92 },
+    "GBP": { "symbol": "£", "rateFromUSD": 0.79 },
+    "AED": { "symbol": "د.إ", "rateFromUSD": 3.67 }
+  },
+  "tiers": [
+    {
+      "id": "starter",
+      "name": "Solo Pro",
+      "tagline": "For Single Business Owners",
+      "popular": false,
+      "priceUSD": 19,
+      "priceINR": 1499,
+      "billing": "per month",
+      "features": [
+        "1 Brand Profile",
+        "Google Business Profile + Facebook",
+        "30 AI Scheduled Posts / mo",
+        "Basic In-Browser Voiceover",
+        "Auto-Compliance Shield"
+      ]
+    },
+    {
+      "id": "agency_growth",
+      "name": "Agency Growth",
+      "tagline": "Most Popular for Side Hustle",
+      "popular": true,
+      "priceUSD": 49,
+      "priceINR": 3999,
+      "billing": "per month",
+      "features": [
+        "Up to 5 Client Brands",
+        "All 8 Social Platforms Connected",
+        "Unlimited Auto-Pilot Dispatches",
+        "9:16 Video Reel Studio + MP4 Export",
+        "Multi-Language Auto-Translator",
+        "Human-like Studio Voices (Male/Female)",
+        "Zero-Ban Strict Anti-Rejection Filter"
+      ]
+    },
+    {
+      "id": "whitelabel_reseller",
+      "name": "White-Label License",
+      "tagline": "One-Time Investor / Agency Reseller",
+      "popular": false,
+      "priceUSD": 499,
+      "priceINR": 39999,
+      "billing": "one-time buyout / year",
+      "features": [
+        "100% Rebrandable (Your Agency Logo & Name)",
+        "Custom CNAME Domain Setup",
+        "Unlimited Clients & Unlimited Retainers",
+        "Embedded Zero-Cost Database (No recurring fees)",
+        "Sell as a SaaS to your local clients at $99/mo",
+        "Complete Source Code & cPanel Deployment Package"
+      ]
+    }
+  ]
+}

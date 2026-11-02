@@ -1,0 +1,127 @@
+[
+  {
+    "id": "gmb",
+    "name": "Google Business Profile",
+    "icon": "📍",
+    "category": "Local SEO & Maps",
+    "enabled": true,
+    "maxChars": 1500,
+    "titleMaxChars": 50,
+    "mediaFormat": "Photo",
+    "strictRules": [
+      "Zero phone numbers in text (use native 'Call now' button)",
+      "Zero external URLs or WhatsApp links in body",
+      "Title must be under 58 characters (enforced <50 chars)",
+      "High-res verified photo (>720px, <5MB, HTTP 200)"
+    ]
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook Pages",
+    "icon": "📘",
+    "category": "Social Feed & Community",
+    "enabled": true,
+    "maxChars": 5000,
+    "titleMaxChars": 100,
+    "mediaFormat": "Photo & Video",
+    "strictRules": [
+      "High-resolution 16:9 or 1:1 image or 9:16 video",
+      "Clear call-to-action link without engagement bait",
+      "Zero false pricing claims (ASCI/FTC compliant)",
+      "Location and service tag included"
+    ]
+  },
+  {
+    "id": "instagram",
+    "name": "Instagram Reels & Feed",
+    "icon": "📸",
+    "category": "Visual & Reels",
+    "enabled": true,
+    "maxChars": 2200,
+    "titleMaxChars": 100,
+    "mediaFormat": "9:16 Video / 1:1 Carousel",
+    "strictRules": [
+      "Strictly 5-8 hyper-local hashtags to prevent shadowban",
+      "0-3s kinetic visual hook",
+      "Clean masked WhatsApp triage link in bio/post",
+      "Zero spam comments or repetitive tags"
+    ]
+  },
+  {
+    "id": "youtube",
+    "name": "YouTube Shorts",
+    "icon": "🎬",
+    "category": "Short-Form Video",
+    "enabled": true,
+    "maxChars": 5000,
+    "titleMaxChars": 100,
+    "mediaFormat": "9:16 Vertical Video (1080x1920)",
+    "strictRules": [
+      "Mandatory #Shorts hashtag in title and description",
+      "High-retention 0-3s hook with audio waveform",
+      "Zero commercial copyrighted background music",
+      "Under 60 seconds duration (30s optimal)"
+    ]
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn B2B Company Page",
+    "icon": "💼",
+    "category": "B2B & Enterprise",
+    "enabled": true,
+    "maxChars": 3000,
+    "titleMaxChars": 120,
+    "mediaFormat": "Document / Photo / Video",
+    "strictRules": [
+      "Authoritative, diagnostic B2B tone",
+      "Focus on cost optimization, SLA, and enterprise continuity",
+      "No emojis overload (max 3-4 professional icons)",
+      "Business contact and Thane address"
+    ]
+  },
+  {
+    "id": "twitter",
+    "name": "X (formerly Twitter)",
+    "icon": "𝕏",
+    "category": "Micro-blogging & Alerts",
+    "enabled": false,
+    "maxChars": 280,
+    "titleMaxChars": 50,
+    "mediaFormat": "Image / Short clip",
+    "strictRules": [
+      "Under 280 characters strict limit",
+      "Max 2 hashtags per tweet",
+      "Direct problem-solution alert format"
+    ]
+  },
+  {
+    "id": "pinterest",
+    "name": "Pinterest Idea Pins",
+    "icon": "📌",
+    "category": "Infographics & Guides",
+    "enabled": false,
+    "maxChars": 500,
+    "titleMaxChars": 100,
+    "mediaFormat": "2:3 Vertical Graphic (1000x1500)",
+    "strictRules": [
+      "Step-by-step DIY vs lab diagnostic infographic",
+      "Rich pin destination URL to website",
+      "Clean descriptive pin title"
+    ]
+  },
+  {
+    "id": "tiktok",
+    "name": "TikTok",
+    "icon": "🎵",
+    "category": "Viral Micro-video",
+    "enabled": false,
+    "maxChars": 2200,
+    "titleMaxChars": 80,
+    "mediaFormat": "9:16 Video",
+    "strictRules": [
+      "Rapid visual pace (cuts every 2-3s)",
+      "Trending diagnostic sound or natural voiceover",
+      "Educational tech disclaimer"
+    ]
+  }
+]

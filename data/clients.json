@@ -1,0 +1,110 @@
+[
+  {
+    "id": "client_bigbyte",
+    "name": "Big Byte Systems",
+    "niche": "Computer, MacBook, Printer & Electronics Laboratory",
+    "tone": "Authoritative, Diagnostic-First, Friendly & Highly Practical",
+    "avatar": "💻",
+    "color": "#0284c7",
+    "hotline": "090547 90592",
+    "address": "Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West 400607",
+    "whatsAppUrl": "https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.",
+    "webhookUrl": "https://hook.eu1.make.com/3j97xsx8t9cd9xcjpnypqhjw9i1mumwo",
+    "accounts": {
+      "gmb": {
+        "connected": true,
+        "handle": "Big Byte Systems (Manpada, Thane)",
+        "followers": "1,240 reviews",
+        "lastPost": "Today"
+      },
+      "youtube": {
+        "connected": true,
+        "handle": "@BigByteSystemsThane",
+        "followers": "850 subscribers",
+        "lastPost": "Yesterday"
+      },
+      "instagram": {
+        "connected": true,
+        "handle": "@bigbytesystems.in",
+        "followers": "1,420 followers",
+        "lastPost": "2 days ago"
+      },
+      "linkedin": {
+        "connected": true,
+        "handle": "Big Byte Systems",
+        "followers": "620 connections",
+        "lastPost": "3 days ago"
+      },
+      "facebook": {
+        "connected": true,
+        "handle": "Big Byte Systems Thane",
+        "followers": "980 followers",
+        "lastPost": "4 days ago"
+      }
+    }
+  },
+  {
+    "id": "client_drsharma",
+    "name": "Dr. Sharma Advanced Dental Care",
+    "niche": "Healthcare / Dental Clinic (Agency Client Demo)",
+    "tone": "Gentle, Reassuring, Clinical & Preventive",
+    "avatar": "🦷",
+    "color": "#10b981",
+    "hotline": "098200 12345",
+    "address": "Panchpakhadi, Thane West",
+    "whatsAppUrl": "https://wa.me/919820012345",
+    "webhookUrl": "https://hook.eu1.make.com/demo-dental-webhook",
+    "accounts": {
+      "gmb": {
+        "connected": true,
+        "handle": "Dr. Sharma Dental Clinic",
+        "followers": "420 reviews",
+        "lastPost": "3 days ago"
+      },
+      "instagram": {
+        "connected": true,
+        "handle": "@drsharmadental",
+        "followers": "2,100 followers",
+        "lastPost": "5 days ago"
+      },
+      "facebook": {
+        "connected": true,
+        "handle": "Dr Sharma Dental",
+        "followers": "1,150 followers",
+        "lastPost": "Last week"
+      }
+    }
+  },
+  {
+    "id": "client_urbanroast",
+    "name": "Urban Roast Artisan Cafe",
+    "niche": "Food & Beverage / Specialty Roastery (Agency Client Demo)",
+    "tone": "Aesthetic, Warm, Lifestyle & Community",
+    "avatar": "☕",
+    "color": "#f59e0b",
+    "hotline": "098190 54321",
+    "address": "Hiranandani Estate, Thane West",
+    "whatsAppUrl": "https://wa.me/919819054321",
+    "webhookUrl": "https://hook.eu1.make.com/demo-cafe-webhook",
+    "accounts": {
+      "instagram": {
+        "connected": true,
+        "handle": "@urbanroastthane",
+        "followers": "5,400 followers",
+        "lastPost": "Yesterday"
+      },
+      "gmb": {
+        "connected": true,
+        "handle": "Urban Roast Cafe Estate",
+        "followers": "680 reviews",
+        "lastPost": "2 days ago"
+      },
+      "facebook": {
+        "connected": true,
+        "handle": "Urban Roast Cafe",
+        "followers": "2,300 followers",
+        "lastPost": "4 days ago"
+      }
+    }
+  }
+]

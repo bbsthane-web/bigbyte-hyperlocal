@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Byte Systems — Social Studio & Agency Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2.3">
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="/logo.png" alt="Big Byte Systems" class="brand-logo" onerror="this.src='https://bigbytesystems.co.in/assets/logo.png'">
+        <div class="brand-text">
+          <h2>Command Center</h2>
+          <span class="version-tag">Edition v2.2 Direct API</span>
+        </div>
+      </div>
+
+      <!-- Active Client Switcher -->
+      <div class="client-picker-box">
+        <div class="client-picker-header">
+          <label>Active Client</label>
+          <span class="badge-tag" id="activeClientTag">Primary</span>
+        </div>
+        <select id="clientSelector" onchange="handleClientChange(this.value)">
+          <!-- Populated dynamically -->
+        </select>
+        <div class="active-client-details" id="activeClientMeta">
+          <div class="meta-item"><span class="icon">📍</span> <span id="clientLocation">Manpada, Thane West</span></div>
+          <div class="meta-item"><span class="icon">📞</span> <span id="clientPhone">090547 90592</span></div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-links">
+        <button class="nav-item active" id="nav-calendar" onclick="showTab('calendar')">
+          <span class="icon">📅</span>
+          <span>Pipeline & Schedule</span>
+          <span class="count-badge" id="postCountBadge">36</span>
+        </button>
+        <button class="nav-item" id="nav-creator" onclick="showTab('creator')">
+          <span class="icon">🎨</span>
+          <span>Content & Infographics</span>
+        </button>
+        <button class="nav-item" id="nav-niche" onclick="showTab('niche')">
+          <span class="icon">🎯</span>
+          <span>Niche & SEO Suite</span>
+          <span class="count-badge" style="background:#10b981; color:#fff;">NEW</span>
+        </button>
+        <button class="nav-item" id="nav-channels" onclick="showTab('channels')">
+          <span class="icon">📡</span>
+          <span>Channels & Autopilot</span>
+        </button>
+
+        <div class="nav-section-title">💼 Agency & SaaS Tools</div>
+
+        <button class="nav-item" id="nav-clients" onclick="showTab('clients')">
+          <span class="icon">🏢</span>
+          <span>Clients & Retainers</span>
+          <span class="count-badge secondary" id="clientCountBadge">3</span>
+        </button>
+        <button class="nav-item" id="nav-reels" onclick="showTab('reels')">
+          <span class="icon">🎬</span>
+          <span>Reels & Audio Player</span>
+          <span class="count-badge" style="background:#ef4444; color:#fff;" id="reelsCountBadge">10</span>
+        </button>
+        <button class="nav-item" id="nav-pricing" onclick="showTab('pricing')">
+          <span class="icon">💳</span>
+          <span>SaaS Plans & Checkout</span>
+        </button>
+        <button class="nav-item" id="nav-whitelabel" onclick="showTab('whitelabel')">
+          <span class="icon">🏷️</span>
+          <span>White-Label Agency</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer / Background Daemon Indicator -->
+      <div class="sidebar-footer">
+        <div class="daemon-status">
+          <span class="status-pulse"></span>
+          <div>
+            <strong>Scheduler Daemon: ON</strong>
+            <small id="daemonStatusText">Native Engine • 100% Free</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="client-current-pill">
+            <span class="client-avatar-mini" id="topAvatar">💻</span>
+            <strong id="topClientName">Big Byte Systems</strong>
+            <span class="pill-dot">•</span>
+            <span class="pill-status" id="topClientStatus" onclick="showTab('channels')" style="cursor:pointer;" title="Click to open Channels & Automation">Meta Connected 🟢</span>
+          </div>
+          <h1 id="tabTitle">Content Calendar & Pipeline</h1>
+          <p id="tabSubtitle">Scheduled posts ready to auto-publish across all connected channels</p>
+        </div>
+        <div class="topbar-actions">
+          <!-- Day / Night Mode Toggle Switch -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch between Night Mode (Dark) and Day Mode (Light)">
+            <span id="themeToggleIcon">🌙</span> <span id="themeToggleText">Night Mode</span>
+          </button>
+
+          <!-- Quick Actions -->
+          <button class="btn btn-secondary btn-sm" onclick="showTab('niche')" title="Open Niche Selector, Viral Hashtag Finder & GSC Regex Suite">
+            <span>🎯</span> Niche Intelligence
+          </button>
+
+          <button class="btn btn-primary btn-sm" onclick="showTab('creator')" style="background: linear-gradient(135deg, #0284c7, #38bdf8); color:#fff; border:none; font-weight:700;">
+            <span>🎨</span> Infographic Studio
+          </button>
+
+          <button class="btn btn-primary btn-sm" id="btnAutopilotCycle" style="background: linear-gradient(135deg, #8b5cf6, #ec4899); border:none;" onclick="triggerAutopilotCycle()">
+            <span>🚀</span> Run Autopilot
+          </button>
+        </div>
+      </header>
+
+      <!-- ======================================================== -->
+      <!-- TAB 1: CALENDAR & PIPELINE -->
+      <!-- ======================================================== -->
+      <section id="tab-calendar" class="tab-pane active">
+        <!-- Infographic Studio Quick Launch Banner -->
+        <div style="background: linear-gradient(135deg, rgba(2,132,199,0.2), rgba(56,189,248,0.1)); border: 1.5px solid #0284c7; border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 20px rgba(2,132,199,0.15);">
+          <div>
+            <div style="font-weight: 800; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <span>🎨</span> <span>Laboratory Infographic Studio</span>
+              <span style="background: #10b981; color: #000; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px;">READY</span>
+            </div>
+            <p style="margin: 4px 0 0; color: #94a3b8; font-size: 13px;">Generate high-converting <b>Before/After Triage Splits</b>, <b>Motherboard Schematics</b>, and <b>4.9★ Social Proof Badges</b>.</p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="showTab('creator')" style="background: #0284c7; color: #fff; font-weight: 800; font-size: 13px; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <span>🔬</span> Open Infographic Studio →
+          </button>
+        </div>
+
+        <!-- View Toggle & Filter Bar -->
+        <div class="filter-bar">
+          <div class="view-toggle-group">
+            <button class="view-toggle-btn active" id="btnViewPipeline" onclick="switchView('pipeline')">
+              <span>📋</span> Pipeline Cards
+            </button>
+            <button class="view-toggle-btn" id="btnViewCalendar" onclick="switchView('calendar')">
+              <span>📅</span> Month Calendar
+            </button>
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-chip active" data-platform="all" onclick="filterPlatform('all')">All (<span id="count-all">36</span>)</button>
+            <button class="filter-chip chip-yt" data-platform="youtube" onclick="filterPlatform('youtube')">🎬 YouTube Shorts (<span id="count-youtube">10</span>)</button>
+            <button class="filter-chip chip-gmb" data-platform="gmb" onclick="filterPlatform('gmb')">📍 Google Business (<span id="count-gmb">8</span>)</button>
+            <button class="filter-chip chip-fb" data-platform="facebook" onclick="filterPlatform('facebook')">📘 Facebook Pages (<span id="count-facebook">6</span>)</button>
+            <button class="filter-chip chip-ig" data-platform="instagram" onclick="filterPlatform('instagram')">📸 Instagram Reels (<span id="count-instagram">8</span>)</button>
+            <button class="filter-chip chip-li" data-platform="linkedin" onclick="filterPlatform('linkedin')">💼 LinkedIn B2B (<span id="count-linkedin">4</span>)</button>
+          </div>
+
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search topics, hooks, keywords..." oninput="handleSearch(this.value)">
+          </div>
+        </div>
+
+        <!-- 1A: Month Calendar View (Initially hidden, toggled by switchView) -->
+        <div id="calendarViewContainer" class="calendar-view-container" style="display: none;">
+          <div class="calendar-header">
+            <div class="calendar-nav">
+              <button class="btn-icon" onclick="changeMonth(-1)">‹</button>
+              <h2 id="currentMonthLabel">October 2026</h2>
+              <button class="btn-icon" onclick="changeMonth(1)">›</button>
+            </div>
+            <div class="calendar-legend">
+              <span class="legend-dot yt"></span> YouTube Shorts
+              <span class="legend-dot gmb"></span> Google Business
+              <span class="legend-dot ig"></span> Instagram
+              <span class="legend-dot li"></span> LinkedIn
+            </div>
+          </div>
+          <div class="calendar-grid-header">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          <div class="calendar-grid-days" id="calendarGridDays">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- 1B: Pipeline Cards Grid -->
+        <div class="posts-grid" id="postsContainer">
+          <!-- Populated dynamically -->
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2: CONTENT STUDIO (AI GENERATOR + REEL CANVAS) -->
+      <!-- ======================================================== -->
+      <section id="tab-creator" class="tab-pane">
+        <div class="studio-two-col">
+          <!-- Left Column: Topic Generator & Schedule Form -->
+          <div class="studio-left-card">
+            <div class="card-header-styled">
+              <div>
+                <h2>✨ 1-Click Content & Reel Generator</h2>
+                <p>Pick a proven laboratory topic preset or type your custom title to instantly generate video hooks, scripts & compliant descriptions.</p>
+              </div>
+            </div>
+
+            <!-- Topic Quick-Presets -->
+            <div class="presets-section">
+              <label class="section-label">⚡ 1-Click Topic Presets (Laboratory Tested):</label>
+              <div class="presets-scroll">
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('humidity')">💻 Coastal Humidity & Overheating</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('macbook')">🍏 Dead MacBook Micro-Soldering</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('epson')">🖨️ Epson EcoTank Red Lights</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('hinge')">🔧 Broken Hinge & Palmrest Fabrication</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('spill')">☕ Tea/Water Liquid Spill Emergency</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('ssd')">⚡ Mechanical HDD to SSD 10X Speed</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('vhs')">📼 Vintage VHS Tape Transfer to MP4</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('cleanroom')">💾 Clicking Hard Disk Cleanroom Recovery</button>
+                <button type="button" class="preset-chip" onclick="applyTopicPreset('amc')">🏢 Corporate Office IT Maintenance AMC</button>
+              </div>
+            </div>
+
+            <form id="postCreateForm" onsubmit="handleCreatePost(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Target Platform *</label>
+                  <select id="newPlatform" required onchange="handlePlatformChange(this.value)">
+                    <option value="youtube">🎬 YouTube Shorts</option>
+                    <option value="gmb" selected>📍 Google Business Profile</option>
+                    <option value="instagram">📸 Instagram / Facebook Reel & Post</option>
+                    <option value="linkedin">💼 LinkedIn B2B Corporate</option>
+                    <option value="twitter">𝕏 Twitter / X</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Schedule Date & Time *</label>
+                  <div class="datetime-inputs">
+                    <input type="date" id="newDate" required>
+                    <input type="time" id="newTime" value="10:15" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Post / Video Title *</label>
+                <input type="text" id="newTitle" placeholder="e.g. ⚠️ Why Coastal Thane Humidity Destroys Laptop Fans" required oninput="syncTitleToCanvas(this.value)">
+              </div>
+
+              <!-- Shorts/Reel Specific Hook & Storyboard -->
+              <div id="shortsSpecificFields">
+                <div class="form-group">
+                  <label>0-3s High-Retention Video Hook</label>
+                  <input type="text" id="newVideoHook" placeholder="e.g. If you live near Ghodbunder Road, your laptop fan looks like THIS right now." oninput="syncHookToCanvas(this.value)">
+                </div>
+                <div class="form-group">
+                  <label>Voiceover Script (What the speaker says)</label>
+                  <textarea id="newScript" rows="3" placeholder="Spoken audio explanation..."></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Post Caption & Description *</label>
+                <textarea id="newContent" rows="5" placeholder="Enter post caption with address, hotline, and hashtags..." required></textarea>
+                <div class="compliance-badge-row">
+                  <span class="compliance-pill pass">🛡️ Anti-Suspension Rules Passed</span>
+                  <span class="compliance-pill">📞 Hotline: 090547 90592</span>
+                  <span class="compliance-pill">💬 Masked WhatsApp</span>
+                  <span class="compliance-pill">💰 No Hardcoded Prices</span>
+                </div>
+              </div>
+
+              <div class="form-actions-split">
+                <button type="button" class="btn btn-secondary" onclick="generateInstantAIContent()">
+                  <span>⚡</span> Auto-Generate Hook & Script
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <span>📅</span> Add to Schedule
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Column: Live Graphic & Reel Storyboard Canvas Maker -->
+          <div class="studio-right-card">
+            <div class="card-header-styled">
+              <div>
+                <h2>🎨 Laboratory Infographic & Graphic Studio</h2>
+                <p>Generate high-converting, authority-building infographics with diagnostic splits, circuit schematics, and trust badges.</p>
+              </div>
+            </div>
+
+            <!-- Canvas Controls -->
+            <div class="canvas-controls-bar">
+              <div class="control-group">
+                <label>Infographic Blueprint:</label>
+                <select id="canvasTemplate" onchange="renderStudioCanvas()">
+                  <option value="diagnostic" selected>🔬 Before/After Triage (Authorized vs Big Byte Lab)</option>
+                  <option value="anatomy">⚡ Micro-Soldering & Motherboard Anatomy</option>
+                  <option value="authority">🛡️ Authority Proof (4.9★ Rated • 1,240+ Thane Reviews)</option>
+                  <option value="alert">⚠️ Coastal Thane Humidity & Heat Alert</option>
+                  <option value="classic">📋 Clean Modern Tech Card</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label>Real Lab Photo Underlay:</label>
+                <select id="canvasBgPhoto" onchange="renderStudioCanvas()">
+                  <option value="macbook" selected>💻 MacBook Micro-Soldering Station</option>
+                  <option value="fan">🌀 Fan Ultrasonic Cleaning & Arctic MX-4</option>
+                  <option value="printer">🖨️ Epson EcoTank Head Restoration</option>
+                  <option value="data">💾 Cleanroom Data Recovery Platter</option>
+                  <option value="cyber">🌌 Dark Cyber Circuit Grid (Digital)</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label>Format / Ratio:</label>
+                <select id="canvasFormat" onchange="updateCanvasFormat(this.value)">
+                  <option value="square" selected>🔲 1:1 Square Feed (1080×1080) [Meta Feed Post]</option>
+                  <option value="reel">📱 9:16 Vertical Reel / Story (1080×1920)</option>
+                  <option value="banner">🖥️ 16:9 Landscape Banner (1200×675)</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label>Color Theme:</label>
+                <select id="canvasTheme" onchange="renderStudioCanvas()">
+                  <option value="cyber" selected>🌌 Dark Cyber Lab (Neon Cyan & Emerald)</option>
+                  <option value="clean">🔬 Clean Lab (Navy & Ice Blue)</option>
+                  <option value="alert">⚠️ Alert Shield (Amber Gold & Charcoal)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Text Inputs for the Infographic -->
+            <div class="infographic-inputs-row" style="display:flex; gap:10px; margin-bottom:12px;">
+              <div style="flex:1;">
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Custom Badge / Headline:</label>
+                <input type="text" id="canvasCustomTitle" placeholder="e.g. 🔥 Dead MacBook Pro Saved! No Board Swap Needed" style="width:100%; padding:8px 10px; background:#0f172a; border:1px solid var(--card-border); border-radius:6px; color:#fff; font-size:12px;" oninput="renderStudioCanvas()">
+              </div>
+              <div style="flex:1;">
+                <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Target Scheduled Post:</label>
+                <select id="targetPostForGraphic" style="width:100%; padding:8px 10px; background:#0f172a; border:1px solid var(--card-border); border-radius:6px; color:#fff; font-size:12px;">
+                  <!-- Populated dynamically with all scheduled posts -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Interactive Live Canvas Preview -->
+            <div class="canvas-preview-wrapper" id="canvasWrapper">
+              <canvas id="studioCanvas" width="1080" height="1080"></canvas>
+            </div>
+
+            <!-- Canvas Action Buttons -->
+            <div class="canvas-actions">
+              <button type="button" class="btn btn-secondary" onclick="downloadCanvasGraphic()">
+                <span>📥</span> Download High-Res 1080p PNG
+              </button>
+              <button type="button" class="btn btn-primary" onclick="attachGraphicAndSchedule()">
+                <span>📎</span> Save & Attach to Selected Post (Auto-Direct Meta Sync)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: UNIVERSAL NICHE & SEO INTELLIGENCE SUITE -->
+      <!-- ======================================================== -->
+      <section id="tab-niche" class="tab-pane">
+        <div class="niche-suite-container">
+          <!-- Hero Banner -->
+          <div class="niche-hero-banner">
+            <div class="niche-hero-content">
+              <h2><span>🎯</span> Universal Niche & SEO Intelligence Suite</h2>
+              <p>
+                Zero-guesswork content engine: Pick any business niche, generate high-converting 3-tier viral hashtags, extract goldmine FAQ questions via Google Search Console regex filters, and convert real customer search queries into scheduled social posts.
+              </p>
+            </div>
+            <div class="niche-quick-controls">
+              <div class="niche-select-group">
+                <label>Select Target Industry / Niche</label>
+                <select id="nichePresetSelect" class="niche-dropdown" onchange="handleNichePresetChange(this.value)">
+                  <option value="repair" selected>💻 Computer & Mobile Repair / Tech Lab</option>
+                  <option value="dental">🦷 Dental Clinic & Orthodontics</option>
+                  <option value="realestate">🏢 Real Estate & Property Advisory</option>
+                  <option value="cafe">☕ Specialty Cafe & Artisan Bakery</option>
+                  <option value="fitness">🏋️‍♂️ Fitness Gym & Personal Training</option>
+                  <option value="autodetail">🚗 Auto Detailing & Ceramic Coating</option>
+                  <option value="legal">⚖️ CA, GST & Financial Advisory</option>
+                  <option value="custom">🛠️ Custom / Type Any Business Niche</option>
+                </select>
+              </div>
+              <div class="niche-select-group">
+                <label>Target City / Locality</label>
+                <input type="text" id="nicheTargetCity" value="Thane West, Manpada, Mumbai" oninput="handleNicheGeoChange(this.value)" placeholder="e.g. Thane West, Mumbai" style="padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-main);">
+              </div>
+            </div>
+          </div>
+
+          <!-- Niche Visual Grid Picker -->
+          <div class="niche-grid-picker" id="nichePickerGrid">
+            <!-- Dynamically populated with fast-click cards -->
+          </div>
+
+          <!-- 1-Click FAQ-to-Social Post Converter (Powered by GSC Questions) -->
+          <div class="faq-converter-card">
+            <div class="faq-converter-header">
+              <h3><span>⚡</span> GSC Question-to-Social Post Converter</h3>
+              <p>Type or paste any customer search question discovered from Google Search Console. We will automatically generate a 3-second kinetic video hook, educational script, structured caption with phone/CTA, select the best Infographic Blueprint, and schedule it!</p>
+            </div>
+            <div class="faq-input-group">
+              <input type="text" id="faqQueryInput" placeholder="e.g. Can a water damaged MacBook motherboard be repaired without full replacement?">
+              <button class="btn btn-primary" onclick="convertFaqToScheduledPost()" style="background: linear-gradient(135deg, #10b981, #0284c7); border: none; font-weight: 700; padding: 12px 20px;">
+                🚀 Convert to Post & Infographic
+              </button>
+            </div>
+            <div class="faq-sample-chips" id="faqSampleChipsList">
+              <span class="faq-sample-label">💡 High-Volume GSC Questions in this Niche:</span>
+              <!-- Dynamically populated with top questions for active niche -->
+            </div>
+          </div>
+
+          <!-- 3-Tier Viral Hashtag Finder -->
+          <div class="tag-finder-box">
+            <div class="tag-finder-header">
+              <div>
+                <h3><span>🏷️</span> 3-Tier Algorithm Hashtag Finder (<span id="activeNicheTagLabel">Computer & Mobile Repair</span>)</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Balanced hashtag architecture prevents shadowbans and maximizes discovery across Instagram, Facebook & YouTube.</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary btn-sm" onclick="copyAllNicheTags()">📋 Copy All Tags</button>
+                <button class="btn btn-primary btn-sm" onclick="pushTagsToCreator()" style="background: #0284c7; border: none;">✨ Push to Post Creator</button>
+              </div>
+            </div>
+
+            <div class="tag-tiers-grid">
+              <!-- Tier 1: Broad / Mega Discovery -->
+              <div class="tag-tier-card">
+                <div class="tag-tier-head">
+                  <span class="tag-tier-title tier-broad">Tier 1: High Reach & Discovery (Mega)</span>
+                  <span class="badge-tag" style="background: rgba(56,189,248,0.15); color: #38bdf8;">1M+ Volume</span>
+                </div>
+                <div class="tag-chips-wrapper" id="tierBroadTags">
+                  <!-- Generated -->
+                </div>
+              </div>
+
+              <!-- Tier 2: Niche Specific Authority -->
+              <div class="tag-tier-card">
+                <div class="tag-tier-head">
+                  <span class="tag-tier-title tier-niche">Tier 2: Niche Authority & Buyer Intent</span>
+                  <span class="badge-tag" style="background: rgba(52,211,153,0.15); color: #34d399;">50k - 500k</span>
+                </div>
+                <div class="tag-chips-wrapper" id="tierNicheTags">
+                  <!-- Generated -->
+                </div>
+              </div>
+
+              <!-- Tier 3: Hyper-Local Geo Targeting -->
+              <div class="tag-tier-card">
+                <div class="tag-tier-head">
+                  <span class="tag-tier-title tier-geo">Tier 3: Hyper-Local / Foot-Traffic Geo Tags</span>
+                  <span class="badge-tag" style="background: rgba(245,158,11,0.15); color: #f59e0b;">Local Area</span>
+                </div>
+                <div class="tag-chips-wrapper" id="tierGeoTags">
+                  <!-- Generated -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Search Console (GSC) Regex Quarry -->
+          <div class="gsc-section-box">
+            <div class="gsc-header">
+              <h3><span>🔍</span> Google Search Console (GSC) Regex Query Filters</h3>
+              <p>
+                How to use: In your Google Search Console ➔ Go to <b>Performance</b> ➔ Click <b>+ New</b> ➔ Choose <b>Query</b> ➔ Select <b>Custom (regex) matches</b> ➔ Paste one of these exact regex formulas to extract customer questions and high-intent buying terms!
+              </p>
+            </div>
+
+            <div class="gsc-regex-grid">
+              <!-- Pattern 1: FAQ / Questions -->
+              <div class="gsc-regex-card">
+                <div class="gsc-card-meta">
+                  <h4>❓ Questions & FAQs Filter</h4>
+                  <p>Extracts every user query starting with What, Why, How, Can, Is, Where, When, Cost, etc.</p>
+                </div>
+                <div class="gsc-code-block" id="gscRegexQuestion">^(what|why|how|where|when|who|which|can|is|are|will|do|does|should|could)\b.*</div>
+                <button class="btn btn-secondary btn-sm" onclick="copyGscRegex('gscRegexQuestion')">📋 Copy Regex</button>
+              </div>
+
+              <!-- Pattern 2: Commercial & Transactional Intent -->
+              <div class="gsc-regex-card">
+                <div class="gsc-card-meta">
+                  <h4>💰 Pricing & Buyer Intent Filter</h4>
+                  <p>Filters queries containing cost, price, charges, rates, affordable, near me, and emergency.</p>
+                </div>
+                <div class="gsc-code-block" id="gscRegexPricing">.*(cost|price|charges|rate|fees|estimate|cheap|affordable|near me|repair|service).*</div>
+                <button class="btn btn-secondary btn-sm" onclick="copyGscRegex('gscRegexPricing')">📋 Copy Regex</button>
+              </div>
+
+              <!-- Pattern 3: Comparisons & Alternatives -->
+              <div class="gsc-regex-card">
+                <div class="gsc-card-meta">
+                  <h4>⚖️ Comparison & 'VS' Filter</h4>
+                  <p>Uncovers buyers comparing options: 'repair vs replace', 'authorized vs chip level', etc.</p>
+                </div>
+                <div class="gsc-code-block" id="gscRegexVs">.*(\bvs\b|\bversus\b|\bor\b|\bdifference between\b|\bwhich is better\b).*</div>
+                <button class="btn btn-secondary btn-sm" onclick="copyGscRegex('gscRegexVs')">📋 Copy Regex</button>
+              </div>
+
+              <!-- Pattern 4: Problem, Error & Urgent Breakdown -->
+              <div class="gsc-regex-card">
+                <div class="gsc-card-meta">
+                  <h4>🚨 Urgent Problem & Error Filter</h4>
+                  <p>Captures distress searches: broken, not working, dead, blinking, smoke, loud fan, stuck.</p>
+                </div>
+                <div class="gsc-code-block" id="gscRegexUrgent">.*(broken|not working|dead|slow|fix|stuck|error|flashing|leaking|overheating).*</div>
+                <button class="btn btn-secondary btn-sm" onclick="copyGscRegex('gscRegexUrgent')">📋 Copy Regex</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 2B: REELS & SHORTS VIDEO PLAYER STUDIO -->
+      <!-- ======================================================== -->
+      <section id="tab-reels" class="tab-pane">
+        <div class="reels-studio-layout">
+          <!-- Left: Reels Playlist Selector -->
+          <div class="reels-playlist-card">
+            <div class="card-header-styled">
+              <div>
+                <h2>🎬 YouTube Shorts & Instagram Reels (10)</h2>
+                <p>Select any micro-video to play with animated Ken Burns effects, voiceover narration, and kinetic hook text.</p>
+              </div>
+            </div>
+            <div class="reels-list" id="reelsPlaylistContainer">
+              <!-- Dynamically populated with 10 reels -->
+            </div>
+          </div>
+
+          <!-- Right: Interactive Smartphone Video Player -->
+          <div class="reels-player-card">
+            <div class="phone-frame">
+              <div class="phone-screen">
+                <!-- Video Canvas -->
+                <canvas id="reelVideoCanvas" width="360" height="640"></canvas>
+
+                <!-- Phone Top Bar Overlay -->
+                <div class="phone-top-bar">
+                  <div class="reel-progress-track">
+                    <div class="reel-progress-bar" id="reelProgressBar"></div>
+                  </div>
+                  <div class="reel-meta-header">
+                    <span class="live-tag">🔴 9:16 REEL PREVIEW</span>
+                    <span class="duration-tag" id="reelTimer">0:00 / 0:30</span>
+                  </div>
+                </div>
+
+                <!-- Floating Lower Third Branding Overlay -->
+                <div class="phone-bottom-overlay">
+                  <div class="brand-pill-overlay">
+                    <span class="avatar-mini">💻</span>
+                    <div>
+                      <strong id="playerBrandName">Big Byte Systems</strong>
+                      <small id="playerLocation">Manpada, Thane West</small>
+                    </div>
+                  </div>
+                  <h4 class="player-hook-text" id="playerHookText">Loading Hook...</h4>
+                  <p class="player-subtitle" id="playerSubtitle">Voiceover narration will appear here as subtitles...</p>
+                  <div class="audio-wave-bars">
+                    <span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span><span class="wave-bar"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Player Control Actions -->
+            <div class="player-actions-card">
+              <div class="player-controls-row">
+                <button class="btn btn-primary" id="btnPlayPauseReel" onclick="togglePlayReel()">
+                  <span id="playIcon">▶</span> <span id="playText">Play Reel Video</span>
+                </button>
+                <button class="btn btn-secondary" onclick="restartReel()">
+                  <span>🔄</span> Replay
+                </button>
+                <button class="btn btn-secondary" id="btnVoiceoverToggle" onclick="toggleVoiceover()">
+                  <span>🔊</span> Voice: ON
+                </button>
+              </div>
+
+              <!-- Human-Like Studio Voice Selector -->
+              <div class="voice-tuning-box">
+                <div class="voice-row">
+                  <label>🎙️ Voice Character:</label>
+                  <select id="voiceCharacterSelect" onchange="handleVoiceCharacterChange(this.value)">
+                    <option value="male_in" selected>👨 Ravi — Indian English (Tech Lead)</option>
+                    <option value="female_in">👩 Priya — Indian English (Friendly)</option>
+                    <option value="male_uk">👨 Oliver — British English (Diagnostic Expert)</option>
+                    <option value="female_us">👩 Sarah — US English (Dynamic)</option>
+                    <option value="hindi">🇮🇳 Kavita — हिंदी (Hindi Natural)</option>
+                    <option value="marathi">🇮🇳 Aniket — मराठी (Marathi Local)</option>
+                    <option value="spanish">🇪🇸 Carlos — Español (Global)</option>
+                    <option value="german">🇩🇪 Lukas — Deutsch (Precision)</option>
+                    <option value="french">🇫🇷 Thomas — Français (Natural)</option>
+                    <option value="arabic">🇦🇪 Tariq — العربية (Gulf Formal)</option>
+                  </select>
+                  <button type="button" class="btn-sample-voice" onclick="testVoiceSample()" title="Listen to Voice Sample">
+                    🔊 Sample
+                  </button>
+                </div>
+                <div class="sliders-row">
+                  <div class="slider-item">
+                    <span>Speed: <b id="lblVoiceRate">1.05x</b></span>
+                    <input type="range" id="voiceRateSlider" min="0.8" max="1.3" step="0.05" value="1.05" oninput="updateVoiceTuning()">
+                  </div>
+                  <div class="slider-item">
+                    <span>Pitch: <b id="lblVoicePitch">1.0x</b></span>
+                    <input type="range" id="voicePitchSlider" min="0.7" max="1.3" step="0.05" value="1.0" oninput="updateVoiceTuning()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="player-download-row">
+                <button class="btn btn-success" onclick="exportAndDownloadReelVideo()">
+                  <span>📥</span> Export Reel Video (.webm / .mp4)
+                </button>
+                <button class="btn btn-secondary" onclick="publishActiveReel()">
+                  <span>⚡</span> Dispatch Reel to Webhook
+                </button>
+              </div>
+              <small class="helper-text" style="display:block; text-align:center; margin-top:8px;">
+                ⚡ 100% Free Forever • Rendered locally in browser • Zero API Costs
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: PLATFORMS & TOGGLE DASHBOARD -->
+      <!-- ======================================================== -->
+      <section id="tab-channels" class="tab-pane">
+        <div class="settings-container">
+          <div class="settings-card">
+            <div class="card-header-styled">
+              <div>
+                <h2>🔗 Multi-Platform Command & Live Policy Shield</h2>
+                <p>Toggle any platform ON or OFF instantly. The background autopilot and scheduler will automatically adhere to the latest anti-ban compliance rules for each enabled network.</p>
+              </div>
+              <button class="btn btn-secondary" onclick="openTestModal()">⚡ Fire Test Webhook</button>
+            </div>
+
+            </div>
+
+            <!-- Direct Native Multi-Platform Publisher (Postiz Architecture) -->
+            <div class="direct-api-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.12)); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin: 0 0 6px 0; color: #34d399; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                    <span>⚡</span> Direct Native Social Publisher (Postiz Architecture • 100% Free)
+                  </h4>
+                  <p style="margin: 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.5;">
+                    Publishes directly to Facebook Pages & Instagram using official Meta Graph API v19.0. Zero middleman fees, zero third-party tools, zero Make.com requirement.
+                  </p>
+                </div>
+                <span class="compliance-pill pass" id="directApiStatusBadge" style="font-size: 11px;">🟢 Direct Native Engine: Active</span>
+              </div>
+
+              <!-- 1-Click Meta Auto-Discovery Tool (Nube-Friendly) -->
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px; margin-bottom: 18px;">
+                <label style="font-size: 12px; font-weight: 700; color: #38bdf8; display: block; margin-bottom: 6px;">
+                  🔍 1-Click Meta Auto-Detect (Paste any Meta Token to auto-find Page ID & Instagram ID)
+                </label>
+                <div style="display: flex; gap: 10px;">
+                  <input type="password" id="metaDiscoveryToken" placeholder="Paste your Meta Access Token here..." style="flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.4); color: #fff; font-family: monospace; font-size: 12px;">
+                  <button type="button" class="btn btn-primary" onclick="autoDiscoverMetaChannels()" style="background: linear-gradient(135deg, #0284c7, #6366f1); border: none; white-space: nowrap; font-weight: 700;">
+                    🔍 Auto-Detect Channels
+                  </button>
+                </div>
+                <div id="metaDiscoveryResults" style="display: none; margin-top: 12px; padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; font-size: 12px;"></div>
+              </div>
+
+              <!-- Credentials Grid -->
+              <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 12px; margin-bottom: 14px;">
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Facebook Page ID</label>
+                  <input type="text" id="directFbPageId" placeholder="e.g. 104859201948291" style="font-family: monospace; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Instagram Account ID</label>
+                  <input type="text" id="directIgAccountId" placeholder="e.g. 178414092837461" style="font-family: monospace; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Page Access Token (Permanent / 60-day)</label>
+                  <input type="password" id="directFbToken" placeholder="EAA..." style="font-family: monospace; font-size: 12px;">
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" onclick="saveDirectApiConfig()" style="background: #10b981; border: none; font-weight: 700;">
+                  💾 Save Direct Channels
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="testDirectMetaGraphApi()" style="font-weight: 600;">
+                  ⚡ Test Facebook Live
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="testDirectInstagramApi()" style="font-weight: 600;">
+                  📸 Test Instagram Live
+                </button>
+              </div>
+
+              <small style="display: block; margin-top: 14px; font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+                💡 <b>How to get your free token in 60 seconds:</b> Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank" style="color: #38bdf8; text-decoration: underline;">Meta Graph API Explorer</a> ➔ Add permissions: <code>pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic, instagram_content_publish</code> ➔ Click Generate Token ➔ Paste it above into <b>Auto-Detect</b>!
+              </small>
+            </div>
+
+            <!-- YouTube Shorts Direct Native Publisher (Postiz Architecture • 100% Free) -->
+            <div class="direct-api-card" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(245, 158, 11, 0.12)); border: 1.5px solid rgba(239, 68, 68, 0.4); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin: 0 0 6px 0; color: #f87171; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                    <span>🎬</span> Direct YouTube Shorts Publisher (Postiz Architecture • 100% Free)
+                  </h4>
+                  <p style="margin: 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.5;">
+                    Uploads directly to YouTube Shorts via official Google Cloud YouTube Data API v3 Resumable Upload protocol. Zero Make.com fees, zero middleman limits.
+                  </p>
+                </div>
+                <span class="compliance-pill" id="ytDirectStatusBadge" style="font-size: 11px;">⚪ YouTube: Not Connected</span>
+              </div>
+
+              <!-- Channel Connected Banner -->
+              <div id="ytConnectedBanner" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                  <div>
+                    <strong style="color: #34d399; font-size: 14px;" id="ytChannelNameDisplay">Big Byte Systems</strong>
+                    <div style="color: var(--text-muted); font-size: 11px;">
+                      Channel ID: <code id="ytChannelIdDisplay">...</code> • <span id="ytChannelStatsDisplay">Connected & Active</span>
+                    </div>
+                  </div>
+                  <span style="color: #34d399; font-weight: 700; font-size: 12px;">✅ Ready to Publish Shorts</span>
+                </div>
+              </div>
+
+              <!-- Google OAuth Credentials Grid -->
+              <div class="form-row" style="display: grid; grid-template-columns: 1.5fr 1.5fr 1fr; gap: 12px; margin-bottom: 14px;">
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Google OAuth Client ID</label>
+                  <input type="text" id="ytClientId" placeholder="e.g. 123456789-xyz.apps.googleusercontent.com" style="font-family: monospace; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Google OAuth Client Secret</label>
+                  <input type="password" id="ytClientSecret" placeholder="GOCSPX-..." style="font-family: monospace; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin: 0;">
+                  <label style="font-size: 12px; font-weight: 600;">Refresh Token (Auto/Manual)</label>
+                  <input type="password" id="ytRefreshToken" placeholder="1//0..." style="font-family: monospace; font-size: 12px;">
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" onclick="connectYouTubeChannel()" style="background: linear-gradient(135deg, #ef4444, #f59e0b); border: none; font-weight: 700;">
+                  🔗 Connect YouTube Account (1-Click Google OAuth)
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveYouTubeConfig()" style="background: #10b981; border: none; font-weight: 700;">
+                  💾 Save YouTube Keys
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="testDirectYouTubeApi()" style="font-weight: 600;">
+                  ⚡ Test YouTube Live
+                </button>
+              </div>
+
+              <small style="display: block; margin-top: 14px; font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+                💡 <b>How to get your free Google Client ID in 3 minutes:</b> Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank" style="color: #f87171; text-decoration: underline;">Google Cloud Console</a> ➔ Create Project ➔ Enable <b>YouTube Data API v3</b> ➔ Credentials ➔ Create OAuth Client ID (Web Application) ➔ Add Redirect URI: <code>http://localhost:3000/api/platforms/youtube-callback</code> ➔ Paste Client ID & Secret above and click <b>Connect YouTube Account</b>!
+              </small>
+            </div>
+
+            <!-- 24/7 Zero-Expense Cloud Autopilot Engine (Laptop Off / Sleep Safe) -->
+            <div class="direct-api-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(2, 132, 199, 0.12)); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                <div>
+                  <h4 style="margin: 0 0 6px 0; color: #34d399; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                    <span>🌙</span> 24/7 Zero-Expense Cloud Autopilot (Laptop Off &amp; Sleep Proof)
+                  </h4>
+                  <p style="margin: 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.5;">
+                    If your local laptop is turned off, hibernating, or sleeping, local scheduler intervals pause. Here are two 100% free, zero-expense cloud alternates that publish on time automatically 24/7 without your laptop being on:
+                  </p>
+                </div>
+                <span class="compliance-pill pass" style="font-size: 11px;">100% Free • Zero Cost</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                <!-- Cloud Method 1: GitHub Actions Cron -->
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px;">
+                  <div style="font-weight: 700; color: #38bdf8; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                    <span>⚡</span> 1. GitHub Actions Cloud Cron (Recommended)
+                  </div>
+                  <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
+                    Runs in GitHub's free cloud environment every 30 minutes. Reads your queued posts and publishes directly to Meta Graph API using your permanent System User token. Completely hands-free, runs 365 days a year even if your laptop is unplugged.
+                  </p>
+                  <code style="display: block; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 6px; font-size: 11px; color: #34d399;">.github/workflows/social-autopilot.yml</code>
+                </div>
+
+                <!-- Cloud Method 2: cPanel Cron Job -->
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px;">
+                  <div style="font-weight: 700; color: #f59e0b; font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                    <span>🌐</span> 2. Your Existing cPanel Cron (bigbytesystems.co.in)
+                  </div>
+                  <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
+                    You already own 24/7 hosting for bigbytesystems.co.in. In your cPanel ➔ Cron Jobs, add a 15-minute cron command to ping the self-hosted dispatcher with zero setup fees:
+                  </p>
+                  <code style="display: block; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 6px; font-size: 11px; color: #f59e0b;">curl -s "https://bigbytesystems.co.in/api.php?cron=1" &gt; /dev/null</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Optional Webhook Relay (Collapsed & Secondary) -->
+            <details style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 12px 16px; margin-bottom: 24px;">
+              <summary style="font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-muted);">
+                ⚙️ Optional External Relay / Webhook (Only if you wish to mirror to Make or Zapier)
+              </summary>
+              <div style="margin-top: 12px;">
+                <div class="input-action-group">
+                  <input type="text" id="settingsWebhookUrl" placeholder="https://hook.make.com/... (optional fallback)">
+                  <button class="btn btn-secondary" onclick="saveWebhookSettings()">Save Fallback URL</button>
+                </div>
+              </div>
+            </details>
+
+            <!-- Dynamic 8 Platforms Grid with Toggle Switches -->
+            <div class="platforms-grid-container" id="platformsGridList">
+              <!-- Dynamically populated from /api/platforms with toggle switches -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: CLIENTS & SIDE HUSTLE AGENCY MANAGER -->
+      <!-- ======================================================== -->
+      <section id="tab-clients" class="tab-pane">
+        <div class="clients-container">
+          <div class="clients-top-header">
+            <div>
+              <h2>💼 Client Accounts & Side Hustle Hub</h2>
+              <p>Manage multiple businesses from this single command center. Create posts, manage schedules, and sell social automation as a monthly retainer service.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddClientModal()">+ Add New Client Business</button>
+          </div>
+
+          <!-- Clients Summary Metrics -->
+          <div class="agency-metrics-grid">
+            <div class="metric-card">
+              <span class="metric-label">Managed Clients</span>
+              <strong class="metric-number" id="metricClientCount">3</strong>
+              <small class="metric-sub">Big Byte + 2 Agency Clients</small>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Total Scheduled Posts</span>
+              <strong class="metric-number" id="metricPostCount">30</strong>
+              <small class="metric-sub">Across All Platforms</small>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Automation Engine</span>
+              <strong class="metric-number success">100% Free</strong>
+              <small class="metric-sub">Zero API Costs • Self-Hosted</small>
+            </div>
+          </div>
+
+          <!-- Clients Grid -->
+          <div class="clients-grid-cards" id="clientsListContainer">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 5: SAAS PRICING & PAYMENT GATEWAY -->
+      <!-- ======================================================== -->
+      <section id="tab-pricing" class="tab-pane">
+        <div class="pricing-container">
+          <div class="pricing-header-hero">
+            <span class="badge-pill">🚀 Ready-to-Sell SaaS Engine</span>
+            <h2>Multi-Tier Subscription & Commercial Plans</h2>
+            <p>Monetize this software directly. Offer 14-day free trials, monthly business retainers, or sell complete White-Label reseller licenses to investors.</p>
+            
+            <div class="trial-banner-card" id="trialInfoBanner">
+              <div class="trial-banner-left">
+                <span class="banner-icon">⏳</span>
+                <div>
+                  <h4 id="trialBannerTitle">Active Plan: 14-Day Free Trial (12 Days Remaining)</h4>
+                  <p id="trialBannerSub">Includes full access to Autopilot dispatches, 9:16 Video Studio, and Anti-Ban compliance filters.</p>
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="openCheckout('agency_growth')">Upgrade to Pro</button>
+            </div>
+          </div>
+
+          <!-- Pricing Cards Grid -->
+          <div class="pricing-grid-cards" id="pricingCardsGrid">
+            <!-- Dynamically populated from /api/plans with dynamic currency prices -->
+          </div>
+
+          <!-- Payment Security & Options Banner -->
+          <div class="payment-guarantee-strip">
+            <div class="pay-icons-row">
+              <span class="pay-chip">⚡ Instant UPI (GPay / PhonePe / Paytm)</span>
+              <span class="pay-chip">💳 Credit & Debit Cards (Visa / MC / RuPay)</span>
+              <span class="pay-chip">🅿️ PayPal Global</span>
+              <span class="pay-chip">🏦 Net Banking</span>
+            </div>
+            <p>100% Secure Checkout • Instant Activation • Zero Hidden Monthly Database Fees</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 6: WHITE-LABEL RESELLER & INVESTOR VALUATION -->
+      <!-- ======================================================== -->
+      <section id="tab-whitelabel" class="tab-pane">
+        <div class="whitelabel-container">
+          <div class="card-header-styled">
+            <div>
+              <h2>🏷️ White-Label Reseller Panel & Investor Valuation</h2>
+              <p>Rebrand the entire platform under your own agency name or sell this system to one-time investors. Compare live market valuations vs industry giants.</p>
+            </div>
+            <button class="btn btn-primary" onclick="saveWhiteLabelSettings()">💾 Save Brand Settings</button>
+          </div>
+
+          <div class="whitelabel-two-col">
+            <!-- Left: Rebranding Form -->
+            <div class="whitelabel-card">
+              <h3>🎨 Agency Rebranding Settings</h3>
+              <div class="form-group">
+                <label>Agency Brand Display Name</label>
+                <input type="text" id="wlAgencyName" value="Big Byte Systems Agency Command Center">
+              </div>
+              <div class="form-group">
+                <label>Short Brand Name (Navbar)</label>
+                <input type="text" id="wlShortName" value="Big Byte Social Studio">
+              </div>
+              <div class="form-group">
+                <label>Custom Agency Tagline</label>
+                <input type="text" id="wlTagline" value="Autopilot Social Media & Diagnostic Content Engine">
+              </div>
+              <div class="form-group">
+                <label>Logo URL (PNG / SVG)</label>
+                <input type="text" id="wlLogoUrl" value="/assets/logo.png">
+              </div>
+              <div class="form-group">
+                <label>Primary Brand Accent Color</label>
+                <div class="color-picker-row">
+                  <input type="color" id="wlAccentColor" value="#0284c7" oninput="updateAccentPreview(this.value)">
+                  <span id="lblAccentColor">#0284c7 (Corporate Cyan)</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Custom CNAME Domain</label>
+                <input type="text" id="wlCustomDomain" value="app.bigbytesystems.co.in">
+                <small class="helper-text">Point a CNAME record from your domain to this server for true white-label SaaS.</small>
+              </div>
+            </div>
+
+            <!-- Right: Market Valuation & Investor Deck -->
+            <div class="whitelabel-card investor-card">
+              <h3>📊 Market Valuation & Investor Analysis</h3>
+              <div class="investor-stat-box">
+                <span class="inv-stat-label">Recommended One-Time Buyout License</span>
+                <strong class="inv-stat-val">₹49,999 - ₹75,000 ($600 - $900)</strong>
+                <p class="inv-stat-sub">Direct competitor GoHighLevel costs $497/mo (₹41,000 every month!). Offering a perpetual license with zero database fees makes this an irresistible investment.</p>
+              </div>
+
+              <div class="investor-stat-box">
+                <span class="inv-stat-label">Recommended Monthly Client Retainer</span>
+                <strong class="inv-stat-val">₹9,999 - ₹14,999 / mo per Business</strong>
+                <p class="inv-stat-sub">Clients pay for full social autopilot, 9:16 video reels, and Google Maps local SEO maintenance.</p>
+              </div>
+
+              <h4>Competitive Landscape Benchmark:</h4>
+              <div class="competitor-list" id="competitorList">
+                <div class="comp-row">
+                  <strong>GoHighLevel</strong>
+                  <span>$297 - $497 / mo</span>
+                  <small>Requires complex setup, English only, costly monthly recurring fees.</small>
+                </div>
+                <div class="comp-row">
+                  <strong>Hootsuite / Buffer</strong>
+                  <span>$99 - $249 / mo</span>
+                  <small>No video reel rendering, no diagnostic/repair presets.</small>
+                </div>
+                <div class="comp-row">
+                  <strong>Big Byte Social Studio</strong>
+                  <span class="success">₹0 Monthly DB Fees</span>
+                  <small>Runs locally on cPanel or VPS, 100% free built-in engine.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CHECKOUT & PAYMENT GATEWAY -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="checkoutModal" onclick="closeCheckoutModal(event)">
+    <div class="modal-card modal-checkout" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 id="checkoutPlanTitle">Upgrade to Agency Growth Plan</h3>
+          <p id="checkoutPlanSubtitle">5 Client Brands • Unlimited Dispatches • Video Studio</p>
+        </div>
+        <button class="btn-close" onclick="closeCheckoutModal()">✕</button>
+      </div>
+
+      <div class="checkout-grid-two-col">
+        <!-- Left: Payment Options -->
+        <div class="checkout-left">
+          <div class="payment-tabs-bar">
+            <button class="pay-tab active" id="tabPayUpi" onclick="switchPayTab('upi')">⚡ UPI (GPay/PhonePe)</button>
+            <button class="pay-tab" id="tabPayCard" onclick="switchPayTab('card')">💳 Credit / Debit Card</button>
+            <button class="pay-tab" id="tabPayPaypal" onclick="switchPayTab('paypal')">🅿️ PayPal Global</button>
+          </div>
+
+          <!-- UPI QR Code Screen -->
+          <div class="pay-content-pane active" id="payPaneUpi">
+            <div class="upi-qr-card">
+              <div class="qr-canvas-box" id="qrCanvasBox">
+                <!-- SVG UPI QR Code -->
+              </div>
+              <p class="upi-instructions">Scan with any UPI App: <strong>GPay, PhonePe, Paytm, BHIM</strong></p>
+              <div class="upi-id-pill">
+                <span>UPI ID:</span>
+                <strong>bigbyte.systems@oksbi</strong>
+                <button type="button" class="btn-copy-upi" onclick="copyUpiId()">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Payment Screen -->
+          <div class="pay-content-pane" id="payPaneCard" style="display:none;">
+            <div class="card-inputs-box">
+              <div class="form-group">
+                <label>Cardholder Name</label>
+                <input type="text" id="cardName" placeholder="e.g. Rajesh Sharma" value="Rajesh Sharma">
+              </div>
+              <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" placeholder="4532 •••• •••• 8892" value="4532 8920 1284 8892">
+              </div>
+              <div class="card-meta-row">
+                <div class="form-group">
+                  <label>Expiry Date</label>
+                  <input type="text" id="cardExpiry" placeholder="MM/YY" value="08/29">
+                </div>
+                <div class="form-group">
+                  <label>CVV / CVC</label>
+                  <input type="password" id="cardCvv" placeholder="•••" value="842">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PayPal Screen -->
+          <div class="pay-content-pane" id="payPanePaypal" style="display:none;">
+            <div class="paypal-box">
+              <span class="paypal-logo-text">Pay<i>Pal</i></span>
+              <p>Pay securely with your PayPal account or international credit card in any currency.</p>
+              <button class="btn btn-primary paypal-btn" onclick="simulatePaymentSuccess('PayPal')">Pay with PayPal</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary & Coupon Code Box -->
+        <div class="checkout-right">
+          <div class="order-summary-card">
+            <h4>Order Summary</h4>
+            <div class="order-line">
+              <span id="summaryPlanName">Agency Growth Plan</span>
+              <strong id="summaryPlanPrice">₹3,999</strong>
+            </div>
+            <div class="order-line discount-line" id="discountLine" style="display:none;">
+              <span>Promo Discount (<span id="discountPercentText">0%</span>)</span>
+              <strong id="discountAmountText">-₹0</strong>
+            </div>
+            <div class="order-line total-line">
+              <span>Total Payable</span>
+              <strong class="total-price" id="summaryTotalPayable">₹3,999</strong>
+            </div>
+
+            <!-- Coupon Code Input Box -->
+            <div class="coupon-box-group">
+              <label>🎟️ Have a Promo / Coupon Code?</label>
+              <div class="coupon-input-row">
+                <input type="text" id="couponInput" placeholder="Try BIGBYTE50 or LAUNCH100">
+                <button type="button" class="btn btn-secondary" onclick="applyCouponCode()">Apply</button>
+              </div>
+              <small class="coupon-msg" id="couponMessage"></small>
+            </div>
+
+            <button class="btn btn-primary btn-pay-now" id="btnCompletePayment" onclick="completePaymentNow()">
+              Confirm & Activate Plan
+            </button>
+            <p class="money-back-note">🛡️ 14-Day Money-Back Guarantee • Instant License Delivery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: POST DETAILS & STORYBOARD PREVIEW -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="postModal" onclick="closePostModal(event)">
+    <div class="modal-card modal-large" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <span class="platform-chip" id="modalPostPlatform">YouTube Shorts</span>
+          <h3 id="modalPostTitle">Dead MacBook Pro Saved!</h3>
+        </div>
+        <button class="btn-close" onclick="closePostModal()">✕</button>
+      </div>
+
+      <div class="modal-body-scroll">
+        <div class="modal-meta-row">
+          <div><strong>Scheduled:</strong> <span id="modalPostDate">2026-10-26 at 10:15</span></div>
+          <div><strong>Status:</strong> <span class="status-chip" id="modalPostStatus">Scheduled</span></div>
+        </div>
+
+        <div class="modal-section" id="modalHookSection">
+          <label>🎯 0-3s High-Retention Video Hook:</label>
+          <div class="hook-callout" id="modalPostHook">Client was told they had to replace this entire dead MacBook Pro logic board...</div>
+        </div>
+
+        <div class="modal-section" id="modalStoryboardSection">
+          <label>🎬 Visual Scene Storyboard:</label>
+          <div class="storyboard-list" id="modalPostStoryboard">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="modal-section" id="modalScriptSection">
+          <label>🎙️ Voiceover Narration Script:</label>
+          <div class="script-box" id="modalPostScript"></div>
+        </div>
+
+        <div class="modal-section">
+          <label>📝 Full Caption & Description:</label>
+          <div class="caption-box" id="modalPostContent"></div>
+        </div>
+      </div>
+
+      <div class="modal-actions-footer">
+        <button class="btn btn-secondary" onclick="closePostModal()">Close</button>
+        <button class="btn btn-primary" id="modalPublishBtn" onclick="publishModalPost()">⚡ Publish / Dispatch Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: INSTANT TEST WEBHOOK -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="testModal" onclick="closeTestModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>⚡ Instant Webhook Test Dispatch</h3>
+        <button class="btn-close" onclick="closeTestModal()">✕</button>
+      </div>
+      <p class="modal-desc">Fire an immediate test payload to your active Make.com webhook to verify connectivity with Google Business Profile & Socials.</p>
+      <div class="modal-preview" id="modalTestPayload"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeTestModal()">Cancel</button>
+        <button class="btn btn-primary" id="btnFireTest" onclick="executeTestDispatch()">Fire Test Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADD NEW CLIENT (SIDE HUSTLE) -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="addClientModal" onclick="closeAddClientModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>💼 Add New Client Business</h3>
+        <button class="btn-close" onclick="closeAddClientModal()">✕</button>
+      </div>
+      <p class="modal-desc">Add a new business account to manage their social posts and automate their publishing pipeline.</p>
+      
+      <form id="addClientForm" onsubmit="handleAddClientSubmit(event)">
+        <div class="form-group">
+          <label>Business Name *</label>
+          <input type="text" id="clientFormName" placeholder="e.g. Apex Multispecialty Clinic" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Niche / Industry *</label>
+            <input type="text" id="clientFormNiche" placeholder="e.g. Healthcare / Orthopedics" required>
+          </div>
+          <div class="form-group">
+            <label>Avatar Emoji</label>
+            <input type="text" id="clientFormAvatar" value="🏥" style="max-width: 80px; text-align: center;">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Hotline Number</label>
+            <input type="text" id="clientFormHotline" placeholder="e.g. 098200 12345">
+          </div>
+          <div class="form-group">
+            <label>City / Vicinity</label>
+            <input type="text" id="clientFormAddress" placeholder="e.g. Panchpakhadi, Thane West">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Custom Webhook URL (Make / Zapier / n8n)</label>
+          <input type="text" id="clientFormWebhook" placeholder="https://hook.make.com/... (optional, uses master if empty)">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddClientModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Client</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Action completed successfully</div>
+
+  <script src="app.js?v=2.3"></script>
+</body>
+</html>
