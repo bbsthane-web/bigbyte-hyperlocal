@@ -7,3 +7,9 @@ data/raw/*.json
 data/queries/*.txt
 .system_generated/
 test_results.json
+
+# Credentials and local state
+**/data/config.json
+*.env
+*.pem
+*.key
