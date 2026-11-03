@@ -1,0 +1,25 @@
+# Big Byte Systems — Social Studio cPanel Apache Configuration
+Options -Indexes
+DirectoryIndex public/index.html index.html
+
+# Rewrite all API calls to api.php if running under standard Apache/PHP
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ api.php [QSA,L]
+</IfModule>
+
+# MIME Types
+<IfModule mod_mime.c>
+    AddType text/html;charset=utf-8 .html
+    AddType text/css;charset=utf-8 .css
+    AddType application/javascript;charset=utf-8 .js
+    AddType application/json;charset=utf-8 .json
+</IfModule>
+
+# Security: Prevent direct web access to sensitive server config
+<Files "server.js">
+    Order allow,deny
+    Deny from all
+</Files>

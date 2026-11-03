@@ -1,0 +1,26 @@
+[
+  {
+    "code": "BIGBYTE50",
+    "discountPercent": 50,
+    "description": "50% Off First 3 Months for Early Thane Beta Testers",
+    "expires": "2026-12-31"
+  },
+  {
+    "code": "LAUNCH100",
+    "discountPercent": 100,
+    "description": "100% Free Full Pro Trial Pass (Zero Billing)",
+    "expires": "2026-12-31"
+  },
+  {
+    "code": "AGENCY20",
+    "discountPercent": 20,
+    "description": "20% Instant Discount on Agency Growth License",
+    "expires": "2026-12-31"
+  },
+  {
+    "code": "INVESTORVIP",
+    "discountPercent": 30,
+    "description": "30% Off One-Time White-Label Buyout",
+    "expires": "2026-12-31"
+  }
+]

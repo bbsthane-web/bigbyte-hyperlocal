@@ -1,0 +1,36 @@
+{
+  "agencyBrandName": "Big Byte Systems Agency Command Center",
+  "agencyShortName": "Big Byte Social Studio",
+  "agencyTagline": "Autopilot Social Media & Diagnostic Content Engine",
+  "logoUrl": "/assets/logo.png",
+  "accentColor": "#0284c7",
+  "supportEmail": "support@bigbytesystems.co.in",
+  "customDomain": "app.bigbytesystems.co.in",
+  "valuationGuide": {
+    "recommendedOneTimeInvestorPriceINR": "₹49,999 - ₹75,000 ($600 - $900)",
+    "recommendedMonthlyRetainerINR": "₹9,999 - ₹14,999 / mo per client business",
+    "competitorBenchmark": [
+      {
+        "competitor": "GoHighLevel",
+        "pricing": "$297 - $497 / month (₹25,000 - ₹41,000/mo)",
+        "drawback": "Requires complex external SaaS setup, English only, expensive recurring fees"
+      },
+      {
+        "competitor": "Hootsuite / Buffer",
+        "pricing": "$99 - $249 / month",
+        "drawback": "No automated video reel rendering, no micro-soldering/repair diagnostic presets"
+      },
+      {
+        "competitor": "Repurpose.io",
+        "pricing": "$25 - $125 / month",
+        "drawback": "Only syndicates existing video files; does not generate diagnostic visuals or enforce zero-ban compliance"
+      }
+    ],
+    "uniqueSellingPoints": [
+      "100% Free Embedded Database (zero MongoDB or Supabase monthly bills)",
+      "Zero API Fees for Video Generation (runs 100% locally in browser canvas)",
+      "Built-in Google Business Profile anti-ban filter (zero phone/URL rejections)",
+      "Ready to deploy on any standard shared hosting cPanel or local Windows PC"
+    ]
+  }
+}

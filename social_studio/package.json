@@ -1,0 +1,15 @@
+{
+  "name": "bigbyte-social-studio",
+  "version": "2.2.0",
+  "description": "Zero-Cost Autonomous Social Studio, Reel Generator & AEO/GEO Discovery Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "cloud": "node scripts/cloud_dispatcher.js",
+    "test:reel": "node scripts/reel_generator.js",
+    "test:cdn": "node scripts/cdn_relay.js"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0"
+  }
+}

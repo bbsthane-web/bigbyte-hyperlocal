@@ -1,0 +1,52 @@
+name: 24/7 Autonomous Social Autopilot
+
+on:
+  schedule:
+    # Runs every 30 minutes, 24 hours a day, 365 days a year (100% Free on GitHub Actions)
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    # Allows manual 1-click trigger from GitHub web interface
+
+permissions:
+  contents: write
+
+jobs:
+  dispatch-posts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🎬 Install FFmpeg (For Zero-Expense 9:16 Reel Video Compilation)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: 📦 Install Node Dependencies
+        run: |
+          cd social_studio
+          npm ci || npm install --omit=dev
+
+      - name: 🚀 Run Autonomous Cloud Dispatcher
+        env:
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+          META_IG_ACCOUNT_ID: ${{ secrets.META_IG_ACCOUNT_ID }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+        run: |
+          cd social_studio
+          node scripts/cloud_dispatcher.js
+
+      - name: 💾 Commit & Push Published Status
+        run: |
+          git config --global user.name "SocialStudioAutopilot[bot]"
+          git config --global user.email "autopilot@bigbytesystems.co.in"
+          git add social_studio/data/posts.json social_studio/public/assets/reels/*.mp4 || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 [Autopilot] Published scheduled posts & synced Reels [skip ci]" && git push)

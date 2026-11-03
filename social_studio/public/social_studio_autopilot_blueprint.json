@@ -1,0 +1,150 @@
+{
+  "name": "Big Byte Systems — 100% Autopilot Multi-Platform Publisher",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {},
+      "mapper": {},
+      "metadata": {
+        "designer": { "x": 0, "y": 0 }
+      }
+    },
+    {
+      "id": 2,
+      "module": "builtin:BasicRouter",
+      "version": 1,
+      "metadata": {
+        "designer": { "x": 280, "y": 0 }
+      },
+      "routes": [
+        {
+          "flow": [
+            {
+              "id": 3,
+              "module": "google-my-business:createPost",
+              "version": 1,
+              "parameters": {},
+              "filter": {
+                "name": "Filter: GMB Only",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.platform}}",
+                      "o": "text:equal",
+                      "b": "gmb"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "summary": "{{1.summary}}",
+                "callToAction": {
+                  "actionType": "CALL"
+                },
+                "media": [
+                  {
+                    "mediaFormat": "PHOTO",
+                    "sourceUrl": "{{1.image}}"
+                  }
+                ]
+              },
+              "metadata": {
+                "designer": { "x": 580, "y": -180 }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 4,
+              "module": "facebook-pages:createPostWithPhotos",
+              "version": 1,
+              "parameters": {},
+              "filter": {
+                "name": "Filter: Facebook Only",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.platform}}",
+                      "o": "text:equal",
+                      "b": "facebook"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "message": "{{1.message}}",
+                "photos": [
+                  {
+                    "url": "{{1.mediaUrl}}"
+                  }
+                ]
+              },
+              "metadata": {
+                "designer": { "x": 580, "y": 0 }
+              }
+            }
+          ]
+        },
+        {
+          "flow": [
+            {
+              "id": 5,
+              "module": "http:ActionGetData",
+              "version": 3,
+              "parameters": {
+                "handleErrors": false
+              },
+              "filter": {
+                "name": "Filter: YouTube Only",
+                "conditions": [
+                  [
+                    {
+                      "a": "{{1.platform}}",
+                      "o": "text:equal",
+                      "b": "youtube"
+                    }
+                  ]
+                ]
+              },
+              "mapper": {
+                "url": "{{1.mediaUrl}}",
+                "method": "get"
+              },
+              "metadata": {
+                "designer": { "x": 580, "y": 180 }
+              }
+            },
+            {
+              "id": 6,
+              "module": "youtube:uploadVideo",
+              "version": 1,
+              "parameters": {},
+              "mapper": {
+                "file": "{{5.data}}",
+                "title": "{{1.title}} #Shorts",
+                "description": "{{1.message}}",
+                "privacyStatus": "public"
+              },
+              "metadata": {
+                "designer": { "x": 860, "y": 180 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    }
+  }
+}
