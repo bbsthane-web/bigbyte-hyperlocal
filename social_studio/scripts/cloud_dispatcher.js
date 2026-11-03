@@ -316,6 +316,152 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
 }
 
 // Main Execution Loop
+
+// YouTube Direct Shorts Publisher for Cloud Dispatcher
+async function getYouTubeAccessToken(clientId, clientSecret, refreshToken) {
+  const params = new URLSearchParams({
+    client_id: clientId,
+    client_secret: clientSecret,
+    refresh_token: refreshToken,
+    grant_type: 'refresh_token'
+  });
+
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  });
+
+  const data = await res.json();
+  if (data.access_token) return data.access_token;
+  throw new Error(data.error_description || data.error || 'Failed to refresh YouTube access token');
+}
+
+function dispatchYouTube(post, ytConfig, publicImageUrl, caption) {
+  return new Promise(async (resolve) => {
+    try {
+      const accessToken = await getYouTubeAccessToken(ytConfig.clientId, ytConfig.clientSecret, ytConfig.refreshToken);
+
+      let shortTitle = (post.title || "Big Byte Systems Diagnostic Lab").trim();
+      if (!shortTitle.toLowerCase().includes('#shorts')) shortTitle = `${shortTitle} #Shorts`;
+      if (shortTitle.length > 100) shortTitle = shortTitle.substring(0, 92) + " #Shorts";
+
+      const tags = [
+        "Shorts", "Laptop Repair Thane", "MacBook Repair Thane", "Computer Repair Near Me",
+        "Big Byte Systems", "Thane West", "Ghodbunder Road Laptop Repair", "Chip Level Motherboard Repair",
+        "Micro Soldering", "Laptop Screen Replacement Thane", "Data Recovery Thane", "Epson Printer Repair Thane"
+      ];
+
+      const scriptContent = (post.script || post.content || caption || "").trim();
+      const description = `⚡ ${shortTitle}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔬 LABORATORY CASE STUDY | BIG BYTE SYSTEMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${scriptContent}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 HYPERLOCAL LAB LOCATION & CONTACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏢 Laboratory: Big Byte Systems
+📍 Address: Shop No 1, Building No 1, Khewra Cir Marg, Manpada, Thane West, Maharashtra 400607
+📞 Direct Hotline: 090547 90592
+💬 Direct WhatsApp: https://wa.me/919167463807
+🌐 Official Website: https://bigbytesystems.co.in
+
+#Shorts #BigByteSystems #LaptopRepairThane #MacBookRepair #ThaneWest #TechLaboratory #ComputerRepairNearMe`;
+
+      // Resolve video file or fallback
+      let videoFile = resolveAsset(publicImageUrl || post.image);
+      if (!videoFile || !fs.existsSync(videoFile) || !videoFile.endsWith('.mp4')) {
+        // Fallback to precompiled reel
+        const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+        const fallbackReel = path.join(reelDir, 'reel_macbook_soldering.mp4');
+        if (fs.existsSync(fallbackReel)) videoFile = fallbackReel;
+      }
+
+      if (!videoFile || !fs.existsSync(videoFile)) {
+        console.warn('⚠️ [YOUTUBE NOTICE] No MP4 video asset found for Short upload.');
+        return resolve({ success: false, error: 'No MP4 video asset available for YouTube Short' });
+      }
+
+      const fileSize = fs.statSync(videoFile).size;
+
+      const metadata = JSON.stringify({
+        snippet: {
+          title: shortTitle,
+          description: description,
+          tags: tags,
+          categoryId: "28",
+          defaultLanguage: "en",
+          defaultAudioLanguage: "en"
+        },
+        status: {
+          privacyStatus: "public",
+          selfDeclaredMadeForKids: false
+        }
+      });
+
+      const https = require('https');
+      const initReq = https.request({
+        hostname: 'www.googleapis.com',
+        path: '/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status',
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Length': Buffer.byteLength(metadata),
+          'X-Upload-Content-Type': 'video/mp4',
+          'X-Upload-Content-Length': fileSize
+        }
+      }, (res) => {
+        const uploadLocation = res.headers['location'];
+        if (!uploadLocation) return resolve({ success: false, error: 'Failed to create resumable upload location' });
+
+        const locUrl = new URL(uploadLocation);
+        const videoStream = fs.createReadStream(videoFile);
+
+        const putReq = https.request({
+          protocol: locUrl.protocol,
+          hostname: locUrl.hostname,
+          port: locUrl.port || 443,
+          path: locUrl.pathname + locUrl.search,
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'video/mp4',
+            'Content-Length': fileSize
+          }
+        }, (putRes) => {
+          let putBody = '';
+          putRes.on('data', d => putBody += d);
+          putRes.on('end', () => {
+            try {
+              const vidData = JSON.parse(putBody);
+              if (vidData.id) {
+                console.log(`🚀 [CLOUD YOUTUBE] Video live at https://youtube.com/shorts/${vidData.id}`);
+                resolve({ success: true, id: vidData.id, url: `https://youtube.com/shorts/${vidData.id}` });
+              } else {
+                resolve({ success: false, error: putBody });
+              }
+            } catch (e) {
+              resolve({ success: false, error: e.message });
+            }
+          });
+        });
+
+        putReq.on('error', e => resolve({ success: false, error: e.message }));
+        videoStream.pipe(putReq);
+      });
+
+      initReq.on('error', e => resolve({ success: false, error: e.message }));
+      initReq.write(metadata);
+      initReq.end();
+    } catch (err) {
+      resolve({ success: false, error: err.message });
+    }
+  });
+}
+
 async function runCloudCycle() {
   console.log(`\n======================================================`);
   console.log(`🕒 [24/7 CLOUD AUTOPILOT] Cycle start at: ${new Date().toISOString()}`);
@@ -351,10 +497,16 @@ async function runCloudCycle() {
           : (p.content || p.title || '');
 
         let result = null;
+        const ytClientId = process.env.YOUTUBE_CLIENT_ID || config.youtubeClientId;
+        const ytClientSecret = process.env.YOUTUBE_CLIENT_SECRET || config.youtubeClientSecret;
+        const ytRefreshToken = process.env.YOUTUBE_REFRESH_TOKEN || config.youtubeRefreshToken;
+
         if (p.platform === 'facebook' && pageId) {
           result = await dispatchFacebook(p, pageId, token, p.image, caption);
         } else if (p.platform === 'instagram' && igAccountId) {
           result = await dispatchInstagram(p, igAccountId, token, p.image, caption);
+        } else if (p.platform === 'youtube' && ytClientId && ytClientSecret && ytRefreshToken) {
+          result = await dispatchYouTube(p, { clientId: ytClientId, clientSecret: ytClientSecret, refreshToken: ytRefreshToken }, p.image, caption);
         } else {
           console.log(`ℹ️ Platform ${p.platform} handled via direct API or fallback.`);
         }
