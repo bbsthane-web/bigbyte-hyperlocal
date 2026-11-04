@@ -48,7 +48,7 @@ const TOPIC_PRESETS = {
       '[0:18 - 0:25] Ultrasonically cleaned copper fin, Arctic MX-4 thermal paste applied in smooth diamond pattern.',
       '[0:25 - 0:30] Cinebench test: Fan runs whisper quiet, CPU temps drop from 98°C to 68°C!'
     ],
-    content: "Hear that jet-engine noise from your laptop? In coastal Thane, humidity bakes dust into a solid airflow block. Here is how deep ultrasonic heatsink cleaning and Arctic MX-4 thermal repasting dropped temps by 30°C!\n\n📍 Shop No 1, Khewra Circle Marg, Manpada, Thane West.\n📞 Call: 090547 90592\n💬 WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #LaptopCleaning #OverheatingFix #GhodbunderRoad #ThaneWest #TechTips"
+    content: "Hear that jet-engine noise from your laptop? In coastal Thane, humidity bakes dust into a solid airflow block. Here is how deep ultrasonic heatsink cleaning and Arctic MX-4 thermal repasting dropped temps by 30°C!\n\n📍 Shop No 1, Khewra Circle Marg, Manpada, Thane West.\n📞 Call: 090547 90592\n💬 WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #LaptopCleaning #OverheatingFix #GhodbunderRoad #ThaneWest #TechTips"
   },
   macbook: {
     platform: 'youtube',
@@ -62,7 +62,7 @@ const TOPIC_PRESETS = {
       '[0:20 - 0:26] Micro-soldering iron removes capacitor, clean pad replacement, thermal paste applied.',
       '[0:26 - 0:30] Power applied: ammeter jumps to 1.45A, famous Apple boot chime sounds!'
     ],
-    content: "Dead MacBook Pro that wouldn't power on! Instead of replacing the entire expensive logic board, we traced a shorted capacitor on the 19V rail using thermal imaging and micro-soldering.\n\n📍 Big Byte Systems — Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 WhatsApp Triage: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #MacBookRepair #LaptopRepairThane #MicroSoldering #ThaneWest #AppleRepair"
+    content: "Dead MacBook Pro that wouldn't power on! Instead of replacing the entire expensive logic board, we traced a shorted capacitor on the 19V rail using thermal imaging and micro-soldering.\n\n📍 Big Byte Systems — Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 WhatsApp Triage: https://bigbytesystems.co.in/chat\n\n#Shorts #MacBookRepair #LaptopRepairThane #MicroSoldering #ThaneWest #AppleRepair"
   },
   epson: {
     platform: 'gmb',
@@ -90,7 +90,7 @@ const TOPIC_PRESETS = {
       '[0:19 - 0:26] High-tensile structural epoxy reconstruction creating an anchor 3X stronger than factory plastic.',
       '[0:26 - 0:30] Smooth lid opening with zero bezel gap or screen wobble.'
     ],
-    content: "Save your laptop display before a broken hinge cracks your expensive screen! We rebuild internal screw anchors with reinforced structural epoxy and calibrate hinge friction.\n\n📍 Shop 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 Triage: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #LaptopHingeRepair #HardwareFix #ThaneCity #GhodbunderRoad #ComputerRepair"
+    content: "Save your laptop display before a broken hinge cracks your expensive screen! We rebuild internal screw anchors with reinforced structural epoxy and calibrate hinge friction.\n\n📍 Shop 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 Triage: https://bigbytesystems.co.in/chat\n\n#Shorts #LaptopHingeRepair #HardwareFix #ThaneCity #GhodbunderRoad #ComputerRepair"
   },
   spill: {
     platform: 'youtube',
@@ -104,7 +104,7 @@ const TOPIC_PRESETS = {
       '[0:19 - 0:26] Rapid ultrasonic bath in 99.9% electronic solvent removing residues.',
       '[0:26 - 0:30] Fully restored laptop running diagnostics with clean keyboard action.'
     ],
-    content: "Liquid spill emergency triage protocol! Rice won't neutralize acidic sugar deposits or mineral corrosion. Immediate power cut and laboratory ultrasonic cleaning is the only proven fix.\n\n📍 Big Byte Systems — Khewra Circle Marg, Manpada, Thane.\n📞 Emergency Desk: 090547 90592\n💬 Instant WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #LiquidSpillRepair #MacBookSpill #LaptopRepairThane #Manpada #TechEmergency"
+    content: "Liquid spill emergency triage protocol! Rice won't neutralize acidic sugar deposits or mineral corrosion. Immediate power cut and laboratory ultrasonic cleaning is the only proven fix.\n\n📍 Big Byte Systems — Khewra Circle Marg, Manpada, Thane.\n📞 Emergency Desk: 090547 90592\n💬 Instant WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #LiquidSpillRepair #MacBookSpill #LaptopRepairThane #Manpada #TechEmergency"
   },
   ssd: {
     platform: 'youtube',
@@ -118,7 +118,7 @@ const TOPIC_PRESETS = {
       '[0:19 - 0:26] Restart test: Windows 11 boots to desktop in 8.4 seconds flat!',
       '[0:26 - 0:30] Customer opens Chrome with 25 tabs instantly with zero lag.'
     ],
-    content: "Why spend large sums on a new laptop when an SSD speed boost makes your current machine boot in 8 seconds? Exact cloning means zero data loss.\n\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Upgrade Hotline: 090547 90592\n💬 WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #SSDUpgrade #SpeedBoost #LaptopRepairThane #ThaneWest #TechUpgrade"
+    content: "Why spend large sums on a new laptop when an SSD speed boost makes your current machine boot in 8 seconds? Exact cloning means zero data loss.\n\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Upgrade Hotline: 090547 90592\n💬 WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #SSDUpgrade #SpeedBoost #LaptopRepairThane #ThaneWest #TechUpgrade"
   },
   vhs: {
     platform: 'instagram',
@@ -132,7 +132,7 @@ const TOPIC_PRESETS = {
       '[0:20 - 0:26] Blackmagic Design capture card displaying crystal clear, jitter-free footage on PC.',
       '[0:26 - 0:30] Customer receives encrypted gold USB drive with high-bitrate MP4 files.'
     ],
-    content: "Don't let humidity destroy your parents' 90s wedding and childhood home movies! We clean mouldy magnetic tape ribbons and transfer VHS, MiniDV & Hi8 to modern USB drives.\n\n📍 Big Byte Systems, Shop 1, Khewra Circle Marg, Manpada, Thane.\n📞 Inquiries: 090547 90592\n💬 Direct WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #VHStoDigital #MemoriesRestored #VintageVideo #ThaneWest #FamilyHistory"
+    content: "Don't let humidity destroy your parents' 90s wedding and childhood home movies! We clean mouldy magnetic tape ribbons and transfer VHS, MiniDV & Hi8 to modern USB drives.\n\n📍 Big Byte Systems, Shop 1, Khewra Circle Marg, Manpada, Thane.\n📞 Inquiries: 090547 90592\n💬 Direct WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #VHStoDigital #MemoriesRestored #VintageVideo #ThaneWest #FamilyHistory"
   },
   cleanroom: {
     platform: 'youtube',
@@ -146,7 +146,7 @@ const TOPIC_PRESETS = {
       '[0:20 - 0:26] Head stack replacement under stereomicroscope with donor drive parts.',
       '[0:26 - 0:30] Hardware imager extracting raw bitstream clone with 99.8% customer data recovery success.'
     ],
-    content: "Hardware data recovery triage! If your external drive clicks, beeps, or isn't recognized, do not run consumer recovery software. Protect your platters and recover safely.\n\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Recovery Lab: 090547 90592\n💬 Direct WhatsApp: https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems%2C%20I%20need%20diagnostic%20triage%20for%20my%20device.\n\n#Shorts #DataRecovery #HardDriveClicking #PhotoRecovery #ThaneWest #TechLaboratory"
+    content: "Hardware data recovery triage! If your external drive clicks, beeps, or isn't recognized, do not run consumer recovery software. Protect your platters and recover safely.\n\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Recovery Lab: 090547 90592\n💬 Direct WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #DataRecovery #HardDriveClicking #PhotoRecovery #ThaneWest #TechLaboratory"
   },
   amc: {
     platform: 'linkedin',
@@ -599,7 +599,7 @@ function generateInstantAIContent() {
   } else if (platform === 'instagram') {
     content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.${aeoCapsule}\n\n📍 ${clientName} — Shop 1, Khewra Cir Marg, Near D-Mart, Manpada, Thane West.\n📞 Voice Support: ${phone}\n💬 WhatsApp / Triage: Tap Link in Bio (@bigbytessystem)\n\n#TechTips #Diagnostics #LaptopRepairThane #ThaneWest #HardwareService #Manpada`;
   } else {
-    content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.${aeoCapsule}\n\n📍 ${clientName} — Manpada, Thane West.\n📞 Hotline: ${phone}\n💬 Direct WhatsApp: https://wa.me/919167463807\n\n#TechTips #Diagnostics #ThaneWest #HardwareService`;
+    content = `${title}\n\nTransparent diagnostics and component-level repairs in Thane.${aeoCapsule}\n\n📍 ${clientName} — Manpada, Thane West.\n📞 Hotline: ${phone}\n💬 Direct WhatsApp: https://bigbytesystems.co.in/chat\n\n#TechTips #Diagnostics #ThaneWest #HardwareService`;
   }
 
   const hookInput = document.getElementById('newVideoHook');
@@ -1665,7 +1665,7 @@ function openTestModal() {
   if (!modal || !preview) return;
 
   const headline = '⚡ Multi-Platform Webhook Test (GMB + Facebook + Socials)';
-  const bodyText = `Live connectivity verification from Big Byte Systems Diagnostic Studio.\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: ${state.currentClient?.hotline || '090547 90592'}\n💬 WhatsApp: https://wa.me/919167463807`;
+  const bodyText = `Live connectivity verification from Big Byte Systems Diagnostic Studio.\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: ${state.currentClient?.hotline || '090547 90592'}\n💬 WhatsApp: https://bigbytesystems.co.in/chat`;
   const fullText = `${headline}\n\n${bodyText}`;
 
   const testPayload = {
@@ -1699,7 +1699,7 @@ async function executeTestDispatch() {
   if (btn) btn.textContent = 'Sending...';
 
   const headline = '⚡ Multi-Platform Webhook Test (GMB + Facebook + Socials)';
-  const bodyText = `Live connectivity verification from Big Byte Systems Diagnostic Studio.\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: ${state.currentClient?.hotline || '090547 90592'}\n💬 WhatsApp: https://wa.me/919167463807`;
+  const bodyText = `Live connectivity verification from Big Byte Systems Diagnostic Studio.\n📍 Shop 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: ${state.currentClient?.hotline || '090547 90592'}\n💬 WhatsApp: https://bigbytesystems.co.in/chat`;
   const fullText = `${headline}\n\n${bodyText}`;
 
   const testPayload = {

@@ -16,7 +16,7 @@ function synthesizeSpeech(text, outputWavPath) {
   try {
     const cleanText = text
       .replace(/[\r\n]+/g, ' ')
-      .replace(/[#*`"']/g, '')
+      .replace(/[^\w\s.,!?-]/g, ' ')
       .replace(/https?:\/\/[^\s]+/g, '')
       .replace(/\s+/g, ' ')
       .trim();
@@ -25,9 +25,24 @@ function synthesizeSpeech(text, outputWavPath) {
 
     const safeWav = outputWavPath.replace(/\\/g, '/');
     const safeText = cleanText.substring(0, 500);
-    const psCommand = `powershell -NoProfile -Command "Add-Type -AssemblyName System.Speech; $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; $s.Rate = 0; $s.SetOutputToWaveFile('${safeWav}'); $s.Speak('${safeText}'); $s.Dispose();"`;
-    
-    execSync(psCommand, { stdio: 'pipe', timeout: 20000 });
+    const tempPs1 = path.join(path.dirname(outputWavPath), `tts_${Date.now()}.ps1`);
+    const psScript = `
+Add-Type -AssemblyName System.Speech
+$s = New-Object System.Speech.Synthesis.SpeechSynthesizer
+$s.Rate = 0
+$s.SetOutputToWaveFile('${safeWav}')
+$s.Speak(@"
+${safeText}
+"@)
+$s.Dispose()
+`;
+    fs.writeFileSync(tempPs1, psScript, 'utf8');
+    try {
+      execSync(`powershell -NoProfile -ExecutionPolicy Bypass -File "${tempPs1}"`, { stdio: 'pipe', timeout: 20000 });
+    } finally {
+      if (fs.existsSync(tempPs1)) fs.unlinkSync(tempPs1);
+    }
+
     return fs.existsSync(outputWavPath) && fs.statSync(outputWavPath).size > 1000;
   } catch (err) {
     console.warn(`⚠️ [TTS ENGINE] Speech synthesis note: ${err.message}`);
@@ -62,7 +77,7 @@ function generateReelVideoFromImage(imagePath, outputMp4Path, durationSec = 15, 
     audioInput = `-i "${wavPath}"`;
   }
 
-  const cmd = `"${ffmpegPath}" -y -loop 1 -i "${imagePath}" ${audioInput} -c:v libx264 -pix_fmt yuv420p -vf "${filter}" -c:a aac -b:a 192k -shortest "${outputMp4Path}"`;
+  const cmd = `"${ffmpegPath}" -y -loop 1 -i "${imagePath}" ${audioInput} -c:v libx264 -pix_fmt yuv420p -vf "${filter}" -c:a aac -b:a 192k -ar 44100 -ac 2 -shortest "${outputMp4Path}"`;
 
   console.log(`🎬 [REEL ENGINE] Compiling 9:16 MP4 video Short with audio: ${path.basename(outputMp4Path)}...`);
   execSync(cmd, { stdio: 'pipe' });

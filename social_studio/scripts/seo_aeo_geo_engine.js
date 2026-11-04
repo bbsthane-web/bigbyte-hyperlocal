@@ -63,13 +63,19 @@ function cleanCaptionForInstagram(caption) {
 /**
  * Sanitizes captions for Facebook:
  * - Facebook supports direct hyperlinks
+ * - Masks direct WhatsApp phone numbers with privacy vanity redirect
+ * - Updates Google Maps to verified short URL
  */
 function cleanCaptionForFacebook(caption) {
   if (!caption) return '';
   let clean = caption;
 
-  // Ensure clean WhatsApp link without messy query strings
-  clean = clean.replace(/https?:\/\/wa\.me\/919167463807\?text=[^\s\n]+/gi, 'https://wa.me/919167463807');
+  // Mask WhatsApp links to vanity redirect URL (Hides direct phone number)
+  clean = clean.replace(/https?:\/\/wa\.me\/[^\s\n]+/gi, 'https://bigbytesystems.co.in/chat');
+  clean = clean.replace(/https?:\/\/api\.whatsapp\.com\/[^\s\n]+/gi, 'https://bigbytesystems.co.in/chat');
+
+  // Ensure Google Maps uses verified permanent link
+  clean = clean.replace(/https?:\/\/maps\.google\.com\/\?cid=[^\s\n]+/gi, 'https://share.google/qoQk9AHu9lm7UxlAH');
 
   clean = clean.replace(/\n{3,}/g, '\n\n').trim();
   return clean;
