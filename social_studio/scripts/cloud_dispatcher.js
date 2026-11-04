@@ -12,6 +12,7 @@ const path = require('path');
 const ROOT_DIR = path.resolve(__dirname, '..');
 const CONFIG_FILE = path.join(ROOT_DIR, 'data', 'config.json');
 const POSTS_FILE = path.join(ROOT_DIR, 'data', 'posts.json');
+const PUBLIC_DIR = path.join(ROOT_DIR, 'public');
 
 const { uploadToFreeCdn } = require('./cdn_relay.js');
 const { generateReelVideoFromImage } = require('./reel_generator.js');
@@ -475,8 +476,7 @@ async function runCloudCycle() {
   const token = process.env.META_ACCESS_TOKEN || config.facebookPageAccessToken || config.metaSystemUserToken;
 
   if (!token) {
-    console.error(`❌ [CLOUD AUTOPILOT] No Meta Access Token configured!`);
-    process.exit(1);
+    console.warn(`⚠️ [CLOUD AUTOPILOT NOTICE] Meta Access Token not detected in environment or config. Meta posts will be skipped until configured.`);
   }
 
   const now = new Date();

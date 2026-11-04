@@ -9,7 +9,7 @@ data/queries/*.txt
 test_results.json
 
 # Credentials and local state
-**/data/config.json
+# **/data/config.json (allowed in private repo)
 *.env
 *.pem
 *.key
