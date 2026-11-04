@@ -23,7 +23,7 @@ jobs:
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: 🎬 Install FFmpeg (For Zero-Expense 9:16 Reel Video Compilation)
         run: |
@@ -33,7 +33,7 @@ jobs:
       - name: 📦 Install Node Dependencies
         run: |
           cd social_studio
-          npm install --omit=dev
+          npm install --omit=dev --no-save
 
       - name: 🚀 Run Autonomous Cloud Dispatcher
         env:
@@ -51,5 +51,11 @@ jobs:
         run: |
           git config --global user.name "SocialStudioAutopilot[bot]"
           git config --global user.email "autopilot@bigbytesystems.co.in"
-          git add social_studio/data/posts.json social_studio/public/assets/reels/*.mp4 || true
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 [Autopilot] Published scheduled posts & synced Reels [skip ci]" && git push)
+          git add social_studio/data/posts.json social_studio/public/assets/reels/ 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            echo "Publish updates detected. Committing and pushing to repository..."
+            git commit -m "🤖 [Autopilot] Published scheduled posts & synced Reels [skip ci]"
+            git push
+          else
+            echo "✅ All scheduled posts up to date. Zero database changes in this cycle."
+          fi
