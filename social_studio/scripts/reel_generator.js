@@ -77,7 +77,7 @@ function generateReelVideoFromImage(imagePath, outputMp4Path, durationSec = 15, 
     audioInput = `-i "${wavPath}"`;
   }
 
-  const cmd = `"${ffmpegPath}" -y -loop 1 -i "${imagePath}" ${audioInput} -c:v libx264 -pix_fmt yuv420p -vf "${filter}" -c:a aac -b:a 192k -ar 44100 -ac 2 -shortest "${outputMp4Path}"`;
+  const cmd = `"${ffmpegPath}" -y -loop 1 -i "${imagePath}" ${audioInput} -c:v libx264 -preset veryfast -pix_fmt yuv420p -vf "${filter}" -c:a aac -b:a 192k -ar 44100 -ac 2 -shortest "${outputMp4Path}"`;
 
   console.log(`🎬 [REEL ENGINE] Compiling 9:16 MP4 video Short with audio: ${path.basename(outputMp4Path)}...`);
   execSync(cmd, { stdio: 'pipe' });

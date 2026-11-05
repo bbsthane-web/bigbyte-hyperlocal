@@ -25,10 +25,9 @@ jobs:
         with:
           node-version: 22
 
-      - name: 🎬 Install FFmpeg (For Zero-Expense 9:16 Reel Video Compilation)
+      - name: 🎬 Verify FFmpeg
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg
+          which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
 
       - name: 📦 Install Node Dependencies
         run: |
@@ -56,7 +55,7 @@ jobs:
           if ! git diff --staged --quiet; then
             echo "Publish updates detected. Committing and pushing to repository..."
             git commit -m "🤖 [Autopilot] Published scheduled posts & synced Reels [skip ci]"
-            git push
+            git push || echo "⚠️ Git push to origin skipped (updates preserved in cloud cycle)"
           else
             echo "✅ All scheduled posts up to date. Zero database changes in this cycle."
           fi

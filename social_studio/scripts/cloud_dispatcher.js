@@ -49,18 +49,37 @@ function resolveAsset(imagePath) {
 // Direct Facebook Page Dispatcher
 function dispatchFacebook(post, pageId, token, imageUrl, caption) {
   return new Promise((resolve) => {
-    const localFile = resolveAsset(imageUrl || post.image);
+    const reelDir = path.join(ROOT_DIR, 'public', 'assets', 'reels');
+    let localFile = resolveAsset(imageUrl || post.image);
+    const cleanBase = localFile ? path.basename(localFile, path.extname(localFile)) : `fb_${post.id}`;
+    
+    const candidates = [
+      path.join(reelDir, `reel_${post.id}.mp4`),
+      path.join(reelDir, `reel_${cleanBase}.mp4`),
+      path.join(reelDir, `${cleanBase}.mp4`)
+    ];
+    const videoReel = (localFile && localFile.endsWith('.mp4')) ? localFile : candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+    const isVideo = Boolean(videoReel && (post.mediaFormat === 'VIDEO' || post.mediaFormat === 'REELS' || (post.image && post.image.endsWith('.mp4'))));
+    const targetFile = isVideo ? videoReel : localFile;
     const cleanCaption = cleanCaptionForFacebook(caption);
 
     // Direct Multipart Buffer
-    if (localFile && fs.existsSync(localFile)) {
-      console.log(`📦 [CLOUD FB] Direct uploading local file: ${path.basename(localFile)}`);
+    if (targetFile && fs.existsSync(targetFile)) {
+      const isMp4 = targetFile.endsWith('.mp4');
+      console.log(`📦 [CLOUD FB] Direct uploading ${isMp4 ? 'VIDEO REEL with stereo sound' : 'high-res photo'}: ${path.basename(targetFile)}`);
       const boundary = '----NodeFormBoundary' + Math.random().toString(36).substring(2);
       const crlf = '\r\n';
-      const fileBuf = fs.readFileSync(localFile);
-      const filename = path.basename(localFile);
+      const fileBuf = fs.readFileSync(targetFile);
+      const filename = path.basename(targetFile);
 
-      const parts = [
+      const parts = isMp4 ? [
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="description"${crlf}${crlf}${cleanCaption}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${token}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: video/mp4${crlf}${crlf}`),
+        fileBuf,
+        Buffer.from(crlf),
+        Buffer.from(`--${boundary}--${crlf}`)
+      ] : [
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="message"${crlf}${crlf}${cleanCaption}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${token}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: image/jpeg${crlf}${crlf}`),
@@ -69,11 +88,12 @@ function dispatchFacebook(post, pageId, token, imageUrl, caption) {
         Buffer.from(`--${boundary}--${crlf}`)
       ];
       const payload = Buffer.concat(parts);
+      const apiPath = isMp4 ? `/v26.0/${encodeURIComponent(pageId)}/videos` : `/v26.0/${encodeURIComponent(pageId)}/photos`;
 
       const req = https.request({
         hostname: 'graph.facebook.com',
         port: 443,
-        path: `/v26.0/${encodeURIComponent(pageId)}/photos`,
+        path: apiPath,
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data; boundary=' + boundary,
@@ -86,7 +106,7 @@ function dispatchFacebook(post, pageId, token, imageUrl, caption) {
           try {
             const parsed = JSON.parse(body);
             if (parsed.id || parsed.post_id) {
-              console.log(`🚀 [CLOUD FB SUCCESS] Post published! Post ID: ${parsed.post_id || parsed.id}`);
+              console.log(`🚀 [CLOUD FB SUCCESS] Post published live to Facebook! (${isMp4 ? 'Video Reel with Sound' : 'Photo Post'} ID: ${parsed.post_id || parsed.id})`);
               return resolve({ success: true, id: parsed.post_id || parsed.id });
             }
             resolve({ success: false, error: parsed.error?.message || body });
@@ -160,14 +180,22 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
         const reelDir = path.join(ROOT_DIR, 'public', 'assets', 'reels');
         if (!fs.existsSync(reelDir)) fs.mkdirSync(reelDir, { recursive: true });
         const cleanBase = path.basename(localFile, path.extname(localFile));
-        const reelVideoPath = path.join(reelDir, `reel_${cleanBase}.mp4`);
-        if (!fs.existsSync(reelVideoPath) || fs.statSync(reelVideoPath).size < 1000) {
-          console.log(`🎬 [CLOUD IG] Converting "${filename}" to interactive 9:16 vertical Reel MP4 video via FFmpeg...`);
-          generateReelVideoFromImage(localFile, reelVideoPath, 15);
+        const candidates = [
+          path.join(reelDir, `reel_${post.id}.mp4`),
+          path.join(reelDir, `reel_${cleanBase}.mp4`),
+          path.join(reelDir, `${cleanBase}.mp4`)
+        ];
+        let found = candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+        if (!found) {
+          console.log(`🎬 [CLOUD IG] Converting "${filename}" to interactive 9:16 vertical Reel MP4 video with stereo audio...`);
+          generateReelVideoFromImage(localFile, candidates[0], 15, post.script || post.content);
+          if (fs.existsSync(candidates[0])) found = candidates[0];
         }
-        localFile = reelVideoPath;
-        filename = path.basename(localFile);
-        isVideo = true;
+        if (found) {
+          localFile = found;
+          filename = path.basename(localFile);
+          isVideo = true;
+        }
       } catch (err) {
         console.warn(`⚠️ [CLOUD IG REEL NOTICE] Video compilation skipped: ${err.message}. Proceeding with photo.`);
         isVideo = false;
@@ -373,13 +401,32 @@ ${scriptContent}
 
 #Shorts #BigByteSystems #LaptopRepairThane #MacBookRepair #ThaneWest #TechLaboratory #ComputerRepairNearMe`;
 
-      // Resolve video file or fallback
-      let videoFile = resolveAsset(publicImageUrl || post.image);
-      if (!videoFile || !fs.existsSync(videoFile) || !videoFile.endsWith('.mp4')) {
-        // Fallback to precompiled reel
-        const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
-        const fallbackReel = path.join(reelDir, 'reel_macbook_soldering.mp4');
-        if (fs.existsSync(fallbackReel)) videoFile = fallbackReel;
+      // Resolve video file: check precompiled reels first
+      let localFile = resolveAsset(publicImageUrl || post.image);
+      const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+      const cleanBase = localFile ? path.basename(localFile, path.extname(localFile)) : `yt_${post.id || Date.now()}`;
+
+      const candidates = [
+        path.join(reelDir, `reel_${post.id}.mp4`),
+        path.join(reelDir, `reel_${cleanBase}.mp4`),
+        path.join(reelDir, `reel_reel_${cleanBase}.mp4`),
+        path.join(reelDir, `${cleanBase}.mp4`),
+        path.join(reelDir, 'reel_post_bb_01.mp4')
+      ];
+
+      let videoFile = (localFile && localFile.endsWith('.mp4') && fs.existsSync(localFile))
+        ? localFile
+        : candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+
+      if (!videoFile && localFile) {
+        const targetReel = candidates[0];
+        try {
+          console.log(`🎬 [CLOUD YOUTUBE] Compiling 9:16 vertical video Short with stereo audio from ${path.basename(localFile)}...`);
+          generateReelVideoFromImage(localFile, targetReel, 15, post.script || post.content);
+          if (fs.existsSync(targetReel)) videoFile = targetReel;
+        } catch (e) {
+          console.warn(`⚠️ [CLOUD YOUTUBE] Video generation note: ${e.message}`);
+        }
       }
 
       if (!videoFile || !fs.existsSync(videoFile)) {

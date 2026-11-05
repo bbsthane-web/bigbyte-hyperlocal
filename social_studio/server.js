@@ -82,20 +82,38 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
   const pageAccessToken = fbConfig.pageAccessToken;
   if (!pageId || !pageAccessToken) return Promise.resolve(null);
 
-  const localFile = resolveLocalAssetPath(publicImageUrl || post.image);
+  const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+  let localFile = resolveLocalAssetPath(publicImageUrl || post.image);
+  const cleanBase = localFile ? path.basename(localFile, path.extname(localFile)) : `fb_${post.id}`;
+  
+  const candidates = [
+    path.join(reelDir, `reel_${post.id}.mp4`),
+    path.join(reelDir, `reel_${cleanBase}.mp4`),
+    path.join(reelDir, `${cleanBase}.mp4`)
+  ];
+  const videoReel = (localFile && localFile.endsWith('.mp4')) ? localFile : candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+  const isVideo = Boolean(videoReel && (post.mediaFormat === 'VIDEO' || post.mediaFormat === 'REELS' || (post.image && post.image.endsWith('.mp4'))));
+  const targetFile = isVideo ? videoReel : localFile;
 
   return new Promise((resolve) => {
     const https = require('https');
 
-    // Case 1: Local file on disk -> Send direct multipart binary buffer! (Zero URL dependency)
-    if (localFile && fs.existsSync(localFile)) {
-      console.log(`📦 [DIRECT META GRAPH API] Uploading exact local binary image "${path.basename(localFile)}" directly to Facebook Page ${pageId}...`);
+    // Case 1: Local file on disk -> Send direct multipart binary buffer! (Video Reel with Sound or High-Res Photo)
+    if (targetFile && fs.existsSync(targetFile)) {
       const boundary = '----NodeFormBoundary' + Math.random().toString(36).substring(2);
       const crlf = '\r\n';
-      const fileBuf = fs.readFileSync(localFile);
-      const filename = path.basename(localFile);
+      const fileBuf = fs.readFileSync(targetFile);
+      const filename = path.basename(targetFile);
+      const isMp4 = filename.endsWith('.mp4');
 
-      const parts = [
+      const parts = isMp4 ? [
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="description"${crlf}${crlf}${caption}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${pageAccessToken}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: video/mp4${crlf}${crlf}`),
+        fileBuf,
+        Buffer.from(crlf),
+        Buffer.from(`--${boundary}--${crlf}`)
+      ] : [
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="message"${crlf}${crlf}${caption}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${pageAccessToken}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: image/jpeg${crlf}${crlf}`),
@@ -104,11 +122,14 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
         Buffer.from(`--${boundary}--${crlf}`)
       ];
       const payload = Buffer.concat(parts);
+      const apiPath = isMp4 ? `/v26.0/${encodeURIComponent(pageId)}/videos` : `/v26.0/${encodeURIComponent(pageId)}/photos`;
 
-      const photoReq = https.request({
+      console.log(`📦 [DIRECT META GRAPH API] Uploading ${isMp4 ? 'VIDEO REEL with stereo sound' : 'high-res photo'} "${filename}" directly to Facebook Page ${pageId}...`);
+
+      const fbReq = https.request({
         hostname: 'graph.facebook.com',
         port: 443,
-        path: `/v26.0/${encodeURIComponent(pageId)}/photos`,
+        path: apiPath,
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data; boundary=' + boundary,
@@ -121,19 +142,19 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
           try {
             const parsed = JSON.parse(body);
             if (parsed.id || parsed.post_id) {
-              console.log(`🚀 [DIRECT META GRAPH API] Success! Exact local image "${post.title}" published live to Facebook Page ${pageId}! (Post ID: ${parsed.post_id || parsed.id})`);
-              return resolve({ success: true, directApi: true, id: parsed.id, postId: parsed.post_id });
+              console.log(`🚀 [DIRECT META GRAPH API] Success! "${post.title}" published live to Facebook! (${isMp4 ? 'Video Reel with Sound' : 'Photo Post'} ID: ${parsed.post_id || parsed.id})`);
+              return resolve({ success: true, directApi: true, id: parsed.id, postId: parsed.post_id, isVideo: isMp4 });
             }
-            console.warn(`⚠️ [DIRECT FB PHOTO FAILED] ${parsed.error?.message || body}`);
+            console.warn(`⚠️ [DIRECT FB FAILED] ${parsed.error?.message || body}`);
             resolve({ success: false, error: parsed.error?.message || body });
           } catch (e) {
             resolve({ success: false, error: e.message });
           }
         });
       });
-      photoReq.on('error', e => resolve({ success: false, error: e.message }));
-      photoReq.write(payload);
-      photoReq.end();
+      fbReq.on('error', e => resolve({ success: false, error: e.message }));
+      fbReq.write(payload);
+      fbReq.end();
       return;
     }
 
