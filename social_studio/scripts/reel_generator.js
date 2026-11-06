@@ -10,7 +10,8 @@ try {
 }
 
 /**
- * Synthesizes spoken audio from text using native Windows System.Speech
+ * Synthesizes spoken audio from text using soothing Indian Neural TTS (Edge-TTS Neerja/Prabhat)
+ * Falls back to System.Speech if offline.
  */
 function synthesizeSpeech(text, outputWavPath) {
   try {
@@ -23,6 +24,24 @@ function synthesizeSpeech(text, outputWavPath) {
 
     if (!cleanText) return false;
 
+    // Primary: Soothing Indian Neural TTS via Python edge-tts
+    const ttsPy = path.join(__dirname, 'neural_tts.py');
+    const tempTxt = path.join(path.dirname(outputWavPath), `tts_prompt_${Date.now()}.txt`);
+    fs.writeFileSync(tempTxt, cleanText, 'utf8');
+
+    try {
+      execSync(`python "${ttsPy}" "${tempTxt}" "${outputWavPath}" en-IN-NeerjaExpressiveNeural`, { stdio: 'pipe', timeout: 25000 });
+      if (fs.existsSync(outputWavPath) && fs.statSync(outputWavPath).size > 1000) {
+        console.log(`🎙️ [NEURAL INDIAN TTS] Soothing human voice generated: ${path.basename(outputWavPath)} (${fs.statSync(outputWavPath).size} bytes)`);
+        return true;
+      }
+    } catch (neuralErr) {
+      console.warn(`⚠️ [NEURAL TTS NOTICE] Primary neural synthesis note: ${neuralErr.message}`);
+    } finally {
+      if (fs.existsSync(tempTxt)) try { fs.unlinkSync(tempTxt); } catch (_) {}
+    }
+
+    // Fallback: Windows System.Speech
     const safeWav = outputWavPath.replace(/\\/g, '/');
     const safeText = cleanText.substring(0, 500);
     const tempPs1 = path.join(path.dirname(outputWavPath), `tts_${Date.now()}.ps1`);
