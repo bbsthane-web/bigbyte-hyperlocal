@@ -126,7 +126,7 @@
     "clientName": "Big Byte Systems",
     "day": 17,
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-06",
     "time": "11:30",
     "title": "☕ Chai Spilled On Your Laptop? The 3 Mistakes That Kill It Instantly",
@@ -141,7 +141,11 @@
     "script": "When tea or water enters your laptop, electric current flowing through mineral liquid causes instant galvanic corrosion that eats copper traces in minutes! Never plug it in, and never use rice. Disconnect the battery immediately and bring it to an electronics laboratory for ultrasonic decontamination. Big Byte Systems, Manpada, Thane West.",
     "content": "Liquid spill emergency triage protocol! Rice won't neutralize acidic sugar deposits or mineral corrosion. Immediate power cut and laboratory ultrasonic cleaning is the only proven fix.\n\n📍 Big Byte Systems — Khewra Circle Marg, Manpada, Thane.\n📞 Emergency Desk: 090547 90592\n💬 Instant WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #LiquidSpillRepair #MacBookSpill #LaptopRepairThane #Manpada #TechEmergency",
     "image": "/assets/reel_liquid_spill.jpg",
-    "mediaUrl": "/assets/reel_liquid_spill.jpg"
+    "mediaUrl": "/assets/reel_liquid_spill.jpg",
+    "publishedAt": "2026-11-06T10:57:36.817Z",
+    "cloudDispatched": true,
+    "publishedUrl": "https://youtube.com/shorts/DqWJL43qh1Y",
+    "publishedId": "DqWJL43qh1Y"
   },
   {
     "id": "post_bb_07",
@@ -259,7 +263,7 @@
     "clientName": "Big Byte Systems",
     "day": 6,
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-11",
     "time": "11:30",
     "title": "📍 Epson & HP Printer Service Lab, Thane",
@@ -268,7 +272,8 @@
     "auditPassed": true,
     "auditIssues": [],
     "auditWarnings": [],
-    "mediaUrl": "/assets/reel_printer_repair.jpg"
+    "mediaUrl": "/assets/reel_printer_repair.jpg",
+    "publishedAt": "2026-11-06T11:00:19.082Z"
   },
   {
     "id": "post_bb_13",
@@ -426,14 +431,16 @@
     "clientName": "Big Byte Systems",
     "day": 15,
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-18",
     "time": "11:30",
     "title": "⚡ 10X Faster Boot Time: SSD Upgrades With 100% File Protection",
     "content": "Don't discard an old laptop just because it's slow! A high-speed Solid State Drive upgrade with exact 1-to-1 cloning will have your PC booting in 8 seconds flat.\n\n📍 Shop 1, Khewra Circle Marg, Manpada, Thane\n📞 Upgrade Hotline: 090547 90592\n💬 WhatsApp link in bio\n\n#SSDUpgrade #SpeedBoost #TechHacks #LaptopRepairThane #ManpadaThane #FastPC",
     "image": "/assets/reel_ssd_speedup.jpg",
     "mediaUrl": "/assets/reel_ssd_speedup.jpg",
-    "mediaFormat": "REELS"
+    "mediaFormat": "REELS",
+    "publishedAt": "2026-11-06T11:00:02.659Z",
+    "publishedId": "18502801219099041"
   },
   {
     "id": "post_bb_23",
@@ -628,7 +635,7 @@
     "clientName": "Big Byte Systems",
     "day": 12,
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-26",
     "time": "11:30",
     "title": "📼 Preserve 90s Wedding VHS Tapes Before Fungus Destroys Them",
@@ -642,7 +649,9 @@
     "script": "Thane monsoon moisture creates magnetic tape mould that snaps old VHS and Hi8 tapes if played directly. Our precision laboratory cleaning safely de-moulds the ribbon and digitizes your priceless family memories into pristine 1080p MP4. Preserve your legacy before tapes demagnetize. Big Byte Systems, Manpada.",
     "content": "Thane humidity causes white mold to grow inside vintage VHS, Hi8, and MiniDV cassette tapes. Playing them in old VCRs will snap the brittle tape ribbons!\n\nOur laboratory uses gentle microfiber de-moulding baths and broadcast-grade time base correctors to digitize your parents' wedding and childhood memories into pristine 1080p MP4 on USB.\n\n📍 Shop No 1, Khewra Cir Marg, Manpada, Thane.\n📞 Inquiries: 090547 90592\n💬 Direct WhatsApp: https://bigbytesystems.co.in/chat\n\n#VHStoDigital #MemoriesRestored #ThaneWest #VintageRestoration #FamilyHistory",
     "image": "/assets/blog_vhs_conversion.jpg",
-    "mediaUrl": "/assets/blog_vhs_conversion.jpg"
+    "mediaUrl": "/assets/blog_vhs_conversion.jpg",
+    "publishedAt": "2026-11-06T10:59:12.930Z",
+    "publishedId": "1310878978775789_122128218153461791"
   },
   {
     "id": "post_fb_05",

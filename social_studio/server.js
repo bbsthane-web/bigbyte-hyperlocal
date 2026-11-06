@@ -955,9 +955,9 @@ setInterval(() => {
 
   posts.forEach(p => {
     if (p.status === 'Scheduled' && p.date && p.time) {
-      const [year, month, day] = p.date.split('-').map(Number);
-      const [h, m] = p.time.split(':').map(Number);
-      const postTime = new Date(year, month - 1, day, h || 10, m || 0).getTime();
+      // Explicit IST (Indian Standard Time, UTC+5:30) parsing
+      const timeStr = (p.time || '10:00').trim().padStart(5, '0');
+      const postTime = new Date(`${p.date}T${timeStr}:00+05:30`).getTime();
 
       if (now.getTime() >= postTime) {
         console.log(`⏰ [TRIGGER] Scheduled time reached for: ${p.title} (${p.platform.toUpperCase()})`);
