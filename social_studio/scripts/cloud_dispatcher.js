@@ -555,8 +555,9 @@ function dispatchGmb(post, config, imageUrl, rawCaption) {
       if (!publicImageUrl || !publicImageUrl.startsWith('http')) {
         const localFile = resolveAsset(imageUrl || post.image);
         if (localFile && fs.existsSync(localFile)) {
-          const cdnResult = await uploadToFreeCdn(localFile);
-          if (cdnResult.success) publicImageUrl = cdnResult.url;
+          // Prioritize permanent high-trust domain asset for Google Business Profile
+          const filename = path.basename(localFile);
+          publicImageUrl = `https://bigbytesystems.co.in/assets/${filename}`;
         }
       }
 
@@ -564,7 +565,9 @@ function dispatchGmb(post, config, imageUrl, rawCaption) {
         id: post.id || `post_${Date.now()}`,
         clientId: post.clientId || "client_bigbyte",
         clientName: "Big Byte Systems",
-        platform: "gmb",
+        platform: "GMB",
+        Platform: "GMB",
+        platform_lower: "gmb",
         title: gmbCleanTitle,
         gmbTitle: gmbCleanTitle,
         content: gmbCleanContent,
