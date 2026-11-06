@@ -1,0 +1,21 @@
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+
+# LLM & AI Search Index
+# https://bigbytesystems.co.in/llms.txt
+# https://bigbytesystems.co.in/llms-full.txt
+
+Sitemap: https://bigbytesystems.co.in/sitemap.xml
+Sitemap: https://bigbytesystems.co.in/sitemap_index.xml
