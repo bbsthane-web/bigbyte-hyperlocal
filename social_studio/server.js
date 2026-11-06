@@ -1017,8 +1017,8 @@ const server = http.createServer((req, res) => {
     });
   }
 
-  // Masked Vanity Redirect for WhatsApp Lab Triage (Zero Phone Number Leak)
-  if (pathname === '/chat' || pathname === '/whatsapp' || pathname === '/wa') {
+  // Masked Vanity Redirect for Direct WhatsApp (Zero Phone Number Leak)
+  if (pathname === '/whatsapp' || pathname === '/wa') {
     res.writeHead(302, { 'Location': 'https://wa.me/919167463807' });
     return res.end();
   }
@@ -2096,6 +2096,12 @@ const server = http.createServer((req, res) => {
 
   // --- STATIC FILE SERVING ---
   let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
+
+  // Handle directory requests (e.g. /chat or /chat/)
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  }
+
   const ext = path.extname(filePath).toLowerCase();
 
   // If path doesn't have an extension, try adding .html
