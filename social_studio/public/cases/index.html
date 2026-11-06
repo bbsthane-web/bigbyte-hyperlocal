@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratory Diagnostic Case Studies | Big Byte Systems Thane</title>
+  <meta name="description" content="Explore documented technical repair case studies from Big Byte Systems laboratory in Thane West. Micro-soldering, hinge repair, printer recovery, and cleanroom data recovery.">
+  <link rel="canonical" href="https://bigbytesystems.co.in/cases/">
+  <link rel="alternate" type="text/markdown" title="LLM Knowledge Graph" href="/llms.txt">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f97316;
+      --dark: #0b1120;
+      --text: #0f172a;
+      --muted: #475569;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      padding-bottom: 70px;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Topbar */
+    .topbar {
+      background: var(--dark);
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      padding: 10px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .topbar a { color: #38bdf8; font-weight: 700; }
+
+    /* Header */
+    header.site-header {
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      padding: 12px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 12px; }
+    .brand-title { font-size: 1.3rem; font-weight: 800; color: var(--dark); }
+    .brand-title span { color: var(--primary); }
+    .brand-tagline { font-size: 0.75rem; color: var(--muted); }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .btn-wa { background: #25D366; color: white; }
+    .btn-call { background: var(--primary); color: white; }
+    .btn-chat { background: #6366f1; color: white; }
+
+    /* Hero */
+    .gallery-hero {
+      background: linear-gradient(135deg, #0b1120 0%, #1e293b 100%);
+      color: white;
+      padding: 50px 5% 40px;
+      text-align: center;
+    }
+    .gallery-hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+    .gallery-hero p { max-width: 700px; margin: 0 auto; color: #cbd5e1; font-size: 1.05rem; }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+
+    /* Cards Grid */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .case-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    }
+    .card-img-wrap {
+      height: 200px;
+      background: #e2e8f0;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(11, 17, 32, 0.85);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      text-transform: uppercase;
+    }
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .card-symptom {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .card-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .card-btn {
+      color: var(--primary);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Sticky Bottom Mobile Bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      padding: 10px 16px;
+      gap: 12px;
+      z-index: 9999;
+    }
+    .sticky-bar a {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>📍 <strong>Big Byte Systems Laboratory:</strong> Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West 400607</div>
+    <div>📞 Lab Hotline: <a href="tel:09054790592">090547 90592</a></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand-wrap">
+      <div>
+        <a href="/" class="brand-title">Big Byte <span>Systems</span></a>
+        <div class="brand-tagline">Hardware Diagnostics & Component-Level Lab</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="/chat" class="btn btn-chat">💬 Interactive Advisor</a>
+      <a href="tel:09054790592" class="btn btn-call">📞 Call Lab</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="gallery-hero">
+    <h1>🔬 Laboratory Case Studies & Bench Records</h1>
+    <p>Real-world component-level micro-soldering, hinge reconstruction, printer sponge resets, and cleanroom data recovery records from our Thane West diagnostic laboratory.</p>
+  </section>
+
+  <!-- Content -->
+  <main class="container">
+    <div class="cases-grid">
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_macbook_soldering.jpg" alt="Dead MacBook Pro Saved: 19V Shorted Capacitor Traced & Repaired" loading="lazy">
+          <div class="card-badge">MacBook Logic Board</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/dead-macbook-pro-shorted-capacitor-logic-board-repair-thane.html">Dead MacBook Pro Logic Board Saved</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Completely dead, no chime, zero power draw (0.00A on USB-C ammeter) after charger spark.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 24 Hours</span>
+            <a href="/cases/dead-macbook-pro-shorted-capacitor-logic-board-repair-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_fan_cleaning.jpg" alt="Coastal Thane Humidity & Dust: Laptop Fan Overheating Thermal Servicing" loading="lazy">
+          <div class="card-badge">Thermal & Cooling</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/laptop-overheating-fan-thermal-paste-servicing-thane.html">Laptop Thermal Overheating & Fan Overhaul</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Laptop thermal throttling, fan roaring at 100%, sudden thermal shutdown after 15 mins of gaming/coding.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (45 Mins)</span>
+            <a href="/cases/laptop-overheating-fan-thermal-paste-servicing-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_printer_repair.jpg" alt="Epson EcoTank Alternating Red Light Blinking: Waste Ink Sponge Reset" loading="lazy">
+          <div class="card-badge">Printer Servicing</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/epson-ecotank-red-light-blinking-waste-pad-reset-thane.html">Epson EcoTank Waste Ink Counter Reset</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Power and ink lights blinking alternately, printer stopped midway with 'Service Required' error on desktop.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (2 Hours)</span>
+            <a href="/cases/epson-ecotank-red-light-blinking-waste-pad-reset-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_vhs_restore.jpg" alt="Rescuing 25-Year-Old Wedding VHS Tapes from Fungus & Degradation" loading="lazy">
+          <div class="card-badge">Tape Digitization</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/vhs-tape-mould-cleaning-digital-mp4-conversion-thane.html">Wedding VHS Tape Digitization to 1080p MP4</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> White mould on magnetic spool, tape stuck, fear of snapping if played in standard VCR.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 48 Hours</span>
+            <a href="/cases/vhs-tape-mould-cleaning-digital-mp4-conversion-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_hinge_repair.jpg" alt="Broken Laptop Hinge Repair: Structural Brass Threaded Insert Reconstruction" loading="lazy">
+          <div class="card-badge">Hinge & Chassis</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/broken-laptop-hinge-brass-insert-repair-thane.html">Broken Laptop Hinge Structural Reconstruction</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Lid clicking, plastic bezel separating, left hinge jammed, threatening to crack LCD display.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (3 Hours)</span>
+            <a href="/cases/broken-laptop-hinge-brass-insert-repair-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_liquid_spill.jpg" alt="Chai & Water Spill Rescue: Ultrasonic PCB Bath & Trace Repair in Thane" loading="lazy">
+          <div class="card-badge">Liquid Spill Rework</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/spilled-chai-liquid-damage-laptop-motherboard-repair-thane.html">Spilled Liquid & Water Damage Motherboard Recovery</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Hot chai spilled over keyboard; device powered off instantly and refused to turn on.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 24-48 Hours</span>
+            <a href="/cases/spilled-chai-liquid-damage-laptop-motherboard-repair-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_ssd_speedup.jpg" alt="10X Faster Boot Time: Sluggish 8-Year-Old Laptop Transformed with SSD" loading="lazy">
+          <div class="card-badge">SSD & Speed Upgrades</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/sluggish-laptop-sata-nvme-ssd-speed-upgrade-thane.html">HDD to High-Speed SSD Speed Upgrade</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Windows 10/11 taking 5-7 minutes to boot; 100% disk usage in Task Manager; frequent freezing during Chrome and Excel work.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (30 Mins)</span>
+            <a href="/cases/sluggish-laptop-sata-nvme-ssd-speed-upgrade-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/printer.jpg" alt="HP Laser Printer Leaving Black Lines & Smudges: Teflon Fuser Sleeve Overhaul" loading="lazy">
+          <div class="card-badge">Printer Servicing</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/hp-laserjet-printer-black-lines-smudges-drum-repair-thane.html">HP LaserJet Black Lines & Fuser Repair</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Printed documents had repetitive vertical black lines, toner wiping off with finger, and paper jamming in fuser.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (2 Hours)</span>
+            <a href="/cases/hp-laserjet-printer-black-lines-smudges-drum-repair-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_data_recovery.jpg" alt="Clicking External Hard Drive: Cleanroom Head Assembly Data Recovery" loading="lazy">
+          <div class="card-badge">Data Recovery</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/clicking-hard-drive-cleanroom-data-recovery-thane.html">Clicking Hard Drive Cleanroom Data Recovery</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> External 2TB Seagate hard disk dropped from desk; began making ticking/clicking noises and was not detected in Windows.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 3-5 Days</span>
+            <a href="/cases/clicking-hard-drive-cleanroom-data-recovery-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/gaming_ps4.jpg" alt="Custom Gaming & Video Editing Rig: Thermal Optimization & Cable Routing" loading="lazy">
+          <div class="card-badge">Custom PC Builds</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/custom-gaming-editing-pc-thermal-cable-management-thane.html">Custom Gaming & Creator Rig Optimization</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Client's custom RTX 4070 rig had tangled cables, negative air pressure choking GPU, and hitting 88°C under Premiere Pro rendering.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (4 Hours)</span>
+            <a href="/cases/custom-gaming-editing-pc-thermal-cable-management-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/blog_pcb_micro_repair.jpg" alt="Chip-Level Laptop Motherboard BGA Rework & Short-Circuit Tracing" loading="lazy">
+          <div class="card-badge">Motherboard Diagnostics</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/chip-level-laptop-motherboard-bga-rework-diagnostics-thane.html">Laptop Motherboard BGA Chip Rework</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Dell XPS power LED blinking 3 amber 5 white; charging light on but zero screen display.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 24 Hours</span>
+            <a href="/cases/chip-level-laptop-motherboard-bga-rework-diagnostics-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/blog_epson_ecotank.jpg" alt="Epson & HP Printhead Ultrasonic Unclogging & Recovery" loading="lazy">
+          <div class="card-badge">Printer Servicing</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/epson-hp-printer-head-ultrasonic-cleaning-service-thane.html">Epson Printhead Ultrasonic Cleaning</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Epson EcoTank sitting unused for 6 months; black ink completely missing and streaks across all color prints.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (3 Hours)</span>
+            <a href="/cases/epson-hp-printer-head-ultrasonic-cleaning-service-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_ssd_speedup.jpg" alt="Gen4 NVMe M.2 High-Speed SSD Installation with Zero Data Loss" loading="lazy">
+          <div class="card-badge">SSD & Speed Upgrades</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/fast-nvme-ssd-boot-drive-upgrade-zero-data-loss-thane.html">Gen4 NVMe High-Speed SSD Upgrade</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Creator's HP Envy laptop taking 40 seconds to open 4K Adobe Photoshop and Premiere projects.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (30 Mins)</span>
+            <a href="/cases/fast-nvme-ssd-boot-drive-upgrade-zero-data-loss-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/blog_vhs_conversion.jpg" alt="Vintage Camcorder Tape Digitization: Hi8, MiniDV & VHS-C to 1080p MP4" loading="lazy">
+          <div class="card-badge">Tape Digitization</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/camcorder-hi8-minidv-vhs-video-digitization-thane.html">Camcorder & Magnetic Tape Archival</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Customer had 12 vintage Sony Handycam 8mm and MiniDV tapes with no working camcorder to play them.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 48-72 Hours</span>
+            <a href="/cases/camcorder-hi8-minidv-vhs-video-digitization-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_hinge_repair.jpg" alt="Reinforced Corner Chassis & Hinge Repair: Structural Resin Reconstruction" loading="lazy">
+          <div class="card-badge">Hinge & Chassis</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/reinforced-laptop-body-corner-chassis-hinge-repair-thane.html">Corner Chassis & Hinge Reinforcement</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Lenovo Ideapad bottom corner cracked open; power jack loose and screen wobble of 30 degrees.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (3 Hours)</span>
+            <a href="/cases/reinforced-laptop-body-corner-chassis-hinge-repair-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/reel_fan_cleaning.jpg" alt="Roaring Fan Noise & Thermal Throttling: Arctic MX-4 Heat-Sink Servicing" loading="lazy">
+          <div class="card-badge">Thermal & Cooling</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/laptop-fan-noise-thermal-throttling-arctic-paste-thane.html">Laptop Fan Noise & Heat-Sink Servicing</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Asus TUF gaming laptop fan making grinding noise, keyboard uncomfortably hot to touch during Zoom meetings.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Same-Day (45 Mins)</span>
+            <a href="/cases/laptop-fan-noise-thermal-throttling-arctic-paste-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/blog_cleanroom_data.jpg" alt="RAW Partition & Undetected External SSD Data Recovery in Thane" loading="lazy">
+          <div class="card-badge">Data Recovery</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/external-hard-drive-ssd-dead-partition-recovery-thane.html">RAW Partition & Dead SSD Data Recovery</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> WD My Passport 1TB external drive prompted 'You need to format the disk before you can use it' with RAW file system.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ 24 Hours</span>
+            <a href="/cases/external-hard-drive-ssd-dead-partition-recovery-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+      <article class="case-card">
+        <div class="card-img-wrap">
+          <img src="/assets/hero.jpg" alt="Corporate IT Fleet Maintenance & AMC: Wagle Estate & Ghodbunder Clinics" loading="lazy">
+          <div class="card-badge">Corporate IT AMC</div>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title"><a href="/cases/corporate-office-it-computer-amc-maintenance-thane.html">Corporate IT Fleet & AMC Maintenance</a></h2>
+          <p class="card-symptom"><strong>Symptom:</strong> Healthcare clinic with 14 workstations facing frequent network drops, printer offline errors, and slow billing software.</p>
+          <div class="card-footer">
+            <span style="color:#059669; font-weight:700;">⏱️ Ongoing Contract / Priority 2-Hour SLA</span>
+            <a href="/cases/corporate-office-it-computer-amc-maintenance-thane.html" class="card-btn">View Diagnostic Record &rsaquo;</a>
+          </div>
+        </div>
+      </article>
+      
+    </div>
+  </main>
+
+  <!-- Sticky Bottom Mobile Bar -->
+  <div class="sticky-bar">
+    <a href="/chat" class="btn-chat">💬 Triage Chat</a>
+    <a href="tel:09054790592" class="btn-call">📞 Call 09054790592</a>
+  </div>
+
+</body>
+</html>
