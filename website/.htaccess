@@ -1,0 +1,65 @@
+# ==========================================================
+# Big Byte Systems — Production High-Performance .htaccess
+# Clean Static Hosting, GSC Juice Preservation & Security
+# ==========================================================
+
+# 1. Enforce HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Canonical Domain Normalization (Enforce non-www)
+RewriteCond %{HTTP_HOST} ^www\.bigbytesystems\.co\.in [NC]
+RewriteRule ^(.*)$ https://bigbytesystems.co.in/$1 [L,R=301]
+
+# 3. Trailing Slash Normalization (Prevents Duplicate Content in GSC)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !index\.php$
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteCond %{REQUEST_URI} !\.(html|css|js|png|jpg|jpeg|svg|webp|gif|xml|txt|pdf|zip)$ [NC]
+RewriteRule ^(.*)$ https://bigbytesystems.co.in/$1/ [L,R=301]
+
+# 4. Shield & 301 Redirect Legacy WordPress Paths to Prevent GSC 404s
+RewriteRule ^feed/?$ https://bigbytesystems.co.in/blog/ [R=301,L]
+RewriteRule ^wp-json/?.*$ https://bigbytesystems.co.in/ [R=301,L]
+RewriteRule ^wp-login\.php$ https://bigbytesystems.co.in/ [R=301,L]
+RewriteRule ^wp-admin/?.*$ https://bigbytesystems.co.in/ [R=301,L]
+RewriteRule ^category/?.*$ https://bigbytesystems.co.in/blog/ [R=301,L]
+RewriteRule ^tag/?.*$ https://bigbytesystems.co.in/blog/ [R=301,L]
+RewriteRule ^author/?.*$ https://bigbytesystems.co.in/about-us/ [R=301,L]
+
+# 4b. Legacy WordPress Sitemaps -> Master Static Sitemap
+RewriteRule ^locations/sitemap-locations\.xml$ https://bigbytesystems.co.in/sitemap.xml [R=301,L]
+RewriteRule ^post-sitemap\.xml$ https://bigbytesystems.co.in/sitemap.xml [R=301,L]
+RewriteRule ^page-sitemap\.xml$ https://bigbytesystems.co.in/sitemap.xml [R=301,L]
+RewriteRule ^category-sitemap\.xml$ https://bigbytesystems.co.in/sitemap.xml [R=301,L]
+
+# Custom 404 Error Handler
+ErrorDocument 404 /404.html
+
+# 5. Browser Caching Headers (LiteSpeed / Apache mod_expires)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType text/plain "access plus 1 hour"
+</IfModule>
+
+# 6. GZIP Compression (mod_deflate)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# 7. Security Headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
