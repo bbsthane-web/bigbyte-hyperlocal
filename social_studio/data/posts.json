@@ -234,7 +234,7 @@
     "clientName": "Big Byte Systems",
     "day": 29,
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-10",
     "time": "11:30",
     "title": "🎮 Custom Gaming & Editing Rig: Cable Management & Thermal Optimization",
@@ -249,7 +249,11 @@
     "script": "A high-performance gaming or 4K rendering PC needs more than just expensive components—it requires calculated positive case airflow and surgical cable management. Our custom PC laboratory builds, tunes, and optimizes workstations for video editors, architects, and gamers across Thane. Big Byte Systems, Manpada.",
     "content": "High-performance PC thermals mastered! Clean airflow channels, custom fan curves, and silent thermal performance for content creators and gamers in Thane.\n\n📍 Shop 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Custom Rig Hotline: 090547 90592\n💬 WhatsApp: https://bigbytesystems.co.in/chat\n\n#Shorts #GamingPC #CustomPCBuild #PCMasterRace #ThaneGamers #WorkstationSetup",
     "image": "/assets/reel_fan_cleaning.jpg",
-    "mediaUrl": "/assets/reel_fan_cleaning.jpg"
+    "mediaUrl": "/assets/reel_fan_cleaning.jpg",
+    "publishedAt": "2026-11-10T09:15:13.379Z",
+    "cloudDispatched": true,
+    "publishedUrl": "https://youtube.com/shorts/6sFaL5SKdOI",
+    "publishedId": "6sFaL5SKdOI"
   },
   {
     "id": "post_bb_11",
