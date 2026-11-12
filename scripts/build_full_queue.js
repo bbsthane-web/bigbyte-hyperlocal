@@ -243,13 +243,14 @@ const TOPICS = [
 ];
 
 // Helper to call Python generate_graphic_plate.py
-function callGenerateGraphic(outputPath, title, bullets, theme, isVertical, platform) {
+function callGenerateGraphic(outputPath, title, bullets, theme, isVertical, platform, aspectRatio) {
   const cfg = {
     output_path: outputPath,
     title,
     bullets,
     theme,
     is_vertical: isVertical,
+    aspect_ratio: aspectRatio || (isVertical ? '9:16' : '1:1'),
     platform: platform
   };
   const tmpJson = path.join(ROOT_DIR, 'data', `tmp_cfg_${Date.now()}_${Math.floor(Math.random()*1000)}.json`);
@@ -280,150 +281,167 @@ async function buildQueue() {
   const publishedPosts = existingPosts.filter(p => p.status === 'Published');
   console.log(`📦 Preserved ${publishedPosts.length} previously Published posts.`);
 
+  // Helper to check if a specific platform post on a date is already published
+  const isAlreadyPublished = (date, platform) => publishedPosts.some(p => p.date === date && p.platform === platform);
+
   const newScheduledPosts = [];
 
   for (const topic of TOPICS) {
     const dStr = topic.date.replace(/-/g, '');
 
     // 1. GMB Post (10:30 AM) - Strict Rule 2: Zero phone, Zero URLs
-    const gmbImgName = `plate_${dStr}_gmb.jpg`;
-    const gmbImgPath = path.join(GENERATED_DIR, gmbImgName);
-    callGenerateGraphic(gmbImgPath, topic.title, topic.bullets, topic.theme, false, 'gmb');
+    if (!isAlreadyPublished(topic.date, 'gmb')) {
+      const gmbImgName = `plate_${dStr}_gmb.jpg`;
+      const gmbImgPath = path.join(GENERATED_DIR, gmbImgName);
+      callGenerateGraphic(gmbImgPath, topic.title, topic.bullets, topic.theme, false, 'gmb', '1:1');
 
-    const gmbCaption = buildFullSeoAeoGeoCaption({
-      title: topic.title,
-      hook: `📍 Diagnostic Alert: ${topic.title} (Manpada, Thane West)`,
-      bulletPoints: topic.bullets,
-      topic: topic.theme,
-      platform: 'gmb'
-    });
+      const gmbCaption = buildFullSeoAeoGeoCaption({
+        title: topic.title,
+        hook: `📍 Diagnostic Alert: ${topic.title} (Manpada, Thane West)`,
+        bulletPoints: topic.bullets,
+        topic: topic.theme,
+        platform: 'gmb'
+      });
 
-    newScheduledPosts.push({
-      id: `post_${dStr}_gmb`,
-      clientId: "client_bigbyte",
-      clientName: "Big Byte Systems",
-      platform: "gmb",
-      status: "Scheduled",
-      date: topic.date,
-      time: "10:30",
-      title: `📍 ${topic.title}`,
-      content: gmbCaption,
-      image: `/assets/generated/${gmbImgName}`,
-      mediaUrl: `/assets/generated/${gmbImgName}`,
-      mediaFormat: "PHOTO",
-      auditPassed: true,
-      auditIssues: [],
-      auditWarnings: []
-    });
+      newScheduledPosts.push({
+        id: `post_${dStr}_gmb`,
+        clientId: "client_bigbyte",
+        clientName: "Big Byte Systems",
+        platform: "gmb",
+        status: "Scheduled",
+        date: topic.date,
+        time: "10:30",
+        title: `📍 ${topic.title}`,
+        content: gmbCaption,
+        image: `/assets/generated/${gmbImgName}`,
+        mediaUrl: `/assets/generated/${gmbImgName}`,
+        mediaFormat: "PHOTO",
+        auditPassed: true,
+        auditIssues: [],
+        auditWarnings: []
+      });
+    }
 
-    // 2. YouTube Shorts (11:30 AM) - 9:16 Video + Voiceover
-    const ytImgName = `plate_${dStr}_yt.jpg`;
-    const ytImgPath = path.join(GENERATED_DIR, ytImgName);
-    callGenerateGraphic(ytImgPath, topic.title, topic.bullets, topic.theme, true, 'youtube');
+    // 2. YouTube Shorts (11:30 AM) - 9:16 Video + Dedicated 16:9 Custom Thumbnail
+    if (!isAlreadyPublished(topic.date, 'youtube')) {
+      const ytImgName = `plate_${dStr}_yt.jpg`;
+      const ytImgPath = path.join(GENERATED_DIR, ytImgName);
+      callGenerateGraphic(ytImgPath, topic.title, topic.bullets, topic.theme, true, 'youtube', '9:16');
 
-    const ytHook = `▶ [Shorts] ${topic.hook}`;
-    const ytCaption = buildFullSeoAeoGeoCaption({
-      title: topic.title,
-      hook: ytHook,
-      bulletPoints: topic.bullets,
-      topic: topic.theme,
-      platform: 'youtube'
-    });
+      // High-CTR 16:9 Custom Thumbnail for YouTube API thumbnails.set
+      const ytThumbName = `thumb_${dStr}_yt_16x9.jpg`;
+      const ytThumbPath = path.join(GENERATED_DIR, ytThumbName);
+      callGenerateGraphic(ytThumbPath, topic.title, topic.bullets, topic.theme, false, 'youtube', '16:9');
 
-    newScheduledPosts.push({
-      id: `post_${dStr}_yt`,
-      clientId: "client_bigbyte",
-      clientName: "Big Byte Systems",
-      platform: "youtube",
-      status: "Scheduled",
-      date: topic.date,
-      time: "11:30",
-      title: `${ytHook.slice(0, 65)} #Shorts`,
-      videoHook: ytHook,
-      script: topic.script,
-      content: ytCaption,
-      image: `/assets/generated/${ytImgName}`,
-      mediaUrl: `/assets/generated/${ytImgName}`,
-      mediaFormat: "VIDEO",
-      auditPassed: true,
-      auditIssues: [],
-      auditWarnings: []
-    });
+      const ytHook = `▶ [Shorts] ${topic.hook}`;
+      const ytCaption = buildFullSeoAeoGeoCaption({
+        title: topic.title,
+        hook: ytHook,
+        bulletPoints: topic.bullets,
+        topic: topic.theme,
+        platform: 'youtube'
+      });
+
+      newScheduledPosts.push({
+        id: `post_${dStr}_yt`,
+        clientId: "client_bigbyte",
+        clientName: "Big Byte Systems",
+        platform: "youtube",
+        status: "Scheduled",
+        date: topic.date,
+        time: "11:30",
+        title: `${ytHook.slice(0, 65)} #Shorts`,
+        videoHook: ytHook,
+        script: topic.script,
+        content: ytCaption,
+        image: `/assets/generated/${ytImgName}`,
+        thumbnail: `/assets/generated/${ytThumbName}`,
+        mediaUrl: `/assets/generated/${ytImgName}`,
+        mediaFormat: "VIDEO",
+        auditPassed: true,
+        auditIssues: [],
+        auditWarnings: []
+      });
+    }
 
     // 3. Facebook Post (12:00 PM) - Direct Hyperlinks & Vanity WhatsApp
-    const fbImgName = `plate_${dStr}_fb.jpg`;
-    const fbImgPath = path.join(GENERATED_DIR, fbImgName);
-    callGenerateGraphic(fbImgPath, topic.title, topic.bullets, topic.theme, false, 'facebook');
+    if (!isAlreadyPublished(topic.date, 'facebook')) {
+      const fbImgName = `plate_${dStr}_fb.jpg`;
+      const fbImgPath = path.join(GENERATED_DIR, fbImgName);
+      callGenerateGraphic(fbImgPath, topic.title, topic.bullets, topic.theme, false, 'facebook', '1:1');
 
-    const fbHook = `⚠️ Thane Tech Alert: ${topic.hook}`;
-    const fbCaption = buildFullSeoAeoGeoCaption({
-      title: topic.title,
-      hook: fbHook,
-      bulletPoints: topic.bullets,
-      topic: topic.theme,
-      platform: 'facebook'
-    });
+      const fbHook = `⚠️ Thane Tech Alert: ${topic.hook}`;
+      const fbCaption = buildFullSeoAeoGeoCaption({
+        title: topic.title,
+        hook: fbHook,
+        bulletPoints: topic.bullets,
+        topic: topic.theme,
+        platform: 'facebook'
+      });
 
-    newScheduledPosts.push({
-      id: `post_${dStr}_fb`,
-      clientId: "client_bigbyte",
-      clientName: "Big Byte Systems",
-      platform: "facebook",
-      status: "Scheduled",
-      date: topic.date,
-      time: "12:00",
-      title: topic.title,
-      videoHook: fbHook,
-      script: topic.script,
-      content: fbCaption,
-      image: `/assets/generated/${fbImgName}`,
-      mediaUrl: `/assets/generated/${fbImgName}`,
-      mediaFormat: "PHOTO",
-      auditPassed: true,
-      auditIssues: [],
-      auditWarnings: []
-    });
+      newScheduledPosts.push({
+        id: `post_${dStr}_fb`,
+        clientId: "client_bigbyte",
+        clientName: "Big Byte Systems",
+        platform: "facebook",
+        status: "Scheduled",
+        date: topic.date,
+        time: "12:00",
+        title: topic.title,
+        videoHook: fbHook,
+        script: topic.script,
+        content: fbCaption,
+        image: `/assets/generated/${fbImgName}`,
+        mediaUrl: `/assets/generated/${fbImgName}`,
+        mediaFormat: "PHOTO",
+        auditPassed: true,
+        auditIssues: [],
+        auditWarnings: []
+      });
+    }
 
     // 4. Instagram Reels (14:00 PM) - 9:16 Vertical Video + Bio Link
-    const igImgName = `plate_${dStr}_ig.jpg`;
-    const igImgPath = path.join(GENERATED_DIR, igImgName);
-    callGenerateGraphic(igImgPath, topic.title, topic.bullets, topic.theme, true, 'instagram');
+    if (!isAlreadyPublished(topic.date, 'instagram')) {
+      const igImgName = `plate_${dStr}_ig.jpg`;
+      const igImgPath = path.join(GENERATED_DIR, igImgName);
+      callGenerateGraphic(igImgPath, topic.title, topic.bullets, topic.theme, true, 'instagram', '9:16');
 
-    const igHook = `🔥 Lab Triage POV: ${topic.hook}`;
-    const igCaption = buildFullSeoAeoGeoCaption({
-      title: topic.title,
-      hook: igHook,
-      bulletPoints: topic.bullets,
-      topic: topic.theme,
-      platform: 'instagram'
-    });
+      const igHook = `🔥 Lab Triage POV: ${topic.hook}`;
+      const igCaption = buildFullSeoAeoGeoCaption({
+        title: topic.title,
+        hook: igHook,
+        bulletPoints: topic.bullets,
+        topic: topic.theme,
+        platform: 'instagram'
+      });
 
-    newScheduledPosts.push({
-      id: `post_${dStr}_ig`,
-      clientId: "client_bigbyte",
-      clientName: "Big Byte Systems",
-      platform: "instagram",
-      status: "Scheduled",
-      date: topic.date,
-      time: "14:00",
-      title: topic.title,
-      videoHook: igHook,
-      script: topic.script,
-      content: igCaption,
-      image: `/assets/generated/${igImgName}`,
-      mediaUrl: `/assets/generated/${igImgName}`,
-      mediaFormat: "REELS",
-      auditPassed: true,
-      auditIssues: [],
-      auditWarnings: []
-    });
+      newScheduledPosts.push({
+        id: `post_${dStr}_ig`,
+        clientId: "client_bigbyte",
+        clientName: "Big Byte Systems",
+        platform: "instagram",
+        status: "Scheduled",
+        date: topic.date,
+        time: "14:00",
+        title: topic.title,
+        videoHook: igHook,
+        script: topic.script,
+        content: igCaption,
+        image: `/assets/generated/${igImgName}`,
+        mediaUrl: `/assets/generated/${igImgName}`,
+        mediaFormat: "REELS",
+        auditPassed: true,
+        auditIssues: [],
+        auditWarnings: []
+      });
+    }
 
     // 5. LinkedIn B2B (16:00 PM on Tuesdays & Thursdays)
     const dayOfWeek = new Date(topic.date).getDay(); // 2 is Tue, 4 is Thu
-    if (dayOfWeek === 2 || dayOfWeek === 4) {
+    if ((dayOfWeek === 2 || dayOfWeek === 4) && !isAlreadyPublished(topic.date, 'linkedin')) {
       const liImgName = `plate_${dStr}_li.jpg`;
       const liImgPath = path.join(GENERATED_DIR, liImgName);
-      callGenerateGraphic(liImgPath, `Enterprise IT: ${topic.title}`, topic.bullets, topic.theme, false, 'linkedin');
+      callGenerateGraphic(liImgPath, `Enterprise IT: ${topic.title}`, topic.bullets, topic.theme, false, 'linkedin', '16:9');
 
       const liHook = `💼 Enterprise Infrastructure Case Study: ${topic.title}`;
       const liCaption = buildFullSeoAeoGeoCaption({

@@ -213,6 +213,20 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
       return resolve({ success: false, error: 'Could not upload media to free CDN relay.' });
     }
 
+    // High-Contrast Reel Cover: upload dedicated graphic plate as Reel cover
+    let coverMediaUrl = null;
+    const dStr = (post.date || '').replace(/-/g, '');
+    const plateCandidate = path.join(ROOT_DIR, 'public', 'assets', 'generated', `plate_${dStr}_ig.jpg`);
+    const coverFile = fs.existsSync(plateCandidate) ? plateCandidate : resolveAsset(imageUrl || post.image);
+    if (isVideo && coverFile && fs.existsSync(coverFile) && !coverFile.endsWith('.mp4')) {
+      try {
+        console.log(`🖼️ [CLOUD IG COVER] Uploading high-contrast cover thumbnail "${path.basename(coverFile)}" to CDN relay...`);
+        coverMediaUrl = await uploadToFreeCdn(coverFile);
+      } catch (coverErr) {
+        console.warn(`⚠️ [CLOUD IG COVER NOTICE] Cover upload skipped: ${coverErr.message}`);
+      }
+    }
+
     // STRICT SANITIZATION: Never leak raw WhatsApp URLs on Instagram! Mask as "Tap Link in Bio"
     const rawCaption = (caption || post.content || post.title || '').trim();
     const safeCaption = cleanCaptionForInstagram(rawCaption);
@@ -224,6 +238,9 @@ function dispatchInstagram(post, igAccountId, token, imageUrl, caption) {
       containerParams.media_type = 'REELS';
       containerParams.video_url = targetMediaUrl;
       containerParams.share_to_feed = 'true';
+      if (coverMediaUrl) {
+        containerParams.cover_url = coverMediaUrl;
+      }
     } else {
       containerParams.image_url = targetMediaUrl;
     }
@@ -367,6 +384,60 @@ async function getYouTubeAccessToken(clientId, clientSecret, refreshToken) {
   throw new Error(data.error_description || data.error || 'Failed to refresh YouTube access token');
 }
 
+/**
+ * Uploads a custom high-CTR thumbnail for a YouTube video/Short
+ * Uses YouTube Data API v3 thumbnails.set endpoint
+ */
+function uploadYouTubeThumbnail(accessToken, videoId, thumbnailPath) {
+  return new Promise((resolve) => {
+    if (!thumbnailPath || !fs.existsSync(thumbnailPath)) {
+      console.warn(`⚠️ [YOUTUBE THUMBNAIL] File not found: ${thumbnailPath}`);
+      return resolve({ success: false, error: 'File not found' });
+    }
+
+    const fileSize = fs.statSync(thumbnailPath).size;
+    const fileStream = fs.createReadStream(thumbnailPath);
+
+    const req = https.request({
+      hostname: 'www.googleapis.com',
+      path: `/upload/youtube/v3/thumbnails/set?videoId=${encodeURIComponent(videoId)}&uploadType=media`,
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'image/jpeg',
+        'Content-Length': fileSize
+      }
+    }, (res) => {
+      let body = '';
+      res.on('data', d => body += d);
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(body);
+          if (parsed.items && parsed.items.length > 0) {
+            console.log(`🖼️ [YOUTUBE THUMBNAIL SUCCESS] Custom high-CTR thumbnail applied to video ${videoId}!`);
+            return resolve({ success: true, data: parsed });
+          }
+          if (parsed.error) {
+            const msg = parsed.error.message || JSON.stringify(parsed.error);
+            console.warn(`⚠️ [YOUTUBE THUMBNAIL NOTICE] YouTube response: ${msg} (Phone verification in YouTube Studio > Feature Eligibility may be required for custom thumbnails).`);
+            return resolve({ success: false, error: msg });
+          }
+          resolve({ success: true, raw: body });
+        } catch (e) {
+          resolve({ success: false, error: e.message });
+        }
+      });
+    });
+
+    req.on('error', (err) => {
+      console.warn(`⚠️ [YOUTUBE THUMBNAIL ERROR] ${err.message}`);
+      resolve({ success: false, error: err.message });
+    });
+
+    fileStream.pipe(req);
+  });
+}
+
 function dispatchYouTube(post, ytConfig, publicImageUrl, caption) {
   return new Promise(async (resolve) => {
     try {
@@ -484,11 +555,33 @@ ${scriptContent}
         }, (putRes) => {
           let putBody = '';
           putRes.on('data', d => putBody += d);
-          putRes.on('end', () => {
+          putRes.on('end', async () => {
             try {
               const vidData = JSON.parse(putBody);
               if (vidData.id) {
                 console.log(`🚀 [CLOUD YOUTUBE] Video live at https://youtube.com/shorts/${vidData.id}`);
+
+                // Programmatic High-CTR Custom Thumbnail Attachment
+                try {
+                  const dStr = (post.date || '').replace(/-/g, '');
+                  const genDir = path.join(ROOT_DIR, 'public', 'assets', 'generated');
+                  const candidates = [
+                    post.thumbnail ? resolveAsset(post.thumbnail) : null,
+                    path.join(genDir, `thumb_${post.id}_16x9.jpg`),
+                    path.join(genDir, `thumb_${dStr}_yt_16x9.jpg`),
+                    path.join(genDir, `plate_${dStr}_yt.jpg`),
+                    localFile
+                  ].filter(Boolean);
+
+                  const thumbCandidate = candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+                  if (thumbCandidate) {
+                    console.log(`🖼️ [CLOUD YOUTUBE THUMBNAIL] Attaching custom thumbnail: ${path.basename(thumbCandidate)}...`);
+                    await uploadYouTubeThumbnail(accessToken, vidData.id, thumbCandidate);
+                  }
+                } catch (thumbErr) {
+                  console.warn(`⚠️ [CLOUD YOUTUBE THUMBNAIL NOTE] ${thumbErr.message}`);
+                }
+
                 resolve({ success: true, id: vidData.id, url: `https://youtube.com/shorts/${vidData.id}` });
               } else {
                 resolve({ success: false, error: putBody });

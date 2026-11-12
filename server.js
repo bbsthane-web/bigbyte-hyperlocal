@@ -1439,7 +1439,9 @@ const server = http.createServer((req, res) => {
     const redirectUri = `http://${host}/api/platforms/youtube-callback`;
     const scopes = [
       'https://www.googleapis.com/auth/youtube.upload',
-      'https://www.googleapis.com/auth/youtube.readonly'
+      'https://www.googleapis.com/auth/youtube.readonly',
+      'https://www.googleapis.com/auth/youtube.force-ssl',
+      'https://www.googleapis.com/auth/youtube'
     ].join(' ');
 
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` + new URLSearchParams({
@@ -1523,6 +1525,25 @@ const server = http.createServer((req, res) => {
             config.youtubeChannelTitle = channelName;
             config.youtubeChannelId = channelId;
           } catch (_) {}
+
+          // Support Multi-Channel Vault (Dual-Channel Multi-Cast)
+          if (!Array.isArray(config.youtubeChannels)) {
+            config.youtubeChannels = [];
+          }
+          if (tParsed.refresh_token && channelId) {
+            const existingIdx = config.youtubeChannels.findIndex(c => c.id === channelId);
+            const channelObj = {
+              id: channelId,
+              title: channelName,
+              refreshToken: tParsed.refresh_token,
+              updatedAt: new Date().toISOString()
+            };
+            if (existingIdx >= 0) {
+              config.youtubeChannels[existingIdx] = channelObj;
+            } else {
+              config.youtubeChannels.push(channelObj);
+            }
+          }
 
           writeJson(CONFIG_FILE, config);
 
