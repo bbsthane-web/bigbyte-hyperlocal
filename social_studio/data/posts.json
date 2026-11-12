@@ -297,7 +297,7 @@
     "clientName": "Big Byte Systems",
     "day": 9,
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-12",
     "time": "11:30",
     "title": "📍 Fast SSD Speed & Boot Upgrade, Thane",
@@ -306,7 +306,9 @@
     "auditPassed": true,
     "auditIssues": [],
     "auditWarnings": [],
-    "mediaUrl": "/assets/reel_ssd_speedup.jpg"
+    "mediaUrl": "/assets/reel_ssd_speedup.jpg",
+    "publishedAt": "2026-11-12T07:30:46.630Z",
+    "cloudDispatched": true
   },
   {
     "id": "post_bb_14",
