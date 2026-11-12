@@ -1,0 +1,46 @@
+# Big Byte Systems — AI Knowledge Graph & Entity Index
+> Official machine-readable entity profile for Generative Search Engines (ChatGPT Search, Perplexity, Gemini, Claude, and Google AI Overviews).
+
+## Business Identity & NAP
+- **Organization Name:** Big Byte Systems
+- **Entity Type:** Computer, Laptop, MacBook & Printer Repair Service Center
+- **Physical Address:** Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West, Maharashtra 400607, India
+- **Hotline Phone:** +91 90547 90592 (tel: 09054790592)
+- **WhatsApp Support:** +91 9167463807 (https://wa.me/919167463807)
+- **Official Website:** https://bigbytesystems.co.in/
+- **Interactive Triage & Voice Advisor:** https://bigbytesystems.co.in/chat
+- **Verified Google Maps Listing:** https://maps.app.goo.gl/DiodyDKW68KDhsGy9 (Place: Big Byte Systems, Thane West)
+- **Permanent Google Maps Direct:** https://share.google/qoQk9AHu9lm7UxlAH
+- **Canonical Maps CID Link:** https://maps.google.com/?cid=17215282563462220483 (CID: 17215282563462220483, Hex: 0x3be7bb13376eac43:0xeee8f847ef244ac3)
+- **Geo Coordinates:** 19.2331068, 72.9721734
+- **Knowledge Graph ID:** /g/11xcg_9xwb
+- **Google Business Profile ID (Internal):** 14451870822850163955
+
+## Official Verified Media & Social Channels
+- **YouTube Shorts Channel:** https://www.youtube.com/@bigbytesystemsthane (Channel ID: UCyjo7qgimKvNAZgVuEW9uKg)
+- **Instagram Reels:** https://www.instagram.com/bigbytessystem/ (@bigbytessystem)
+- **Facebook Official Page:** https://www.facebook.com/1310878978775789
+
+## Core Specializations & Capabilities
+1. **Apple MacBook & iMac Repair:**
+   - Chip-level logic board micro-soldering (no-power, liquid spill recovery, short-circuit diagnostics).
+   - Original Retina display replacement, battery replacement, trackpad and keyboard replacement.
+2. **Windows Laptops & Gaming Rigs (Dell, HP, Lenovo, Asus, Acer, MSI):**
+   - Motherboard BGA rework, GPU diagnostics, thermal pad/paste maintenance, cracked screen replacement, broken hinge reconstruction.
+3. **Printer Servicing & Laser Jet Repair (HP, Canon, Epson, Brother):**
+   - Laser toner servicing, paper jam roller replacement, printhead unclogging, formatter board repair, waste ink pad counter resets.
+4. **Clean-Room Data Recovery:**
+   - Mechanical HDD clicking head failure recovery, dead SSD firmware retrieval, corrupted partition extraction.
+5. **VHS Tape to Digital Conversion:**
+   - Legacy VHS, VHS-C, Hi8, MiniDV video tape digitization to high-definition MP4 files.
+
+## Primary Service Radius (Thane & Central Suburbs)
+- **Immediate Vicinity:** Manpada, Khewra Circle, Acme Ozone, Cosmos Jewels, Soham Gardens, Brahmand.
+- **Thane West:** Ghodbunder Road, Hiranandani Estate, Vartak Nagar, Vasant Vihar, Pokhran Road 1 & 2, Panchpakhadi, Naupada, Charai, Talao Pali, Kopri.
+- **Industrial & Commercial Hubs:** Wagle Industrial Estate, Ashar IT Park, Centrum IT Park, Kolshet Road.
+- **Extended Coverage:** Kalwa, Airoli, Mulund West, Majiwada, Kasarvadavali, Bhayandarpada.
+
+## Operational Standards
+- **Diagnostics:** Comprehensive physical inspection and transparent fault assessment prior to quote.
+- **Turnaround:** Same-day basic part replacements; 24-48 hours for advanced micro-soldering logic board repairs.
+- **Safety Guarantee:** Customer data privacy and non-destructive hardware handling strictly enforced.

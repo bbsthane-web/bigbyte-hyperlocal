@@ -1,0 +1,364 @@
+{
+  "version": "1.0",
+  "assets": {
+    "7d51225d57da7579047eb2669df39234d50b92d36792280201e9eafd87ea231b": {
+      "postId": "post_bb_27",
+      "platform": "linkedin",
+      "fileName": "reel_macbook_soldering.jpg",
+      "date": "2026-10-30",
+      "lastPublished": "2026-10-30T09:11:58.287Z"
+    },
+    "f7606c4fc9ee7f29a50fe451657deda9a1a3d643c1f4b9df42f4a8df322725ca": {
+      "postId": "post_fb_07",
+      "platform": "facebook",
+      "fileName": "reel_fan_cleaning.jpg",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T06:30:08.170Z"
+    },
+    "4d81a1baca0b57b93a9d9ca542e5229fc98bc076b35446f9d47da5111f8ebbfa": {
+      "postId": "post_bb_24",
+      "platform": "instagram",
+      "fileName": "reel_printer_repair.jpg",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T08:30:11.992Z"
+    },
+    "33d7b236cccdee34167cf0d098bdb4af10da6117f1a30f1b0a1e3bd579df49f8": {
+      "postId": "post_bb_21",
+      "platform": "instagram",
+      "fileName": "reel_vhs_restore.jpg",
+      "date": "2026-11-06",
+      "lastPublished": "2026-11-02T14:59:48.766Z"
+    },
+    "288850db75a7434389d5443c1e7bdfb448c17cd3b40632e6686f80ad26cf8cbd": {
+      "postId": "post_bb_23",
+      "platform": "instagram",
+      "fileName": "reel_hinge_repair.jpg",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T08:30:08.575Z"
+    },
+    "164de711ca7518abbdb63b659a34da6d8900ad29b2728ed864a57dae0706f8d4": {
+      "postId": "post_bb_31",
+      "platform": "youtube",
+      "fileName": "reel_liquid_spill.jpg",
+      "date": "2026-11-11",
+      "lastPublished": "2026-11-11T06:00:09.287Z"
+    },
+    "927b0162daa74828848914a22d32b81555b9a5d5b8c5890b401d6ce3323b6f85": {
+      "postId": "post_bb_22",
+      "platform": "instagram",
+      "fileName": "reel_ssd_speedup.jpg",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T08:30:08.147Z"
+    },
+    "b5a884cec27550a055d1964b5266a6f1183eb163e9aa99db757f592cd7b8303d": {
+      "postId": "post_bb_09",
+      "platform": "youtube",
+      "fileName": "reel_data_recovery.jpg",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T06:07:49.337Z"
+    },
+    "99188544d47bc7473160e78803c584375e56ed92526d76ac2376037a970b7574": {
+      "postId": "post_fb_06",
+      "platform": "facebook",
+      "fileName": "blog_macbook_repair.jpg",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T06:30:04.415Z"
+    },
+    "70aaaa58dfb0a9b46e3fa6566c05c9c5f218b29b45e92ef98017f6525e8cf2a9": {
+      "postId": "post_fb_05",
+      "platform": "facebook",
+      "fileName": "blog_pcb_micro_repair.jpg",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T06:30:03.888Z"
+    },
+    "8ca5fbcb35b2041de6c5f6eae2569daaf6dafde3e994164d329bde574e619ad7": {
+      "postId": "post_fb_03",
+      "platform": "facebook",
+      "fileName": "blog_epson_ecotank.jpg",
+      "date": "2026-11-02",
+      "lastPublished": "2026-10-31T09:42:07.000Z"
+    },
+    "096beecde0af400b51d2e11120606328408a2c0117f4a1f99bb395edab810737": {
+      "postId": "post_fb_04",
+      "platform": "facebook",
+      "fileName": "blog_vhs_conversion.jpg",
+      "date": "2026-11-26",
+      "lastPublished": "2026-11-06T10:59:07.000Z"
+    },
+    "cb07736f1e9b611a9af898bc2083dc5ed377aecf56735ebb8118bedefe64101c": {
+      "postId": "post_20261112_gmb",
+      "platform": "gmb",
+      "fileName": "plate_20261112_gmb.jpg",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:01:08.363Z"
+    },
+    "00db6293be07248b289ff74b804a5f0831f96eacd539520f87988da4939e8103": {
+      "postId": "post_20261112_fb",
+      "platform": "facebook",
+      "fileName": "plate_20261112_fb.jpg",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:01:16.126Z"
+    },
+    "0a1d7e2d3d1256260b8eb75f27c43f073ecf954ae203902ab2ef5a908f6102b8": {
+      "postId": "post_20261112_ig",
+      "platform": "instagram",
+      "fileName": "plate_20261112_ig.jpg",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:04:05.659Z"
+    },
+    "aff172dc9861e2e42a8eb76a2b58ad4d96c4d2d7cd7642a9470598d210360ded": {
+      "postId": "post_20261112_yt",
+      "platform": "youtube",
+      "fileName": "plate_20261112_yt.jpg",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T14:32:39.973Z"
+    },
+    "28fe305da074d0b19073b975cd929f43a52008e94e4ea53df5774774372e315b": {
+      "postId": "post_20261112_li",
+      "platform": "linkedin",
+      "fileName": "plate_20261112_li.jpg",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T14:15:10.804Z"
+    }
+  },
+  "hooks": {
+    "a553a7223cb27376afd2b7a0c5f8b1148b05e2a7ace14cd9caa1368967d876ae": {
+      "postId": "post_fb_06",
+      "platform": "facebook",
+      "snippet": "Client was told they had to replace this entire dead MacBook",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T06:30:04.415Z"
+    },
+    "575578603a13b9ff20afc42ef3b34da3d010f4da844cf045c29cf64f5cc58074": {
+      "postId": "post_bb_02",
+      "platform": "youtube",
+      "snippet": "If you live near Ghodbunder Road or Majiwada, your laptop fa",
+      "date": "2026-10-29",
+      "lastPublished": "2026-10-27T04:47:53.016Z"
+    },
+    "5d0a1b2a1ca515d69342645a97620a257fd9261ddd7aab65505664ae723a6329": {
+      "postId": "post_fb_03",
+      "platform": "facebook",
+      "snippet": "Red lights flashing alternately on your Epson printer? Stop ",
+      "date": "2026-11-02",
+      "lastPublished": "2026-10-31T09:42:07.000Z"
+    },
+    "af631803bfbe2ec6ca66491bbf703b5affa88aea03401fc252e3e194d4d63d47": {
+      "postId": "post_bb_04",
+      "platform": "youtube",
+      "snippet": "White fuzzy fungus on your parents old 1998 wedding tape? Wa",
+      "date": "2026-11-04",
+      "lastPublished": "2026-11-04T07:22:01.266Z"
+    },
+    "7d68d3cefc89d32dc0f78ae14629045254a5cb49542218feeaa681b83f5f5086": {
+      "postId": "post_fb_05",
+      "platform": "facebook",
+      "snippet": "Does your laptop lid pop open near the corner with a loud cr",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T06:30:03.888Z"
+    },
+    "5ba4def0130bd3fea63f79a34403f16ffb40c9922edd5f68fac2f7e0280c1757": {
+      "postId": "post_bb_06",
+      "platform": "youtube",
+      "snippet": "If you just spilled water or chai on your laptop, do NOT put",
+      "date": "2026-11-06",
+      "lastPublished": "2026-11-06T10:57:36.817Z"
+    },
+    "8f14ed153719b7c1b8703028dbda7728a3540e4edfb2098cc90f32f419d1c999": {
+      "postId": "post_bb_07",
+      "platform": "youtube",
+      "snippet": "Takes 6 minutes for your PC to boot Windows? Watch this 20-m",
+      "date": "2026-11-07",
+      "lastPublished": "2026-11-07T06:09:44.340Z"
+    },
+    "781c5a376652913881941537c0cf7ea4522747fa2dea8903a1d7f6b22889fa0a": {
+      "postId": "post_bb_08",
+      "platform": "youtube",
+      "snippet": "Are your office printouts looking like zebra crossings? Here",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T06:25:49.809Z"
+    },
+    "15bbe63b509b7211e9ec40554d87be05547c30bcc10a08b8c5ffb1fd62fe0ef0": {
+      "postId": "post_bb_09",
+      "platform": "youtube",
+      "snippet": "Hear that rhythmic clicking sound from your external hard di",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T06:07:49.337Z"
+    },
+    "1db1b9987bd16ba7d07bfa0dc62d8e75e9186e174394853d4267cdbc55fb8c6a": {
+      "postId": "post_bb_10",
+      "platform": "youtube",
+      "snippet": "Built a new RTX 4070 rig but temps hit 90°C? Here are the 3 ",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T06:00:07.266Z"
+    },
+    "5338d6aa25dfe0a06d254e21e21cd60c0e88905bc5fda0b32850ade9dfd53412": {
+      "postId": "post_bb_11",
+      "platform": "gmb",
+      "snippet": "📍 Chip-Level Motherboard Diagnostics, Thane",
+      "date": "2026-10-27",
+      "lastPublished": "2026-10-28T04:41:51.931Z"
+    },
+    "19c0721df36c69f8277146b76906bc905a7933d863a590d13282335f84af63de": {
+      "postId": "post_bb_12",
+      "platform": "gmb",
+      "snippet": "📍 Epson & HP Printer Service Lab, Thane",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T05:00:04.971Z"
+    },
+    "53bad93dfbfdff33850b5b3dc83b6bf176616f459a4a2bdd5d36a6b07c9536c7": {
+      "postId": "post_bb_13",
+      "platform": "gmb",
+      "snippet": "📍 Fast SSD Speed & Boot Upgrade, Thane",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T05:00:05.882Z"
+    },
+    "271805136267e44baa941e480f9ed2686ade0d6aea835b6f2cd59fd00fb2e519": {
+      "postId": "post_bb_14",
+      "platform": "gmb",
+      "snippet": "📍 Vintage VHS & Tape Digitization, Thane",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T05:00:10.980Z"
+    },
+    "d9259338ceeddc56db4896a49e9e19574c70ae6ba6a09d18bbfef681e3b18725": {
+      "postId": "post_bb_15",
+      "platform": "gmb",
+      "snippet": "📍 Reinforced Laptop Hinge Repair, Thane",
+      "date": "2026-11-11",
+      "lastPublished": "2026-11-11T05:00:03.387Z"
+    },
+    "9831482f7aedc0bb1a8ce6b434c1821c96385f78c99fd414b0b6ec7d5cbed289": {
+      "postId": "post_bb_19",
+      "platform": "instagram",
+      "snippet": "🔬 Inside The Electronics Lab: What Real Micro-Soldering Look",
+      "date": "2026-10-28",
+      "lastPublished": "2026-10-31T09:44:43.935Z"
+    },
+    "ae1dd71aa0966c3b990488fafaa37384ca170fba112717361fffa75f2f19a634": {
+      "postId": "post_bb_20",
+      "platform": "instagram",
+      "snippet": "💨 Say Goodbye To Overheating: Fresh Arctic Thermal Paste App",
+      "date": "2026-11-02",
+      "lastPublished": "2026-11-02T14:16:44.214Z"
+    },
+    "309f9d8fcb1bf10bb6127a9b60c9b18de66773f7ba3d1b4c2bf6b1c10439a56b": {
+      "postId": "post_bb_21",
+      "platform": "instagram",
+      "snippet": "📼 Unboxing 90s Nostalgia: From Moldy VHS To 1080p Digital MP",
+      "date": "2026-11-06",
+      "lastPublished": "2026-11-02T14:59:48.766Z"
+    },
+    "49292c9e120028df90892d353d16d835ba6f625dfab525df563ab871c554ef69": {
+      "postId": "post_bb_22",
+      "platform": "instagram",
+      "snippet": "⚡ 10X Faster Boot Time: SSD Upgrades With 100% File Protecti",
+      "date": "2026-11-08",
+      "lastPublished": "2026-11-08T08:30:08.147Z"
+    },
+    "7c03df71fe41c440ce38143a87a39c64fe8ec237e3b32924446ac2bc68bc9517": {
+      "postId": "post_bb_23",
+      "platform": "instagram",
+      "snippet": "🔧 Broken Hinge Fixed For Good: Structural Epoxy Reconstructi",
+      "date": "2026-11-09",
+      "lastPublished": "2026-11-09T08:30:08.575Z"
+    },
+    "5b2f6275d534df9a1b7084844041fdbd368f0cf12e403ebb0b9c66729df1ea33": {
+      "postId": "post_bb_24",
+      "platform": "instagram",
+      "snippet": "🖨️ EcoTank Printing Sharp & Vivid: Full Maintenance Sponge S",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T08:30:11.992Z"
+    },
+    "24e0fa6445894d3b0a52613b96ccf0318dada365abe60d24f59a2b1e6abf32cf": {
+      "postId": "post_bb_25",
+      "platform": "instagram",
+      "snippet": "🛡️ Liquid Spill Rescue Protocol: The 3 Golden Rules",
+      "date": "2026-11-11",
+      "lastPublished": "2026-11-11T08:30:00.601Z"
+    },
+    "abad340f8be48429314f92e4219b6fdf629f80d450e1385372696a2ec730d1f3": {
+      "postId": "post_bb_27",
+      "platform": "linkedin",
+      "snippet": "💼 Why Component-Level Diagnostics Save Corporate IT Budgets",
+      "date": "2026-10-30",
+      "lastPublished": "2026-10-30T09:11:58.287Z"
+    },
+    "c8d4f67ade6479a63d77ea8751f90824d44dfc5019169ec90a0daa5d0ea1ea83": {
+      "postId": "post_bb_28",
+      "platform": "linkedin",
+      "snippet": "💼 Securing Business Continuity: The Critical Role of Proacti",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T06:00:07.266Z"
+    },
+    "8abe79dc74c54e79af5485b2fa8ca0438fccf9282d6724611e5fbabcace29da3": {
+      "postId": "post_bb_31",
+      "platform": "youtube",
+      "snippet": "Spilled chai or water on your laptop? Whatever you do, DO NO",
+      "date": "2026-11-11",
+      "lastPublished": "2026-11-11T06:00:09.287Z"
+    },
+    "a5335295d8cfbef1e08b8e577ee5576c3719d15161e16622c4ba72c2402aaa0a": {
+      "postId": "post_fb_02",
+      "platform": "facebook",
+      "snippet": "Takes 5 minutes for your laptop to start Windows? Watch this",
+      "date": "2026-10-30",
+      "lastPublished": "2026-11-02T14:15:26.000Z"
+    },
+    "5df044a306d02681b74159726f566b68e3c1e4e346cba28b9960f4582f4a3d04": {
+      "postId": "post_fb_04",
+      "platform": "facebook",
+      "snippet": "White fuzzy fungus on your parents' 1995 wedding tape? Watch",
+      "date": "2026-11-26",
+      "lastPublished": "2026-11-06T10:59:07.000Z"
+    },
+    "2117dba4625d656ca712c1bb66f70f1e12f9fbd90b04344aa4cdd817ef32f5cf": {
+      "postId": "post_fb_07",
+      "platform": "facebook",
+      "snippet": "Is your laptop fan screaming like a jet engine? Here is what",
+      "date": "2026-11-10",
+      "lastPublished": "2026-11-10T06:30:08.170Z"
+    },
+    "d09f032ded94e746742a5451b6b490bd2ee1e01aaa935656d142c1c448e5a8d2": {
+      "postId": "post_fb_08",
+      "platform": "facebook",
+      "snippet": "Spilled liquid on your laptop? Never put it in rice. Here is",
+      "date": "2026-11-11",
+      "lastPublished": "2026-11-11T06:30:10.560Z"
+    },
+    "8d1ea30f7a7bc92e7f7b23e243a18e451a7d0e336d179c49dc85e44610d439bd": {
+      "postId": "post_20261112_gmb",
+      "platform": "gmb",
+      "snippet": "📍 Coastal Thane Humidity Thermal Mud & Fan Servicing",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:01:08.363Z"
+    },
+    "d2ada6c8d92e9d8f6fd9cca61cd652945e1d12320af5374360026620b96fcd76": {
+      "postId": "post_20261112_fb",
+      "platform": "facebook",
+      "snippet": "⚠️ Thane Tech Alert: Why does your laptop feel like a heater",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:01:16.126Z"
+    },
+    "9462f934848f466c13ce19dfc9bd417b479e53818768e216f32e016abf216943": {
+      "postId": "post_20261112_ig",
+      "platform": "instagram",
+      "snippet": "🔥 Lab Triage POV: Why does your laptop feel like a heater i",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T11:04:05.659Z"
+    },
+    "cd67fdb02dc91917b4a2435e7e5cc5c5c8acfc82c507970d6632b51e3e1c93cc": {
+      "postId": "post_20261112_yt",
+      "platform": "youtube",
+      "snippet": "▶ [Shorts] Why does your laptop feel like a heater in Thane?",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T14:32:39.973Z"
+    },
+    "5bbdd5ce1bd2c6998a3223026ef25b4c70f6d2e0dc25bed6c69b4d2fece9a6f8": {
+      "postId": "post_20261112_li",
+      "platform": "linkedin",
+      "snippet": "Enterprise IT: Coastal Thane Humidity Thermal Mud & Fan Serv",
+      "date": "2026-11-12",
+      "lastPublished": "2026-11-12T14:15:10.804Z"
+    }
+  }
+}

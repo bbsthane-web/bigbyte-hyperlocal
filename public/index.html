@@ -92,6 +92,11 @@
             <small id="daemonStatusText">Native Engine • 100% Free</small>
           </div>
         </div>
+        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; font-size: 11px;">
+          <a href="javascript:void(0)" onclick="openContactModal()" style="color: #38bdf8; text-decoration: none;">📞 Contact Lab</a>
+          <span style="color: #475569;">•</span>
+          <a href="javascript:void(0)" onclick="openDisclaimerModal()" style="color: #94a3b8; text-decoration: none;">⚖️ Legal & Compliance</a>
+        </div>
       </div>
     </aside>
 
@@ -101,7 +106,7 @@
       <header class="topbar">
         <div class="topbar-left">
           <div class="client-current-pill">
-            <span class="client-avatar-mini" id="topAvatar">💻</span>
+            <img src="/logo.png" alt="Big Byte Systems" style="width: 24px; height: 24px; border-radius: 4px; object-fit: contain; vertical-align: middle; background: rgba(255,255,255,0.05); padding: 2px;" onerror="this.outerHTML='<span class=\'client-avatar-mini\'>💻</span>'">
             <strong id="topClientName">Big Byte Systems</strong>
             <span class="pill-dot">•</span>
             <span class="pill-status" id="topClientStatus" onclick="showTab('channels')" style="cursor:pointer;" title="Click to open Channels & Automation">Meta Connected 🟢</span>
@@ -116,6 +121,9 @@
           </button>
 
           <!-- Quick Actions -->
+          <button class="btn btn-secondary btn-sm" onclick="openPreflightModal()" title="Run instant pre-flight compliance audit across GMB, Meta, Instagram & YouTube policies">
+            <span>🛡️</span> Compliance Inspector
+          </button>
           <button class="btn btn-secondary btn-sm" onclick="showTab('niche')" title="Open Niche Selector, Viral Hashtag Finder & GSC Regex Suite">
             <span>🎯</span> Niche Intelligence
           </button>
@@ -146,6 +154,31 @@
           <button type="button" class="btn btn-primary" onclick="showTab('creator')" style="background: #0284c7; color: #fff; font-weight: 800; font-size: 13px; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px;">
             <span>🔬</span> Open Infographic Studio →
           </button>
+        </div>
+
+        
+        <!-- Schedule Cadence & Frequency Autopilot Bar -->
+        <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+              ⚡
+            </div>
+            <div>
+              <strong style="color: #38bdf8; font-size: 14px; display: block;">Automated Publishing Rhythm & Cadence</strong>
+              <span style="color: var(--text-muted); font-size: 11.5px;">Schedule posts daily across YouTube Shorts, Instagram Reels, Facebook & GMB</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <select id="scheduleCadenceSelect" style="background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer;">
+              <option value="daily" selected>⚡ Daily Rhythm (1 Post/Day - 11:30 AM)</option>
+              <option value="twice_daily">🚀 High Velocity (2 Posts/Day - 10:30 AM & 6:30 PM)</option>
+              <option value="alternate">📅 Alternating Days (Every 2 Days)</option>
+            </select>
+            <button type="button" class="btn btn-primary btn-sm" onclick="applyScheduleCadence()" style="background: linear-gradient(135deg, #0284c7, #38bdf8); border: none; font-weight: 700; padding: 8px 16px; border-radius: 8px; cursor: pointer;">
+              ⚡ Apply Daily Rhythm
+            </button>
+            <span id="cadenceNoticeBadge" class="compliance-pill pass" style="font-size: 11px;">Active: Daily (11:30 AM)</span>
+          </div>
         </div>
 
         <!-- View Toggle & Filter Bar -->
@@ -789,6 +822,45 @@
               </small>
             </div>
 
+            
+            <!-- Google Business Profile (GMB) Publisher (100% Direct & Compliant) -->
+            <div class="direct-api-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(16, 185, 129, 0.12)); border: 1.5px solid rgba(59, 130, 246, 0.4); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>
+                  <h4 style="margin: 0 0 6px 0; color: #60a5fa; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                    <span>📍</span> Google Business Profile (GMB Local Updates • 100% Free)
+                  </h4>
+                  <p style="margin: 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.5;">
+                    Publishes local updates directly to Big Byte Systems on Google Maps & Google Search. Includes native "Call Now" buttons and automatic zero-phone policy sanitization.
+                  </p>
+                </div>
+                <span class="compliance-pill" id="gmbDirectStatusBadge" style="font-size: 11px;">⚪ GMB: Setup Ready</span>
+              </div>
+
+              <!-- GMB Connected Banner -->
+              <div id="gmbConnectedBanner" style="display: none; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                  <div>
+                    <strong style="color: #60a5fa; font-size: 14px;" id="gmbLocationTitleDisplay">Big Byte Systems</strong>
+                    <div style="color: var(--text-muted); font-size: 11px;">
+                      Location: <code id="gmbLocationIdDisplay">Shop 1, Khewra Cir Marg, Manpada</code> • <span style="color:#34d399;">Connected & Active</span>
+                    </div>
+                  </div>
+                  <span style="color: #60a5fa; font-weight: 700; font-size: 12px;">✅ Ready to Publish Updates</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" onclick="connectGmbAccount()" style="background: linear-gradient(135deg, #2563eb, #38bdf8); border: none; font-weight: 700;">
+                  📍 Connect Google Business Profile (1-Click Google OAuth)
+                </button>
+              </div>
+
+              <small style="display: block; margin-top: 14px; font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+                💡 <b>Shared Google Cloud Project:</b> Uses your existing Google OAuth Client ID (<code>481969...</code>). In Google Cloud Console ➔ Enable <b>Google Business Profile API</b> and add redirect URI <code>http://localhost:3000/api/platforms/gmb-callback</code>. Also pre-wired to auto-relay via Make webhook if API approval is pending.
+              </small>
+            </div>
+
             <!-- 24/7 Zero-Expense Cloud Autopilot Engine (Laptop Off / Sleep Safe) -->
             <div class="direct-api-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(2, 132, 199, 0.12)); border: 1.5px solid rgba(16, 185, 129, 0.4); border-radius: 14px; padding: 22px; margin-bottom: 24px;">
               <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
@@ -1031,10 +1103,30 @@
       <div class="checkout-grid-two-col">
         <!-- Left: Payment Options -->
         <div class="checkout-left">
+
+          <!-- Customer Information -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; margin-bottom: 14px;">
+            <div style="font-size: 11.5px; font-weight: 700; color: #38bdf8; margin-bottom: 8px;">👤 Subscriber Information</div>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+              <input type="text" id="custFullName" placeholder="Full Name *" value="Big Byte Systems" style="font-size: 12px; padding: 6px 10px; border-radius: 6px; background: #0f172a; border: 1px solid #334155; color: #fff;">
+              <input type="email" id="custEmail" placeholder="Email Address *" value="bbsthane@gmail.com" style="font-size: 12px; padding: 6px 10px; border-radius: 6px; background: #0f172a; border: 1px solid #334155; color: #fff;">
+            </div>
+            <div class="form-row" style="display: grid; grid-template-columns: 90px 1fr; gap: 8px;">
+              <select id="custCountryCode" style="font-size: 12px; padding: 6px 8px; border-radius: 6px; background: #0f172a; border: 1px solid #334155; color: #fff;">
+                <option value="+91" selected>🇮🇳 +91</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+971">🇦🇪 +971</option>
+              </select>
+              <input type="tel" id="custPhone" placeholder="Mobile Number *" value="09054790592" style="font-size: 12px; padding: 6px 10px; border-radius: 6px; background: #0f172a; border: 1px solid #334155; color: #fff;">
+            </div>
+          </div>
+
           <div class="payment-tabs-bar">
             <button class="pay-tab active" id="tabPayUpi" onclick="switchPayTab('upi')">⚡ UPI (GPay/PhonePe)</button>
             <button class="pay-tab" id="tabPayCard" onclick="switchPayTab('card')">💳 Credit / Debit Card</button>
             <button class="pay-tab" id="tabPayPaypal" onclick="switchPayTab('paypal')">🅿️ PayPal Global</button>
+            <button class="pay-tab" id="tabPayBank" onclick="switchPayTab('bank')">🏦 Bank / IFSC</button>
           </div>
 
           <!-- UPI QR Code Screen -->
@@ -1073,6 +1165,21 @@
                   <input type="password" id="cardCvv" placeholder="•••" value="842">
                 </div>
               </div>
+            </div>
+          </div>
+
+          
+          <!-- Bank Account & IFSC Transfer Screen -->
+          <div class="pay-content-pane" id="payPaneBank" style="display:none;">
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; font-size: 13px;">
+              <h4 style="margin: 0 0 10px; color: #38bdf8;">Direct Bank IMPS / NEFT Transfer</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; color: #cbd5e1; margin-bottom: 12px;">
+                <div><span style="color:#94a3b8; font-size: 11px;">Beneficiary:</span><br><strong>Big Byte Systems</strong></div>
+                <div><span style="color:#94a3b8; font-size: 11px;">Bank Name:</span><br><strong>State Bank of India (SBI)</strong></div>
+                <div><span style="color:#94a3b8; font-size: 11px;">Account Number:</span><br><strong style="font-family: monospace;">389201948201</strong></div>
+                <div><span style="color:#94a3b8; font-size: 11px;">IFSC Code:</span><br><strong style="font-family: monospace; color:#34d399;">SBIN0011682</strong></div>
+              </div>
+              <p style="margin: 0; font-size: 11.5px; color: #94a3b8;">Branch: Manpada, Thane West. Instant activation upon receipt confirmation.</p>
             </div>
           </div>
 
@@ -1140,6 +1247,9 @@
         <div class="modal-meta-row">
           <div><strong>Scheduled:</strong> <span id="modalPostDate">2026-10-26 at 10:15</span></div>
           <div><strong>Status:</strong> <span class="status-chip" id="modalPostStatus">Scheduled</span></div>
+          <div id="modalLiveLinkContainer" style="display: none;">
+            <a id="modalLiveLink" href="#" target="_blank" rel="noopener noreferrer" class="status-chip" style="background: #10b981; color: #fff; text-decoration: none; font-weight: 600;">🔗 View Live Post</a>
+          </div>
         </div>
 
         <div class="modal-section" id="modalHookSection">
@@ -1168,6 +1278,127 @@
       <div class="modal-actions-footer">
         <button class="btn btn-secondary" onclick="closePostModal()">Close</button>
         <button class="btn btn-primary" id="modalPublishBtn" onclick="publishModalPost()">⚡ Publish / Dispatch Now</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- ======================================================== -->
+  <!-- MODAL: PRE-FLIGHT COMPLIANCE INSPECTOR -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="preflightModal" onclick="closePreflightModal(event)">
+    <div class="modal-card" style="max-width: 640px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 26px;">🛡️</span>
+          <div>
+            <h3 style="margin: 0; color: #38bdf8;">Pre-Flight Multi-Platform Compliance Shield</h3>
+            <p style="margin: 2px 0 0; color: var(--text-muted); font-size: 12px;">Automated Anti-Ban Policy Verifier for Big Byte Systems</p>
+          </div>
+        </div>
+        <button class="btn-close" onclick="closePreflightModal()">✕</button>
+      </div>
+
+      <div style="padding: 16px 0;">
+        <label style="font-size: 12px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">Select Post to Inspect:</label>
+        <select id="preflightPostSelector" onchange="runPreflightAudit(this.value)" style="width: 100%; background: #0f172a; color: #fff; border: 1px solid #334155; border-radius: 8px; padding: 10px; font-size: 13px; margin-bottom: 16px;">
+          <!-- Populated dynamically -->
+        </select>
+
+        <div id="preflightAuditResults" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px;">
+        <button class="btn btn-secondary" onclick="closePreflightModal()">Close Inspector</button>
+        <button class="btn btn-primary" onclick="dispatchAuditedPost()" style="background: linear-gradient(135deg, #10b981, #0284c7); border: none;">⚡ Safe Dispatch Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CONTACT & LAB SUPPORT -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="contactModal" onclick="closeContactModal(event)">
+    <div class="modal-card" style="max-width: 540px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="/logo.png" alt="Big Byte Systems" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px;" onerror="this.outerHTML='🔬'">
+          <div>
+            <h3 style="margin: 0; color: #38bdf8;">Big Byte Systems — Contact & Lab Support</h3>
+            <p style="margin: 2px 0 0; color: var(--text-muted); font-size: 12px;">Chip-Level Diagnostics & Automation Support in Thane West</p>
+          </div>
+        </div>
+        <button class="btn-close" onclick="closeContactModal()">✕</button>
+      </div>
+
+      <div style="padding: 16px 0; font-size: 13px; line-height: 1.7; color: #e2e8f0;">
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+            <span>📍</span>
+            <div>
+              <strong>Physical Laboratory Address:</strong><br>
+              Shop No 1, Building No 1, Khewra Cir Marg, Manpada, Thane West, Maharashtra 400607
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span>📞</span>
+            <div><strong>Direct Hotline:</strong> <a href="tel:09054790592" style="color: #38bdf8;">090547 90592</a></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <span>💬</span>
+            <div><strong>Direct WhatsApp Lab Consultation:</strong> <a href="https://bigbytesystems.co.in/chat" target="_blank" style="color: #34d399;">wa.me/919167463807</a></div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span>🌐</span>
+            <div><strong>Official Web Portal:</strong> <a href="https://bigbytesystems.co.in" target="_blank" style="color: #38bdf8;">bigbytesystems.co.in</a></div>
+          </div>
+        </div>
+        <p style="color: #94a3b8; font-size: 12px; margin: 0;">
+          ⏰ <b>Lab Working Hours:</b> Monday – Saturday: 10:30 AM – 8:30 PM • Sunday by Appointment.
+        </p>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 10px;">
+        <button class="btn btn-primary" onclick="window.open('https://bigbytesystems.co.in/chat', '_blank')" style="background: #10b981; border: none;">💬 Open WhatsApp Chat</button>
+        <button class="btn btn-secondary" onclick="closeContactModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: LEGAL & INTERNATIONAL COMPLIANCE DISCLAIMER -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="disclaimerModal" onclick="closeDisclaimerModal(event)">
+    <div class="modal-card" style="max-width: 600px;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 26px;">⚖️</span>
+          <div>
+            <h3 style="margin: 0; color: #f59e0b;">Legal Compliance & Platform Disclaimers</h3>
+            <p style="margin: 2px 0 0; color: var(--text-muted); font-size: 12px;">Terms of Service, Privacy Policy & Independent Laboratory Statement</p>
+          </div>
+        </div>
+        <button class="btn-close" onclick="closeDisclaimerModal()">✕</button>
+      </div>
+
+      <div style="padding: 16px 0; font-size: 12px; line-height: 1.6; color: #cbd5e1; max-height: 380px; overflow-y: auto;">
+        <h4 style="color: #fff; margin: 0 0 6px;">1. Independent Service Provider Disclaimer</h4>
+        <p style="margin-bottom: 12px;">Big Byte Systems is an independent technology diagnosis, hardware triage, and chip-level component repair laboratory. All trademarked brand names (such as Apple, MacBook, HP, Dell, Lenovo, Epson, etc.) belong to their respective owners and are referenced solely for identification and diagnostic compatibility purposes.</p>
+
+        <h4 style="color: #fff; margin: 0 0 6px;">2. Social Platform API Compliance (Anti-Ban Guarantee)</h4>
+        <p style="margin-bottom: 12px;">This application operates strictly under official Meta Graph API v26.0 and Google Cloud YouTube Data API v3 terms of service. It uses native OAuth2 and direct Server-to-Server protocols. No undocumented scraping, automated spoofing, or credential sharing takes place.</p>
+
+        <h4 style="color: #fff; margin: 0 0 6px;">3. Privacy Policy & Zero-Cloud Leak Guarantee</h4>
+        <p style="margin-bottom: 12px;">Your client tokens, customer lists, and financial records are stored exclusively in your local configuration environment. No customer data or access tokens are relayed to third-party databases.</p>
+
+        <h4 style="color: #fff; margin: 0 0 6px;">4. International Children's Online Privacy (COPPA)</h4>
+        <p style="margin-bottom: 0;">All automated video and audio content generated by Big Byte Systems is technical educational case material for adult computer owners and explicitly declares <code>selfDeclaredMadeForKids: false</code> in strict accordance with the US COPPA act and international online privacy regulations.</p>
+      </div>
+
+      <div class="modal-actions" style="margin-top: 14px;">
+        <button class="btn btn-secondary" onclick="closeDisclaimerModal()">I Acknowledge & Agree</button>
       </div>
     </div>
   </div>

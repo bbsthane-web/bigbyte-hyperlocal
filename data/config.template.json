@@ -1,0 +1,21 @@
+{
+  "webhookUrl": "https://hook.eu1.make.com/3j97xsx8t9cd9xcjpnypqhjw9i1mumwo",
+  "facebookPageId": "1310878978775789",
+  "facebookPageAccessToken": "",
+  "instagramAccountId": "17841425989601610",
+  "youtubeChannelId": "UCnEnkcDiu43I_d5CErvPgXg",
+  "youtubeChannelTitle": "Big Byte Systems Laptop IT Services",
+  "youtubeClientId": "481969462786-567pkeci0iqrfr62m38j5eb4o5fjs61p.apps.googleusercontent.com",
+  "youtubeClientSecret": "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",
+  "youtubeRefreshToken": "",
+  "youtubeApiKey": "",
+  "directApiEnabled": true,
+  "autopilotEnabled": true,
+  "checkIntervalSeconds": 15,
+  "metaSystemUserToken": "",
+  "scheduleCadence": "daily",
+  "gmbRefreshToken": "",
+  "gmbLocationTitle": "Big Byte Systems",
+  "gmbAccountId": "Big Byte Systems",
+  "gmbLocationId": "big-byte-systems-thane"
+}

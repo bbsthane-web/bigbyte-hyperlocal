@@ -62,6 +62,7 @@ try {
 const { uploadToFreeCdn } = require('./scripts/cdn_relay.js');
 const { generateReelVideoFromImage } = require('./scripts/reel_generator.js');
 const { cleanCaptionForInstagram, cleanCaptionForFacebook } = require('./scripts/seo_aeo_geo_engine.js');
+const { checkDuplicate, recordAsset } = require('./scripts/media_vault.js');
 
 // Helper to resolve local disk path for an asset
 function resolveLocalAssetPath(imageUrl) {
@@ -82,20 +83,38 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
   const pageAccessToken = fbConfig.pageAccessToken;
   if (!pageId || !pageAccessToken) return Promise.resolve(null);
 
-  const localFile = resolveLocalAssetPath(publicImageUrl || post.image);
+  const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+  let localFile = resolveLocalAssetPath(publicImageUrl || post.image);
+  const cleanBase = localFile ? path.basename(localFile, path.extname(localFile)) : `fb_${post.id}`;
+  
+  const candidates = [
+    path.join(reelDir, `reel_${post.id}.mp4`),
+    path.join(reelDir, `reel_${cleanBase}.mp4`),
+    path.join(reelDir, `${cleanBase}.mp4`)
+  ];
+  const videoReel = (localFile && localFile.endsWith('.mp4')) ? localFile : candidates.find(f => fs.existsSync(f) && fs.statSync(f).size > 1000);
+  const isVideo = Boolean(videoReel && (post.mediaFormat === 'VIDEO' || post.mediaFormat === 'REELS' || (post.image && post.image.endsWith('.mp4'))));
+  const targetFile = isVideo ? videoReel : localFile;
 
   return new Promise((resolve) => {
     const https = require('https');
 
-    // Case 1: Local file on disk -> Send direct multipart binary buffer! (Zero URL dependency)
-    if (localFile && fs.existsSync(localFile)) {
-      console.log(`📦 [DIRECT META GRAPH API] Uploading exact local binary image "${path.basename(localFile)}" directly to Facebook Page ${pageId}...`);
+    // Case 1: Local file on disk -> Send direct multipart binary buffer! (Video Reel with Sound or High-Res Photo)
+    if (targetFile && fs.existsSync(targetFile)) {
       const boundary = '----NodeFormBoundary' + Math.random().toString(36).substring(2);
       const crlf = '\r\n';
-      const fileBuf = fs.readFileSync(localFile);
-      const filename = path.basename(localFile);
+      const fileBuf = fs.readFileSync(targetFile);
+      const filename = path.basename(targetFile);
+      const isMp4 = filename.endsWith('.mp4');
 
-      const parts = [
+      const parts = isMp4 ? [
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="description"${crlf}${crlf}${caption}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${pageAccessToken}${crlf}`),
+        Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: video/mp4${crlf}${crlf}`),
+        fileBuf,
+        Buffer.from(crlf),
+        Buffer.from(`--${boundary}--${crlf}`)
+      ] : [
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="message"${crlf}${crlf}${caption}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="access_token"${crlf}${crlf}${pageAccessToken}${crlf}`),
         Buffer.from(`--${boundary}${crlf}Content-Disposition: form-data; name="source"; filename="${filename}"${crlf}Content-Type: image/jpeg${crlf}${crlf}`),
@@ -104,11 +123,14 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
         Buffer.from(`--${boundary}--${crlf}`)
       ];
       const payload = Buffer.concat(parts);
+      const apiPath = isMp4 ? `/v26.0/${encodeURIComponent(pageId)}/videos` : `/v26.0/${encodeURIComponent(pageId)}/photos`;
 
-      const photoReq = https.request({
+      console.log(`📦 [DIRECT META GRAPH API] Uploading ${isMp4 ? 'VIDEO REEL with stereo sound' : 'high-res photo'} "${filename}" directly to Facebook Page ${pageId}...`);
+
+      const fbReq = https.request({
         hostname: 'graph.facebook.com',
         port: 443,
-        path: `/v26.0/${encodeURIComponent(pageId)}/photos`,
+        path: apiPath,
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data; boundary=' + boundary,
@@ -121,19 +143,19 @@ function dispatchDirectToFacebook(post, fbConfig, publicImageUrl, caption) {
           try {
             const parsed = JSON.parse(body);
             if (parsed.id || parsed.post_id) {
-              console.log(`🚀 [DIRECT META GRAPH API] Success! Exact local image "${post.title}" published live to Facebook Page ${pageId}! (Post ID: ${parsed.post_id || parsed.id})`);
-              return resolve({ success: true, directApi: true, id: parsed.id, postId: parsed.post_id });
+              console.log(`🚀 [DIRECT META GRAPH API] Success! "${post.title}" published live to Facebook! (${isMp4 ? 'Video Reel with Sound' : 'Photo Post'} ID: ${parsed.post_id || parsed.id})`);
+              return resolve({ success: true, directApi: true, id: parsed.id, postId: parsed.post_id, isVideo: isMp4 });
             }
-            console.warn(`⚠️ [DIRECT FB PHOTO FAILED] ${parsed.error?.message || body}`);
+            console.warn(`⚠️ [DIRECT FB FAILED] ${parsed.error?.message || body}`);
             resolve({ success: false, error: parsed.error?.message || body });
           } catch (e) {
             resolve({ success: false, error: e.message });
           }
         });
       });
-      photoReq.on('error', e => resolve({ success: false, error: e.message }));
-      photoReq.write(payload);
-      photoReq.end();
+      fbReq.on('error', e => resolve({ success: false, error: e.message }));
+      fbReq.write(payload);
+      fbReq.end();
       return;
     }
 
@@ -206,7 +228,7 @@ function dispatchDirectToInstagram(post, igConfig, publicImageUrl, caption) {
         const reelVideoPath = path.join(reelDir, `reel_${cleanBase}.mp4`);
         if (!fs.existsSync(reelVideoPath) || fs.statSync(reelVideoPath).size < 1000) {
           console.log(`🎬 [DIRECT INSTAGRAM] Converting "${filename}" to interactive 9:16 vertical video Reel via FFmpeg...`);
-          generateReelVideoFromImage(localFile, reelVideoPath, 15);
+          generateReelVideoFromImage(localFile, reelVideoPath, 15, post.script || post.content);
         }
         localFile = reelVideoPath;
         filename = path.basename(localFile);
@@ -461,32 +483,170 @@ function getYouTubeChannelDetails(accessToken) {
   });
 }
 
-// Direct YouTube Shorts Dispatcher (Resumable Upload Protocol)
+
+// Advanced SEO, AEO & GEO Metadata Engine for YouTube Shorts
+function buildYouTubeSEOMetadata(post, caption) {
+  let shortTitle = (post.title || "Big Byte Systems Diagnostic Lab").trim();
+  if (!shortTitle.toLowerCase().includes('#shorts')) {
+    shortTitle = `${shortTitle} #Shorts`;
+  }
+  if (shortTitle.length > 100) {
+    shortTitle = shortTitle.substring(0, 92) + " #Shorts";
+  }
+
+  // Hyperlocal High-Ranking Local Thane & Tech Tags
+  const coreTags = [
+    "Shorts",
+    "Laptop Repair Thane",
+    "MacBook Repair Thane",
+    "Computer Repair Near Me",
+    "Big Byte Systems",
+    "Thane West",
+    "Ghodbunder Road Laptop Repair",
+    "Chip Level Motherboard Repair",
+    "Micro Soldering",
+    "Laptop Screen Replacement Thane",
+    "Data Recovery Thane",
+    "Epson Printer Repair Thane",
+    "Apple Service Center Alternative",
+    "No Display Fix",
+    "Liquid Damage Repair",
+    "Tech Laboratory Thane",
+    "Manpada Thane",
+    "Gaming Laptop Repair",
+    "VHS to Digital",
+    "SSD Upgrade Thane"
+  ];
+
+  const postTags = Array.isArray(post.tags) ? post.tags : [];
+  const tags = Array.from(new Set([...coreTags, ...postTags])).slice(0, 25);
+
+  const scriptContent = (post.script || post.content || caption || "").trim();
+  const hookContent = post.videoHook ? `💡 CASE SUMMARY: ${post.videoHook}\n\n` : '';
+
+  const description = `⚡ ${shortTitle}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔬 LABORATORY CASE STUDY | BIG BYTE SYSTEMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${hookContent}${scriptContent}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 HYPERLOCAL LAB LOCATION & CONTACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏢 Laboratory: Big Byte Systems
+📍 Address: Shop No 1, Building No 1, Khewra Cir Marg, Manpada, Thane West, Maharashtra 400607
+📞 Direct Hotline: 090547 90592
+💬 Direct WhatsApp: https://bigbytesystems.co.in/chat
+🌐 Official Website: https://bigbytesystems.co.in
+🗺️ Google Maps: https://share.google/qoQk9AHu9lm7UxlAH
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏙️ HYPERLOCAL SERVICE COVERAGE AREAS (THANE & MUMBAI)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Thane West • Ghodbunder Road • Manpada • Majiwada • Vasant Vihar • Hiranandani Estate • Hiranandani Meadows • Naupada • Pachpakhadi • Mulund • Kolshet Road • Kasarvadavali • Wagle Estate
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❓ FREQUENTLY ASKED QUESTIONS (AEO / AI OVERVIEW)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Q: Can dead logic boards be repaired without replacement?
+A: Yes! Over 85% of 'dead' motherboards can be saved via precision micro-soldering and chip-level component replacement, saving up to 70-90% compared to official replacement costs.
+
+Q: How long does diagnosis take?
+A: Initial microscope inspection and thermal diagnostic analysis is completed within 24 to 48 hours with transparent component-level quotes.
+
+#Shorts #BigByteSystems #LaptopRepairThane #MacBookRepair #ThaneWest #GhodbunderRoad #TechLaboratory #ComputerRepairNearMe #DataRecoveryThane #ViralReels`;
+
+  return { shortTitle, description, tags };
+}
+
+// Google Business Profile (GMB) Helper Functions
+async function getGmbAccessToken(gmbConfig) {
+  const params = new URLSearchParams({
+    client_id: gmbConfig.clientId || config.youtubeClientId,
+    client_secret: gmbConfig.clientSecret || config.youtubeClientSecret,
+    refresh_token: gmbConfig.refreshToken,
+    grant_type: 'refresh_token'
+  });
+
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  });
+
+  const data = await res.json();
+  if (data.access_token) return data.access_token;
+  throw new Error(data.error_description || data.error || 'Failed to refresh Google Business Profile access token');
+}
+
+async function getGmbAccountDetails(accessToken) {
+  try {
+    const res = await fetch('https://mybusinessaccountmanagement.googleapis.com/v1/accounts', {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    const data = await res.json();
+    if (data.accounts && data.accounts.length > 0) {
+      const acc = data.accounts[0];
+      let locationTitle = "Big Byte Systems";
+      let locationId = "";
+      try {
+        const locRes = await fetch(`https://mybusinessbusinessinformation.googleapis.com/v1/${acc.name}/locations?readMask=name,title,storefrontAddress`, {
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        const locData = await locRes.json();
+        if (locData.locations && locData.locations.length > 0) {
+          locationTitle = locData.locations[0].title || locationTitle;
+          locationId = locData.locations[0].name;
+        }
+      } catch (_) {}
+      return { accountId: acc.name, locationId, locationTitle };
+    }
+  } catch (err) {
+    console.warn(`[GMB DISCOVERY NOTICE] ${err.message}`);
+  }
+  return { accountId: "Big Byte Systems", locationId: "big-byte-systems-thane", locationTitle: "Big Byte Systems" };
+}
+
+// Direct YouTube Shorts Dispatcher (Full 2-Step Resumable Upload Protocol)
 function dispatchDirectToYouTube(post, ytConfig, publicImageUrl, caption) {
   return new Promise(async (resolve) => {
     try {
       const accessToken = await getYouTubeAccessToken(ytConfig);
       const chDetails = await getYouTubeChannelDetails(accessToken);
 
-      // Verify or attach #Shorts tag for YouTube shelf discovery
-      let shortTitle = post.title || "Big Byte Systems Diagnostic Lab";
-      if (!shortTitle.toLowerCase().includes('#shorts')) {
-        shortTitle = `${shortTitle} #Shorts`;
-      }
-      if (shortTitle.length > 100) {
-        shortTitle = shortTitle.substring(0, 92) + " #Shorts";
+      // 1. Resolve or Generate 9:16 Vertical Video File
+      let localFile = resolveLocalAssetPath(publicImageUrl || post.image || post.mediaUrl);
+      let videoFile = localFile;
+
+      if (!videoFile || !fs.existsSync(videoFile) || videoFile.endsWith('.jpg') || videoFile.endsWith('.jpeg') || videoFile.endsWith('.png')) {
+        const reelDir = path.join(PUBLIC_DIR, 'assets', 'reels');
+        if (!fs.existsSync(reelDir)) fs.mkdirSync(reelDir, { recursive: true });
+        const cleanBase = localFile ? path.basename(localFile, path.extname(localFile)) : `yt_${post.id || Date.now()}`;
+        const compiledReel = path.join(reelDir, `reel_${cleanBase}.mp4`);
+
+        if (!fs.existsSync(compiledReel) || fs.statSync(compiledReel).size < 1000) {
+          const sourceImg = (localFile && fs.existsSync(localFile)) ? localFile : path.join(PUBLIC_DIR, 'assets', 'hero.jpg');
+          console.log(`🎬 [YOUTUBE ENGINE] Compiling 9:16 vertical video Short from ${path.basename(sourceImg)}...`);
+          generateReelVideoFromImage(sourceImg, compiledReel, 15, post.script || post.content);
+        }
+        videoFile = compiledReel;
       }
 
-      const description = `${post.script || post.content || caption}\n\n📍 Big Byte Systems — Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 WhatsApp Triage: https://wa.me/919167463807\n\n#Shorts #BigByteSystems #LaptopRepair #Thane #TechTips`;
+      const fileSize = fs.statSync(videoFile).size;
 
-      console.log(`🎬 [DIRECT YOUTUBE SHORTS] Connected to channel "${chDetails.title}" (ID: ${chDetails.id}). Initializing resumable session...`);
+      const { shortTitle, description, tags } = buildYouTubeSEOMetadata(post, caption);
+
+      console.log(`🎬 [DIRECT YOUTUBE SHORTS] Connected to channel "${chDetails.title}" (ID: ${chDetails.id}). Initializing resumable session for ${fileSize} bytes with full SEO/AEO/GEO tags...`);
 
       const metadata = JSON.stringify({
         snippet: {
           title: shortTitle,
           description: description,
-          tags: ["Shorts", "BigByteSystems", "LaptopRepair", "Thane", "MacBookRepair", "DataRecovery"],
-          categoryId: "28"
+          tags: tags,
+          categoryId: "28",
+          defaultLanguage: "en",
+          defaultAudioLanguage: "en"
         },
         status: {
           privacyStatus: "public",
@@ -495,6 +655,7 @@ function dispatchDirectToYouTube(post, ytConfig, publicImageUrl, caption) {
       });
 
       const https = require('https');
+      // Step 1: Create Resumable Upload Session
       const initReq = https.request({
         hostname: 'www.googleapis.com',
         path: '/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status',
@@ -503,28 +664,69 @@ function dispatchDirectToYouTube(post, ytConfig, publicImageUrl, caption) {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json; charset=UTF-8',
           'Content-Length': Buffer.byteLength(metadata),
-          'X-Upload-Content-Type': 'video/mp4'
+          'X-Upload-Content-Type': 'video/mp4',
+          'X-Upload-Content-Length': fileSize
         }
       }, (res) => {
         const uploadLocation = res.headers['location'];
-        if (uploadLocation) {
-          console.log(`🚀 [DIRECT YOUTUBE] Resumable session ready for "${shortTitle}" on channel "${chDetails.title}"!`);
-          resolve({
-            success: true,
-            directApi: true,
-            channel: chDetails.title,
-            channelId: chDetails.id,
-            uploadSessionUrl: uploadLocation,
-            title: shortTitle
-          });
-        } else {
+        if (!uploadLocation) {
           let errBody = '';
           res.on('data', d => errBody += d);
           res.on('end', () => {
             console.error(`❌ [DIRECT YOUTUBE ERROR]`, errBody);
             resolve({ success: false, error: errBody });
           });
+          return;
         }
+
+        console.log(`🚀 [DIRECT YOUTUBE] Resumable session created. Streaming video binary payload (${fileSize} bytes)...`);
+
+        // Step 2: Stream Video Binary Bytes via PUT
+        const locUrl = new URL(uploadLocation);
+        const videoStream = fs.createReadStream(videoFile);
+
+        const putReq = https.request({
+          protocol: locUrl.protocol,
+          hostname: locUrl.hostname,
+          port: locUrl.port || 443,
+          path: locUrl.pathname + locUrl.search,
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'video/mp4',
+            'Content-Length': fileSize
+          }
+        }, (putRes) => {
+          let putBody = '';
+          putRes.on('data', d => putBody += d);
+          putRes.on('end', () => {
+            try {
+              const vidData = JSON.parse(putBody);
+              if (vidData.id) {
+                console.log(`\n======================================================`);
+                console.log(`🚀 [YOUTUBE SUCCESS] Video is LIVE on YouTube Shorts!`);
+                console.log(`📺 Video ID: ${vidData.id}`);
+                console.log(`🔗 Watch URL: https://youtube.com/shorts/${vidData.id}`);
+                console.log(`======================================================\n`);
+                resolve({
+                  success: true,
+                  directApi: true,
+                  id: vidData.id,
+                  url: `https://youtube.com/shorts/${vidData.id}`,
+                  title: shortTitle,
+                  channel: chDetails.title
+                });
+              } else {
+                console.error(`❌ [YOUTUBE UPLOAD ERROR]`, putBody);
+                resolve({ success: false, error: putBody });
+              }
+            } catch (e) {
+              resolve({ success: false, error: e.message });
+            }
+          });
+        });
+
+        putReq.on('error', (e) => resolve({ success: false, error: e.message }));
+        videoStream.pipe(putReq);
       });
 
       initReq.on('error', (e) => resolve({ success: false, error: e.message }));
@@ -577,15 +779,16 @@ function dispatchToWebhook(post, client) {
                                        .replace(/\+?91[\d\s\-]{8,15}/g, '')
                                        .replace(/📞\s*(Hotline|Call|Phone|Emergency Desk|Recovery Lab|Inquiries|Service Desk|Upgrade Hotline|Upgrade Desk|Custom Rig Hotline)?\s*[:\-]?\s*[\d\s]+/gi, '')
                                        .replace(/📞[^\n]+/gi, '')
-                                       .replace(/(📞|Call|Hotline|Phone|Tel)\s*[:\-]?\s*[\d\s]*/gi, '');
+                                       .replace(/(Hotline|Phone|Tel)\s*[:\-]?\s*[\d\s]*/gi, '')
+                                       .replace(/Call\s*[:\-]\s*\d[\d\s\-]*/gi, '');
       gmbCleanContent = gmbCleanContent.replace(/https?:\/\/[^\s]+/gi, '')
                                        .replace(/wa\.me\/[^\s]+/gi, '')
                                        .replace(/💬\s*(WhatsApp|Triage|Instant WhatsApp|Direct WhatsApp|WhatsApp Triage)?\s*[:\-]?\s*[^\n]+/gi, '')
                                        .replace(/💬[^\n]+/gi, '')
-                                       .replace(/WhatsApp\s*[:\-]?\s*/gi, '');
-      if (!gmbCleanContent.includes('Call now')) {
-        gmbCleanContent = gmbCleanContent.trim() + "\n\nTap the 'Call now' button below to consult directly with our senior technicians.";
-      }
+                                       .replace(/WhatsApp\s*[:\-]?\s*[^\n]*/gi, '');
+      gmbCleanContent = gmbCleanContent.replace(/Tap the ["']?now["']? button[^\n]*/gi, '');
+      gmbCleanContent = gmbCleanContent.replace(/Tap the ["']?Call now["']? button[^\n]*/gi, '');
+      gmbCleanContent = gmbCleanContent.trim() + "\n\nTap the 'Call now' button below to consult directly with our senior technicians.";
       gmbCleanContent = gmbCleanContent.replace(/\n{3,}/g, '\n\n').trim();
 
       let gmbCleanTitle = (post.title || "Big Byte Systems Diagnostic Lab").trim();
@@ -753,16 +956,24 @@ setInterval(() => {
 
   posts.forEach(p => {
     if (p.status === 'Scheduled' && p.date && p.time) {
-      const [year, month, day] = p.date.split('-').map(Number);
-      const [h, m] = p.time.split(':').map(Number);
-      const postTime = new Date(year, month - 1, day, h || 10, m || 0).getTime();
+      // Explicit IST (Indian Standard Time, UTC+5:30) parsing
+      const timeStr = (p.time || '10:00').trim().padStart(5, '0');
+      const postTime = new Date(`${p.date}T${timeStr}:00+05:30`).getTime();
 
       if (now.getTime() >= postTime) {
+        // Anti-Duplication Sentinel Gate
+        const dupCheck = checkDuplicate(p.image, p.videoHook || p.title, 90);
+        if (dupCheck.isDuplicate) {
+          console.warn(`🛡️ [VAULT DEDUPLICATION GATE BLOCKED] Post ${p.id} skipped: ${dupCheck.message}`);
+          return;
+        }
+
         console.log(`⏰ [TRIGGER] Scheduled time reached for: ${p.title} (${p.platform.toUpperCase()})`);
         const client = allClients.find(c => c.id === p.clientId) || allClients[0];
         dispatchToWebhook(p, client);
         p.status = 'Published';
         p.publishedAt = now.toISOString();
+        recordAsset(p);
         updated = true;
       }
     }
@@ -813,6 +1024,12 @@ const server = http.createServer((req, res) => {
         callback(err, null);
       }
     });
+  }
+
+  // Masked Vanity Redirect for Direct WhatsApp (Zero Phone Number Leak)
+  if (pathname === '/whatsapp' || pathname === '/wa') {
+    res.writeHead(302, { 'Location': 'https://wa.me/919167463807' });
+    return res.end();
   }
 
   // --- API ROUTES ---
@@ -946,6 +1163,18 @@ const server = http.createServer((req, res) => {
         return res.end(JSON.stringify({ error: 'Invalid JSON' }));
       }
       try {
+        // Anti-Duplication Sentinel Gate (bypass if user passes { force: true })
+        const dupCheck = checkDuplicate(post.image, post.videoHook || post.title, 90);
+        if (dupCheck.isDuplicate && !post.force) {
+          console.warn(`🛡️ [VAULT DEDUPLICATION GATE BLOCKED] Manual post ${post.id}: ${dupCheck.message}`);
+          res.writeHead(409, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({
+            success: false,
+            error: `Anti-duplication gate: ${dupCheck.message}`,
+            isDuplicate: true
+          }));
+        }
+
         const allClients = readJson(CLIENTS_FILE, []);
         const client = allClients.find(c => c.id === post.clientId) || allClients[0];
         const dispatchResult = await dispatchToWebhook(post, client);
@@ -953,13 +1182,29 @@ const server = http.createServer((req, res) => {
         const errorMsg = typeof dispatchResult === 'object' ? dispatchResult.error : null;
         
         // Update post status in database ONLY if it actually succeeded on the live channel!
+        let pubUrl = null;
+        let pubId = null;
         if (success) {
           const allPosts = readJson(POSTS_FILE, []);
           const pIdx = allPosts.findIndex(p => String(p.id) === String(post.id));
           if (pIdx >= 0) {
             allPosts[pIdx].status = 'Published';
             allPosts[pIdx].publishedAt = new Date().toISOString();
+            pubId = dispatchResult?.postId || dispatchResult?.id || null;
+            if (pubId) allPosts[pIdx].publishedId = pubId;
+            if (dispatchResult?.url) {
+              pubUrl = dispatchResult.url;
+            } else if (post.platform === 'facebook' && pubId) {
+              const cleanId = String(pubId).split('_').pop();
+              pubUrl = `https://www.facebook.com/122128630917461791/posts/${cleanId}`;
+            } else if (post.platform === 'youtube' && pubId) {
+              pubUrl = `https://youtube.com/shorts/${pubId}`;
+            }
+            if (pubUrl) allPosts[pIdx].publishedUrl = pubUrl;
+            recordAsset(allPosts[pIdx]);
             writeJson(POSTS_FILE, allPosts);
+          } else {
+            recordAsset(post);
           }
         }
 
@@ -967,6 +1212,8 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({
           success,
           error: errorMsg,
+          publishedUrl: pubUrl,
+          publishedId: pubId,
           message: success ? "Dispatched successfully to live channel!" : (errorMsg || "Dispatch failed")
         }));
       } catch (err2) {
@@ -1201,7 +1448,7 @@ const server = http.createServer((req, res) => {
       response_type: 'code',
       scope: scopes,
       access_type: 'offline',
-      prompt: 'consent'
+      prompt: 'select_account consent'
     }).toString();
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -1323,6 +1570,212 @@ const server = http.createServer((req, res) => {
 
     tokenReq.write(tokenPayload);
     tokenReq.end();
+    return;
+  }
+
+  
+  // GET /api/platforms/gmb-auth-url (Generate Google OAuth2 URL for Google Business Profile)
+  if (pathname === '/api/platforms/gmb-auth-url' && req.method === 'GET') {
+    const clientId = config.gmbClientId || config.youtubeClientId;
+    if (!clientId) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ success: false, error: 'Please enter and save your Google OAuth Client ID first.' }));
+    }
+
+    const host = req.headers.host || 'localhost:3000';
+    const redirectUri = `http://${host}/api/platforms/gmb-callback`;
+    const scopes = [
+      'https://www.googleapis.com/auth/business.manage'
+    ].join(' ');
+
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` + new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: 'code',
+      scope: scopes,
+      access_type: 'offline',
+      prompt: 'select_account consent'
+    }).toString();
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ success: true, authUrl, redirectUri }));
+  }
+
+  // GET /api/platforms/gmb-callback (Google OAuth2 Redirect Callback for GMB)
+  if (pathname === '/api/platforms/gmb-callback' && req.method === 'GET') {
+    const code = parsedUrl.searchParams.get('code');
+    const errParam = parsedUrl.searchParams.get('error');
+
+    if (errParam || !code) {
+      res.writeHead(400, { 'Content-Type': 'text/html; charset=utf-8' });
+      return res.end(`
+        <div style="font-family: system-ui; max-width: 500px; margin: 60px auto; padding: 24px; background: #1e1e24; color: #fff; border-radius: 12px; border: 1px solid #ef4444;">
+          <h2 style="color: #ef4444; margin-top: 0;">❌ Authorization Cancelled</h2>
+          <p>${errParam || 'No authorization code received from Google.'}</p>
+          <a href="/#channels" style="color: #38bdf8; text-decoration: none; font-weight: 700;">← Return to Social Studio</a>
+        </div>
+      `);
+    }
+
+    const host = req.headers.host || 'localhost:3000';
+    const redirectUri = `http://${host}/api/platforms/gmb-callback`;
+    const https = require('https');
+
+    const tokenPayload = new URLSearchParams({
+      code: code,
+      client_id: config.gmbClientId || config.youtubeClientId,
+      client_secret: config.gmbClientSecret || config.youtubeClientSecret,
+      redirect_uri: redirectUri,
+      grant_type: 'authorization_code'
+    }).toString();
+
+    const tokenReq = https.request({
+      hostname: 'oauth2.googleapis.com',
+      port: 443,
+      path: '/token',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(tokenPayload)
+      }
+    }, (tokenRes) => {
+      let tBody = '';
+      tokenRes.on('data', d => tBody += d);
+      tokenRes.on('end', async () => {
+        try {
+          const tParsed = JSON.parse(tBody);
+          if (!tParsed.access_token) {
+            res.writeHead(400, { 'Content-Type': 'text/html; charset=utf-8' });
+            return res.end(`
+              <div style="font-family: system-ui; max-width: 500px; margin: 60px auto; padding: 24px; background: #1e1e24; color: #fff; border-radius: 12px; border: 1px solid #ef4444;">
+                <h2 style="color: #ef4444; margin-top: 0;">❌ Token Exchange Failed</h2>
+                <p>${tParsed.error_description || tParsed.error || tBody}</p>
+                <a href="/#channels" style="color: #38bdf8; text-decoration: none; font-weight: 700;">← Return to Social Studio</a>
+              </div>
+            `);
+          }
+
+          if (tParsed.refresh_token) {
+            config.gmbRefreshToken = tParsed.refresh_token;
+          }
+
+          let businessName = "Big Byte Systems";
+          let locationId = "";
+          try {
+            const gmbDetails = await getGmbAccountDetails(tParsed.access_token);
+            businessName = gmbDetails.locationTitle || businessName;
+            locationId = gmbDetails.locationId || "";
+            config.gmbLocationTitle = businessName;
+            config.gmbAccountId = gmbDetails.accountId;
+            config.gmbLocationId = locationId;
+          } catch (_) {}
+
+          writeJson(CONFIG_FILE, config);
+
+          res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Google Business Connected</title>
+              <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+                .card { background: rgba(30, 41, 59, 0.8); border: 1px solid #3b82f6; border-radius: 16px; padding: 36px; max-width: 480px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+                h1 { color: #60a5fa; font-size: 22px; margin: 0 0 12px; }
+                p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+                .badge { background: rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block; margin-bottom: 20px; }
+                .btn { background: #3b82f6; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; }
+              </style>
+            </head>
+            <body>
+              <div class="card">
+                <div style="font-size: 48px; margin-bottom: 12px;">📍</div>
+                <div class="badge">Connected to Google Business</div>
+                <h1>${businessName}</h1>
+                <p>Location: <code>${locationId || 'Verified Thane Location'}</code><br>Google Business Profile is connected and ready for automated updates.</p>
+                <a href="/#channels" class="btn">Return to Social Studio Dashboard</a>
+                <script>
+                  setTimeout(() => { window.location.href = '/#channels'; }, 2500);
+                </script>
+              </div>
+            </body>
+            </html>
+          `);
+        } catch (e) {
+          res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
+          res.end(`<p>Error processing GMB callback: ${e.message}</p>`);
+        }
+      });
+    });
+
+    tokenReq.on('error', e => {
+      res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(`<p>Network error contacting Google: ${e.message}</p>`);
+    });
+
+    tokenReq.write(tokenPayload);
+    tokenReq.end();
+    return;
+  }
+
+  // POST /api/schedule/recalculate-daily (Auto-Schedule All Queued Posts on Chosen Cadence)
+  if (pathname === '/api/schedule/recalculate-daily' && req.method === 'POST') {
+    getJsonBody((err, body) => {
+      try {
+        const cadence = (body && body.cadence) || 'daily'; // 'daily', 'twice_daily', 'alternate'
+        const posts = readJson(POSTS_FILE, []);
+
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        let curDate = new Date(tomorrow);
+        let updatedCount = 0;
+
+        for (let i = 0; i < posts.length; i++) {
+          if (posts[i].status === 'Published') continue;
+
+          const yyyy = curDate.getFullYear();
+          const mm = String(curDate.getMonth() + 1).padStart(2, '0');
+          const dd = String(curDate.getDate()).padStart(2, '0');
+          posts[i].date = `${yyyy}-${mm}-${dd}`;
+
+          if (cadence === 'twice_daily') {
+            if (updatedCount % 2 === 0) {
+              posts[i].time = "10:30";
+            } else {
+              posts[i].time = "18:30";
+              curDate.setDate(curDate.getDate() + 1);
+            }
+          } else if (cadence === 'alternate') {
+            posts[i].time = "11:30";
+            curDate.setDate(curDate.getDate() + 2);
+          } else {
+            posts[i].time = "11:30";
+            curDate.setDate(curDate.getDate() + 1);
+          }
+
+          posts[i].status = 'Scheduled';
+          updatedCount++;
+        }
+
+        writeJson(POSTS_FILE, posts);
+
+        config.scheduleCadence = cadence;
+        writeJson(CONFIG_FILE, config);
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          cadence,
+          updatedCount,
+          nextPostDate: posts.find(p => p.status === 'Scheduled')?.date
+        }));
+      } catch (e) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: e.message }));
+      }
+    });
     return;
   }
 
@@ -1682,6 +2135,12 @@ const server = http.createServer((req, res) => {
 
   // --- STATIC FILE SERVING ---
   let filePath = path.join(PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname);
+
+  // Handle directory requests (e.g. /chat or /chat/)
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  }
+
   const ext = path.extname(filePath).toLowerCase();
 
   // If path doesn't have an extension, try adding .html
