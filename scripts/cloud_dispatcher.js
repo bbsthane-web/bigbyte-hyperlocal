@@ -667,8 +667,23 @@ async function runCloudCycle() {
           result = await dispatchFacebook(p, pageId, token, p.image, caption);
         } else if (p.platform === 'instagram' && igAccountId) {
           result = await dispatchInstagram(p, igAccountId, token, p.image, caption);
-        } else if (p.platform === 'youtube' && ytClientId && ytClientSecret && ytRefreshToken) {
-          result = await dispatchYouTube(p, { clientId: ytClientId, clientSecret: ytClientSecret, refreshToken: ytRefreshToken }, p.image, caption);
+        } else if (p.platform === 'youtube' && ytClientId && ytClientSecret) {
+          const channels = (config.youtubeChannels && config.youtubeChannels.length > 0)
+            ? config.youtubeChannels
+            : (ytRefreshToken ? [{ id: config.youtubeChannelId, title: config.youtubeChannelTitle || "YouTube Channel", refreshToken: ytRefreshToken }] : []);
+          
+          let lastRes = null;
+          const pubUrls = [];
+          for (const ch of channels) {
+            if (!ch.refreshToken) continue;
+            console.log(`🎬 [MULTI-CHANNEL YOUTUBE] Dispatching Short to "${ch.title || ch.id}"...`);
+            const chRes = await dispatchYouTube(p, { clientId: ytClientId, clientSecret: ytClientSecret, refreshToken: ch.refreshToken }, p.image, caption);
+            if (chRes && chRes.success) {
+              lastRes = chRes;
+              pubUrls.push(chRes.url);
+            }
+          }
+          result = lastRes ? { success: true, id: lastRes.id, url: pubUrls.join(' | ') } : { success: false, error: 'YouTube upload failed' };
         } else if (p.platform === 'gmb') {
           result = await dispatchGmb(p, config, p.image, caption);
         } else {
