@@ -1118,8 +1118,8 @@ const server = http.createServer((req, res) => {
     res.setHeader('Set-Cookie', `bbs_session=${session.token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=259200`);
   }
 
-  // Portal & Hub Redirects
-  if (pathname === '/portal' || pathname === '/hub') {
+  // Portal, Hub, Login & Feedback Redirects
+  if (pathname === '/portal' || pathname === '/hub' || pathname === '/login' || pathname === '/feedback') {
     res.writeHead(301, { 'Location': `${pathname}/` });
     return res.end();
   }
@@ -1127,7 +1127,7 @@ const server = http.createServer((req, res) => {
   // Protected UI Routes (Social Studio & Leads CRM require active session)
   const isProtectedPage = /^\/(crm|studio|social)(\/|$)/i.test(pathname);
   if (isProtectedPage && !session) {
-    res.writeHead(302, { 'Location': `/portal/?locked=true&redirect=${encodeURIComponent(pathname)}` });
+    res.writeHead(302, { 'Location': `/login/?locked=true&redirect=${encodeURIComponent(pathname)}` });
     return res.end();
   }
 

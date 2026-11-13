@@ -454,12 +454,15 @@
       <div id="authStatusPill" class="auth-status-pill auth-status-locked">
         <span id="authStatusIcon">🔒</span> <span id="authStatusText">Protected Beta</span>
       </div>
+      <a href="/feedback/" class="btn btn-secondary">
+        ⭐ Reviews (<span id="feedbackCountBadge">0</span>)
+      </a>
       <button class="btn btn-secondary" onclick="openFeedbackModal()">
-        📝 Feedback
+        📝 Give Feedback
       </button>
-      <button class="btn btn-primary" id="btnAuthTrigger" onclick="openAuthModal()">
-        🔑 Enter Secret Key
-      </button>
+      <a href="/login/" class="btn btn-primary" id="btnAuthTrigger">
+        🔑 Login Gateway
+      </a>
     </div>
   </header>
 
@@ -482,6 +485,15 @@
         <div class="hero-badge-pill">🛡️ Zero Third-Party SaaS Fees ($0 Margin)</div>
         <div class="hero-badge-pill">📍 Thane West Focused</div>
       </div>
+
+      <div style="display: flex; justify-content: center; gap: 14px; margin-top: 26px; flex-wrap: wrap;">
+        <a href="/login/" class="btn btn-primary" style="padding: 12px 24px; font-size: 0.98rem; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);">
+          🔑 Access Login & Passcode Gateway
+        </a>
+        <a href="/feedback/" class="btn btn-secondary" style="padding: 12px 24px; font-size: 0.98rem; border-color: #38bdf8; color: #38bdf8;">
+          ⭐ View Tester Reviews Registry
+        </a>
+      </div>
     </section>
 
     <!-- Secret Key Quick Unlocking Banner -->
@@ -489,15 +501,15 @@
       <div class="invite-alert-text">
         <span style="font-size: 1.5rem;">🎟️</span>
         <div>
-          <strong id="inviteBannerTitle">Testing with an Invite Passcode?</strong>
+          <strong id="inviteBannerTitle">Testing with an Invite Passcode or Master Admin?</strong>
           <p style="color: var(--text-muted); font-size: 0.84rem;" id="inviteBannerSub">
-            Have a tester passcode like <code>BBS-TESTER-2026</code>? Enter it to unlock full access to the studio and leads CRM.
+            Have a tester passcode like <code>BBS-TESTER-2026</code>, <code>PILOT-VIP</code>, or Master Admin login? Click below to enter the gateway.
           </p>
         </div>
       </div>
-      <button class="btn btn-secondary" style="border-color: #38bdf8; color: #38bdf8;" onclick="openAuthModal()">
-        Unlock with Secret Key 🔓
-      </button>
+      <a href="/login/" class="btn btn-secondary" style="border-color: #38bdf8; color: #38bdf8; text-decoration: none;">
+        Open Login Gateway 🔓
+      </a>
     </div>
 
     <!-- 4 Core Products Grid -->
@@ -785,7 +797,7 @@
     let currentAuth = { authenticated: false, role: null, name: null };
     let currentRating = 5;
 
-    // Check query params for 1-click ?key=XXX access
+    // Check query params for 1-click ?key=XXX access or ?openFeedback=true
     window.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const urlKey = urlParams.get('key');
@@ -794,6 +806,20 @@
       } else {
         await checkAuthStatus();
       }
+
+      if (urlParams.get('openFeedback') === 'true') {
+        openFeedbackModal();
+      }
+
+      // Fetch feedback count for badges
+      try {
+        const fbRes = await fetch('/api/feedback');
+        const fbList = await fbRes.json();
+        if (Array.isArray(fbList)) {
+          const badge = document.getElementById('feedbackCountBadge');
+          if (badge) badge.textContent = fbList.length;
+        }
+      } catch (e) {}
     });
 
     async function checkAuthStatus() {
@@ -822,14 +848,16 @@
         icon.textContent = currentAuth.role === 'admin' ? '👑' : '🔓';
         text.textContent = currentAuth.role === 'admin' ? 'Master Admin' : `Unlocked: ${currentAuth.name || 'Tester'}`;
         trigger.textContent = '🚪 Logout';
+        trigger.removeAttribute('href');
         trigger.onclick = handleLogout;
         banner.style.display = 'none';
       } else {
         pill.className = 'auth-status-pill auth-status-locked';
         icon.textContent = '🔒';
         text.textContent = 'Protected Beta';
-        trigger.textContent = '🔑 Enter Secret Key';
-        trigger.onclick = openAuthModal;
+        trigger.textContent = '🔑 Login Gateway';
+        trigger.setAttribute('href', '/login/');
+        trigger.onclick = null;
         banner.style.display = 'flex';
       }
     }

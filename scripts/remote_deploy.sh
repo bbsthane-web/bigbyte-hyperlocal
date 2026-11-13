@@ -139,6 +139,38 @@ server {
         return 301 /hub/;
     }
 
+    # Access & Login Gateway (/login/)
+    location ^~ /login/ {
+        proxy_pass http://127.0.0.1:3000/login/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location = /login {
+        return 301 /login/;
+    }
+
+    # Tester Feedback Dashboard (/feedback/)
+    location ^~ /feedback/ {
+        proxy_pass http://127.0.0.1:3000/feedback/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location = /feedback {
+        return 301 /feedback/;
+    }
+
     location = /whatsapp {
         return 302 https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20I%20am%20interested%20in%20the%20Social%20Media%20Pilot;
     }
@@ -150,6 +182,8 @@ sudo systemctl reload nginx
 
 echo "=== [6/6] HEALTH CHECKS VIA NGINX ==="
 curl -I http://127.0.0.1/portal/ | head -n 5
+curl -I http://127.0.0.1/login/ | head -n 5
+curl -I http://127.0.0.1/feedback/ | head -n 5
 curl -I http://127.0.0.1/crm/ | head -n 5
 curl -I http://127.0.0.1/pitch/ | head -n 5
 curl -I http://127.0.0.1/api/leads | head -n 5

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Access Gateway — Big Byte Systems</title>
+  <meta name="description" content="Secure Access Gateway for Big Byte Systems Social Studio, Hyperlocal Lead CRM, and Pilot Testing Suite.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-purple: #8b5cf6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    /* Ambient Glow Background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .login-container {
+      max-width: 460px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .brand-logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 12px;
+    }
+    .brand-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .brand-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Switcher Tabs */
+    .auth-tabs {
+      display: flex;
+      gap: 6px;
+      background: #0a0f1d;
+      border: 1px solid #1e293b;
+      padding: 5px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab.active {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+    .form-group input {
+      width: 100%;
+      background: #0a0f1d;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+    .form-group small {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover { background: #0369a1; }
+    .btn-submit:active { transform: scale(0.99); }
+
+    .error-box {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+      text-align: center;
+    }
+
+    .success-box {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+      text-align: center;
+    }
+
+    .footer-links {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #1e293b;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+    .footer-links a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer-links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="brand-header">
+      <div class="brand-logo-badge">⚡ BIG BYTE SYSTEMS • THANE WEST</div>
+      <h1 class="brand-title">Access Gateway</h1>
+      <p class="brand-subtitle" id="gatewaySub">Sign in as Master Admin or unlock with a Secret Tester Key</p>
+    </div>
+
+    <!-- Switcher Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabKey" onclick="switchTab('key')">🔑 Secret Tester Key</button>
+      <button class="auth-tab" id="tabAdmin" onclick="switchTab('admin')">👑 Master Admin</button>
+    </div>
+
+    <!-- Alert / Messages -->
+    <div class="error-box" id="errorBox"></div>
+    <div class="success-box" id="successBox"></div>
+
+    <!-- Tab 1: Secret Key Form -->
+    <form id="keyForm" onsubmit="handleKeyLogin(event)">
+      <div class="form-group">
+        <label>Secret Invite Passcode</label>
+        <input type="text" id="secretKeyInput" placeholder="e.g. BBS-TESTER-2026 or PILOT-VIP" required autofocus>
+        <small>Available passcodes: <code>BBS-TESTER-2026</code>, <code>PILOT-VIP</code>, <code>THANE-GROWTH</code></small>
+      </div>
+      <button type="submit" class="btn-submit" id="btnKeySubmit">
+        <span>Unlock Suite</span> 🚀
+      </button>
+    </form>
+
+    <!-- Tab 2: Admin Login Form -->
+    <form id="adminForm" style="display: none;" onsubmit="handleAdminLogin(event)">
+      <div class="form-group">
+        <label>Admin Username</label>
+        <input type="text" id="adminUserInput" placeholder="admin" required>
+      </div>
+      <div class="form-group">
+        <label>Master Password</label>
+        <input type="password" id="adminPassInput" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-submit" id="btnAdminSubmit">
+        <span>Sign In as Master Admin</span> 👑
+      </button>
+    </form>
+
+    <div class="footer-links">
+      <p>Want to explore first? <a href="/portal/">Back to Product Portal</a></p>
+      <p style="margin-top: 6px;">Need access? <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20please%20send%20me%20a%20tester%20secret%20key." target="_blank">Request Key on WhatsApp</a></p>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectTarget = urlParams.get('redirect') || '/portal/';
+    const prefillKey = urlParams.get('key');
+
+    if (prefillKey) {
+      document.getElementById('secretKeyInput').value = prefillKey;
+      doKeyLogin(prefillKey);
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tabKey').className = tab === 'key' ? 'auth-tab active' : 'auth-tab';
+      document.getElementById('tabAdmin').className = tab === 'admin' ? 'auth-tab active' : 'auth-tab';
+      document.getElementById('keyForm').style.display = tab === 'key' ? 'block' : 'none';
+      document.getElementById('adminForm').style.display = tab === 'admin' ? 'block' : 'none';
+      document.getElementById('gatewaySub').textContent = tab === 'key' 
+        ? 'Enter your invited passcode to unlock the Social Studio and CRM' 
+        : 'Enter Master Administrator credentials for Big Byte Systems';
+      hideError();
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('errorBox');
+      el.textContent = msg;
+      el.style.display = 'block';
+      document.getElementById('successBox').style.display = 'none';
+    }
+
+    function hideError() {
+      document.getElementById('errorBox').style.display = 'none';
+    }
+
+    function showSuccess(msg) {
+      const el = document.getElementById('successBox');
+      el.textContent = msg;
+      el.style.display = 'block';
+      document.getElementById('errorBox').style.display = 'none';
+    }
+
+    async function doKeyLogin(key) {
+      hideError();
+      const btn = document.getElementById('btnKeySubmit');
+      btn.innerHTML = 'Verifying Passcode... ⏳';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ secretKey: key.trim() })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showSuccess(`🎉 Unlocked as ${data.label}! Redirecting...`);
+          setTimeout(() => {
+            window.location.href = redirectTarget;
+          }, 800);
+        } else {
+          showError(data.error || 'Invalid Secret Key. Please verify your passcode.');
+          btn.innerHTML = '<span>Unlock Suite</span> 🚀';
+          btn.disabled = false;
+        }
+      } catch (e) {
+        showError('Network error connecting to authentication server.');
+        btn.innerHTML = '<span>Unlock Suite</span> 🚀';
+        btn.disabled = false;
+      }
+    }
+
+    async function handleKeyLogin(e) {
+      e.preventDefault();
+      const key = document.getElementById('secretKeyInput').value;
+      await doKeyLogin(key);
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      hideError();
+      const username = document.getElementById('adminUserInput').value;
+      const password = document.getElementById('adminPassInput').value;
+      const btn = document.getElementById('btnAdminSubmit');
+      btn.innerHTML = 'Signing In... ⏳';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showSuccess('👑 Welcome, Master Admin! Redirecting...');
+          setTimeout(() => {
+            window.location.href = redirectTarget;
+          }, 800);
+        } else {
+          showError(data.error || 'Invalid Admin Credentials.');
+          btn.innerHTML = '<span>Sign In as Master Admin</span> 👑';
+          btn.disabled = false;
+        }
+      } catch (e) {
+        showError('Network error connecting to authentication server.');
+        btn.innerHTML = '<span>Sign In as Master Admin</span> 👑';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
