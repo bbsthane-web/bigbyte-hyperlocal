@@ -1,0 +1,9 @@
+file 'C:\Users\BBS\Projects\02_BigByte_Social_Studio\social_studio_app\public\dentist\slides\slide_1.jpg'
+duration 28
+file 'C:\Users\BBS\Projects\02_BigByte_Social_Studio\social_studio_app\public\dentist\slides\slide_2.jpg'
+duration 30
+file 'C:\Users\BBS\Projects\02_BigByte_Social_Studio\social_studio_app\public\dentist\slides\slide_3.jpg'
+duration 32
+file 'C:\Users\BBS\Projects\02_BigByte_Social_Studio\social_studio_app\public\dentist\slides\slide_4.jpg'
+duration 22
+file 'C:\Users\BBS\Projects\02_BigByte_Social_Studio\social_studio_app\public\dentist\slides\slide_4.jpg'

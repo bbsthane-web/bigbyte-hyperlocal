@@ -3835,3 +3835,29 @@ function closeDisclaimerModal(e) {
   const m = document.getElementById('disclaimerModal');
   if (m) m.style.display = 'none';
 }
+
+
+// =============================================================
+// MOBILE DRAWER & BOTTOM NAVIGATION CONTROLLERS
+// =============================================================
+function toggleMobileDrawer() {
+  const sidebar = document.querySelector('.sidebar');
+  const backdrop = document.getElementById('mobileDrawerBackdrop');
+  if (sidebar) sidebar.classList.toggle('mobile-open');
+  if (backdrop) backdrop.classList.toggle('active');
+}
+
+function closeMobileDrawer() {
+  const sidebar = document.querySelector('.sidebar');
+  const backdrop = document.getElementById('mobileDrawerBackdrop');
+  if (sidebar) sidebar.classList.remove('mobile-open');
+  if (backdrop) backdrop.classList.remove('active');
+}
+
+function mobileSelectTab(tabName) {
+  showTab(tabName);
+  closeMobileDrawer();
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById(`m-nav-${tabName}`);
+  if (btn) btn.classList.add('active');
+}

@@ -1074,7 +1074,11 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.mp3': 'audio/mpeg',
+  '.mp4': 'video/mp4',
+  '.wav': 'audio/wav',
+  '.webp': 'image/webp'
 };
 
 // HTTP Server
@@ -2492,6 +2496,39 @@ const server = http.createServer((req, res) => {
   // If path doesn't have an extension, try adding .html
   if (!ext && !fs.existsSync(filePath)) {
     filePath += '.html';
+  }
+
+  // Optimized streaming for audio and video assets
+  if (['.mp4', '.mp3'].includes(ext) && fs.existsSync(filePath)) {
+    const fileStats = fs.statSync(filePath);
+    const totalBytes = fileStats.size;
+    const clientRange = req.headers.range;
+
+    if (clientRange) {
+      const match = clientRange.match(/bytes=(\d+)-(\d*)/);
+      if (match) {
+        const startPos = parseInt(match[1], 10);
+        const endPos = match[2] ? parseInt(match[2], 10) : totalBytes - 1;
+        const sliceLength = endPos - startPos + 1;
+
+        res.writeHead(206, {
+          'Content-Range': `bytes ${startPos}-${endPos}/${totalBytes}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': sliceLength,
+          'Content-Type': MIME_TYPES[ext] || 'application/octet-stream'
+        });
+        fs.createReadStream(filePath, { start: startPos, end: endPos }).pipe(res);
+        return;
+      }
+    }
+
+    res.writeHead(200, {
+      'Content-Length': totalBytes,
+      'Accept-Ranges': 'bytes',
+      'Content-Type': MIME_TYPES[ext] || 'application/octet-stream'
+    });
+    fs.createReadStream(filePath).pipe(res);
+    return;
   }
 
   fs.readFile(filePath, (err, content) => {

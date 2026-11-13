@@ -100,16 +100,24 @@
       </div>
     </aside>
 
+    <!-- Mobile Drawer Backdrop Overlay -->
+    <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" onclick="closeMobileDrawer()"></div>
+
     <!-- Main Content Area -->
     <main class="main-content">
       <!-- Top Bar -->
       <header class="topbar">
         <div class="topbar-left">
-          <div class="client-current-pill">
-            <span id="topAvatarWrapper"><img src="/logo.png" alt="Client Logo" style="width: 24px; height: 24px; border-radius: 4px; object-fit: contain; vertical-align: middle; background: rgba(255,255,255,0.05); padding: 2px;" onerror="this.outerHTML='<span class=\'client-avatar-mini\'>💻</span>'"></span>
-            <strong id="topClientName">Big Byte Systems</strong>
-            <span class="pill-dot">•</span>
-            <span class="pill-status" id="topClientStatus" onclick="showTab('channels')" style="cursor:pointer;" title="Click to open Channels & Automation">Meta Connected 🟢</span>
+          <div class="topbar-left-row">
+            <button type="button" class="mobile-hamburger-btn" onclick="toggleMobileDrawer()" title="Open Navigation Menu" aria-label="Open menu">
+              <span>☰</span>
+            </button>
+            <div class="client-current-pill">
+              <span id="topAvatarWrapper"><img src="/logo.png" alt="Client Logo" style="width: 24px; height: 24px; border-radius: 4px; object-fit: contain; vertical-align: middle; background: rgba(255,255,255,0.05); padding: 2px;" onerror="this.outerHTML='<span class=\'client-avatar-mini\'>💻</span>'"></span>
+              <strong id="topClientName">Big Byte Systems</strong>
+              <span class="pill-dot">•</span>
+              <span class="pill-status" id="topClientStatus" onclick="showTab('channels')" style="cursor:pointer;" title="Click to open Channels & Automation">Meta Connected 🟢</span>
+            </div>
           </div>
           <h1 id="tabTitle">Content Calendar & Pipeline</h1>
           <p id="tabSubtitle">Scheduled posts ready to auto-publish across all connected channels</p>
@@ -1480,6 +1488,30 @@
 
   <!-- Toast Notification -->
   <div class="toast" id="toast">Action completed successfully</div>
+
+  <!-- Mobile Sticky Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav">
+    <button type="button" class="mobile-nav-btn active" id="m-nav-calendar" onclick="mobileSelectTab('calendar')">
+      <span class="m-nav-icon">📅</span>
+      <span class="m-nav-label">Pipeline</span>
+    </button>
+    <button type="button" class="mobile-nav-btn" id="m-nav-reels" onclick="mobileSelectTab('reels')">
+      <span class="m-nav-icon">🎬</span>
+      <span class="m-nav-label">Reels</span>
+    </button>
+    <button type="button" class="mobile-nav-btn m-nav-highlight" onclick="mobileSelectTab('creator')" title="Create Post">
+      <span class="m-nav-icon">➕</span>
+      <span class="m-nav-label">Create</span>
+    </button>
+    <a href="/crm/" class="mobile-nav-btn" title="Leads CRM">
+      <span class="m-nav-icon">👥</span>
+      <span class="m-nav-label">CRM</span>
+    </a>
+    <button type="button" class="mobile-nav-btn" onclick="toggleMobileDrawer()" title="Menu">
+      <span class="m-nav-icon">☰</span>
+      <span class="m-nav-label">Menu</span>
+    </button>
+  </nav>
 
   <script src="app.js?v=2.3"></script>
 </body>

@@ -74,6 +74,22 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
+    # Social Studio App: Dentist Animated Explainer Portal
+    location ^~ /dentist/ {
+        proxy_pass http://127.0.0.1:3000/dentist/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location = /dentist {
+        return 301 /dentist/;
+    }
+
     # Assets & Generated Media
     location ^~ /assets/ {
         proxy_pass http://127.0.0.1:3000/assets/;

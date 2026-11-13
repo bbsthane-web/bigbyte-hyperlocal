@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dental Growth Suite — 30-Second Daily Routine | Big Byte Systems</title>
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: rgba(16, 185, 129, 0.2);
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.4);
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ambient Glow Background */
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 600px;
+      background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15) 0%, rgba(56, 189, 248, 0.05) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Navigation Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .brand-text h1 {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.2px;
+    }
+
+    .brand-text span {
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 600;
+      display: block;
+    }
+
+    .header-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-wa-header {
+      background: #25d366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 12.5px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-wa-header:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 80px 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Headline */
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #34d399;
+      margin-bottom: 14px;
+    }
+
+    .hero h2 {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 span {
+      background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* Animated Explainer Video Player Card */
+    .player-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.1);
+      margin-bottom: 32px;
+    }
+
+    /* Video Visual Stage */
+    .stage {
+      position: relative;
+      background: #060911;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 24px;
+    }
+
+    @media (max-width: 640px) {
+      .stage {
+        aspect-ratio: 4 / 3;
+        padding: 16px;
+      }
+    }
+
+    /* Scene Container (Fades in/out) */
+    .scene-view {
+      display: none;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scene-view.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .scene-icon-wrap {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { transform: scale(1.06); box-shadow: 0 0 32px rgba(16, 185, 129, 0.55); }
+    }
+
+    .scene-title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .scene-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 10px;
+    }
+
+    .scene-metric-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      max-width: 520px;
+      margin-top: 6px;
+    }
+
+    /* Subtitles Bar (Live Word-Timed Display) */
+    .subtitle-bar {
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 18px;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fef08a;
+      font-weight: 600;
+      font-size: 13.5px;
+      line-height: 1.4;
+    }
+
+    /* Progress & Controls Bar */
+    .controls-bar {
+      background: #0f172a;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-play-explainer {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-play-explainer:hover {
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-nav-scene {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .voice-badge-pill {
+      font-size: 11px;
+      color: #34d399;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .voice-badge-pill .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* Scene Selector Pills */
+    .scene-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .scene-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .scene-tab-btn {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scene-tab-btn.active {
+      border-color: var(--primary);
+      background: rgba(16, 185, 129, 0.1);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+    }
+
+    .scene-tab-btn span {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .scene-tab-btn.active span {
+      color: var(--primary);
+    }
+
+    .scene-tab-btn strong {
+      font-size: 12.5px;
+      color: #fff;
+      font-weight: 700;
+      display: block;
+    }
+
+    /* 3-Pillars Card Grid */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    @media (max-width: 768px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pillar-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .pillar-icon {
+      font-size: 26px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .pillar-card h3 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .pillar-card p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* The 30-Second Daily Routine (WhatsApp Step-by-Step) */
+    .routine-box {
+      background: linear-gradient(145deg, #0f172a 0%, #111e38 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .routine-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .routine-header h3 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+
+    .routine-tag {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .routine-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .routine-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .step-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .step-num {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.06);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-time {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f59e0b;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .step-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .step-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Final CTA Card */
+    .cta-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.35) 100%);
+      border: 1.5px solid var(--primary);
+      border-radius: 18px;
+      padding: 30px 24px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(16, 185, 129, 0.25);
+    }
+
+    .cta-card h3 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .cta-card p {
+      font-size: 14px;
+      color: #cbd5e1;
+      max-width: 560px;
+      margin: 0 auto 20px auto;
+    }
+
+    .btn-wa-large {
+      background: #25d366;
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-wa-large:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.55);
+    }
+
+    .guarantee-note {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 14px;
+    }
+
+    /* Video Download Pill */
+    .download-pill {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #38bdf8;
+      text-decoration: none;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .download-pill:hover {
+      background: rgba(56, 189, 248, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand-wrap">
+      <div class="brand-logo">🦷</div>
+      <div class="brand-text">
+        <h1>Dr. Sharma Dental Partner Edition</h1>
+        <span>Big Byte Social Studio • Thane West</span>
+      </div>
+    </div>
+    <div class="header-cta">
+      <a href="https://wa.me/919167463807?text=Namaste%20Big%20Byte%20Systems!%20I%20am%20interested%20in%20the%20Dental%20Social%20Studio%203-Day%20Trial" class="btn-wa-header" target="_blank" rel="noopener">
+        <span>💬</span> <span>WhatsApp Pilot</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Hero Title -->
+    <div class="hero">
+      <div class="badge-pill">
+        <span>⚡</span> 30-Second Daily Routine for Modern Dental Practices
+      </div>
+      <h2>How Thane Dentists Get <span>15–20 High-Value Patient Inquiries</span> Monthly</h2>
+      <p>Zero camera awkwardness. Zero video editing. Zero tech headaches. Watch the 90-second animated explainer below.</p>
+    </div>
+
+    <!-- Animated Explainer Video Player -->
+    <div class="player-card">
+      <div class="stage" id="stageScreen">
+        <!-- Scene 1: The Local Dilemma -->
+        <div class="scene-view active" id="scene-1">
+          <div class="scene-icon-wrap" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15); box-shadow: 0 0 24px rgba(239, 68, 68, 0.3);">
+            🚨
+          </div>
+          <span class="scene-tag" style="color: #f87171;">Scene 1 • The Empty Chair Dilemma</span>
+          <h3 class="scene-title">10,000+ Thane Patients Search Daily</h3>
+          <div class="scene-metric-box">
+            "Over 10,000 residents in Thane search Google & Instagram monthly for teeth whitening, RCT & aligners. If your clinic isn't answering with video reels, they are walking into a competitor's clinic across the street."
+          </div>
+        </div>
+
+        <!-- Scene 2: What You Get -->
+        <div class="scene-view" id="scene-2">
+          <div class="scene-icon-wrap" style="border-color: #10b981;">
+            ✨
+          </div>
+          <span class="scene-tag" style="color: #34d399;">Scene 2 • What You Get</span>
+          <h3 class="scene-title">The 3 Automated Growth Pillars</h3>
+          <div class="scene-metric-box">
+            🎬 <strong>4K Daily Clinical Reels:</strong> Ultrasonic scaling, invisible aligners, laser RCT with natural Indian voiceovers.<br>
+            📍 <strong>Google Maps 3-Pack:</strong> Rank #1 in your local enclave.<br>
+            💬 <strong>WhatsApp Inquiries:</strong> Patients book consultations directly.
+          </div>
+        </div>
+
+        <!-- Scene 3: The 30-Second Routine -->
+        <div class="scene-view" id="scene-3">
+          <div class="scene-icon-wrap" style="border-color: #38bdf8;">
+            📲
+          </div>
+          <span class="scene-tag" style="color: #38bdf8;">Scene 3 • Your Daily Effort</span>
+          <h3 class="scene-title">Exactly 30 Seconds Every Morning</h3>
+          <div class="scene-metric-box">
+            <strong>10:00 AM:</strong> Receive ready clinical post preview on WhatsApp.<br>
+            <strong>Review in 30s:</strong> Reply "1" to approve between appointments.<br>
+            <strong>Done:</strong> We publish across YouTube Shorts, Instagram & Google Maps!
+          </div>
+        </div>
+
+        <!-- Scene 4: 3-Day Zero Risk Pilot -->
+        <div class="scene-view" id="scene-4">
+          <div class="scene-icon-wrap" style="border-color: #f59e0b;">
+            🎁
+          </div>
+          <span class="scene-tag" style="color: #fbbf24;">Scene 4 • Zero-Risk Pilot</span>
+          <h3 class="scene-title">3-Day Free Trial (Zero Setup Fee)</h3>
+          <div class="scene-metric-box">
+            Test drive 3 full days of clinical reels and local Google SEO at zero cost. No contracts. Keep all patient inquiries.
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtitles Display -->
+      <div class="subtitle-bar" id="subtitlesDisplay">
+        "Namaste Doctor! Watch how our 30-second daily routine grows your dental practice..."
+      </div>
+
+      <!-- Controls Bar -->
+      <div class="controls-bar">
+        <div class="controls-left">
+          <button type="button" class="btn-play-explainer" id="btnPlayExplainer" onclick="togglePlayExplainer()">
+            <span id="playIcon">▶</span> <span id="playText">Play Explainer Video</span>
+          </button>
+          <button type="button" class="btn-nav-scene" onclick="prevScene()">◀ Prev</button>
+          <button type="button" class="btn-nav-scene" onclick="nextScene()">Next ▶</button>
+        </div>
+        <div class="voice-badge-pill">
+          <span class="pulse-dot"></span>
+          <span>🎙️ Neerja Neural Voice (-14 LUFS Broadcast)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene Tabs Bar -->
+    <div class="scene-tabs">
+      <button type="button" class="scene-tab-btn active" id="tab-scene-1" onclick="jumpToScene(1)">
+        <span>Part 1</span>
+        <strong>The Local Dilemma</strong>
+      </button>
+      <button type="button" class="scene-tab-btn" id="tab-scene-2" onclick="jumpToScene(2)">
+        <span>Part 2</span>
+        <strong>What You Get</strong>
+      </button>
+      <button type="button" class="scene-tab-btn" id="tab-scene-3" onclick="jumpToScene(3)">
+        <span>Part 3</span>
+        <strong>30-Sec Daily Habit</strong>
+      </button>
+      <button type="button" class="scene-tab-btn" id="tab-scene-4" onclick="jumpToScene(4)">
+        <span>Part 4</span>
+        <strong>3-Day Free Trial</strong>
+      </button>
+    </div>
+
+    <!-- The 3 Pillars Breakdown -->
+    <h3 class="section-title"><span>🛡️</span> What Every Dental Clinic Receives</h3>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <span class="pillar-icon">🎬</span>
+        <h3>4K Clinical Reels & Shorts</h3>
+        <p>Pre-rendered vertical reels explaining bleeding gums, clear aligners, and laser RCT with reassuring Indian voiceover and 0–3s retention hooks.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">📍</span>
+        <h3>Google Maps 3-Pack Rank</h3>
+        <p>Hyperlocal AEO/GEO optimization that puts your practice in the top 3 Google Maps recommendations for dental emergencies with 100% zero-suspension compliance.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">💬</span>
+        <h3>Pre-Qualified WhatsApp Leads</h3>
+        <p>Patients tap directly into your clinic desk. No middleman agencies, no commission cuts. Every consultation lead goes 100% to your clinic.</p>
+      </div>
+    </div>
+
+    <!-- The 30-Second Daily Routine Walkthrough -->
+    <div class="routine-box">
+      <div class="routine-header">
+        <h3>The 30-Second Doctor Routine</h3>
+        <span class="routine-tag">Zero Tech Headache</span>
+      </div>
+      <div class="routine-steps">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <span class="step-time">⏰ 10:00 AM MORNING</span>
+          <h4>Receive WhatsApp Draft</h4>
+          <p>Our engine prepares today's clinical reel & caption, sending a preview link directly to your personal WhatsApp.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <span class="step-time">⏱️ 30 SECONDS</span>
+          <h4>Reply "1" to Approve</h4>
+          <p>Review the 15-second preview between patient appointments. Reply "1" to approve or request any instant change.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <span class="step-time">🚀 AUTO DISPATCH</span>
+          <h4>We Publish Everywhere</h4>
+          <p>Our cloud engine automatically schedules and broadcasts your post to Instagram Reels, YouTube Shorts & Google Business Profile.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Call to Action -->
+    <div class="cta-card">
+      <h3>Test Drive 3 Free Days for Your Practice</h3>
+      <p>See real patient engagement and 4K daily clinical reels before you spend a single rupee. No contracts. No credit card required.</p>
+      <a href="https://wa.me/919167463807?text=Namaste%20Big%20Byte%20Systems!%20I%20am%20interested%20in%20the%20Dental%20Social%20Studio%203-Day%20Trial" class="btn-wa-large" target="_blank" rel="noopener">
+        <span>💬</span> <span>Activate 3-Day Free Dental Pilot on WhatsApp</span>
+      </a>
+      <p class="guarantee-note">🔒 Setup takes 5 minutes • Dedicated support by Big Byte Systems, Thane West</p>
+
+      <div>
+        <a href="/dentist/audio/full_dentist_explainer.mp3" download class="download-pill" title="Download Full Audio Track">
+          <span>⬇</span> Download Voiceover Audio (MP3)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Controller Script -->
+  <script>
+    const sceneAudioMap = {
+      1: '/dentist/audio/scene1_dilemma.mp3',
+      2: '/dentist/audio/scene2_what_you_get.mp3',
+      3: '/dentist/audio/scene3_daily_routine.mp3',
+      4: '/dentist/audio/scene4_pilot_offer.mp3'
+    };
+
+    const sceneSubtitles = {
+      1: [
+        "Namaste Doctor! You have spent years mastering surgical precision, root canals, and cosmetic smile makeovers.",
+        "Over 10,000 patients in Thane search Google Maps & Instagram every month for dental care.",
+        "If your clinic isn't answering with daily video reels, they walk into a competitor's clinic across the street."
+      ],
+      2: [
+        "Here is what Big Byte Social Studio deploys for your practice:",
+        "First: 4K clinical video reels and YouTube Shorts with natural, reassuring voiceovers.",
+        "Second: Google Maps 3-Pack optimization that ranks your clinic at the top of local searches.",
+        "Third: High-intent patient inquiries arriving directly on your clinic WhatsApp desk."
+      ],
+      3: [
+        "Now, what do you actually have to do daily? Exactly thirty seconds of effort.",
+        "You do NOT need to stand in front of a camera. You do NOT need to learn video editing.",
+        "At 10:00 AM, our AI prepares your daily clinical reel and sends a preview to your WhatsApp.",
+        "You review it between patient appointments, reply '1' to approve, and we publish it everywhere."
+      ],
+      4: [
+        "Test drive three full days of daily clinical reels and Google SEO at zero cost.",
+        "Zero setup fee, no long-term contracts.",
+        "Tap the WhatsApp button right now to activate your three-day pilot."
+      ]
+    };
+
+    let currentScene = 1;
+    let isPlaying = false;
+    let audio = new Audio();
+    let subtitleTimer = null;
+
+    function jumpToScene(sceneNum) {
+      currentScene = sceneNum;
+      document.querySelectorAll('.scene-view').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.scene-tab-btn').forEach(t => t.classList.remove('active'));
+
+      const targetScene = document.getElementById(`scene-${sceneNum}`);
+      const targetTab = document.getElementById(`tab-scene-${sceneNum}`);
+      if (targetScene) targetScene.classList.add('active');
+      if (targetTab) targetTab.classList.add('active');
+
+      audio.src = sceneAudioMap[sceneNum];
+      audio.load();
+
+      const subBox = document.getElementById('subtitlesDisplay');
+      if (subBox && sceneSubtitles[sceneNum]) {
+        subBox.textContent = `"${sceneSubtitles[sceneNum][0]}"`;
+      }
+
+      if (isPlaying) {
+        audio.play().catch(e => console.log('Audio playback notice:', e));
+        startSubtitleCycle(sceneNum);
+      }
+    }
+
+    function togglePlayExplainer() {
+      const icon = document.getElementById('playIcon');
+      const text = document.getElementById('playText');
+
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        if (icon) icon.textContent = '▶';
+        if (text) text.textContent = 'Play Explainer Video';
+        clearInterval(subtitleTimer);
+      } else {
+        if (!audio.src) {
+          audio.src = sceneAudioMap[currentScene];
+        }
+        audio.play().then(() => {
+          isPlaying = true;
+          if (icon) icon.textContent = '⏸';
+          if (text) text.textContent = 'Pause Video';
+          startSubtitleCycle(currentScene);
+        }).catch(err => {
+          console.warn('Playback error:', err);
+        });
+      }
+    }
+
+    function startSubtitleCycle(sceneNum) {
+      clearInterval(subtitleTimer);
+      const lines = sceneSubtitles[sceneNum] || [];
+      if (lines.length === 0) return;
+      let idx = 0;
+      const subBox = document.getElementById('subtitlesDisplay');
+      subBox.textContent = `"${lines[0]}"`;
+
+      subtitleTimer = setInterval(() => {
+        idx = (idx + 1) % lines.length;
+        subBox.textContent = `"${lines[idx]}"`;
+      }, 4500);
+    }
+
+    audio.onended = () => {
+      clearInterval(subtitleTimer);
+      if (currentScene < 4) {
+        jumpToScene(currentScene + 1);
+      } else {
+        isPlaying = false;
+        const icon = document.getElementById('playIcon');
+        const text = document.getElementById('playText');
+        if (icon) icon.textContent = '▶';
+        if (text) text.textContent = 'Replay Explainer';
+      }
+    };
+
+    function nextScene() {
+      if (currentScene < 4) jumpToScene(currentScene + 1);
+      else jumpToScene(1);
+    }
+
+    function prevScene() {
+      if (currentScene > 1) jumpToScene(currentScene - 1);
+      else jumpToScene(4);
+    }
+
+    // Preload scene 1
+    window.addEventListener('DOMContentLoaded', () => {
+      jumpToScene(1);
+    });
+  </script>
+</body>
+</html>
