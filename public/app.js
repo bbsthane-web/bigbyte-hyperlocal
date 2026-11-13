@@ -36,6 +36,69 @@ const state = {
 
 // Preset Topic Library for Instant Generation
 const TOPIC_PRESETS = {
+  dental_scaling: {
+    platform: 'youtube',
+    title: '🦷 Why Your Gums Bleed While Brushing! (Ultrasonic Scaling Truth)',
+    hook: 'If your sink turns pink when you spit toothpaste, your jawbone is losing bone density right now.',
+    script: 'Plaque calcifies into rock-hard calculus below the gumline that toothbrushes cannot remove. Ultrasonic micro-vibrations safely dislodge tartar without touching your enamel. Preserve your natural smile. Dr. Sharma Dental, Panch Pakhadi.',
+    content: 'Bleeding gums are an early sign of gingivitis. Ultrasonic scaling safely flushes subgingival tartar pockets in just 25 minutes!\n\n📍 Dr. Sharma Advanced Dental Care — Panch Pakhadi, Thane West.\n📞 Helpline: 098200 12345\n\n#Shorts #DentalCare #BleedingGums #TeethCleaning #PanchPakhadi #ThaneDentist'
+  },
+  dental_aligners: {
+    platform: 'instagram',
+    title: '✨ Metal Braces vs Clear Aligners: 3 Reasons Teens Choose Invisible Trays',
+    hook: 'Want straight teeth without painful metal wires tearing up your lips?',
+    script: 'Custom 3D-scanned invisible aligners gently reposition your smile with zero dietary restrictions and invisible aesthetics. Dr. Sharma Dental, Panch Pakhadi.',
+    content: 'Discreet orthodontic correction with custom clear aligners. No painful tightening wires, no food restrictions!\n\n📍 Dr. Sharma Advanced Dental Care, Panch Pakhadi, Thane West.\n📞 Appointments: 098200 12345\n\n#ClearAligners #SmileMakeover #InvisalignThane #PanchPakhadi #CosmeticDentistry'
+  },
+  dental_rct: {
+    platform: 'gmb',
+    title: '⚡ Single-Sitting Laser Root Canal: Zero Pain & Same-Day Relief',
+    hook: 'Terrified of root canal pain? Modern rotary endodontics changed everything.',
+    script: 'Utilizing computerized local anesthesia and 980nm laser canal sterilization, we eradicate deep pulp infections in a single 45-minute sitting. Tap Call Now on this post.',
+    content: 'Eliminate unbearable toothache with painless single-sitting rotary laser root canal therapy.\n\n📍 Dr. Sharma Dental — Panch Pakhadi, Thane West 400602.\n\n#RootCanal #LaserDentistry #PainlessDental #PanchPakhadi #ThaneWest'
+  },
+  cafe_espresso: {
+    platform: 'youtube',
+    title: '☕ Why Your Espresso Tastes Bitter: The 9-Bar Extraction Ratio Secret',
+    hook: 'If your espresso tastes bitter or sour, your coffee shop is committing this 1 fatal mistake.',
+    script: 'Over-extraction pulls harsh tannins. At Urban Roast, single-origin Chikmagalur beans are ground to 0.1 gram precision and pulled at 9-bar pre-infusion. Urban Roast, The Walk, Hiranandani Estate.',
+    content: 'Bitter espresso comes from bad grind size and temperature channeling! Watch how 9-bar pre-infusion unlocks natural honey and cocoa notes.\n\n📍 Urban Roast Cafe — The Walk, Hiranandani Estate, Thane West.\n\n#Shorts #SpecialtyCoffee #Espresso #TheWalkThane #HiranandaniEstate'
+  },
+  cafe_sourdough: {
+    platform: 'instagram',
+    title: '🥐 36-Hour Fermented Sourdough Meets Single-Origin Pourover',
+    hook: 'Store-bought bread is full of commercial yeast and preservatives. Taste real wild yeast sourdough.',
+    script: 'Naturally leavened sourdough with open crumb texture, paired with Ethiopian Yirgacheffe pour-over. Urban Roast, The Walk, Hiranandani Estate.',
+    content: 'Crusty, airy sourdough toast with whipped cultured butter, perfectly balanced with single-origin coffee.\n\n📍 Urban Roast Artisan Cafe, The Walk, Hiranandani Estate.\n\n#SourdoughLovers #ArtisanCafe #ThaneFoodie #HiranandaniEstate #CoffeeShop'
+  },
+  cafe_coldbrew: {
+    platform: 'facebook',
+    title: '🧊 18-Hour Slow Drip Kyoto Cold Brew: Zero Acidity & 100% Smooth',
+    hook: 'Why drink watery iced coffee when slow cold-drip extraction delivers smooth dark chocolate notes?',
+    script: 'Ice water slowly drips through single-origin grounds over 18 hours, removing 70% of coffee acid while preserving natural sweetness. Urban Roast, Hiranandani Estate.',
+    content: 'Cold brew done right! 18 hours of slow Japanese drip extraction yielding pure chocolate-hazelnut nectar.\n\n📍 Urban Roast Cafe, The Walk, Hiranandani Estate, Thane.\n\n#ColdBrew #CoffeeCulture #TheWalkThane #ThaneCafes'
+  },
+  salon_nanoplasty: {
+    platform: 'youtube',
+    title: '✨ Frizzy Damaged Hair? Nanoplasty vs Keratin: The True Scientific Difference',
+    hook: 'Stop burning your hair with formaldehyde keratin. Here is the 100% organic secret to liquid glass hair.',
+    script: 'Japanese Organic Nanoplasty infuses plant amino acids deep into the cortex for 6 months of effortless liquid silk shine. Aura Luxe Atelier, Hiranandani Meadows.',
+    content: 'Zero formaldehyde fumes! Japanese Nanoplasty rebuilds damaged hair bonds for 6 months of mirror-like shine.\n\n📍 Aura Luxe Hair & Skin Atelier — Gladys Alwares Rd, Hiranandani Meadows, Thane.\n\n#Shorts #Nanoplasty #LiquidHair #HiranandaniMeadows #ThaneSalon'
+  },
+  salon_hydrafacial: {
+    platform: 'instagram',
+    title: '💎 Medical HydraFacial: 4-Step Vortex Deep Pore Extraction',
+    hook: 'Look at the debris collected in our HydraFacial waste canister after just 30 minutes!',
+    script: 'Medical vortex suction extracts sebum, blackheads, and dead skin cells while flooding dermis with hyaluronic acid peptides. Aura Luxe Atelier, Meadows.',
+    content: 'Deep pore vacuum extraction and intense antioxidant infusion for instant red-carpet glow.\n\n📍 Aura Luxe Atelier — Gladys Alwares Rd, Opposite Hiranandani Meadows.\n\n#HydraFacial #GlassSkin #GlowTreatment #HiranandaniMeadows #VasantVihar'
+  },
+  salon_balayage: {
+    platform: 'facebook',
+    title: '🎨 French Dimensional Balayage: Seamless Sun-Kissed Blend',
+    hook: 'Tired of harsh stripy highlights that look awful when roots grow out?',
+    script: 'Freehand French Balayage creates seamless sun-kissed dimension with zero harsh regrowth lines. Aura Luxe Atelier, Hiranandani Meadows.',
+    content: 'Hand-painted dimensional balayage tailored to Indian skin tones. Low maintenance, maximum luxury.\n\n📍 Aura Luxe Atelier, Gladys Alwares Road, Hiranandani Meadows, Thane West.\n\n#BalayageThane #LuxurySalon #HairGoals #HiranandaniMeadows'
+  },
   humidity: {
     platform: 'youtube',
     title: '⚠️ Why Coastal Thane Humidity Destroys Laptop Fans & Thermal Paste',
@@ -239,23 +302,81 @@ function updateClientUI() {
   const c = state.currentClient;
   if (!c) return;
 
-  const topAvatar = document.getElementById('topAvatar');
+  const topWrapper = document.getElementById('topAvatarWrapper');
   const topName = document.getElementById('topClientName');
   const topStatus = document.getElementById('topClientStatus');
   const clientLoc = document.getElementById('clientLocation');
   const clientPhone = document.getElementById('clientPhone');
+  const clientTag = document.getElementById('activeClientTag');
+  const sel = document.getElementById('clientSelector');
 
-  if (topAvatar) topAvatar.textContent = c.avatar || '💻';
+  if (sel && sel.value !== c.id) sel.value = c.id;
+
+  if (topWrapper) {
+    if (c.id === 'client_bigbyte') {
+      topWrapper.innerHTML = `<img src="/logo.png" alt="Big Byte Systems" style="width: 24px; height: 24px; border-radius: 4px; object-fit: contain; vertical-align: middle; background: rgba(255,255,255,0.05); padding: 2px;" onerror="this.outerHTML='<span class=\\'client-avatar-mini\\'>💻</span>'">`;
+    } else {
+      topWrapper.innerHTML = `<span style="display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:6px; background:${c.color || '#3b82f6'}; color:#fff; font-size:14px; vertical-align:middle;">${c.avatar || '🏢'}</span>`;
+    }
+  }
+
   if (topName) topName.textContent = c.name;
   if (topStatus) {
     const chCount = Object.keys(c.accounts || {}).length || 5;
-    topStatus.textContent = `${chCount} Channels Connected`;
+    const shortNiche = (c.niche || 'Client').split('/')[0].trim();
+    topStatus.textContent = `${shortNiche} • ${chCount} Channels Connected 🟢`;
   }
-  if (clientLoc) clientLoc.textContent = c.address || 'Manpada, Thane West';
+  if (clientLoc) clientLoc.textContent = c.address || 'Thane West';
   if (clientPhone) clientPhone.textContent = c.hotline || '090547 90592';
+  if (clientTag) {
+    const shortNiche = (c.niche || 'Client').split('/')[0].trim();
+    clientTag.textContent = shortNiche;
+  }
+
+  // Update dynamic topic presets for 1-Click Generator
+  updateDynamicPresets();
 
   // Update canvas branding with client name
   renderStudioCanvas();
+}
+
+// Dynamic Topic Presets per Niche
+function updateDynamicPresets() {
+  const container = document.getElementById('topicPresetsBox');
+  if (!container) return;
+  const c = state.currentClient;
+  if (!c) return;
+
+  let presets = [];
+  if (c.id === 'client_drsharma' || (c.niche && c.niche.includes('Dental'))) {
+    presets = [
+      { label: '🦷 Ultrasonic Scaling & Bleeding Gums', key: 'dental_scaling' },
+      { label: '✨ Clear Aligners vs Braces', key: 'dental_aligners' },
+      { label: '⚡ Single-Sitting Laser Root Canal', key: 'dental_rct' }
+    ];
+  } else if (c.id === 'client_urbanroast' || (c.niche && c.niche.includes('Cafe'))) {
+    presets = [
+      { label: '☕ 9-Bar Espresso Extraction Secrets', key: 'cafe_espresso' },
+      { label: '🥐 Artisan Sourdough & Specialty Roast', key: 'cafe_sourdough' },
+      { label: '🧊 18-Hour Kyoto Cold Brew', key: 'cafe_coldbrew' }
+    ];
+  } else if (c.id === 'client_aura_luxe' || (c.niche && (c.niche.includes('Hair') || c.niche.includes('Skin') || c.niche.includes('Aesthetics')))) {
+    presets = [
+      { label: '✨ Japanese Organic Nanoplasty', key: 'salon_nanoplasty' },
+      { label: '💎 Medical HydraFacial Clinical Glow', key: 'salon_hydrafacial' },
+      { label: '🎨 Dimensional French Balayage', key: 'salon_balayage' }
+    ];
+  } else {
+    presets = [
+      { label: '💻 Coastal Humidity & Overheating', key: 'humidity' },
+      { label: '🍏 Dead MacBook Micro-Soldering', key: 'macbook' },
+      { label: '🖨️ Epson EcoTank Red Lights', key: 'epson' }
+    ];
+  }
+
+  container.innerHTML = presets.map(p => `
+    <button type="button" class="preset-chip" onclick="applyTopicPreset('${p.key}')">${p.label}</button>
+  `).join('');
 }
 
 // Switch Active Client
@@ -266,7 +387,9 @@ function handleClientChange(clientId) {
     updateClientUI();
     filterAndRenderPosts();
     renderCalendar();
-    showToast(`Switched to active client: ${found.name}`);
+    renderReelsPlaylist();
+    populateTargetPosts();
+    showToast(`Switched active context to: ${found.name}`);
   }
 }
 
@@ -281,6 +404,7 @@ async function loadPosts() {
       renderCalendar();
       updatePlatformCounters();
       populateTargetPosts();
+      renderReelsPlaylist();
     }
   } catch (err) {
     console.error('Failed to load posts:', err);
@@ -292,8 +416,8 @@ function filterAndRenderPosts() {
   const cid = state.currentClient?.id || 'client_bigbyte';
   
   state.filteredPosts = state.allPosts.filter(p => {
-    // Client match
-    const matchClient = !p.clientId || p.clientId === cid;
+    // Strict Client match - Never leak other clients' content!
+    const matchClient = p.clientId === cid || (!p.clientId && cid === 'client_bigbyte');
     // Platform match
     const matchPlatform = state.currentPlatform === 'all' || p.platform === state.currentPlatform;
     // Search match
@@ -1984,7 +2108,7 @@ function escapeHtml(str) {
 }
 
 // =============================================================
-// REELS & SHORTS STUDIO PLAYER ENGINE (100% FREE IN-BROWSER)
+// REELS & SHORTS STUDIO PLAYER ENGINE (BROADCAST NEURAL -14 LUFS)
 // =============================================================
 const reelPlayerState = {
   activePost: null,
@@ -1997,7 +2121,9 @@ const reelPlayerState = {
   lastTimestamp: null,
   speechUtterance: null,
   mediaRecorder: null,
-  recordedChunks: []
+  recordedChunks: [],
+  audioElement: new Audio(),
+  isNeuralLoaded: false
 };
 
 function renderReelsPlaylist() {
@@ -2006,7 +2132,7 @@ function renderReelsPlaylist() {
 
   const cid = state.currentClient?.id || 'client_bigbyte';
   const reelPosts = state.allPosts.filter(p => {
-    const matchClient = !p.clientId || p.clientId === cid;
+    const matchClient = p.clientId === cid || (!p.clientId && cid === 'client_bigbyte');
     const isVideo = p.platform === 'youtube' || p.platform === 'instagram' || Boolean(p.videoHook);
     return matchClient && isVideo;
   });
@@ -2015,12 +2141,13 @@ function renderReelsPlaylist() {
   if (countBadge) countBadge.textContent = reelPosts.length;
 
   if (reelPosts.length === 0) {
-    container.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">No video reels found.</p>';
+    container.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">No video reels found for this client.</p>';
     return;
   }
 
-  // If no reel active, select first
-  if (!reelPlayerState.activePost || !reelPosts.find(p => p.id === reelPlayerState.activePost.id)) {
+  // If no reel active, or active post doesn't belong to this client, select first reel of this client
+  const activeBelongs = reelPlayerState.activePost && reelPosts.some(p => p.id === reelPlayerState.activePost.id);
+  if (!activeBelongs) {
     reelPlayerState.activePost = reelPosts[0];
   }
 
@@ -2031,7 +2158,7 @@ function renderReelsPlaylist() {
         <img class="reel-thumb-mini" src="${p.image || '/assets/reel_fan_cleaning.jpg'}" alt="Thumb" onerror="this.src='/assets/reel_fan_cleaning.jpg'">
         <div class="reel-info-col">
           <h4>${escapeHtml(p.title)}</h4>
-          <p>🎯 "${escapeHtml(p.videoHook || 'Watch diagnostic')}"</p>
+          <p>🎯 "${escapeHtml(p.videoHook || 'Watch video')}"</p>
           <div class="reel-meta-tags">
             <span class="tag-badge ${p.platform === 'youtube' ? 'yt' : 'sec'}">${p.platform === 'youtube' ? 'YouTube Short' : 'Reel'}</span>
             <span class="tag-badge sec">⏱️ 0:30</span>
@@ -2047,6 +2174,7 @@ function renderReelsPlaylist() {
     preloadReelImage(reelPlayerState.activePost.image, () => {
       drawReelFrame();
     });
+    loadNeuralAudio(reelPlayerState.activePost);
   }
 }
 
@@ -2061,11 +2189,63 @@ function selectReel(postId) {
   document.querySelectorAll('.reel-item-row').forEach(row => {
     row.classList.remove('active');
   });
+  const activeRow = document.querySelector(`.reel-item-row[onclick="selectReel('${postId}')"]`);
+  if (activeRow) activeRow.classList.add('active');
   
   updateReelPlayerUI(found);
   preloadReelImage(found.image, () => {
     drawReelFrame();
   });
+
+  // Preload Broadcast -14 LUFS Neural Audio
+  loadNeuralAudio(found);
+}
+
+// Preload Broadcast -14 LUFS Neural Audio from Server
+async function loadNeuralAudio(post, voiceKey) {
+  if (!post) return;
+  const v = voiceKey || state.voiceCharacter || 'female_in';
+  const voiceIndicator = document.getElementById('neuralVoiceStatus');
+  if (voiceIndicator) {
+    voiceIndicator.innerHTML = '<span style="color:#f59e0b;">⏳ Buffering -14 LUFS Neural Audio...</span>';
+  }
+
+  try {
+    const res = await fetch('/api/tts/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId: post.id,
+        text: `${post.videoHook || ''}. ${post.script || post.content.substring(0, 180)}`,
+        voice: v
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.audioUrl) {
+      if (!reelPlayerState.audioElement) {
+        reelPlayerState.audioElement = new Audio();
+      }
+      reelPlayerState.audioElement.src = data.audioUrl;
+      reelPlayerState.audioElement.load();
+      reelPlayerState.isNeuralLoaded = true;
+
+      const voiceLabels = {
+        'female_in': '🇮🇳 Neerja (Warm Indian Female Studio)',
+        'male_in': '🇮🇳 Prabhat (Authoritative Indian Male Studio)',
+        'hindi': '🇮🇳 Swara (Natural Hindi Broadcast)',
+        'marathi': '🇮🇳 Aarohi (Natural Marathi Broadcast)',
+        'female_us': '🇺🇸 Jenny (US Dynamic Storyteller)',
+        'male_uk': '🇬🇧 Ryan (British Specialist)'
+      };
+      const label = voiceLabels[v] || v;
+
+      if (voiceIndicator) {
+        voiceIndicator.innerHTML = `<span style="color:#10b981; font-weight:700;">🎙️ Broadcast Neural Audio:</span> <strong style="color:#fff;">${label}</strong> <span style="background:rgba(16,185,129,0.15); color:#10b981; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700; margin-left:6px;">-14 LUFS Broadcast</span>`;
+      }
+    }
+  } catch (err) {
+    console.warn('Neural audio load notice:', err);
+  }
 }
 
 function openReelFromCard(postId, event) {
@@ -2170,15 +2350,38 @@ function drawReelFrame() {
   ctx.fillStyle = gradBottom;
   ctx.fillRect(0, H - 240, 0, 240);
 
-  // 3. Top Header Branding Badge
-  ctx.fillStyle = '#ef4444';
+  // 3. Top Header Branding Badge (Dynamic Niche Badge)
+  const c = state.currentClient || { name: 'Big Byte Systems', niche: 'Hardware' };
+  let reelCategory = '4K LAB REEL';
+  let warningHeader = '⚠️ CRITICAL THANE WARNING';
+  let headerColor = '#f59e0b';
+  let badgeColor = '#ef4444';
+
+  if (c.niche && c.niche.includes('Dental')) {
+    reelCategory = '4K CLINICAL REEL';
+    warningHeader = '🦷 ORAL HEALTH ALERT';
+    headerColor = '#10b981';
+    badgeColor = '#059669';
+  } else if (c.niche && c.niche.includes('Cafe')) {
+    reelCategory = '4K ARTISAN REEL';
+    warningHeader = '☕ SPECIALTY COFFEE TIP';
+    headerColor = '#f59e0b';
+    badgeColor = '#d97706';
+  } else if (c.niche && (c.niche.includes('Hair') || c.niche.includes('Skin') || c.niche.includes('Aesthetics'))) {
+    reelCategory = '4K ATELIER REEL';
+    warningHeader = '✨ HAIR COUTURE SECRETS';
+    headerColor = '#f43f5e';
+    badgeColor = '#e11d48';
+  }
+
+  ctx.fillStyle = badgeColor;
   ctx.beginPath();
-  if (ctx.roundRect) ctx.roundRect(16, 26, 96, 22, 11);
-  else ctx.rect(16, 26, 96, 22);
+  if (ctx.roundRect) ctx.roundRect(16, 26, 126, 22, 11);
+  else ctx.rect(16, 26, 126, 22);
   ctx.fill();
   ctx.fillStyle = '#ffffff';
   ctx.font = 'bold 10px Inter, sans-serif';
-  ctx.fillText('⚡ 4K LAB REEL', 26, 41);
+  ctx.fillText(`⚡ ${reelCategory}`, 24, 41);
 
   // Sound Wave Indicator on Top Right
   if (reelPlayerState.isPlaying) {
@@ -2203,15 +2406,15 @@ function drawReelFrame() {
     ctx.scale(popScale, popScale);
     ctx.translate(-W / 2, -120);
 
-    // Warning Badge
-    ctx.fillStyle = '#f59e0b';
+    // Warning Badge (Dynamic Niche Header)
+    ctx.fillStyle = headerColor;
     ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(24, 76, 175, 24, 12);
-    else ctx.rect(24, 76, 175, 24);
+    if (ctx.roundRect) ctx.roundRect(24, 76, 195, 24, 12);
+    else ctx.rect(24, 76, 195, 24);
     ctx.fill();
     ctx.fillStyle = '#000000';
     ctx.font = '900 11px Inter, sans-serif';
-    ctx.fillText('⚠️ CRITICAL THANE WARNING', 32, 92);
+    ctx.fillText(warningHeader, 32, 92);
 
     // Hook Headline Box
     ctx.fillStyle = 'rgba(0, 0, 0, 0.88)';
@@ -2308,64 +2511,25 @@ function playReel() {
   if (icon) icon.textContent = '⏸';
   if (text) text.textContent = 'Pause Reel';
 
-  // Native Browser Speech Synthesis (100% Free Human-Like Studio Voiceover)
-  if (reelPlayerState.isVoiceover && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const p = reelPlayerState.activePost;
-    const textToSpeak = `${p.videoHook || ''}. ${p.script || p.content.substring(0, 180)}`;
-    const utter = new SpeechSynthesisUtterance(textToSpeak);
-    
-    // Voice tuning values from state
-    utter.rate = state.voiceRate || 1.05;
-    utter.pitch = state.voicePitch || 1.0;
-    
-    const voices = window.speechSynthesis.getVoices();
-    const char = state.voiceCharacter || 'male_in';
-
-    let matchedVoice = null;
-    if (char === 'male_in') {
-      matchedVoice = voices.find(v => (v.lang === 'en-IN' || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('ravi') || v.name.toLowerCase().includes('prabhat')) && v.name.toLowerCase().includes('male')) ||
-                     voices.find(v => v.lang === 'en-IN') ||
-                     voices.find(v => v.lang.includes('en-GB'));
-    } else if (char === 'female_in') {
-      matchedVoice = voices.find(v => (v.lang === 'en-IN' || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('neerja') || v.name.toLowerCase().includes('priya') || v.name.toLowerCase().includes('heera')) && (v.name.toLowerCase().includes('female') || !v.name.toLowerCase().includes('male'))) ||
-                     voices.find(v => v.lang === 'en-IN');
-    } else if (char === 'male_uk') {
-      matchedVoice = voices.find(v => v.lang === 'en-GB' && (v.name.toLowerCase().includes('george') || v.name.toLowerCase().includes('oliver') || v.name.toLowerCase().includes('male'))) ||
-                     voices.find(v => v.lang === 'en-GB');
-    } else if (char === 'female_us') {
-      matchedVoice = voices.find(v => (v.lang === 'en-US' || v.lang === 'en_US') && (v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('female'))) ||
-                     voices.find(v => v.lang.startsWith('en'));
-    } else if (char === 'hindi') {
-      matchedVoice = voices.find(v => v.lang.startsWith('hi') || v.name.toLowerCase().includes('hindi') || v.name.toLowerCase().includes('kalpana') || v.name.toLowerCase().includes('hemant'));
-    } else if (char === 'marathi') {
-      matchedVoice = voices.find(v => v.lang.startsWith('mr') || v.name.toLowerCase().includes('marathi')) ||
-                     voices.find(v => v.lang.startsWith('hi'));
-    } else if (char === 'spanish') {
-      matchedVoice = voices.find(v => v.lang.startsWith('es'));
-    } else if (char === 'german') {
-      matchedVoice = voices.find(v => v.lang.startsWith('de'));
-    } else if (char === 'french') {
-      matchedVoice = voices.find(v => v.lang.startsWith('fr'));
-    } else if (char === 'arabic') {
-      matchedVoice = voices.find(v => v.lang.startsWith('ar'));
-    }
-
-    if (!matchedVoice) {
-      matchedVoice = voices.find(v => v.lang.includes('IN') || v.lang.includes('en-GB') || v.lang.includes('en-US')) || voices[0];
-    }
-    if (matchedVoice) utter.voice = matchedVoice;
-
-    window.speechSynthesis.speak(utter);
-    reelPlayerState.speechUtterance = utter;
+  // Play True Broadcast -14 LUFS Neural Voiceover
+  if (reelPlayerState.isVoiceover && reelPlayerState.audioElement && reelPlayerState.audioElement.src) {
+    reelPlayerState.audioElement.currentTime = reelPlayerState.currentTime;
+    reelPlayerState.audioElement.play().catch(e => console.log('Audio autoplay interaction notice:', e));
   }
 
   function loop(now) {
     if (!reelPlayerState.isPlaying) return;
-    const dt = (now - reelPlayerState.lastTimestamp) / 1000;
+
+    // Time is locked to real broadcast audio clock if available
+    if (reelPlayerState.audioElement && !reelPlayerState.audioElement.paused && reelPlayerState.audioElement.duration) {
+      reelPlayerState.currentTime = reelPlayerState.audioElement.currentTime;
+      reelPlayerState.duration = reelPlayerState.audioElement.duration || 30;
+    } else {
+      const dt = (now - reelPlayerState.lastTimestamp) / 1000;
+      reelPlayerState.currentTime += dt;
+    }
     reelPlayerState.lastTimestamp = now;
 
-    reelPlayerState.currentTime += dt;
     if (reelPlayerState.currentTime >= reelPlayerState.duration) {
       reelPlayerState.currentTime = 0;
       pauseReel();
@@ -2387,6 +2551,9 @@ function pauseReel() {
   if (reelPlayerState.animationFrameId) {
     cancelAnimationFrame(reelPlayerState.animationFrameId);
     reelPlayerState.animationFrameId = null;
+  }
+  if (reelPlayerState.audioElement) {
+    reelPlayerState.audioElement.pause();
   }
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -2609,53 +2776,46 @@ function updateVoiceTuning() {
   }
 }
 
-function testVoiceSample() {
-  if (!('speechSynthesis' in window)) {
-    showToast('Speech synthesis not supported in this browser');
-    return;
+async function testVoiceSample() {
+  const c = state.currentClient || { name: 'Big Byte Systems', address: 'Manpada, Thane West' };
+  let sampleText = `Welcome to Big Byte Systems, Manpada, Thane West. We diagnose and repair motherboards at chip-level with 100% precision.`;
+  
+  if (c.niche && c.niche.includes('Dental')) {
+    sampleText = `Welcome to Dr. Sharma Advanced Dental Care, Panch Pakhadi, Thane West. We provide gentle ultrasonic scaling, single-sitting laser root canals, and clear aligners.`;
+  } else if (c.niche && c.niche.includes('Cafe')) {
+    sampleText = `Welcome to Urban Roast Artisan Cafe at The Walk, Hiranandani Estate. Taste our 9-bar single-origin espresso and 18-hour cold brew.`;
+  } else if (c.niche && (c.niche.includes('Hair') || c.niche.includes('Skin') || c.niche.includes('Aesthetics'))) {
+    sampleText = `Experience couture hair and skin therapy at Aura Luxe Atelier, Gladys Alwares Road, Hiranandani Meadows. Featuring Japanese Organic Nanoplasty.`;
   }
 
-  window.speechSynthesis.cancel();
-  const sampleSentences = {
-    male_in: "Welcome to Big Byte Systems Thane. We diagnose and repair motherboards at chip-level with 100% precision.",
-    female_in: "Protect your laptop from coastal Thane humidity with our professional ultrasonic cleaning and thermal servicing.",
-    male_uk: "Authorized centres recommended logic board replacement, but our laboratory isolated the faulty capacitor in minutes.",
-    female_us: "Transform your sluggish laptop in just 20 minutes with a high-speed SSD upgrade and zero data loss.",
-    hindi: "बिग बाइट सिस्टम्स ठाणे में आपका स्वागत है। हम चिप-लेवल पर लैपटॉप और कंप्यूटर की सटीक डायग्नोस्टिक करते हैं।",
-    marathi: "नमस्कार! बिग बाइट सिस्टीम्स ठाणे येथे आपले स्वागत आहे. आम्ही लॅपटॉप आणि प्रिंटरची दर्जेदार दुरुस्ती करतो.",
-    spanish: "Bienvenido a Big Byte Systems. Reparación profesional de ordenadores y recuperación de datos garantizada."
-  };
-
-  const sampleText = sampleSentences[state.voiceCharacter] || sampleSentences.male_in;
-  const utter = new SpeechSynthesisUtterance(sampleText);
-  utter.rate = state.voiceRate || 1.05;
-  utter.pitch = state.voicePitch || 1.0;
-
-  const voices = window.speechSynthesis.getVoices();
-  const char = state.voiceCharacter || 'male_in';
-
-  let matchedVoice = null;
-  if (char === 'hindi') {
-    matchedVoice = voices.find(v => v.lang.startsWith('hi') || v.name.toLowerCase().includes('hindi'));
-  } else if (char === 'marathi') {
-    matchedVoice = voices.find(v => v.lang.startsWith('mr') || v.name.toLowerCase().includes('marathi')) ||
-                   voices.find(v => v.lang.startsWith('hi'));
-  } else if (char === 'spanish') {
-    matchedVoice = voices.find(v => v.lang.startsWith('es'));
-  } else if (char === 'female_in') {
-    matchedVoice = voices.find(v => (v.lang === 'en-IN' || v.name.toLowerCase().includes('india')) && (v.name.toLowerCase().includes('female') || !v.name.toLowerCase().includes('male'))) ||
-                   voices.find(v => v.lang === 'en-IN');
-  } else if (char === 'male_uk') {
-    matchedVoice = voices.find(v => v.lang === 'en-GB');
-  } else if (char === 'female_us') {
-    matchedVoice = voices.find(v => v.lang.startsWith('en-US'));
-  } else {
-    matchedVoice = voices.find(v => v.lang === 'en-IN') || voices.find(v => v.lang.includes('en'));
+  showToast('⏳ Generating broadcast -14 LUFS neural sample...');
+  try {
+    const res = await fetch('/api/tts/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId: 'sample_' + (state.voiceCharacter || 'female_in'),
+        text: sampleText,
+        voice: state.voiceCharacter || 'female_in'
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.audioUrl) {
+      const audio = new Audio(data.audioUrl);
+      audio.play().catch(e => console.log('Audio sample notice:', e));
+      showToast(`🔊 Playing broadcast -14 LUFS neural sample (${data.voice})`);
+    } else {
+      throw new Error(data.error || 'TTS error');
+    }
+  } catch (err) {
+    console.warn('Fallback speech notice:', err);
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(sampleText);
+      window.speechSynthesis.speak(utter);
+      showToast('🔊 Playing fallback voice sample...');
+    }
   }
-
-  if (matchedVoice) utter.voice = matchedVoice;
-  window.speechSynthesis.speak(utter);
-  showToast('🔊 Playing voice character sample...');
 }
 
 // =============================================================

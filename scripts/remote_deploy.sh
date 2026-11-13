@@ -74,6 +74,16 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
+    # Assets & Generated Media
+    location ^~ /assets/ {
+        proxy_pass http://127.0.0.1:3000/assets/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800";
+    }
+
     # Social Studio App: REST APIs
     location ^~ /api/ {
         proxy_pass http://127.0.0.1:3000/api/;

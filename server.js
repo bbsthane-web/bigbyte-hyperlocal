@@ -1421,6 +1421,65 @@ const server = http.createServer((req, res) => {
   }
 
 
+  // POST /api/tts/generate (On-Demand Broadcast -14 LUFS Neural Audio)
+  if (pathname === '/api/tts/generate' && req.method === 'POST') {
+    getJsonBody(async (err, body) => {
+      if (err || !body) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: false, error: 'Invalid JSON' }));
+      }
+      const postId = body.postId || 'custom';
+      const voice = (body.voice || 'female_in').toLowerCase();
+      const text = (body.text || '').trim();
+      if (!text) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: false, error: 'text is required' }));
+      }
+
+      const audioFilename = `reel_${postId}_${voice}.mp3`;
+      const audioDir = path.join(PUBLIC_DIR, 'assets', 'audio', 'reels');
+      const audioPath = path.join(audioDir, audioFilename);
+      const publicUrl = `/assets/audio/reels/${audioFilename}`;
+
+      if (fs.existsSync(audioPath) && fs.statSync(audioPath).size > 10000 && !body.force) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({
+          success: true,
+          cached: true,
+          audioUrl: publicUrl,
+          voice,
+          lufs: -14
+        }));
+      }
+
+      // Generate on-the-fly using generate_neural_reel_audio.py
+      const scriptPath = path.join(__dirname, 'scripts', 'generate_neural_reel_audio.py');
+      const { spawn } = require('child_process');
+      const pythonExe = process.platform === 'win32' ? 'python' : 'python3';
+      const proc = spawn(pythonExe, [scriptPath, '--text', text, '--voice', voice, '--output', audioPath]);
+
+      let stderr = '';
+      proc.stderr.on('data', d => { stderr += d.toString(); });
+      proc.on('close', code => {
+        if (code === 0 && fs.existsSync(audioPath)) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({
+            success: true,
+            cached: false,
+            audioUrl: publicUrl,
+            voice,
+            lufs: -14
+          }));
+        } else {
+          console.error(`Neural TTS synthesis failed (code ${code}):`, stderr);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'TTS generation failed: ' + stderr }));
+        }
+      });
+    });
+    return;
+  }
+
   // POST /api/publish-now (Instant 1-click test/dispatch)
   if (pathname === '/api/publish-now' && req.method === 'POST') {
     getJsonBody(async (err, post) => {
