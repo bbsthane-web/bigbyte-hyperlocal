@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Byte Social Studio — Automated Local Business Growth for Thane</title>
+  <meta name="description" content="Turn nearby Thane residents into loyal customers. Automated 4K video reels, high-CTR thumbnails, and Google Maps Local 3-Pack rankings. Zero laptop required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Brand Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 28px;
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-audio {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+    }
+    .btn-audio.playing {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border-color: #059669;
+      animation: pulse 2s infinite;
+    }
+
+    .btn-pdf {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+    }
+    .btn-pdf:hover { background: #334155; }
+
+    .btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
+    .btn-primary:hover { background: #0369a1; }
+
+    /* Main Deck Container */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Deck Stage */
+    .deck-container {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slide Progress Bar */
+    .progress-bar-container {
+      height: 4px;
+      background: #1e293b;
+      width: 100%;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      width: 16.66%;
+      transition: width 0.35s ease;
+    }
+
+    /* Slide Card */
+    .slide {
+      display: none;
+      padding: 40px 48px;
+      flex: 1;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .slide.active { display: flex; flex-direction: column; justify-content: space-between; }
+
+    .slide-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .highlight-cyan { color: var(--accent-cyan); }
+    .highlight-emerald { color: var(--accent-emerald); }
+    .highlight-amber { color: var(--accent-amber); }
+    .highlight-red { color: var(--accent-red); }
+
+    .slide-body {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .slide-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    /* Mascot Cartoon Box */
+    .mascot-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .mascot-avatar {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 14px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .mascot-bubble {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      color: #f1f5f9;
+      line-height: 1.4;
+      font-weight: 600;
+      position: relative;
+    }
+    .mascot-bubble::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 8px 8px 8px;
+      border-style: solid;
+      border-color: transparent transparent #1e293b transparent;
+    }
+
+    /* Comparison & Metrics Grids */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .metric-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .metric-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .metric-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Pricing Table */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 12px 0;
+    }
+    .price-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .price-card.popular {
+      border-color: var(--accent-cyan);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, #0f172a 100%);
+    }
+    .popular-tag {
+      position: absolute;
+      top: -10px;
+      right: 16px;
+      background: var(--accent-cyan);
+      color: #090d16;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+    .price-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .price-amount { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .price-amount span { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+    .price-features { list-style: none; font-size: 0.84rem; color: #cbd5e1; margin-bottom: 16px; }
+    .price-features li { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+
+    /* Bottom Deck Controls */
+    .deck-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: #0a0f1d;
+      border-top: 1px solid var(--card-border);
+    }
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .nav-btns {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-nav {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Print / PDF Mode */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      header, .deck-controls, .progress-bar-container { display: none !important; }
+      .deck-container { box-shadow: none !important; border: none !important; background: transparent !important; }
+      .slide { display: flex !important; page-break-after: always; padding: 40px !important; color: #111 !important; }
+      .slide-badge { border-color: #0284c7 !important; color: #0284c7 !important; }
+      .slide-title { color: #000 !important; }
+      .slide-text { color: #333 !important; }
+      .mascot-box, .metric-card, .price-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #111 !important; }
+      .highlight-cyan { color: #0284c7 !important; }
+      .highlight-emerald { color: #059669 !important; }
+      .price-amount { color: #000 !important; }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .slide { padding: 24px 20px; }
+      .slide-title { font-size: 1.55rem; }
+      .slide-body { grid-template-columns: 1fr; gap: 20px; }
+      .pricing-grid, .metrics-grid { grid-template-columns: 1fr; }
+      .header-actions .btn-pdf { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <span>⚡ Big Byte Social Studio</span>
+      <span class="brand-badge">THANE WEST</span>
+    </div>
+    <div class="header-actions">
+      <button id="btnAudioToggle" class="btn btn-audio" onclick="toggleAudio()">
+        <span id="audioIcon">🔊</span> <span id="audioLabel">Desi Lady Voice: ON</span>
+      </button>
+      <button class="btn btn-pdf" onclick="window.print()">
+        📄 Save as PDF
+      </button>
+      <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems!%20I%20am%20interested%20in%20the%203-Day%20Free%20Social%20Media%20Pilot%20for%20my%20business." target="_blank" class="btn btn-primary">
+        💬 Free Pilot
+      </a>
+    </div>
+  </header>
+
+  <!-- Audio Player Element -->
+  <audio id="slideAudio" preload="auto"></audio>
+
+  <!-- Main Presentation Deck -->
+  <main>
+    <div class="deck-container">
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <!-- Slide 1: The Problem -->
+      <section class="slide active" id="slide-0">
+        <div>
+          <div class="slide-badge">🚨 THE LOCAL BUSINESS CHALLENGE</div>
+          <h1 class="slide-title">Why 92% of Thane Businesses Are <span class="highlight-red">Completely Invisible</span> Online</h1>
+          <div class="slide-body">
+            <div class="slide-text">
+              <p>Every single month, over <strong>10,000+ residents</strong> along Ghodbunder Road, Hiranandani Estate, Meadows, and Manpada search Google for trusted doctors, salons, repair labs, and cafes.</p>
+              <br>
+              <p>Yet traditional agencies charge <strong>₹20,000/month</strong> for generic stock posters that get zero calls and zero walk-ins.</p>
+            </div>
+            <div class="mascot-box">
+              <!-- Animated SVG Robot Mascot (Byte) -->
+              <svg class="mascot-avatar" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="60" height="50" rx="16" fill="#0284C7"/>
+                <rect x="28" y="35" width="44" height="30" rx="10" fill="#0F172A"/>
+                <circle cx="40" cy="50" r="5" fill="#38BDF8"/>
+                <circle cx="60" cy="50" r="5" fill="#38BDF8"/>
+                <rect x="44" y="58" width="12" height="3" rx="1.5" fill="#38BDF8"/>
+                <line x1="50" y1="12" x2="50" y2="25" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="10" r="5" fill="#F59E0B"/>
+                <rect x="14" y="42" width="6" height="16" rx="3" fill="#0284C7"/>
+                <rect x="80" y="42" width="6" height="16" rx="3" fill="#0284C7"/>
+              </svg>
+              <div class="mascot-bubble">
+                "Are nearby Thane customers seeing your clinic, or are they walking into your competitor's door?"
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-val highlight-red">10,000+</div>
+            <div class="metric-lbl">Monthly Local Searches in Thane</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-amber">84%</div>
+            <div class="metric-lbl">Choose the Top 3 Google Map Results</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-cyan">0 Sec</div>
+            <div class="metric-lbl">Attention Span for Boring Static Posts</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: The Solution -->
+      <section class="slide" id="slide-1">
+        <div>
+          <div class="slide-badge">⚡ THE BIG BYTE ADVANTAGE</div>
+          <h1 class="slide-title">Introducing <span class="highlight-cyan">Big Byte Social Studio</span>: Autonomous Local Dominance</h1>
+          <div class="slide-body">
+            <div class="slide-text">
+              <p>We built Thane's first <strong>hyperlocal social engine</strong>. We don't post generic templates. We generate punchy, high-retention 4K Video Shorts, high-contrast click-worthy thumbnails, and exact Google Map Local SEO keywords.</p>
+              <br>
+              <p>Every post is engineered with natural Indian neural voiceovers, authentic localized landmarks (Opp D-Mart, Near Khewra Circle), and zero robotic speech.</p>
+            </div>
+            <div class="mascot-box">
+              <svg class="mascot-avatar" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="60" height="50" rx="16" fill="#10B981"/>
+                <rect x="28" y="35" width="44" height="30" rx="10" fill="#0F172A"/>
+                <circle cx="40" cy="50" r="5" fill="#34D399"/>
+                <circle cx="60" cy="50" r="5" fill="#34D399"/>
+                <path d="M42 58 Q50 64 58 58" stroke="#34D399" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <line x1="50" y1="12" x2="50" y2="25" stroke="#10B981" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="10" r="5" fill="#38BDF8"/>
+                <rect x="14" y="42" width="6" height="16" rx="3" fill="#10B981"/>
+                <rect x="80" y="42" width="6" height="16" rx="3" fill="#10B981"/>
+              </svg>
+              <div class="mascot-bubble">
+                "4K Vertical Video Reels + High-CTR Thumbnails + Exact GPS Landmarks = Daily Walk-in Clients!"
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-val highlight-emerald">4K / 9:16</div>
+            <div class="metric-lbl">High-Retention Video Reels</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-cyan">-14 LUFS</div>
+            <div class="metric-lbl">Broadcast Indian Voiceover</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-amber">Local 3-Pack</div>
+            <div class="metric-lbl">Google Maps SEO Domination</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: The 3-Step Zero-Effort Workflow -->
+      <section class="slide" id="slide-2">
+        <div>
+          <div class="slide-badge">📱 100% MOBILE-NATIVE</div>
+          <h1 class="slide-title">Zero Laptop Needed. <span class="highlight-emerald">1-Tap WhatsApp</span> Approval</h1>
+          <div class="slide-body">
+            <div class="slide-text">
+              <p>You are busy running your clinic, salon, or store. You don't have time to open a laptop, edit videos, or navigate complex developer consoles.</p>
+              <br>
+              <p><strong>Step 1:</strong> Our cloud engine compiles your daily video reel, thumbnail, and local tags.<br>
+              <strong>Step 2:</strong> A preview lands on your WhatsApp at 10:30 AM.<br>
+              <strong>Step 3:</strong> You tap 1 button on your phone to publish, or let our server run on 100% hands-free autopilot.</p>
+            </div>
+            <div class="mascot-box">
+              <svg class="mascot-avatar" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="60" height="50" rx="16" fill="#F59E0B"/>
+                <rect x="28" y="35" width="44" height="30" rx="10" fill="#0F172A"/>
+                <circle cx="40" cy="50" r="5" fill="#FBBF24"/>
+                <circle cx="60" cy="50" r="5" fill="#FBBF24"/>
+                <path d="M40 58 Q50 63 60 58" stroke="#FBBF24" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <line x1="50" y1="12" x2="50" y2="25" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="10" r="5" fill="#10B981"/>
+                <rect x="14" y="42" width="6" height="16" rx="3" fill="#F59E0B"/>
+                <rect x="80" y="42" width="6" height="16" rx="3" fill="#F59E0B"/>
+              </svg>
+              <div class="mascot-bubble">
+                "No laptop. No passwords. No complexity. Just 5 seconds on your phone every morning!"
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-val highlight-cyan">5 Sec</div>
+            <div class="metric-lbl">Daily Client Time Investment</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-emerald">4 Networks</div>
+            <div class="metric-lbl">YouTube, Instagram, Facebook, GMB</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-amber">0 Bans</div>
+            <div class="metric-lbl">100% Policy-Safe Shield</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Real Case Study -->
+      <section class="slide" id="slide-3">
+        <div>
+          <div class="slide-badge">🏆 REAL THANE CASE STUDY</div>
+          <h1 class="slide-title">How <span class="highlight-cyan">Dr. Sharma Dental Care</span> Got 42 New Consultations in 30 Days</h1>
+          <div class="slide-body">
+            <div class="slide-text">
+              <p>Located in Panchpakhadi, Thane West, Dr. Sharma struggled with competing against large corporate dental chains with massive ad budgets.</p>
+              <br>
+              <p>Big Byte Social Studio deployed <strong>daily oral health Reels</strong> with localized tags (Panchpakhadi, Talao Pali, Naupada) and automated Google Business Profile updates with zero phone-number policy violations.</p>
+            </div>
+            <div class="mascot-box">
+              <div style="font-size: 3rem; margin-bottom: 8px;">🦷</div>
+              <div style="font-weight: 800; font-size: 1.1rem; color: #fff; margin-bottom: 4px;">Dr. Sharma Dental</div>
+              <div style="font-size: 0.8rem; color: var(--accent-emerald); font-weight: 700;">⭐ 4.9★ (420+ Reviews)</div>
+              <div class="mascot-bubble" style="margin-top: 12px;">
+                "We went from 3 inquiries a month to a fully booked appointment book. Zero money spent on paid ads!"
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-val highlight-emerald">+1,400%</div>
+            <div class="metric-lbl">Monthly Consultation Growth</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-cyan">#1 Rank</div>
+            <div class="metric-lbl">Google Maps 'Dentist Near Me Thane'</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-amber">₹0</div>
+            <div class="metric-lbl">Paid Ad Spend Required</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Transparent Pricing -->
+      <section class="slide" id="slide-4">
+        <div>
+          <div class="slide-badge">💎 TRANSPARENT INVESTMENT</div>
+          <h1 class="slide-title">Simple Pricing. <span class="highlight-emerald">Massive Local ROI</span></h1>
+          <p class="slide-text" style="margin-bottom: 16px;">Zero setup fees. Zero lock-in contracts. Cancel anytime with 1 click.</p>
+          <div class="pricing-grid">
+            <div class="price-card">
+              <div>
+                <div class="price-name">Solo Pro</div>
+                <div class="price-amount">₹1,499 <span>/month</span></div>
+                <ul class="price-features">
+                  <li>✅ Google Business Profile + FB</li>
+                  <li>✅ 30 Scheduled Local Posts</li>
+                  <li>✅ High-Contrast Visual Plates</li>
+                  <li>✅ Anti-Suspension Shield</li>
+                </ul>
+              </div>
+              <a href="https://wa.me/919167463807?text=Hi!%20I%20want%20the%20Solo%20Pro%20plan%20(Rs%201499/mo)%20for%20my%20business." target="_blank" class="btn btn-audio" style="text-align: center; justify-content: center;">Choose Solo</a>
+            </div>
+
+            <div class="price-card popular">
+              <div class="popular-tag">MOST POPULAR</div>
+              <div>
+                <div class="price-name highlight-cyan">Agency Growth</div>
+                <div class="price-amount">₹3,999 <span>/month</span></div>
+                <ul class="price-features">
+                  <li>✅ <strong>All 4 Platforms</strong> (YT, IG, FB, GMB)</li>
+                  <li>✅ <strong>Daily 4K Video Shorts / Reels</strong></li>
+                  <li>✅ <strong>16:9 High-CTR Thumbnails</strong></li>
+                  <li>✅ <strong>Broadcast Indian Voiceover</strong></li>
+                  <li>✅ 1-Tap Mobile WhatsApp Relay</li>
+                </ul>
+              </div>
+              <a href="https://wa.me/919167463807?text=Hi!%20I%20want%20the%20Agency%20Growth%20plan%20(Rs%203999/mo)%20for%20my%20business." target="_blank" class="btn btn-primary" style="text-align: center; justify-content: center;">Choose Growth</a>
+            </div>
+
+            <div class="price-card">
+              <div>
+                <div class="price-name">Enterprise Retainer</div>
+                <div class="price-amount">₹9,999 <span>/month</span></div>
+                <ul class="price-features">
+                  <li>✅ Everything in Growth Plan</li>
+                  <li>✅ Dedicated Multi-Location Support</li>
+                  <li>✅ LinkedIn B2B Corporate Outreach</li>
+                  <li>✅ Bi-Weekly Competitor Audits</li>
+                  <li>✅ Dedicated Account Manager</li>
+                </ul>
+              </div>
+              <a href="https://wa.me/919167463807?text=Hi!%20I%20am%20interested%20in%20the%20Enterprise%20Retainer%20(Rs%209999/mo)." target="_blank" class="btn btn-audio" style="text-align: center; justify-content: center;">Choose Enterprise</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Call To Action -->
+      <section class="slide" id="slide-5">
+        <div>
+          <div class="slide-badge">🚀 START TODAY RISK-FREE</div>
+          <h1 class="slide-title">Claim Your <span class="highlight-cyan">3-Day Free Pilot</span> (Zero Setup Fee)</h1>
+          <div class="slide-body">
+            <div class="slide-text">
+              <p>We will generate your <strong>first custom 4K video reel</strong>, high-CTR thumbnail, and full local SEO keyword audit for your business completely free.</p>
+              <br>
+              <p>No credit card required. No obligation. If you don't love the quality and phone calls, you pay nothing.</p>
+              <br>
+              <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems!%20I%20want%20to%20activate%20my%203-Day%20Free%20Trial%20Pilot." target="_blank" class="btn btn-primary" style="padding: 12px 24px; font-size: 1rem;">
+                  💬 Activate 3-Day Free Trial on WhatsApp
+                </a>
+                <a href="tel:09054790592" class="btn btn-audio" style="padding: 12px 20px; font-size: 1rem;">
+                  📞 Call: 090547 90592
+                </a>
+              </div>
+            </div>
+            <div class="mascot-box">
+              <svg class="mascot-avatar" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="60" height="50" rx="16" fill="#0284C7"/>
+                <rect x="28" y="35" width="44" height="30" rx="10" fill="#0F172A"/>
+                <path d="M35 48 L45 56 L65 42" stroke="#34D399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="50" y1="12" x2="50" y2="25" stroke="#38BDF8" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="50" cy="10" r="5" fill="#F59E0B"/>
+                <rect x="14" y="42" width="6" height="16" rx="3" fill="#0284C7"/>
+                <rect x="80" y="42" width="6" height="16" rx="3" fill="#0284C7"/>
+              </svg>
+              <div class="mascot-bubble">
+                "Big Byte Systems • Shop 1, Khewra Cir Marg, Manpada, Thane West (Opp D-Mart). 4.9★ Google Verified."
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-val highlight-emerald">3 Days</div>
+            <div class="metric-lbl">100% Free Trial Period</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-cyan">₹0</div>
+            <div class="metric-lbl">Setup & Onboarding Fee</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-val highlight-amber">24 Hours</div>
+            <div class="metric-lbl">Time to First Live Reel</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Deck Navigation -->
+      <div class="deck-controls">
+        <span class="slide-counter" id="slideCounter">SLIDE 01 / 06</span>
+        <div class="nav-btns">
+          <button id="btnPrev" class="btn-nav" onclick="prevSlide()" disabled>← Previous</button>
+          <button id="btnNext" class="btn-nav" onclick="nextSlide()">Next →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 6;
+    let audioEnabled = true;
+    const audioElement = document.getElementById('slideAudio');
+
+    const audioTracks = [
+      'audio/slide1.mp3',
+      'audio/slide2.mp3',
+      'audio/slide3.mp3',
+      'audio/slide4.mp3',
+      'audio/slide5.mp3',
+      'audio/slide6.mp3'
+    ];
+
+    function updateSlide() {
+      // Update DOM visibility
+      for (let i = 0; i < totalSlides; i++) {
+        const s = document.getElementById(`slide-${i}`);
+        if (s) {
+          s.classList.toggle('active', i === currentSlide);
+        }
+      }
+
+      // Update Counter & Progress Bar
+      document.getElementById('slideCounter').innerText = `SLIDE 0${currentSlide + 1} / 0${totalSlides}`;
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+
+      // Navigation buttons state
+      document.getElementById('btnPrev').disabled = (currentSlide === 0);
+      document.getElementById('btnNext').innerText = (currentSlide === totalSlides - 1) ? 'Finish 🚀' : 'Next →';
+
+      // Play audio if enabled
+      if (audioEnabled) {
+        audioElement.src = audioTracks[currentSlide];
+        audioElement.play().catch(e => {
+          console.warn('Audio auto-play note:', e.message);
+        });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      } else {
+        // Redirect to WhatsApp CTA on last slide
+        window.open('https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems!%20I%20am%20interested%20in%20the%203-Day%20Free%20Trial.', '_blank');
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('btnAudioToggle');
+      const icon = document.getElementById('audioIcon');
+      const lbl = document.getElementById('audioLabel');
+
+      if (audioEnabled) {
+        btn.classList.add('playing');
+        icon.innerText = '🔊';
+        lbl.innerText = 'Desi Lady Voice: ON';
+        audioElement.src = audioTracks[currentSlide];
+        audioElement.play().catch(() => {});
+      } else {
+        btn.classList.remove('playing');
+        icon.innerText = '🔇';
+        lbl.innerText = 'Voice: MUTED';
+        audioElement.pause();
+      }
+    }
+
+    // Auto-advance when audio ends
+    audioElement.addEventListener('ended', () => {
+      if (currentSlide < totalSlides - 1) {
+        setTimeout(nextSlide, 800);
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Start with audio enabled on first user interaction
+    document.addEventListener('click', () => {
+      if (audioEnabled && audioElement.paused && audioElement.currentTime === 0) {
+        audioElement.src = audioTracks[0];
+        audioElement.play().catch(() => {});
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>

@@ -20,6 +20,7 @@ const PLATFORMS_FILE = path.join(DATA_DIR, 'platforms.json');
 const PLANS_FILE = path.join(DATA_DIR, 'plans.json');
 const COUPONS_FILE = path.join(DATA_DIR, 'coupons.json');
 const WHITELABEL_FILE = path.join(DATA_DIR, 'whitelabel.json');
+const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -1086,6 +1087,54 @@ const server = http.createServer((req, res) => {
     writeJson(CLIENTS_FILE, allClients);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({ success: true }));
+  }
+
+  // GET /api/leads (CRM Leads list)
+  if (pathname === '/api/leads' && req.method === 'GET') {
+    const status = parsedUrl.searchParams.get('status');
+    let leads = readJson(LEADS_FILE, []);
+    if (status) {
+      leads = leads.filter(l => l.status?.toLowerCase() === status.toLowerCase());
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(leads));
+  }
+
+  // POST /api/leads (Add or update lead)
+  if (pathname === '/api/leads' && req.method === 'POST') {
+    getJsonBody((err, newLead) => {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'Invalid JSON' }));
+      }
+      newLead.id = newLead.id || `lead_${Date.now()}`;
+      newLead.updatedAt = new Date().toISOString();
+      const allLeads = readJson(LEADS_FILE, []);
+      const idx = allLeads.findIndex(l => l.id === newLead.id || (newLead.phone && l.phone === newLead.phone));
+      if (idx >= 0) {
+        allLeads[idx] = { ...allLeads[idx], ...newLead };
+      } else {
+        allLeads.push(newLead);
+      }
+      writeJson(LEADS_FILE, allLeads);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, lead: newLead }));
+    });
+    return;
+  }
+
+  // POST /api/leads/interest (1-Click Lead Capturing endpoint from WhatsApp / Pitch Deck)
+  if (pathname === '/api/leads/interest' && (req.method === 'POST' || req.method === 'GET')) {
+    const leadId = parsedUrl.searchParams.get('leadId') || 'lead_dentist_01';
+    const allLeads = readJson(LEADS_FILE, []);
+    const lead = allLeads.find(l => l.id === leadId);
+    if (lead) {
+      lead.status = 'Interested';
+      lead.interestedAt = new Date().toISOString();
+      writeJson(LEADS_FILE, allLeads);
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ success: true, message: 'Lead marked as Interested', lead }));
   }
 
   // GET /api/posts (Supports ?clientId=...)
