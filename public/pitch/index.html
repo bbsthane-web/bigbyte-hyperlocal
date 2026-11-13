@@ -353,17 +353,206 @@
 
     /* Print / PDF Mode */
     @media print {
-      body { background: #fff !important; color: #000 !important; }
-      header, .deck-controls, .progress-bar-container { display: none !important; }
-      .deck-container { box-shadow: none !important; border: none !important; background: transparent !important; }
-      .slide { display: flex !important; page-break-after: always; padding: 40px !important; color: #111 !important; }
-      .slide-badge { border-color: #0284c7 !important; color: #0284c7 !important; }
-      .slide-title { color: #000 !important; }
-      .slide-text { color: #333 !important; }
-      .mascot-box, .metric-card, .price-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #111 !important; }
+      @page {
+        size: 297mm 210mm;
+        margin: 0;
+      }
+
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        animation: none !important;
+        transition: none !important;
+        box-sizing: border-box !important;
+      }
+
+      html, body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 297mm !important;
+        height: auto !important;
+        overflow: visible !important;
+        display: block !important;
+        font-size: 13px;
+      }
+
+      header, .deck-controls, .progress-bar-container, #slideAudio {
+        display: none !important;
+      }
+
+      main {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+        width: 297mm !important;
+      }
+
+      .deck-container {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        overflow: visible !important;
+        min-height: auto !important;
+        height: auto !important;
+        width: 297mm !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .slide {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        min-height: 210mm !important;
+        max-height: 210mm !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        padding: 18mm 22mm !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+        border: none !important;
+        color: #0f172a !important;
+        overflow: hidden !important;
+      }
+
+      .slide:last-of-type {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      .slide-badge {
+        background: #e0f2fe !important;
+        border: 1px solid #0284c7 !important;
+        color: #0284c7 !important;
+        padding: 4px 10px !important;
+        font-weight: 800 !important;
+        display: inline-flex !important;
+        margin-bottom: 12px !important;
+      }
+
+      .slide-title {
+        color: #0f172a !important;
+        font-size: 1.85rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 16px !important;
+      }
+
+      .slide-body {
+        margin-bottom: 16px !important;
+        gap: 24px !important;
+      }
+
+      .slide-text, .slide-text p {
+        color: #334155 !important;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+      }
+
+      .mascot-avatar {
+        animation: none !important;
+        transform: none !important;
+        width: 80px !important;
+        height: 80px !important;
+      }
+
+      .mascot-box {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+      }
+
+      .mascot-bubble {
+        background: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        font-size: 0.82rem !important;
+      }
+
+      .mascot-bubble::before {
+        display: none !important;
+      }
+
+      .metric-card, .proof-box, .pricing-grid .price-card, .engine-step {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        break-inside: avoid !important;
+      }
+
+      .metric-val {
+        font-size: 1.7rem !important;
+      }
+
+      .metric-lbl {
+        color: #475569 !important;
+        font-size: 0.78rem !important;
+      }
+
       .highlight-cyan { color: #0284c7 !important; }
       .highlight-emerald { color: #059669 !important; }
-      .price-amount { color: #000 !important; }
+      .highlight-amber { color: #d97706 !important; }
+      .highlight-red { color: #dc2626 !important; }
+
+      .price-name { color: #0f172a !important; }
+      .price-amount { color: #0f172a !important; }
+      .price-features li { color: #334155 !important; }
+
+      .price-card.featured {
+        border: 2px solid #0284c7 !important;
+        background: #f0f9ff !important;
+      }
+
+      .engine-step .step-num {
+        background: #0284c7 !important;
+        color: #ffffff !important;
+      }
+
+      .engine-step h3 {
+        color: #0f172a !important;
+      }
+
+      .engine-step p {
+        color: #475569 !important;
+      }
+
+      .proof-stat {
+        color: #0284c7 !important;
+      }
+
+      .cta-box {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+
+      .cta-box h2 {
+        color: #0f172a !important;
+      }
+
+      .cta-box p {
+        color: #475569 !important;
+      }
+
+      .btn-primary, .btn-secondary {
+        border: 1px solid #cbd5e1 !important;
+        background: #0284c7 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
     }
 
     /* Mobile adjustments */
@@ -388,8 +577,11 @@
       <button id="btnAudioToggle" class="btn btn-audio" onclick="toggleAudio()">
         <span id="audioIcon">🔊</span> <span id="audioLabel">Desi Lady Voice: ON</span>
       </button>
+      <a href="/pitch/pitch_deck_presentation.pdf" download="BigByte_Social_Studio_Pitch.pdf" class="btn btn-pdf" style="text-decoration:none;">
+        📥 Download PDF
+      </a>
       <button class="btn btn-pdf" onclick="window.print()">
-        📄 Save as PDF
+        🖨️ Print / Save PDF
       </button>
       <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems!%20I%20am%20interested%20in%20the%203-Day%20Free%20Social%20Media%20Pilot%20for%20my%20business." target="_blank" class="btn btn-primary">
         💬 Free Pilot

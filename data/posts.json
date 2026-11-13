@@ -799,7 +799,7 @@
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-13",
     "time": "10:30",
     "title": "📍 Liquid Spill & Ultrasonic Logic Board Deoxidization",
@@ -809,14 +809,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-13T05:00:01.150Z"
   },
   {
     "id": "post_20261113_yt",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-13",
     "time": "11:30",
     "title": "▶ [Shorts] Spilled water or coffee on your laptop? Never put it i #Shorts",
@@ -829,14 +830,15 @@
     "mediaFormat": "VIDEO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-13T06:00:11.042Z"
   },
   {
     "id": "post_20261113_fb",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-13",
     "time": "12:00",
     "title": "Liquid Spill & Ultrasonic Logic Board Deoxidization",
@@ -848,14 +850,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-13T06:30:06.165Z"
   },
   {
     "id": "post_20261113_ig",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-13",
     "time": "14:00",
     "title": "Liquid Spill & Ultrasonic Logic Board Deoxidization",
@@ -867,7 +870,8 @@
     "mediaFormat": "REELS",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-13T08:30:09.969Z"
   },
   {
     "id": "post_20261114_gmb",

@@ -119,6 +119,34 @@
       "fileName": "plate_20261112_li.jpg",
       "date": "2026-11-12",
       "lastPublished": "2026-11-12T14:15:10.804Z"
+    },
+    "3dc0ffd835255206978f3ff46018f6620ef4b1117aa58a124ba3d52f297a69cc": {
+      "postId": "post_20261113_gmb",
+      "platform": "gmb",
+      "fileName": "plate_20261113_gmb.jpg",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T05:00:01.355Z"
+    },
+    "e4a1f542abf6559356fc186c7250462ba850d0e57f0de8c0e4c4bbe6fb5d443a": {
+      "postId": "post_20261113_yt",
+      "platform": "youtube",
+      "fileName": "plate_20261113_yt.jpg",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T06:00:11.060Z"
+    },
+    "5880436f0e6d2d623685bed75eca843fcf231ad4256a9b6091eec6aabe16a219": {
+      "postId": "post_20261113_fb",
+      "platform": "facebook",
+      "fileName": "plate_20261113_fb.jpg",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T06:30:06.364Z"
+    },
+    "1d4d73bb4d424c782045536a271faec13496de0f45cbae5f048e264d5be79b8f": {
+      "postId": "post_20261113_ig",
+      "platform": "instagram",
+      "fileName": "plate_20261113_ig.jpg",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T08:30:09.980Z"
     }
   },
   "hooks": {
@@ -359,6 +387,34 @@
       "snippet": "Enterprise IT: Coastal Thane Humidity Thermal Mud & Fan Serv",
       "date": "2026-11-12",
       "lastPublished": "2026-11-12T14:15:10.804Z"
+    },
+    "86a6c3faaaf01546e3ec6a6a9d84ec7f19927c24e2c38d8fe662b251d38babc5": {
+      "postId": "post_20261113_gmb",
+      "platform": "gmb",
+      "snippet": "📍 Liquid Spill & Ultrasonic Logic Board Deoxidization",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T05:00:01.355Z"
+    },
+    "c4f750e305e2ee51ec825e11027f4a02739de5330e3bc8f500289bb305e11d18": {
+      "postId": "post_20261113_yt",
+      "platform": "youtube",
+      "snippet": "▶ [Shorts] Spilled water or coffee on your laptop? Never put",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T06:00:11.060Z"
+    },
+    "65a3c0d0193528b687a92300ba34936704210a9ebf80d60c73cb8913f4889c3d": {
+      "postId": "post_20261113_fb",
+      "platform": "facebook",
+      "snippet": "⚠️ Thane Tech Alert: Spilled water or coffee on your laptop?",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T06:30:06.364Z"
+    },
+    "69459c7ad257830e59f43c64af6148bf2f7adb43c84896ef0448ea5aee188b98": {
+      "postId": "post_20261113_ig",
+      "platform": "instagram",
+      "snippet": "🔥 Lab Triage POV: Spilled water or coffee on your laptop? N",
+      "date": "2026-11-13",
+      "lastPublished": "2026-11-13T08:30:09.980Z"
     }
   }
 }
