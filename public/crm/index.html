@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Byte Social Studio — Lead CRM & Client Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+    .brand a { color: inherit; text-decoration: none; }
+
+    .brand-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover { background: #334155; color: #fff; }
+    .btn-primary {
+      background: #0284c7;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-whatsapp {
+      background: #15803d;
+      color: #fff;
+    }
+    .btn-whatsapp:hover { background: #166534; }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      padding: 28px 32px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* KPI Summary Stats */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 22px;
+    }
+    .kpi-title {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .kpi-sub {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Filters Bar */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pill.active {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+    }
+    .search-box {
+      flex: 1;
+      max-width: 320px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 14px 8px 36px;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+
+    /* Leads Table */
+    .leads-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    thead th {
+      background: #0d1322;
+      padding: 14px 18px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+    tbody tr {
+      border-bottom: 1px solid #1a2234;
+      transition: background 0.15s ease;
+    }
+    tbody tr:hover { background: #141c2e; }
+    td {
+      padding: 16px 18px;
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+
+    .lead-name-box {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .lead-title {
+      font-weight: 700;
+      color: #f8fafc;
+      font-size: 0.95rem;
+    }
+    .lead-doctor {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .lead-loc-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .lead-locality {
+      font-weight: 600;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+    }
+    .lead-landmark {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Status Badges */
+    .status-select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .status-New-Lead { background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .status-Interested { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
+    .status-Trial-Active { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.3); }
+    .status-Closed { background: rgba(34, 197, 94, 0.25); color: #4ade80; border: 1px solid #22c55e; }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .action-wa {
+      background: #15803d;
+      color: #fff;
+    }
+    .action-wa:hover { background: #166534; }
+    .action-pitch {
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+    }
+    .action-pitch:hover { background: #334155; }
+
+    /* Modal for Quick Outreach preview */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 600px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; }
+    .modal-textarea {
+      width: 100%;
+      height: 220px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      color: #f1f5f9;
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <a href="/">⚡ Big Byte Social Studio</a>
+      <span class="brand-badge">THANE B2B LEAD CRM</span>
+    </div>
+    <div class="header-actions">
+      <a href="/" class="btn btn-secondary">
+        📊 Social Dashboard
+      </a>
+      <a href="/pitch/" target="_blank" class="btn btn-secondary">
+        👁️ Open Pitch Deck
+      </a>
+      <button class="btn btn-primary" onclick="syncScraper()">
+        🔄 Refresh Leads Scraper
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- KPI Row -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Total Local Prospects</div>
+        <div class="kpi-value highlight-cyan" id="kpiTotal">0</div>
+        <div class="kpi-sub">Verified Clinics in Thane West</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Interested / Warm Leads</div>
+        <div class="kpi-value highlight-emerald" id="kpiInterested" style="color: var(--accent-emerald);">0</div>
+        <div class="kpi-sub">Replied or Clicked Trial</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Active 3-Day Pilots</div>
+        <div class="kpi-value highlight-purple" id="kpiTrial" style="color: var(--accent-purple);">0</div>
+        <div class="kpi-sub">Sample Reels Currently Queued</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Closed Retainers</div>
+        <div class="kpi-value" id="kpiClosed" style="color: #4ade80;">0</div>
+        <div class="kpi-sub">Paying ₹3,999/mo Retainers</div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="filter-bar">
+      <div class="filter-pills">
+        <button class="pill active" onclick="setFilter('all', this)">All Prospects (<span id="countAll">0</span>)</button>
+        <button class="pill" onclick="setFilter('Interested', this)">🔥 Interested (<span id="countInterested">0</span>)</button>
+        <button class="pill" onclick="setFilter('Trial Active', this)">⚡ Active Pilot (<span id="countTrial">0</span>)</button>
+        <button class="pill" onclick="setFilter('New Lead', this)">📥 New Leads (<span id="countNew">0</span>)</button>
+        <button class="pill" onclick="setFilter('Closed', this)">🏆 Closed (<span id="countClosed">0</span>)</button>
+      </div>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search clinic, doctor, locality..." oninput="renderTable()">
+      </div>
+    </div>
+
+    <!-- Leads Table Card -->
+    <div class="leads-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Clinic & Doctor</th>
+            <th>Locality & Landmark</th>
+            <th>Google Maps Rep</th>
+            <th>Pipeline Status</th>
+            <th>Direct Outreach</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+          <tr><td colspan="5" style="text-align: center; padding: 40px; color: #64748b;">Loading verified leads...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Outreach Modal -->
+  <div class="modal-overlay" id="outreachModal">
+    <div class="modal-box">
+      <h2 class="modal-title" id="modalClinicTitle">Send Personalized WhatsApp Pitch</h2>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;" id="modalDoctorSub">Personalized with local landmark & Google rating</p>
+      <textarea class="modal-textarea" id="modalDraftText"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-whatsapp" onclick="launchWhatsAppFromModal()">
+          💬 Open in WhatsApp & Mark Contacted
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allLeads = [];
+    let currentFilter = 'all';
+    let activeModalLead = null;
+
+    async function fetchLeads() {
+      try {
+        const res = await fetch('/api/leads');
+        allLeads = await res.json();
+        updateKPIs();
+        renderTable();
+      } catch (err) {
+        console.error('Failed to load leads:', err);
+      }
+    }
+
+    function updateKPIs() {
+      const total = allLeads.length;
+      const interested = allLeads.filter(l => l.status === 'Interested').length;
+      const trial = allLeads.filter(l => l.status === 'Trial Active').length;
+      const closed = allLeads.filter(l => l.status === 'Closed').length;
+      const newLeads = allLeads.filter(l => l.status === 'New Lead').length;
+
+      document.getElementById('kpiTotal').innerText = total;
+      document.getElementById('kpiInterested').innerText = interested;
+      document.getElementById('kpiTrial').innerText = trial;
+      document.getElementById('kpiClosed').innerText = closed;
+
+      document.getElementById('countAll').innerText = total;
+      document.getElementById('countInterested').innerText = interested;
+      document.getElementById('countTrial').innerText = trial;
+      document.getElementById('countNew').innerText = newLeads;
+      document.getElementById('countClosed').innerText = closed;
+    }
+
+    function setFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      renderTable();
+    }
+
+    function renderTable() {
+      const query = (document.getElementById('searchInput').value || '').toLowerCase();
+      const tbody = document.getElementById('leadsTableBody');
+
+      const filtered = allLeads.filter(l => {
+        const matchFilter = (currentFilter === 'all') || (l.status === currentFilter);
+        const matchQuery = (
+          (l.name || '').toLowerCase().includes(query) ||
+          (l.doctor || '').toLowerCase().includes(query) ||
+          (l.locality || '').toLowerCase().includes(query) ||
+          (l.landmark || '').toLowerCase().includes(query)
+        );
+        return matchFilter && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #64748b;">No leads match this filter.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(l => {
+        const statusClass = `status-${(l.status || 'New-Lead').replace(/\s+/g, '-')}`;
+        return `
+          <tr>
+            <td>
+              <div class="lead-name-box">
+                <span class="lead-title">${l.name}</span>
+                <span class="lead-doctor">👨‍⚕️ ${l.doctor || 'Senior Specialist'}</span>
+              </div>
+            </td>
+            <td>
+              <div class="lead-loc-box">
+                <span class="lead-locality">📍 ${l.locality}</span>
+                <span class="lead-landmark">${l.landmark || ''}</span>
+              </div>
+            </td>
+            <td>
+              <span class="rating-badge">⭐ ${l.googleRating || '4.8'}★ (${l.reviews || '100+'} reviews)</span>
+            </td>
+            <td>
+              <select class="status-select" onchange="updateStatus('${l.id}', this.value)">
+                <option value="New Lead" ${l.status === 'New Lead' ? 'selected' : ''}>📥 New Lead</option>
+                <option value="Interested" ${l.status === 'Interested' ? 'selected' : ''}>🔥 Interested</option>
+                <option value="Trial Active" ${l.status === 'Trial Active' ? 'selected' : ''}>⚡ Trial Active</option>
+                <option value="Closed" ${l.status === 'Closed' ? 'selected' : ''}>🏆 Client Closed</option>
+              </select>
+            </td>
+            <td>
+              <div class="action-group">
+                <button class="action-btn action-wa" onclick="openOutreachModal('${l.id}')">
+                  💬 WhatsApp Pitch
+                </button>
+                <a href="${l.pitchUrl || '/pitch/'}" target="_blank" class="action-btn action-pitch">
+                  👁️ Demo Deck
+                </a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function updateStatus(leadId, newStatus) {
+      try {
+        await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, status: newStatus })
+        });
+        const lead = allLeads.find(l => l.id === leadId);
+        if (lead) lead.status = newStatus;
+        updateKPIs();
+        renderTable();
+      } catch (err) {
+        alert('Failed to update status: ' + err.message);
+      }
+    }
+
+    function openOutreachModal(leadId) {
+      activeModalLead = allLeads.find(l => l.id === leadId);
+      if (!activeModalLead) return;
+
+      document.getElementById('modalClinicTitle').innerText = activeModalLead.name;
+      document.getElementById('modalDoctorSub').innerText = `${activeModalLead.doctor || ''} • ${activeModalLead.locality}`;
+      document.getElementById('modalDraftText').value = activeModalLead.whatsappDraft || '';
+      document.getElementById('outreachModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('outreachModal').classList.remove('active');
+      activeModalLead = null;
+    }
+
+    async function launchWhatsAppFromModal() {
+      if (!activeModalLead) return;
+      const text = encodeURIComponent(document.getElementById('modalDraftText').value);
+      const cleanPhone = (activeModalLead.phone || '').replace(/[^0-9]/g, '');
+      const waUrl = `https://wa.me/${cleanPhone}?text=${text}`;
+
+      // Mark as contacted / interested
+      if (activeModalLead.status === 'New Lead') {
+        await updateStatus(activeModalLead.id, 'Interested');
+      }
+
+      closeModal();
+      window.open(waUrl, '_blank');
+    }
+
+    async function syncScraper() {
+      alert('Refreshing scraper leads from Thane West micro-markets...');
+      await fetchLeads();
+    }
+
+    // Initial Load
+    fetchLeads();
+  </script>
+</body>
+</html>
