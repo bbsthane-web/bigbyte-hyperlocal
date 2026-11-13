@@ -21,6 +21,85 @@ const PLANS_FILE = path.join(DATA_DIR, 'plans.json');
 const COUPONS_FILE = path.join(DATA_DIR, 'coupons.json');
 const WHITELABEL_FILE = path.join(DATA_DIR, 'whitelabel.json');
 const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
+const AUTH_CONFIG_FILE = path.join(DATA_DIR, 'auth_config.json');
+const FEEDBACK_FILE = path.join(DATA_DIR, 'feedback.json');
+
+// In-Memory Active Sessions Store (Token -> Session Info)
+const activeSessions = new Map();
+
+function getAuthConfig() {
+  return readJson(AUTH_CONFIG_FILE, {
+    admin: { username: "admin", password: "bbs2026!login", displayName: "Big Byte Systems Master Admin" },
+    secretKeys: [
+      { key: "BBS-TESTER-2026", role: "Beta Tester", label: "Big Byte Pilot Tester", active: true },
+      { key: "PILOT-VIP", role: "VIP Client", label: "Doctor & Clinic VIP Guest", active: true }
+    ],
+    sessionDurationHours: 72
+  });
+}
+
+function parseCookies(req) {
+  const list = {};
+  const cookieHeader = req.headers.cookie;
+  if (!cookieHeader) return list;
+  cookieHeader.split(';').forEach(cookie => {
+    let [name, ...rest] = cookie.split('=');
+    name = name?.trim();
+    if (!name) return;
+    const value = rest.join('=').trim();
+    list[name] = decodeURIComponent(value);
+  });
+  return list;
+}
+
+function createSession(role, name) {
+  const token = 'bbs_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+  const duration = (getAuthConfig().sessionDurationHours || 72) * 3600 * 1000;
+  activeSessions.set(token, {
+    token,
+    role,
+    name,
+    expiresAt: Date.now() + duration
+  });
+  return token;
+}
+
+function verifySession(req, parsedUrl) {
+  // 1. Check Query Parameter (?key=XXX) for seamless 1-click test links
+  const queryKey = parsedUrl?.searchParams?.get('key');
+  if (queryKey) {
+    const authCfg = getAuthConfig();
+    const matchedKey = (authCfg.secretKeys || []).find(k => k.active && k.key.toUpperCase() === queryKey.trim().toUpperCase());
+    if (matchedKey) {
+      const token = createSession(matchedKey.role, matchedKey.label);
+      return { token, role: matchedKey.role, name: matchedKey.label, isNew: true };
+    }
+  }
+
+  // 2. Check Cookie
+  const cookies = parseCookies(req);
+  const sessionToken = cookies['bbs_session'];
+  if (sessionToken && activeSessions.has(sessionToken)) {
+    const sess = activeSessions.get(sessionToken);
+    if (Date.now() < sess.expiresAt) {
+      return sess;
+    } else {
+      activeSessions.delete(sessionToken);
+    }
+  }
+
+  // 3. Check Authorization header
+  const authHeader = req.headers['authorization'];
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    const bToken = authHeader.slice(7).trim();
+    if (activeSessions.has(bToken)) {
+      const sess = activeSessions.get(bToken);
+      if (Date.now() < sess.expiresAt) return sess;
+    }
+  }
+
+  return null;
+}
 
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
@@ -1031,6 +1110,144 @@ const server = http.createServer((req, res) => {
   if (pathname === '/whatsapp' || pathname === '/wa') {
     res.writeHead(302, { 'Location': 'https://wa.me/919167463807' });
     return res.end();
+  }
+
+  // --- AUTHENTICATION & ACCESS CONTROL SENTINEL ---
+  const session = verifySession(req, parsedUrl);
+  if (session && session.isNew) {
+    res.setHeader('Set-Cookie', `bbs_session=${session.token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=259200`);
+  }
+
+  // Portal & Hub Redirects
+  if (pathname === '/portal' || pathname === '/hub') {
+    res.writeHead(301, { 'Location': `${pathname}/` });
+    return res.end();
+  }
+
+  // Protected UI Routes (Social Studio & Leads CRM require active session)
+  const isProtectedPage = /^\/(crm|studio|social)(\/|$)/i.test(pathname);
+  if (isProtectedPage && !session) {
+    res.writeHead(302, { 'Location': `/portal/?locked=true&redirect=${encodeURIComponent(pathname)}` });
+    return res.end();
+  }
+
+  // Protected Mutation APIs (Publishing and Autopilot trigger require active session)
+  const isProtectedApi = req.method === 'POST' && /^\/api\/(publish-now|autopilot|clients|schedule)/i.test(pathname);
+  if (isProtectedApi && !session) {
+    res.writeHead(401, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ error: 'Unauthorized: Secret Key or Admin login required' }));
+  }
+
+  // --- AUTH & FEEDBACK API ROUTES ---
+
+  // POST /api/auth/login (Admin credentials or Secret Invite Key)
+  if (pathname === '/api/auth/login' && req.method === 'POST') {
+    getJsonBody((err, body) => {
+      if (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: false, error: 'Invalid JSON body' }));
+      }
+      const authCfg = getAuthConfig();
+
+      // Check Secret Key
+      if (body.secretKey) {
+        const enteredKey = String(body.secretKey).trim().toUpperCase();
+        const matchedKey = (authCfg.secretKeys || []).find(k => k.active && k.key.toUpperCase() === enteredKey);
+        if (matchedKey) {
+          const token = createSession(matchedKey.role, matchedKey.label);
+          res.writeHead(200, {
+            'Content-Type': 'application/json',
+            'Set-Cookie': `bbs_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=259200`
+          });
+          return res.end(JSON.stringify({
+            success: true,
+            role: matchedKey.role,
+            label: matchedKey.label,
+            token
+          }));
+        }
+      }
+
+      // Check Admin Login (Username & Password)
+      if (body.username && body.password) {
+        if (body.username === authCfg.admin.username && body.password === authCfg.admin.password) {
+          const token = createSession('admin', authCfg.admin.displayName);
+          res.writeHead(200, {
+            'Content-Type': 'application/json',
+            'Set-Cookie': `bbs_session=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=259200`
+          });
+          return res.end(JSON.stringify({
+            success: true,
+            role: 'admin',
+            label: authCfg.admin.displayName,
+            token
+          }));
+        }
+      }
+
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({
+        success: false,
+        error: 'Invalid Secret Key or Admin Username/Password'
+      }));
+    });
+    return;
+  }
+
+  // GET /api/auth/me (Check current auth status)
+  if (pathname === '/api/auth/me' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    if (session) {
+      return res.end(JSON.stringify({ authenticated: true, role: session.role, name: session.name }));
+    } else {
+      return res.end(JSON.stringify({ authenticated: false }));
+    }
+  }
+
+  // POST /api/auth/logout (Clear session)
+  if (pathname === '/api/auth/logout' && req.method === 'POST') {
+    const cookies = parseCookies(req);
+    const sessionToken = cookies['bbs_session'];
+    if (sessionToken) activeSessions.delete(sessionToken);
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+      'Set-Cookie': 'bbs_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    });
+    return res.end(JSON.stringify({ success: true }));
+  }
+
+  // POST /api/feedback (Submit tester feedback)
+  if (pathname === '/api/feedback' && req.method === 'POST') {
+    getJsonBody((err, body) => {
+      if (err || !body || !body.feedback) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: false, error: 'Feedback text is required' }));
+      }
+      const feedbackList = readJson(FEEDBACK_FILE, []);
+      const newEntry = {
+        id: 'fb_' + Date.now().toString(36),
+        name: body.name || 'Anonymous Tester',
+        business: body.business || 'Guest',
+        rating: Number(body.rating) || 5,
+        module: body.module || 'Overall Suite',
+        feedback: String(body.feedback).trim(),
+        submittedAt: new Date().toISOString(),
+        role: session?.role || 'public',
+        ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
+      };
+      feedbackList.unshift(newEntry);
+      writeJson(FEEDBACK_FILE, feedbackList);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ success: true, id: newEntry.id }));
+    });
+    return;
+  }
+
+  // GET /api/feedback (List feedback submissions)
+  if (pathname === '/api/feedback' && req.method === 'GET') {
+    const feedbackList = readJson(FEEDBACK_FILE, []);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(feedbackList));
   }
 
   // --- API ROUTES ---

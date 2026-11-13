@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Byte Systems — Product Hub & Autonomous Social Studio</title>
+  <meta name="description" content="Central Product Portal & Testing Hub for Big Byte Systems Social Studio, Hyperlocal Lead CRM, and Interactive Explainer Pitch Deck.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-purple: #8b5cf6;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .brand a { color: inherit; text-decoration: none; }
+
+    .brand-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover { background: #334155; }
+
+    .btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
+    .btn-primary:hover { background: #0369a1; }
+
+    .btn-emerald {
+      background: #059669;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+    }
+    .btn-emerald:hover { background: #047857; }
+
+    .auth-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .auth-status-locked {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .auth-status-unlocked {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139, 92, 246, 0.15);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    .hero-badges-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hero-badge-pill {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Secret Key Alert Bar */
+    .invite-alert {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .invite-alert-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .product-card-top {
+      margin-bottom: 24px;
+    }
+    .product-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .product-icon {
+      font-size: 2.2rem;
+    }
+    .product-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tag-cyan { background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .tag-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .tag-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .product-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .product-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .product-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      background: #0a0f1d;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .spec-item .spec-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .spec-item .spec-lbl {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .product-actions .btn {
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Feedback Banner Section */
+    .feedback-section {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 36px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .feedback-text h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .feedback-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+    .modal-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      max-width: 480px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-header h3 { font-size: 1.3rem; font-weight: 800; }
+    .btn-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+      background: #1e293b;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: none;
+      color: #94a3b8;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .auth-tab.active {
+      background: #0284c7;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: #0a0f1d;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .star-rating span { color: #475569; transition: color 0.15s; }
+    .star-rating span.active { color: #f59e0b; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 24px 32px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: auto;
+    }
+
+    @media (max-width: 860px) {
+      .product-grid { grid-template-columns: 1fr; }
+      header { padding: 14px 18px; }
+      .hero-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">
+      <a href="/portal/">⚡ Big Byte Systems</a>
+      <span class="brand-badge">THANE WEST • AI SUITE</span>
+    </div>
+    <div class="header-actions">
+      <div id="authStatusPill" class="auth-status-pill auth-status-locked">
+        <span id="authStatusIcon">🔒</span> <span id="authStatusText">Protected Beta</span>
+      </div>
+      <button class="btn btn-secondary" onclick="openFeedbackModal()">
+        📝 Feedback
+      </button>
+      <button class="btn btn-primary" id="btnAuthTrigger" onclick="openAuthModal()">
+        🔑 Enter Secret Key
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span>🚀 THANE LOCAL BUSINESS DOMINANCE</span>
+      </div>
+      <h1 class="hero-title">
+        The Autonomous <span>Hyperlocal Social Studio</span> & Growth Suite
+      </h1>
+      <p class="hero-desc">
+        Programmatic 4K vertical video reels, verified local B2B lead generation, and interactive client pitch decks — built exclusively to rank Thane businesses in the Google Maps 3-Pack and Meta feeds.
+      </p>
+
+      <div class="hero-badges-row">
+        <div class="hero-badge-pill">⚡ 100% Self-Hosted on Oracle Cloud</div>
+        <div class="hero-badge-pill">🎙️ Desi Female Voiceover Engine</div>
+        <div class="hero-badge-pill">🛡️ Zero Third-Party SaaS Fees ($0 Margin)</div>
+        <div class="hero-badge-pill">📍 Thane West Focused</div>
+      </div>
+    </section>
+
+    <!-- Secret Key Quick Unlocking Banner -->
+    <div class="invite-alert" id="inviteBanner">
+      <div class="invite-alert-text">
+        <span style="font-size: 1.5rem;">🎟️</span>
+        <div>
+          <strong id="inviteBannerTitle">Testing with an Invite Passcode?</strong>
+          <p style="color: var(--text-muted); font-size: 0.84rem;" id="inviteBannerSub">
+            Have a tester passcode like <code>BBS-TESTER-2026</code>? Enter it to unlock full access to the studio and leads CRM.
+          </p>
+        </div>
+      </div>
+      <button class="btn btn-secondary" style="border-color: #38bdf8; color: #38bdf8;" onclick="openAuthModal()">
+        Unlock with Secret Key 🔓
+      </button>
+    </div>
+
+    <!-- 4 Core Products Grid -->
+    <div class="product-grid">
+
+      <!-- Product 1: Social Studio Engine -->
+      <div class="product-card">
+        <div class="product-card-top">
+          <div class="product-header-row">
+            <span class="product-icon">⚡</span>
+            <span class="product-tag tag-cyan">CORE ENGINE</span>
+          </div>
+          <h2 class="product-name">Social Studio Command Center</h2>
+          <p class="product-desc">
+            Automated multi-platform content studio. Manages 36-post daily queues across GMB, YouTube Shorts, Meta & Instagram with 1-click video synthesis and auto-scheduling.
+          </p>
+
+          <div class="product-specs">
+            <div class="spec-item">
+              <div class="spec-val highlight-cyan">36 Posts</div>
+              <div class="spec-lbl">Daily Pipeline</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-emerald">4 Channels</div>
+              <div class="spec-lbl">GMB, YT, FB, IG</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val">11:30 AM</div>
+              <div class="spec-lbl">Daily Dispatch</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <a href="/studio/" class="btn btn-primary" id="btnLaunchStudio">
+            Launch Social Studio 🚀
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 2: Hyperlocal Leads CRM -->
+      <div class="product-card">
+        <div class="product-card-top">
+          <div class="product-header-row">
+            <span class="product-icon">👥</span>
+            <span class="product-tag tag-emerald">CLIENT PIPELINE</span>
+          </div>
+          <h2 class="product-name">Hyperlocal B2B Leads CRM</h2>
+          <p class="product-desc">
+            Visual prospecting CRM targeting local clinics, doctors, and diagnostic labs across Thane West (Manpada, Hiranandani Estate, Meadows). Includes 1-click WhatsApp pitch generator.
+          </p>
+
+          <div class="product-specs">
+            <div class="spec-item">
+              <div class="spec-val highlight-emerald">8 Clinics</div>
+              <div class="spec-lbl">Verified Leads</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-amber">4.8★ Avg</div>
+              <div class="spec-lbl">Clinic Rating</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-cyan">1-Click</div>
+              <div class="spec-lbl">WhatsApp Outreach</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <a href="/crm/" class="btn btn-emerald" id="btnLaunchCRM">
+            Open Leads CRM 👥
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 3: Client Explainer Pitch Deck -->
+      <div class="product-card">
+        <div class="product-card-top">
+          <div class="product-header-row">
+            <span class="product-icon">👁️</span>
+            <span class="product-tag tag-purple">CLIENT FACING</span>
+          </div>
+          <h2 class="product-name">Interactive Pitch Deck</h2>
+          <p class="product-desc">
+            Animated 6-slide client-facing presentation featuring "Byte" the robot mascot and broadcast-grade Indian female narration (`en-IN-NeerjaNeural`). Converts WhatsApp leads without calls.
+          </p>
+
+          <div class="product-specs">
+            <div class="spec-item">
+              <div class="spec-val highlight-cyan">6 Slides</div>
+              <div class="spec-lbl">Interactive Deck</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-purple">Desi Voice</div>
+              <div class="spec-lbl">-14 LUFS Audio</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-emerald">3-Day Trial</div>
+              <div class="spec-lbl">WhatsApp CTA</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <a href="/pitch/" target="_blank" class="btn btn-secondary" style="border-color: #8b5cf6; color: #c084fc;">
+            Watch Interactive Pitch 🎬
+          </a>
+        </div>
+      </div>
+
+      <!-- Product 4: Sales Brochure PDF -->
+      <div class="product-card">
+        <div class="product-card-top">
+          <div class="product-header-row">
+            <span class="product-icon">📄</span>
+            <span class="product-tag tag-amber">SALES COLLATERAL</span>
+          </div>
+          <h2 class="product-name">Print-Ready Sales Brochure (PDF)</h2>
+          <p class="product-desc">
+            Official 6-page A4 landscape sales brochure. Clean, high-density print geometry formatted with zero blank pages, ready to attach to WhatsApp messages and proposal emails.
+          </p>
+
+          <div class="product-specs">
+            <div class="spec-item">
+              <div class="spec-val">6 Pages</div>
+              <div class="spec-lbl">A4 Landscape</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val highlight-emerald">0 Blanks</div>
+              <div class="spec-lbl">Blink Formatted</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-val">781 KB</div>
+              <div class="spec-lbl">Instant Download</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-actions">
+          <a href="/pitch/pitch_deck_presentation.pdf" download="BigByte_Social_Studio_Pitch.pdf" class="btn btn-secondary">
+            📥 Download Sales PDF
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tester Feedback & Review Callout -->
+    <section class="feedback-section">
+      <div class="feedback-text">
+        <h3>💬 Help Us Refine the Studio for Thane Businesses</h3>
+        <p>Testing as a partner or guest? Test out the workflows and let us know what features or clinic niches we should prioritize next.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-emerald" onclick="openFeedbackModal()">
+          ⭐ Give Tester Feedback
+        </button>
+        <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems!%20I%20am%20testing%20the%20Social%20Studio%20suite%20and%20have%20feedback." target="_blank" class="btn btn-secondary">
+          💬 WhatsApp Hotline
+        </a>
+      </div>
+    </section>
+
+    <!-- Admin Feedback Submissions Table (Visible only when Master Admin logged in) -->
+    <div id="adminFeedbackContainer" style="display: none; margin-top: 40px; background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 24px;">
+      <h3 style="margin-bottom: 16px; color: #38bdf8;">👑 Master Admin: Live Feedback Submissions</h3>
+      <div id="feedbackList" style="display: flex; flex-direction: column; gap: 12px;"></div>
+    </div>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: SECRET KEY & LOGIN AUTHENTICATION -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="authModal" onclick="closeAuthModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="authModalHeading">🔑 Unlock Access</h3>
+        <button class="btn-close" onclick="closeAuthModal()">✕</button>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabKey" onclick="switchAuthTab('key')">Secret Tester Key</button>
+        <button class="auth-tab" id="tabAdmin" onclick="switchAuthTab('admin')">Master Admin Login</button>
+      </div>
+
+      <!-- Tab 1: Secret Key Form -->
+      <form id="keyForm" onsubmit="handleKeyLogin(event)">
+        <div class="form-group">
+          <label>Secret Invite / Tester Key</label>
+          <input type="text" id="secretKeyInput" placeholder="e.g. BBS-TESTER-2026 or PILOT-VIP" required autofocus>
+          <small style="color: #64748b; font-size: 0.75rem; margin-top: 4px; display: block;">
+            Passcode provided for beta testing and pilot evaluation.
+          </small>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          Unlock Access 🚀
+        </button>
+      </form>
+
+      <!-- Tab 2: Admin Login Form -->
+      <form id="adminForm" style="display: none;" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label>Admin Username</label>
+          <input type="text" id="adminUserInput" placeholder="admin" required>
+        </div>
+        <div class="form-group">
+          <label>Master Password</label>
+          <input type="password" id="adminPassInput" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;">
+          Sign In as Admin 👑
+        </button>
+      </form>
+
+      <div id="authErrorMsg" style="color: #ef4444; font-size: 0.85rem; margin-top: 14px; text-align: center; display: none;"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: TESTER FEEDBACK SUBMISSION -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="feedbackModal" onclick="closeFeedbackModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>⭐ Share Your Feedback</h3>
+        <button class="btn-close" onclick="closeFeedbackModal()">✕</button>
+      </div>
+
+      <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)">
+        <div class="form-group">
+          <label>Your Name / Business</label>
+          <input type="text" id="fbNameInput" placeholder="e.g. Dr. Patil / Thane Reviewer" required>
+        </div>
+
+        <div class="form-group">
+          <label>Overall Experience Rating</label>
+          <div class="star-rating" id="starContainer">
+            <span onclick="setRating(1)">★</span>
+            <span onclick="setRating(2)">★</span>
+            <span onclick="setRating(3)">★</span>
+            <span onclick="setRating(4)">★</span>
+            <span onclick="setRating(5)" class="active">★</span>
+          </div>
+          <input type="hidden" id="fbRatingVal" value="5">
+        </div>
+
+        <div class="form-group">
+          <label>Module Tested</label>
+          <select id="fbModuleSelect">
+            <option value="Overall Suite">Overall Suite & Hub</option>
+            <option value="Social Studio Engine">Social Studio Engine</option>
+            <option value="Leads CRM">Hyperlocal Leads CRM</option>
+            <option value="Pitch Deck">Interactive Pitch Deck & Audio</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Comments, Suggestions & Feature Requests</label>
+          <textarea id="fbTextInput" rows="4" placeholder="What impressed you? What needs improvement? Which local business niches should we add?" required></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            Submit Feedback 💾
+          </button>
+          <button type="button" class="btn btn-emerald" onclick="sendFeedbackToWhatsApp()">
+            💬 Send via WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      ⚡ Big Byte Systems Laboratory • Shop No 1, Khewra Cir Marg, Manpada, Thane West, MH 400607 • Hotline: 090547 90592
+    </p>
+    <p style="margin-top: 4px; font-size: 0.78rem;">
+      Autonomous AI Social Studio v2.3 • Direct Meta Graph & Google Cloud APIs • Zero Third-Party SaaS Bloat
+    </p>
+  </footer>
+
+  <script>
+    let currentAuth = { authenticated: false, role: null, name: null };
+    let currentRating = 5;
+
+    // Check query params for 1-click ?key=XXX access
+    window.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlKey = urlParams.get('key');
+      if (urlKey) {
+        await verifySecretKey(urlKey);
+      } else {
+        await checkAuthStatus();
+      }
+    });
+
+    async function checkAuthStatus() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        currentAuth = data;
+        updateAuthUI();
+        if (data.role === 'admin') {
+          loadAdminFeedback();
+        }
+      } catch (err) {
+        console.warn('Auth check error:', err);
+      }
+    }
+
+    function updateAuthUI() {
+      const pill = document.getElementById('authStatusPill');
+      const icon = document.getElementById('authStatusIcon');
+      const text = document.getElementById('authStatusText');
+      const trigger = document.getElementById('btnAuthTrigger');
+      const banner = document.getElementById('inviteBanner');
+
+      if (currentAuth.authenticated) {
+        pill.className = 'auth-status-pill auth-status-unlocked';
+        icon.textContent = currentAuth.role === 'admin' ? '👑' : '🔓';
+        text.textContent = currentAuth.role === 'admin' ? 'Master Admin' : `Unlocked: ${currentAuth.name || 'Tester'}`;
+        trigger.textContent = '🚪 Logout';
+        trigger.onclick = handleLogout;
+        banner.style.display = 'none';
+      } else {
+        pill.className = 'auth-status-pill auth-status-locked';
+        icon.textContent = '🔒';
+        text.textContent = 'Protected Beta';
+        trigger.textContent = '🔑 Enter Secret Key';
+        trigger.onclick = openAuthModal;
+        banner.style.display = 'flex';
+      }
+    }
+
+    async function verifySecretKey(key) {
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ secretKey: key.trim() })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentAuth = { authenticated: true, role: data.role, name: data.label };
+          updateAuthUI();
+          closeAuthModal();
+        } else {
+          showAuthError(data.error || 'Invalid Secret Key');
+        }
+      } catch (err) {
+        showAuthError('Failed to communicate with authentication server');
+      }
+    }
+
+    async function handleKeyLogin(e) {
+      e.preventDefault();
+      const key = document.getElementById('secretKeyInput').value;
+      await verifySecretKey(key);
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('adminUserInput').value;
+      const password = document.getElementById('adminPassInput').value;
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          currentAuth = { authenticated: true, role: 'admin', name: 'Master Admin' };
+          updateAuthUI();
+          loadAdminFeedback();
+          closeAuthModal();
+        } else {
+          showAuthError(data.error || 'Invalid Admin Credentials');
+        }
+      } catch (err) {
+        showAuthError('Login request failed');
+      }
+    }
+
+    async function handleLogout() {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      currentAuth = { authenticated: false, role: null, name: null };
+      updateAuthUI();
+      document.getElementById('adminFeedbackContainer').style.display = 'none';
+    }
+
+    function showAuthError(msg) {
+      const el = document.getElementById('authErrorMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+
+    // Modal Controls
+    function openAuthModal() {
+      document.getElementById('authErrorMsg').style.display = 'none';
+      document.getElementById('authModal').style.display = 'flex';
+    }
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+    }
+    function switchAuthTab(tab) {
+      document.getElementById('tabKey').className = tab === 'key' ? 'auth-tab active' : 'auth-tab';
+      document.getElementById('tabAdmin').className = tab === 'admin' ? 'auth-tab active' : 'auth-tab';
+      document.getElementById('keyForm').style.display = tab === 'key' ? 'block' : 'none';
+      document.getElementById('adminForm').style.display = tab === 'admin' ? 'block' : 'none';
+      document.getElementById('authModalHeading').textContent = tab === 'key' ? '🔑 Unlock with Secret Key' : '👑 Master Admin Sign In';
+    }
+
+    function openFeedbackModal() {
+      document.getElementById('feedbackModal').style.display = 'flex';
+    }
+    function closeFeedbackModal() {
+      document.getElementById('feedbackModal').style.display = 'none';
+    }
+
+    function setRating(r) {
+      currentRating = r;
+      document.getElementById('fbRatingVal').value = r;
+      const stars = document.querySelectorAll('#starContainer span');
+      stars.forEach((s, idx) => {
+        s.className = idx < r ? 'active' : '';
+      });
+    }
+
+    async function handleFeedbackSubmit(e) {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('fbNameInput').value,
+        rating: Number(document.getElementById('fbRatingVal').value),
+        module: document.getElementById('fbModuleSelect').value,
+        feedback: document.getElementById('fbTextInput').value
+      };
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('🎉 Thank you! Your feedback has been received and recorded.');
+          closeFeedbackModal();
+          document.getElementById('feedbackForm').reset();
+          if (currentAuth.role === 'admin') loadAdminFeedback();
+        }
+      } catch (err) {
+        alert('Could not submit feedback: ' + err.message);
+      }
+    }
+
+    function sendFeedbackToWhatsApp() {
+      const name = document.getElementById('fbNameInput').value || 'Tester';
+      const rating = document.getElementById('fbRatingVal').value || '5';
+      const module = document.getElementById('fbModuleSelect').value;
+      const text = document.getElementById('fbTextInput').value;
+      const msg = `Hi Big Byte Systems! 👋\n\n*Tester Feedback from:* ${name}\n*Rating:* ${rating}/5 Stars ⭐\n*Module:* ${module}\n*Feedback:* ${text}`;
+      window.open(`https://wa.me/919167463807?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    async function loadAdminFeedback() {
+      try {
+        const res = await fetch('/api/feedback');
+        const list = await res.json();
+        const container = document.getElementById('adminFeedbackContainer');
+        const listEl = document.getElementById('feedbackList');
+        if (Array.isArray(list) && list.length > 0) {
+          container.style.display = 'block';
+          listEl.innerHTML = list.map(item => `
+            <div style="background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong>${item.name || 'Anonymous'} <span style="color: #f59e0b;">(${item.rating}★)</span></strong>
+                <span style="font-size: 0.75rem; color: #94a3b8;">${new Date(item.submittedAt).toLocaleString()}</span>
+              </div>
+              <div style="font-size: 0.8rem; color: #38bdf8; margin-bottom: 4px;">Module: ${item.module}</div>
+              <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">${item.feedback}</p>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.warn('Could not load feedback:', e);
+      }
+    }
+  </script>
+</body>
+</html>

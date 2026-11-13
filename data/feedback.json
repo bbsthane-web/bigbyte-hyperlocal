@@ -1,0 +1,23 @@
+[
+  {
+    "id": "fb_mwewnvlo",
+    "name": "Dr. Sharma",
+    "business": "Guest",
+    "rating": 5,
+    "module": "Interactive Pitch Deck",
+    "feedback": "The Desi voiceover and 3-day trial offer is exactly what our dental practice needed.",
+    "submittedAt": "2026-11-13T11:40:33.084Z",
+    "role": "Beta Tester",
+    "ip": "::1"
+  },
+  {
+    "id": "fb_sample_01",
+    "name": "Beta Test User",
+    "business": "Thane Tech Reviewer",
+    "rating": 5,
+    "module": "Overall Suite",
+    "feedback": "Pitch deck animations with Neerja voiceover sound super professional. CRM WhatsApp button works cleanly.",
+    "submittedAt": "2026-11-13T10:00:00.000Z",
+    "role": "tester"
+  }
+]

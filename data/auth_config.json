@@ -1,0 +1,28 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "bbs2026!login",
+    "displayName": "Big Byte Systems Master Admin"
+  },
+  "secretKeys": [
+    {
+      "key": "BBS-TESTER-2026",
+      "role": "Beta Tester",
+      "label": "Big Byte Pilot Tester",
+      "active": true
+    },
+    {
+      "key": "PILOT-VIP",
+      "role": "VIP Client",
+      "label": "Doctor & Clinic VIP Guest",
+      "active": true
+    },
+    {
+      "key": "THANE-GROWTH",
+      "role": "Partner",
+      "label": "Thane Business Partner",
+      "active": true
+    }
+  ],
+  "sessionDurationHours": 72
+}
