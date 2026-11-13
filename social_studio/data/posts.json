@@ -316,7 +316,7 @@
     "clientName": "Big Byte Systems",
     "day": 13,
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-13",
     "time": "11:30",
     "title": "📍 Vintage VHS & Tape Digitization, Thane",
@@ -325,7 +325,9 @@
     "auditPassed": true,
     "auditIssues": [],
     "auditWarnings": [],
-    "mediaUrl": "/assets/reel_vhs_restore.jpg"
+    "mediaUrl": "/assets/reel_vhs_restore.jpg",
+    "publishedAt": "2026-11-13T11:23:00.601Z",
+    "cloudDispatched": true
   },
   {
     "id": "post_bb_15",
