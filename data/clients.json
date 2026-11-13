@@ -8,6 +8,9 @@
     "color": "#0284c7",
     "hotline": "090547 90592",
     "address": "Shop No 1, Building 1, Khewra Cir Marg, Manpada, Thane West 400607",
+    "coordinates": "19.2372° N, 72.9781° E",
+    "landmarks": "Opposite D-Mart Manpada, Near Khewra Circle Marg",
+    "servicedAreas": "Manpada, Hiranandani Estate, Meadows, Ghodbunder Rd, Majiwada, Kolshet, Vasant Vihar, Naupada & Mulund West",
     "whatsAppUrl": "https://bigbytesystems.co.in/chat",
     "webhookUrl": "https://hook.eu1.make.com/3j97xsx8t9cd9xcjpnypqhjw9i1mumwo",
     "accounts": {
@@ -46,20 +49,29 @@
   {
     "id": "client_drsharma",
     "name": "Dr. Sharma Advanced Dental Care",
-    "niche": "Healthcare / Dental Clinic (Agency Client Demo)",
-    "tone": "Gentle, Reassuring, Clinical & Preventive",
+    "niche": "Healthcare / Dental Clinic & Implantology",
+    "tone": "Gentle, Reassuring, Clinical & Preventive Authority",
     "avatar": "🦷",
     "color": "#10b981",
     "hotline": "098200 12345",
-    "address": "Panchpakhadi, Thane West",
+    "address": "Shop 4, Sunrise Arcade, Opp Post Office, Panch Pakhadi, Thane West 400602",
+    "coordinates": "19.1895° N, 72.9682° E",
+    "landmarks": "Opposite Panch Pakhadi Post Office, Near Talao Pali Lake",
+    "servicedAreas": "Panch Pakhadi, Naupada, Talao Pali, Charai, Louis Wadi, Nitin Casting, Thane Station West",
     "whatsAppUrl": "https://wa.me/919820012345",
     "webhookUrl": "https://hook.eu1.make.com/demo-dental-webhook",
     "accounts": {
       "gmb": {
         "connected": true,
-        "handle": "Dr. Sharma Dental Clinic",
+        "handle": "Dr. Sharma Dental Clinic (Panch Pakhadi)",
         "followers": "420 reviews",
         "lastPost": "3 days ago"
+      },
+      "youtube": {
+        "connected": true,
+        "handle": "@DrSharmaDentalCareThane",
+        "followers": "1,850 subscribers",
+        "lastPost": "Yesterday"
       },
       "instagram": {
         "connected": true,
@@ -69,7 +81,7 @@
       },
       "facebook": {
         "connected": true,
-        "handle": "Dr Sharma Dental",
+        "handle": "Dr Sharma Dental Clinic Thane",
         "followers": "1,150 followers",
         "lastPost": "Last week"
       }
@@ -78,32 +90,82 @@
   {
     "id": "client_urbanroast",
     "name": "Urban Roast Artisan Cafe",
-    "niche": "Food & Beverage / Specialty Roastery (Agency Client Demo)",
-    "tone": "Aesthetic, Warm, Lifestyle & Community",
+    "niche": "Food & Beverage / Specialty Roastery & Micro-Bakery",
+    "tone": "Aesthetic, Warm, Sensory, Lifestyle & Third-Wave Craft",
     "avatar": "☕",
     "color": "#f59e0b",
     "hotline": "098190 54321",
-    "address": "Hiranandani Estate, Thane West",
+    "address": "Unit 12, The Walk High Street, Hiranandani Estate, Ghodbunder Road, Thane West 400607",
+    "coordinates": "19.2558° N, 72.9772° E",
+    "landmarks": "The Walk High Street, Opposite Arcadia Circle",
+    "servicedAreas": "Hiranandani Estate, The Walk, Arcadia, Rodas Enclave, Patlipada, Brahmand, Ghodbunder Road",
     "whatsAppUrl": "https://wa.me/919819054321",
     "webhookUrl": "https://hook.eu1.make.com/demo-cafe-webhook",
     "accounts": {
+      "gmb": {
+        "connected": true,
+        "handle": "Urban Roast Cafe (The Walk, Hiranandani Estate)",
+        "followers": "680 reviews",
+        "lastPost": "2 days ago"
+      },
+      "youtube": {
+        "connected": true,
+        "handle": "@UrbanRoastThane",
+        "followers": "3,200 subscribers",
+        "lastPost": "2 days ago"
+      },
       "instagram": {
         "connected": true,
         "handle": "@urbanroastthane",
         "followers": "5,400 followers",
         "lastPost": "Yesterday"
       },
+      "facebook": {
+        "connected": true,
+        "handle": "Urban Roast Cafe Thane",
+        "followers": "2,300 followers",
+        "lastPost": "4 days ago"
+      }
+    }
+  },
+  {
+    "id": "client_aura_luxe",
+    "name": "Aura Luxe Hair & Skin Atelier",
+    "niche": "Luxury Salon, Haute Coiffure & Medical Aesthetics",
+    "tone": "Editorial, Glamorous, High-Craft, Dermatological & Transformational",
+    "avatar": "✨",
+    "color": "#ec4899",
+    "hotline": "098210 99888",
+    "address": "Suite 102, 1st Floor, Gladys Alwares Road, Opp Hiranandani Meadows, Thane West 400610",
+    "coordinates": "19.2241° N, 72.9698° E",
+    "landmarks": "Opposite Hiranandani Meadows, Off Pokhran Road No 2",
+    "servicedAreas": "Hiranandani Meadows, Vasant Vihar, Pokhran Road 1 & 2, Gladys Alwares Marg, Manpada, Thane West",
+    "whatsAppUrl": "https://wa.me/919821099888",
+    "webhookUrl": "https://hook.eu1.make.com/demo-auraluxe-webhook",
+    "accounts": {
       "gmb": {
         "connected": true,
-        "handle": "Urban Roast Cafe Estate",
-        "followers": "680 reviews",
-        "lastPost": "2 days ago"
+        "handle": "Aura Luxe Atelier (Hiranandani Meadows)",
+        "followers": "510 reviews",
+        "lastPost": "Yesterday"
+      },
+      "youtube": {
+        "connected": true,
+        "handle": "@AuraLuxeAtelier",
+        "followers": "2,450 subscribers",
+        "lastPost": "3 days ago"
+      },
+      "instagram": {
+        "connected": true,
+        "handle": "@auraluxethane",
+        "followers": "8,900 followers",
+        "lastPost": "Today"
       },
       "facebook": {
         "connected": true,
-        "handle": "Urban Roast Cafe",
-        "followers": "2,300 followers",
-        "lastPost": "4 days ago"
+        "handle": "Aura Luxe Hair Skin Atelier Thane",
+        "followers": "3,400 followers",
+        "lastPost": "Yesterday"
       }
     }
   }
