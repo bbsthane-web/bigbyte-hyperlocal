@@ -7,9 +7,18 @@ if [ ! -d "/home/ubuntu/social_studio/.git" ]; then
     git clone -b social-studio https://github.com/bbsthane-web/bigbyte-hyperlocal.git /home/ubuntu/social_studio
 else
     cd /home/ubuntu/social_studio
+    # Preserve runtime data directory if it exists
+    if [ -d "/home/ubuntu/social_studio/data" ]; then
+        cp -r /home/ubuntu/social_studio/data /tmp/social_studio_data_backup
+    fi
     git fetch origin social-studio
     git checkout social-studio
     git reset --hard origin/social-studio
+    # Restore persisted runtime data
+    if [ -d "/tmp/social_studio_data_backup" ]; then
+        cp -rn /tmp/social_studio_data_backup/* /home/ubuntu/social_studio/data/ 2>/dev/null || true
+        rm -rf /tmp/social_studio_data_backup
+    fi
 fi
 
 echo "=== [2/6] INSTALLING NPM DEPENDENCIES ==="
