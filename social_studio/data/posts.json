@@ -335,7 +335,7 @@
     "clientName": "Big Byte Systems",
     "day": 16,
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-14",
     "time": "11:30",
     "title": "📍 Reinforced Laptop Hinge Repair, Thane",
@@ -344,7 +344,9 @@
     "auditPassed": true,
     "auditIssues": [],
     "auditWarnings": [],
-    "mediaUrl": "/assets/reel_hinge_repair.jpg"
+    "mediaUrl": "/assets/reel_hinge_repair.jpg",
+    "publishedAt": "2026-11-14T06:52:45.957Z",
+    "cloudDispatched": true
   },
   {
     "id": "post_bb_16",
