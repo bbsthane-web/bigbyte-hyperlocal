@@ -1,0 +1,279 @@
+{
+  "systemTitle": "Antigravity Evolution Hub & Ready-Reckoner",
+  "lastUpdated": "2026-11-14T08:50:00+05:30",
+  "governingDirectives": {
+    "philosophy": "Apex or Nothing (One In, One Out Darwinism)",
+    "rule7": "Multidevice-First Invariant (Desktop, Tablet, Mobile Parity)",
+    "costBasis": "$0 Marginal Software Cost (Self-Hosted / Open Source / Free GPU)"
+  },
+  "metrics": {
+    "totalScrubbedTitans": 28,
+    "activeArsenalTitans": 16,
+    "discardedWrappers": 12,
+    "averageTokenSavingsPercent": 88.5,
+    "monthlySaaSSavingsUSD": 3840,
+    "freeNetworkGPUTier": "NVIDIA A100/H100 (Hugging Face ZeroGPU)"
+  },
+  "evolutionLedger": [
+    {
+      "id": "evo_01",
+      "capability": "Conversational Multi-Speaker Video & Voice",
+      "incumbentTitan": "Microsoft Edge-TTS Multi-Voice (-14 LUFS) + LivePortrait (ZeroGPU)",
+      "stars": "15k+ ⭐",
+      "replacedCandidate": "Browser speechSynthesis (Robotic SAPI5) & Pillow Slides",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 92,
+      "timeToProduction": "Cut from 2 days to 30 seconds",
+      "saasCostReplaced": "ElevenLabs ($99/mo) + HeyGen ($89/mo)",
+      "darwinianReason": "Pillow slides produced static PowerPoint slop with truncated text. Multi-voice Edge-TTS + LivePortrait provides broadcast-mastered Desi doctor personas with natural lip sync for $0.",
+      "category": "Video & Voice"
+    },
+    {
+      "id": "evo_02",
+      "capability": "UI/UX Design Intelligence & Multi-Device Parity",
+      "incumbentTitan": "ui-ux-pro-max-skill + shadcn/ui Primitives + Rule 7",
+      "stars": "75k+ ⭐ (shadcn)",
+      "replacedCandidate": "Hand-coded custom CSS media queries & rigid 280px sidebars",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 85,
+      "timeToProduction": "Cut from 6 hours to 15 minutes",
+      "saasCostReplaced": "v0 ($20/mo) + Lovable ($40/mo)",
+      "darwinianReason": "Injected BM25 token intelligence, clamp() typography, and strict 48px touch targets, eliminating iterative CSS bugs and horizontal mobile overflow.",
+      "category": "UI/UX"
+    },
+    {
+      "id": "evo_03",
+      "capability": "Video as Code & Launch Teasers",
+      "incumbentTitan": "HeyGen Hyperframes + Remotion Agent Skills",
+      "stars": "81k+ ⭐ / 22k+ ⭐",
+      "replacedCandidate": "HeyGen SaaS Cloud Studio & InVideo",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 90,
+      "timeToProduction": "Cut from 4 hours to 25 seconds render",
+      "saasCostReplaced": "HeyGen ($89/mo) + Runway ($35/mo)",
+      "darwinianReason": "Deterministic React code-rendered video eliminates character facial morphing, hallucinations, and recurring cloud credit drain.",
+      "category": "Video & Voice"
+    },
+    {
+      "id": "evo_04",
+      "capability": "Autonomous Short-Form Video & Subtitling",
+      "incumbentTitan": "MoneyPrinterTurbo + FFmpeg Libass Kinetic Subtitles",
+      "stars": "138k+ ⭐",
+      "replacedCandidate": "CapCut Pro / OpusClip / JSON2Video API",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 95,
+      "timeToProduction": "Cut from 1 hour to 45 seconds batch run",
+      "saasCostReplaced": "OpusClip ($19/mo) + CapCut ($12/mo)",
+      "darwinianReason": "Zero-cost local Python pipeline; word-timed Whisper subtitles with zero metered API limits.",
+      "category": "Video & Voice"
+    },
+    {
+      "id": "evo_05",
+      "capability": "Codebase Memory & Fast AST Navigation",
+      "incumbentTitan": "Aider Repo Map + Tree-sitter + Codebase Memory MCP",
+      "stars": "32k+ ⭐",
+      "replacedCandidate": "Raw grep / ripgrep burning 50,000+ context tokens",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 98,
+      "timeToProduction": "Instant context lookup (<200ms)",
+      "saasCostReplaced": "Sourcegraph Enterprise ($49/user/mo)",
+      "darwinianReason": "Packs full monorepo graph into ~1,000 tokens using PageRank, eliminating massive context-window bloat.",
+      "category": "Core Agentic"
+    },
+    {
+      "id": "evo_06",
+      "capability": "Multi-Agent Governance & Swarm Execution",
+      "incumbentTitan": "Rooflow 3-Tier Swarm + Paperclip AI Control Plane",
+      "stars": "111k+ ⭐ (Paperclip)",
+      "replacedCandidate": "Vanity 50-Agent Prompt Packs (/ultracode)",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 82,
+      "timeToProduction": "Zero runaway loop crashes",
+      "saasCostReplaced": "CrewAI Enterprise / AutoGen Cloud",
+      "darwinianReason": "Dual-pass independent QA with hard token budgets prevents runaway agent loops and $100/night token accidents.",
+      "category": "Core Agentic"
+    },
+    {
+      "id": "evo_07",
+      "capability": "Omnichannel Social Media Scheduling & Dispatch",
+      "incumbentTitan": "Native YouTube Studio Python Uploader + Postiz Docker",
+      "stars": "41.1k+ ⭐ (Postiz)",
+      "replacedCandidate": "Blotato SaaS / Buffer / Hootsuite",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 90,
+      "timeToProduction": "Automated 15-day scheduler in 10s",
+      "saasCostReplaced": "Hootsuite ($1,200/yr) + Buffer ($120/yr)",
+      "darwinianReason": "Self-hosted Docker and lean REST scripts eliminate third-party proxy ban risks and monthly subscription fees.",
+      "category": "Social & Media"
+    },
+    {
+      "id": "evo_08",
+      "capability": "High-Precision Local Lead Scraping",
+      "incumbentTitan": "Crawl4AI + SQLite Lead Store",
+      "stars": "25k+ ⭐",
+      "replacedCandidate": "Semrush ($130/mo) + RapidAPI Social Scrapers",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 94,
+      "timeToProduction": "Scrapes 50 clinics in 40 seconds",
+      "saasCostReplaced": "BrightLocal ($40/mo) + DataForSEO API",
+      "darwinianReason": "Extracts clean Markdown and structured JSON directly from Google Maps without pay-per-call SaaS middlemen.",
+      "category": "Data & Scraping"
+    },
+    {
+      "id": "evo_09",
+      "capability": "Indian Equities Algo Backtesting (NSE/BSE)",
+      "incumbentTitan": "vectorbt + backtesting.py + DhanHQ API",
+      "stars": "9.8k+ ⭐ / 9.2k+ ⭐",
+      "replacedCandidate": "Tradetron / AlgoTest / Streak",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 90,
+      "timeToProduction": "Sub-second multi-regime backtests",
+      "saasCostReplaced": "Tradetron (₹4,000/mo) + Zerodha Kite API fees",
+      "darwinianReason": "Numba-compiled vector backtesting running locally on Oracle VPS with ₹0 DhanHQ API order routing.",
+      "category": "Quant & Finance"
+    },
+    {
+      "id": "evo_10",
+      "capability": "Vintage Photo Restoration & 4K Tape Remastering",
+      "incumbentTitan": "CodeFormer + GFPGAN + QTGMC / Video2X",
+      "stars": "18k+ ⭐",
+      "replacedCandidate": "Topaz Video AI ($299) + Remini / VanceAI",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 100,
+      "timeToProduction": "Local batch scripts running in parallel",
+      "saasCostReplaced": "Topaz ($299 license) + Remini ($20/mo)",
+      "darwinianReason": "High-fidelity face restoration and hardware deinterlacing executed on loopback with zero per-image fees.",
+      "category": "Media Restoration"
+    }
+  ],
+  "scouredRadar": [
+    {
+      "id": "sig_101",
+      "toolName": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "stars": "Trending",
+      "category": "UI/UX Design Intelligence",
+      "source": "GitHub Trending / Community Signal",
+      "commitVelocity": "Active (<15 days)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "✅ Promoted to Active Arsenal",
+      "rationale": "Injects BM25 token search, 60+ UI design styles, 90+ industry color profiles into agent prompts to kill AI slop."
+    },
+    {
+      "id": "sig_102",
+      "toolName": "KlingAIResearch/LivePortrait",
+      "stars": "15.2k ⭐",
+      "category": "Audio-Driven Talking Avatars",
+      "source": "Hugging Face ZeroGPU / Community Signal",
+      "commitVelocity": "Active (<30 days)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "✅ Promoted to Active Arsenal",
+      "rationale": "ZeroGPU Gradio Client runs on cloud A100s for $0. Delivers realistic Desi doctor facial gestures and lip sync."
+    },
+    {
+      "id": "sig_103",
+      "toolName": "remotion-dev/skills",
+      "stars": "22k+ ⭐",
+      "category": "Agentic Programmatic Video",
+      "source": "GitHub / Remotion Official",
+      "commitVelocity": "Active (<7 days)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "✅ Promoted to Active Arsenal",
+      "rationale": "Teaches coding agents valid 60fps React motion graphics, timeline layouts, and kinetic subtitles without trial and error."
+    },
+    {
+      "id": "sig_104",
+      "toolName": "unclecode/crawl4ai",
+      "stars": "25.1k ⭐",
+      "category": "Local Web & Lead Scraping",
+      "source": "GitHub Trending",
+      "commitVelocity": "Active (<5 days)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "✅ Promoted to Active Arsenal",
+      "rationale": "Asynchronous headless crawler outputting LLM-ready clean markdown from Google Maps and local directories."
+    },
+    {
+      "id": "sig_105",
+      "toolName": "dyad-sh/dyad",
+      "stars": "4.8k ⭐",
+      "category": "Local-First App Builder",
+      "source": "GitHub Trending",
+      "commitVelocity": "Active (<20 days)",
+      "healthGateScore": "3/4 Passed",
+      "verdict": "🟡 Cataloged Reference",
+      "rationale": "Open-source Lovable/v0 alternative. Preserved for visual component prototyping, but shadcn/ui remains primary builder."
+    },
+    {
+      "id": "sig_106",
+      "toolName": "Blotato Cloud Social Publisher",
+      "stars": "N/A (Closed SaaS)",
+      "category": "Social Media Scheduler",
+      "source": "Facebook / Instagram Reel Ad",
+      "commitVelocity": "Closed Source",
+      "healthGateScore": "0/4 Failed",
+      "verdict": "❌ Discarded / Bypassed",
+      "rationale": "$29/mo paid wrapper using standard meta APIs with high IP ban risk. Discarded in favor of self-hosted Postiz and Python uploaders."
+    }
+  ],
+  "sideHustlesPipeline": [
+    {
+      "id": "sh_01",
+      "name": "ClinicGrow AI (Hyperlocal Dental & Medical Growth Suite)",
+      "targetAudience": "Dentists, Dermatologists, Orthopedic Surgeons (Thane West)",
+      "status": "Pilot Live (Dr. Sharma Enclave Trial)",
+      "monthlyRetainer": "₹17,500 / month per clinic",
+      "capacityTarget": "6 Enclaves in Thane = ₹1,05,000 / month MRR",
+      "automationLeveragePercent": 95,
+      "timeToFirstRupee": "3 to 7 Days",
+      "zeroCostStack": "Oracle VPS + Edge-TTS Neerja/Prabhat + LivePortrait ZeroGPU + Crawl4AI",
+      "competitiveMoat": "Strict 2-km Geofenced Enclave Exclusivity + 30-Sec WhatsApp Approval Routine"
+    },
+    {
+      "id": "sh_02",
+      "name": "AI Vintage Photo Restoration & Colorization Studio",
+      "targetAudience": "Family heirlooms, ancestral photo restoration, photo framing studios",
+      "status": "Operational Pipeline",
+      "monthlyRetainer": "₹299–₹799 per restored photo",
+      "capacityTarget": "50–100 Photos/month = ₹25,000–₹50,000 / month",
+      "automationLeveragePercent": 90,
+      "timeToFirstRupee": "Instant (Walk-in or WhatsApp dispatch)",
+      "zeroCostStack": "Local PyTorch CodeFormer + GFPGAN ($0 Software Cost)",
+      "competitiveMoat": "Physical store presence in Thane West + Instant turnaround (<60s)"
+    },
+    {
+      "id": "sh_03",
+      "name": "4K AI VHS & Magnetic Tape Remastering",
+      "targetAudience": "NRI families, 90s wedding tape preservation, local archives",
+      "status": "Operational Pipeline",
+      "monthlyRetainer": "₹1,499–₹2,999 per video hour",
+      "capacityTarget": "20–30 Tapes/month = ₹40,000–₹75,000 / month",
+      "automationLeveragePercent": 85,
+      "timeToFirstRupee": "Same-week delivery",
+      "zeroCostStack": "QTGMC Deinterlacing + Video2X AI Upscaler + FFmpeg",
+      "competitiveMoat": "Studio-grade CRT color timing + True 60fps deinterlacing (No Topaz subscription)"
+    },
+    {
+      "id": "sh_04",
+      "name": "Market Watch & Algorithmic Equities Engine",
+      "targetAudience": "Proprietary Capital Compounding (NSE/BSE Indian Equities)",
+      "status": "Running on Oracle VPS (quant-engine online under PM2)",
+      "monthlyRetainer": "Capital Return on Alpha Deployment",
+      "capacityTarget": "Systematic 2-4% monthly compounding target",
+      "automationLeveragePercent": 100,
+      "timeToFirstRupee": "Active Trading Days",
+      "zeroCostStack": "vectorbt + DhanHQ API + Oracle Cloud Always-Free Tier",
+      "competitiveMoat": "Zero API fees, microsecond execution, automated risk parity"
+    },
+    {
+      "id": "sh_05",
+      "name": "High-Performance Hyperlocal Web Design & Local SEO",
+      "targetAudience": "High-ticket local service businesses (Pain clinics, Lawyers, Luxury Gyms)",
+      "status": "Active Portfolio Service",
+      "monthlyRetainer": "₹15,000–₹35,000 setup + ₹3,000/mo retainer",
+      "capacityTarget": "2 New Sites/month = ₹40,000 / month",
+      "automationLeveragePercent": 80,
+      "timeToFirstRupee": "10-day sprint",
+      "zeroCostStack": "LiteSpeed Cache + Schema.org JSON-LD + Static HTML5 (100/100 PageSpeed)",
+      "competitiveMoat": "Zero-bloat architecture outranking bloated WordPress sites on Google Maps"
+    }
+  ]
+}

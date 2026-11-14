@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antigravity Evolution Hub & Ready-Reckoner | Big Byte Systems</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: #0f172a;
+      --bg-card-hover: #1e293b;
+      --border-color: #1e293b;
+      --border-accent: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --brand-primary: #38bdf8;
+      --brand-glow: rgba(56, 189, 248, 0.15);
+      --accent-green: #10b981;
+      --accent-green-glow: rgba(16, 185, 129, 0.15);
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Nav */
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #0f172a;
+      padding: 2px;
+      border: 1px solid var(--border-accent);
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent-green-glow);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-action {
+      background: var(--brand-glow);
+      color: var(--brand-primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: var(--brand-primary);
+      color: #000;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 4rem;
+    }
+
+    /* Metrics Hero Banner */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    .metric-val {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    .metric-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    /* Tabs Navigation */
+    .tabs-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.4rem;
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 1.75rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 160px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      background: var(--brand-primary);
+      color: #090d16;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .tab-pill {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+    }
+
+    .tab-btn.active .tab-pill {
+      background: rgba(0, 0, 0, 0.25);
+      color: #000;
+    }
+
+    /* Filter & Search Bar */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--brand-primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .category-chips {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .chip:hover, .chip.active {
+      background: var(--border-accent);
+      color: var(--text-main);
+      border-color: var(--brand-primary);
+    }
+
+    /* Tab Contents */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Grid Layouts */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .hub-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .hub-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .category-badge {
+      font-size: 0.68rem;
+      color: var(--brand-primary);
+      background: var(--brand-glow);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .titan-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-left: 3px solid var(--accent-green);
+      padding: 0.65rem 0.85rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .titan-label {
+      font-size: 0.68rem;
+      color: var(--accent-green);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2rem;
+    }
+
+    .titan-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .replaced-box {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .strike-text {
+      text-decoration: line-through;
+      color: var(--accent-rose);
+      opacity: 0.8;
+    }
+
+    .metrics-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .metric-chip-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .metric-chip-val {
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent-green);
+    }
+
+    .darwin-reason {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+      margin-top: auto;
+    }
+
+    /* Radar / Signal Feed Cards */
+    .signal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .signal-verdict {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .verdict-promoted {
+      background: var(--accent-green-glow);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .verdict-cataloged {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .verdict-discarded {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    /* Side Hustles Cards */
+    .hustle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .hustle-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .hustle-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.85rem;
+      border-radius: 10px;
+    }
+
+    .hustle-stat-item p:first-child {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .hustle-stat-item p:last-child {
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--brand-primary);
+    }
+
+    /* Quick Drop Signal Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+      font-family: var(--font-sans);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--brand-primary);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--brand-primary);
+      color: #000;
+      font-weight: 700;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #7dd3fc;
+    }
+
+    /* Rule 7: Responsive Breakpoints */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      .nav-actions {
+        justify-content: space-between;
+      }
+      .items-grid {
+        grid-template-columns: 1fr;
+      }
+      .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      .tabs-wrapper {
+        justify-content: flex-start;
+      }
+      .tab-btn {
+        min-width: 130px;
+        font-size: 0.78rem;
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <a href="/hub/" class="brand-group">
+        <img src="/assets/logo.png" alt="Big Byte Systems" class="brand-logo" onerror="this.src='/logo.png'">
+        <div class="brand-text">
+          <h1>Antigravity Evolution Hub</h1>
+          <p>Apex Capability & Cashflow Registry • Thane West</p>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>PM2 LIVE (VPS)</span>
+        </div>
+        <button class="btn-action" onclick="openSignalModal()">
+          <span>⚡ Drop Signal</span>
+        </button>
+        <a href="/crm/" class="btn-action">
+          <span>👥 CRM</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- KPIs Hero Grid -->
+    <section class="metrics-grid" id="metricsContainer">
+      <div class="metric-card">
+        <div class="metric-label">Active Arsenal Titans</div>
+        <div class="metric-val" id="kpiActiveTitans">16</div>
+        <div class="metric-sub">Out of 28 scrubbed candidates</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Avg. Token Savings</div>
+        <div class="metric-val" id="kpiTokenSavings">88.5%</div>
+        <div class="metric-sub">Deterministic script & AST packing</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Monthly SaaS Replaced</div>
+        <div class="metric-val" id="kpiSaaSSaved">$3,840/mo</div>
+        <div class="metric-sub">$0 software marginal cost</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Free Network GPU Tier</div>
+        <div class="metric-val" style="font-size: 1.15rem; color: var(--brand-primary);" id="kpiGpuTier">NVIDIA A100</div>
+        <div class="metric-sub">ZeroGPU serverless via Gradio</div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-wrapper">
+      <button class="tab-btn active" onclick="switchTab('evolution')">
+        <span>🏛️ Evolution & Titan Ledger</span>
+        <span class="tab-pill" id="pillEvolutionCount">10</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('radar')">
+        <span>🛰️ Autonomous Radar & Signals</span>
+        <span class="tab-pill" id="pillRadarCount">6</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('pipeline')">
+        <span>💰 Side Hustles & Products</span>
+        <span class="tab-pill" id="pillPipelineCount">5</span>
+      </button>
+    </div>
+
+    <!-- Search & Category Filters -->
+    <div class="controls-row">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search titans, repos, skills, or capabilities..." oninput="handleSearch()">
+      </div>
+      <div class="category-chips" id="categoryChips">
+        <button class="chip active" onclick="filterCategory('All')">All</button>
+        <button class="chip" onclick="filterCategory('Video & Voice')">Video & Voice</button>
+        <button class="chip" onclick="filterCategory('UI/UX')">UI/UX</button>
+        <button class="chip" onclick="filterCategory('Core Agentic')">Core Agentic</button>
+        <button class="chip" onclick="filterCategory('Quant & Finance')">Quant & Finance</button>
+        <button class="chip" onclick="filterCategory('Data & Scraping')">Data & Scraping</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: Evolution Ledger -->
+    <section id="tab-evolution" class="tab-content active">
+      <div class="items-grid" id="evolutionGrid">
+        <!-- Rendered via JavaScript from /api/hub/data -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Autonomous Radar -->
+    <section id="tab-radar" class="tab-content">
+      <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--brand-primary); margin-bottom: 0.2rem;">🛰️ Autonomous 24/7 Intelligence Radar</h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted);">Continuously evaluates incoming GitHub trending repos, HuggingFace ZeroGPU spaces, and dropped reels against the 4-Point Health Gate.</p>
+        </div>
+        <button class="btn-action" onclick="openSignalModal()">+ Drop New Signal URL</button>
+      </div>
+      <div class="items-grid" id="radarGrid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- TAB 3: Side Hustles Pipeline -->
+    <section id="tab-pipeline" class="tab-content">
+      <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--accent-green); margin-bottom: 0.2rem;">💰 Active Cashflow Arbitrage & Commercialization Pipeline</h3>
+        <p style="font-size: 0.78rem; color: var(--text-muted);">Self-hosted, high-margin micro-services executing on our $0 software stack across Thane West and online markets.</p>
+      </div>
+      <div class="items-grid" id="pipelineGrid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Quick Drop Modal -->
+  <div class="modal-overlay" id="signalModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size: 1.1rem; font-weight: 800;">⚡ Quick Drop New Signal</h3>
+        <button class="modal-close" onclick="closeSignalModal()">✕</button>
+      </div>
+      <form id="signalForm" onsubmit="submitSignal(event)">
+        <div class="form-group">
+          <label class="form-label">Tool / Repo / Reel URL *</label>
+          <input type="text" id="signalUrl" class="form-input" placeholder="https://github.com/... or Facebook/Insta Reel URL" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tool Name (Optional)</label>
+          <input type="text" id="signalName" class="form-input" placeholder="e.g. LivePortrait, Dyad, v0-clone">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="signalCategory" class="form-input">
+            <option value="Video & Voice">Video & Voice</option>
+            <option value="UI/UX">UI/UX</option>
+            <option value="Data & Scraping">Data & Scraping</option>
+            <option value="Quant & Finance">Quant & Finance</option>
+            <option value="Core Agentic">Core Agentic</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes / Claims from Reel</label>
+          <textarea id="signalNotes" class="form-textarea" rows="3" placeholder="What caught your attention? What does it claim to replace?"></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="btnSubmitSignal">Add to Autonomous Radar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let hubState = {
+      evolution: [],
+      scouredRadar: [],
+      sideHustles: [],
+      currentTab: 'evolution',
+      currentCategory: 'All',
+      searchQuery: ''
+    };
+
+    async function loadHubData() {
+      try {
+        const res = await fetch('/api/hub/data');
+        if (!res.ok) throw new Error('Failed to load data');
+        const data = await res.json();
+        
+        hubState.evolution = data.evolutionLedger || [];
+        hubState.scouredRadar = data.scouredRadar || [];
+        hubState.sideHustles = data.sideHustlesPipeline || [];
+
+        // Update KPIs
+        if (data.metrics) {
+          document.getElementById('kpiActiveTitans').innerText = data.metrics.activeArsenalTitans || 16;
+          document.getElementById('kpiTokenSavings').innerText = (data.metrics.averageTokenSavingsPercent || 88.5) + '%';
+          document.getElementById('kpiSaaSSaved').innerText = '$' + (data.metrics.monthlySaaSSavingsUSD || 3840) + '/mo';
+          document.getElementById('kpiGpuTier').innerText = data.metrics.freeNetworkGPUTier || 'NVIDIA A100';
+        }
+
+        document.getElementById('pillEvolutionCount').innerText = hubState.evolution.length;
+        document.getElementById('pillRadarCount').innerText = hubState.scouredRadar.length;
+        document.getElementById('pillPipelineCount').innerText = hubState.sideHustles.length;
+
+        renderCurrentTab();
+      } catch (err) {
+        console.error('Error loading hub data:', err);
+      }
+    }
+
+    function switchTab(tabId) {
+      hubState.currentTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.onclick.toString().includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+      
+      const activeContent = document.getElementById('tab-' + tabId);
+      if (activeContent) activeContent.classList.add('active');
+
+      renderCurrentTab();
+    }
+
+    function filterCategory(cat) {
+      hubState.currentCategory = cat;
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      const activeChip = Array.from(document.querySelectorAll('.chip')).find(c => c.innerText === cat);
+      if (activeChip) activeChip.classList.add('active');
+      renderCurrentTab();
+    }
+
+    function handleSearch() {
+      hubState.searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderCurrentTab();
+    }
+
+    function renderCurrentTab() {
+      if (hubState.currentTab === 'evolution') renderEvolution();
+      if (hubState.currentTab === 'radar') renderRadar();
+      if (hubState.currentTab === 'pipeline') renderPipeline();
+    }
+
+    function renderEvolution() {
+      const container = document.getElementById('evolutionGrid');
+      let items = hubState.evolution;
+
+      if (hubState.currentCategory !== 'All') {
+        items = items.filter(i => i.category === hubState.currentCategory);
+      }
+
+      if (hubState.searchQuery) {
+        items = items.filter(i => 
+          i.capability.toLowerCase().includes(hubState.searchQuery) ||
+          i.incumbentTitan.toLowerCase().includes(hubState.searchQuery) ||
+          i.replacedCandidate.toLowerCase().includes(hubState.searchQuery) ||
+          i.darwinianReason.toLowerCase().includes(hubState.searchQuery)
+        );
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-dim); padding: 2rem; grid-column: 1/-1; text-align: center;">No evolutionary titans match your query.</div>';
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="hub-card">
+          <div>
+            <div class="card-header">
+              <h3 class="card-title">${item.capability}</h3>
+              <span class="category-badge">${item.category}</span>
+            </div>
+            
+            <div class="titan-box">
+              <div class="titan-label">👑 Active Titan (${item.stars})</div>
+              <div class="titan-name">${item.incumbentTitan}</div>
+            </div>
+
+            <div class="replaced-box">
+              <span>Replaced:</span>
+              <span class="strike-text">${item.replacedCandidate}</span>
+            </div>
+
+            <div class="metrics-row">
+              <div>
+                <div class="metric-chip-label">Token Savings</div>
+                <div class="metric-chip-val">${item.tokenSavingsPercent}%</div>
+              </div>
+              <div>
+                <div class="metric-chip-label">SaaS Replaced</div>
+                <div class="metric-chip-val" style="color: var(--brand-primary);">${item.saasCostReplaced.split('(')[0]}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="darwin-reason">
+            <strong style="color: var(--text-main);">Darwinian Reason:</strong> ${item.darwinianReason}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderRadar() {
+      const container = document.getElementById('radarGrid');
+      let items = hubState.scouredRadar;
+
+      if (hubState.searchQuery) {
+        items = items.filter(i => 
+          i.toolName.toLowerCase().includes(hubState.searchQuery) ||
+          i.category.toLowerCase().includes(hubState.searchQuery) ||
+          i.rationale.toLowerCase().includes(hubState.searchQuery)
+        );
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-dim); padding: 2rem; grid-column: 1/-1; text-align: center;">No scoured signals match your query.</div>';
+        return;
+      }
+
+      container.innerHTML = items.map(sig => {
+        let verdictClass = 'verdict-cataloged';
+        if (sig.verdict.includes('Promoted')) verdictClass = 'verdict-promoted';
+        if (sig.verdict.includes('Discarded') || sig.verdict.includes('Bypassed')) verdictClass = 'verdict-discarded';
+
+        return `
+          <div class="signal-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+              <div>
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #fff;">${sig.toolName}</h4>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.2rem;">Source: ${sig.source} · ${sig.stars}</div>
+              </div>
+              <span class="signal-verdict ${verdictClass}">${sig.verdict}</span>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; font-size: 0.75rem; background: rgba(0,0,0,0.25); padding: 0.5rem 0.75rem; border-radius: 6px;">
+              <div><span style="color: var(--text-dim);">Commit Velocity:</span> <strong style="color: #fff;">${sig.commitVelocity}</strong></div>
+              <div><span style="color: var(--text-dim);">Health Gate:</span> <strong style="color: var(--accent-green);">${sig.healthGateScore}</strong></div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">
+              ${sig.rationale}
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPipeline() {
+      const container = document.getElementById('pipelineGrid');
+      let items = hubState.sideHustles;
+
+      if (hubState.searchQuery) {
+        items = items.filter(i => 
+          i.name.toLowerCase().includes(hubState.searchQuery) ||
+          i.targetAudience.toLowerCase().includes(hubState.searchQuery) ||
+          i.competitiveMoat.toLowerCase().includes(hubState.searchQuery)
+        );
+      }
+
+      container.innerHTML = items.map(hustle => `
+        <div class="hustle-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div>
+              <h3 class="hustle-title">${hustle.name}</h3>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">Target: ${hustle.targetAudience}</p>
+            </div>
+            <span style="background: var(--accent-green-glow); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 6px; font-family: var(--font-mono);">${hustle.status}</span>
+          </div>
+
+          <div class="hustle-stats">
+            <div class="hustle-stat-item">
+              <p>Monthly Retainer</p>
+              <p>${hustle.monthlyRetainer}</p>
+            </div>
+            <div class="hustle-stat-item">
+              <p>Capacity Target</p>
+              <p style="color: var(--accent-green);">${hustle.capacityTarget}</p>
+            </div>
+            <div class="hustle-stat-item">
+              <p>Automation</p>
+              <p style="color: #fff;">${hustle.automationLeveragePercent}%</p>
+            </div>
+            <div class="hustle-stat-item">
+              <p>Time to 1st Rupee</p>
+              <p style="color: var(--accent-amber);">${hustle.timeToFirstRupee}</p>
+            </div>
+          </div>
+
+          <div style="font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+            <p style="margin-bottom: 0.35rem;"><strong style="color: var(--text-main);">Zero-Cost Stack:</strong> ${hustle.zeroCostStack}</p>
+            <p><strong style="color: var(--brand-primary);">Competitive Moat:</strong> ${hustle.competitiveMoat}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openSignalModal() {
+      document.getElementById('signalModal').classList.add('open');
+    }
+
+    function closeSignalModal() {
+      document.getElementById('signalModal').classList.remove('open');
+    }
+
+    async function submitSignal(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitSignal');
+      btn.disabled = true;
+      btn.innerText = 'Evaluating Signal...';
+
+      const payload = {
+        url: document.getElementById('signalUrl').value.trim(),
+        toolName: document.getElementById('signalName').value.trim(),
+        category: document.getElementById('signalCategory').value,
+        notes: document.getElementById('signalNotes').value.trim(),
+        source: 'User Quick Drop'
+      };
+
+      try {
+        const res = await fetch('/api/hub/signal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (result.success) {
+          closeSignalModal();
+          document.getElementById('signalForm').reset();
+          await loadHubData();
+          switchTab('radar');
+        } else {
+          alert('Error adding signal: ' + (result.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to connect to server');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Add to Autonomous Radar';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadHubData);
+  </script>
+</body>
+</html>

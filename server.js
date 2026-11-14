@@ -23,6 +23,7 @@ const WHITELABEL_FILE = path.join(DATA_DIR, 'whitelabel.json');
 const LEADS_FILE = path.join(DATA_DIR, 'leads.json');
 const AUTH_CONFIG_FILE = path.join(DATA_DIR, 'auth_config.json');
 const FEEDBACK_FILE = path.join(DATA_DIR, 'feedback.json');
+const HUB_DATA_FILE = path.join(DATA_DIR, 'hub_data.json');
 
 // In-Memory Active Sessions Store (Token -> Session Info)
 const activeSessions = new Map();
@@ -1252,6 +1253,42 @@ const server = http.createServer((req, res) => {
     const feedbackList = readJson(FEEDBACK_FILE, []);
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify(feedbackList));
+  }
+
+  // GET /api/hub/data (Live Evolution Hub & Ready-Reckoner Data)
+  if (pathname === '/api/hub/data' && req.method === 'GET') {
+    const hubData = readJson(HUB_DATA_FILE, {});
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify(hubData));
+  }
+
+  // POST /api/hub/signal (Drop new tool/repo/reel signal)
+  if (pathname === '/api/hub/signal' && req.method === 'POST') {
+    getJsonBody((err, body) => {
+      if (err || !body || (!body.url && !body.toolName)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ success: false, error: 'URL or repo name is required' }));
+      }
+      const hubData = readJson(HUB_DATA_FILE, { scouredRadar: [] });
+      if (!hubData.scouredRadar) hubData.scouredRadar = [];
+      const newSignal = {
+        id: 'sig_' + Date.now().toString(36),
+        toolName: body.toolName || body.url,
+        url: body.url || '',
+        category: body.category || 'Discovered Signal',
+        source: body.source || 'User Quick Drop',
+        commitVelocity: 'Pending Verification',
+        healthGateScore: 'Evaluating...',
+        verdict: '🟡 Under Evaluation',
+        rationale: body.notes || 'Signal dropped into autonomous scouring queue.',
+        discoveredAt: new Date().toISOString()
+      };
+      hubData.scouredRadar.unshift(newSignal);
+      writeJson(HUB_DATA_FILE, hubData);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ success: true, signal: newSignal }));
+    });
+    return;
   }
 
   // --- API ROUTES ---
