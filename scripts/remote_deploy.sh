@@ -174,6 +174,22 @@ server {
         return 301 /hub/;
     }
 
+    # OTT Living Room Simulator & Turnkey Hardware Prototype (/ott/)
+    location ^~ /ott/ {
+        proxy_pass http://127.0.0.1:3000/ott/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location = /ott {
+        return 301 /ott/;
+    }
+
     # Access & Login Gateway (/login/)
     location ^~ /login/ {
         proxy_pass http://127.0.0.1:3000/login/;
