@@ -7,11 +7,11 @@
     "costBasis": "$0 Marginal Software Cost (Self-Hosted / Open Source / Free GPU)"
   },
   "metrics": {
-    "totalScrubbedTitans": 28,
-    "activeArsenalTitans": 16,
+    "totalScrubbedTitans": 38,
+    "activeArsenalTitans": 21,
     "discardedWrappers": 12,
     "averageTokenSavingsPercent": 88.5,
-    "monthlySaaSSavingsUSD": 3840,
+    "monthlySaaSSavingsUSD": 4520,
     "freeNetworkGPUTier": "NVIDIA A100/H100 (Hugging Face ZeroGPU)"
   },
   "evolutionLedger": [
@@ -144,9 +144,116 @@
       "saasCostReplaced": "Topaz ($299 license) + Remini ($20/mo)",
       "darwinianReason": "High-fidelity face restoration and hardware deinterlacing executed on loopback with zero per-image fees.",
       "category": "Media Restoration"
+    },
+    {
+      "id": "evo_11",
+      "capability": "Agentic Engineering & Pre-Completion QA",
+      "incumbentTitan": "Superpowers (316.7k+ ⭐) + verification-before-completion",
+      "stars": "316.7k+ ⭐",
+      "replacedCandidate": "Undisciplined agents guessing code without test-driven plans",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 88,
+      "timeToProduction": "Zero hallucinated completions",
+      "saasCostReplaced": "Devin / Closed agents (/mo)",
+      "darwinianReason": "Enforces senior engineering discipline: brainstorming, plans, TDD, systematic debugging, and verification before declaring tasks done.",
+      "category": "Core Agentic"
+    },
+    {
+      "id": "evo_12",
+      "capability": "Competitor Marketing Forensics & Growth Teardowns",
+      "incumbentTitan": "REM: Reverse Engineer Marketing (coreyhaines31/marketingskills)",
+      "stars": "Corey Haines MCP",
+      "replacedCandidate": "Manual 6-hour Meta ad library and Wayback scrubbing",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 94,
+      "timeToProduction": "Cut from 4 hours to 45 seconds",
+      "saasCostReplaced": "SpyFu (/mo) + SimilarWeb (/mo)",
+      "darwinianReason": "A single npx command extracts full ad libraries, tech stacks, and growth playbooks for any target clinic or business.",
+      "category": "Marketing & Growth"
+    },
+    {
+      "id": "evo_13",
+      "capability": "Agent-Native Local Video Editing & QA",
+      "incumbentTitan": "ffmpeg-skill (42 MCP tools + built-in inspection)",
+      "stars": "kajisho5 (NPM v3.2)",
+      "replacedCandidate": "Manual FFmpeg command hacking and unverified video renders",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 90,
+      "timeToProduction": "Cut video formatting from 30 min to 10s",
+      "saasCostReplaced": "Cloud video APIs (/mo)",
+      "darwinianReason": "Gives agents native cut, fit, and export tools with self-checking verification (check.py / look.py) before user delivery.",
+      "category": "Video & Voice"
+    },
+    {
+      "id": "evo_14",
+      "capability": "Agent Skills Empirical Evaluation Harness",
+      "incumbentTitan": "SkillEvaluator (NVIDIA Developer / arXiv 2608.20614)",
+      "stars": "NVIDIA Verified",
+      "replacedCandidate": "Subjective prompt tweaking and unmeasured agent skill bloat",
+      "status": "Active Titan",
+      "tokenSavingsPercent": 85,
+      "timeToProduction": "Automated A/B skill test in 2 min",
+      "saasCostReplaced": "Braintrust / Arize AX (+/mo)",
+      "darwinianReason": "Measures exact task success delta with and without a skill, preventing agentic bloat.",
+      "category": "Core Agentic"
     }
   ],
   "scouredRadar": [
+    {
+      "id": "sig_111",
+      "toolName": "dreammis/social-auto-upload",
+      "stars": "5.6k+ ⭐",
+      "category": "Multi-Platform Cookie Uploader",
+      "source": "Facebook Group / GitHub",
+      "commitVelocity": "Active (<30 days)",
+      "healthGateScore": "3/4 Passed",
+      "verdict": "🟡 Cataloged Reference",
+      "rationale": "Playwright browser automation for TikTok and Asian social platforms via cookies. Postiz remains primary titan for Western/Indian networks."
+    },
+    {
+      "id": "sig_110",
+      "toolName": "SwarmChat",
+      "stars": "PyPI v0.1.0",
+      "category": "Agent Swarm Visual Messenger",
+      "source": "PyPI / GitHub",
+      "commitVelocity": "Active",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "🟡 Cataloged Reference",
+      "rationale": "Zero-dependency Python package serving a Slack-like browser dashboard on 127.0.0.1:8484 for watching agent swarms live."
+    },
+    {
+      "id": "sig_109",
+      "toolName": "IPVIO Stream (Android TV / Fire TV)",
+      "stars": "Open-Source Kotlin",
+      "category": "OTT Media & IPTV Client",
+      "source": "Community Signal / Downloader 4200542",
+      "commitVelocity": "Active",
+      "healthGateScore": "3/4 Passed (GPL-3.0)",
+      "verdict": "🟡 Cataloged Reference",
+      "rationale": "Native Jetpack Compose IPTV player for remote controls. Key reference for OTT Navigator hardware bundling side hustles."
+    },
+    {
+      "id": "sig_108",
+      "toolName": "getmaxun/maxun",
+      "stars": "18k+ ⭐",
+      "category": "Visual Web Scraper & API Generator",
+      "source": "ZainFinds / GitHub Trending",
+      "commitVelocity": "Active (<15 days)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "🟡 Cataloged Reference",
+      "rationale": "Turn any website into a structured API via visual point-and-click UI. Complementary to Crawl4AI for non-technical visual scraping."
+    },
+    {
+      "id": "sig_107",
+      "toolName": "Google Gemini 4 Hydrogen",
+      "stars": "Google Flagship",
+      "category": "LLM & Agentic Workhorse",
+      "source": "Google Official (Nov 12, 2026)",
+      "commitVelocity": "Active (Current)",
+      "healthGateScore": "4/4 Passed",
+      "verdict": "✅ Active Model Stack",
+      "rationale": "1M context, 1M decode continuation, 4-tier thinking knob (low to xhigh). Ultra-fast tool-heavy agentic execution at  on AI Studio."
+    },
     {
       "id": "sig_101",
       "toolName": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -274,6 +381,30 @@
       "timeToFirstRupee": "10-day sprint",
       "zeroCostStack": "LiteSpeed Cache + Schema.org JSON-LD + Static HTML5 (100/100 PageSpeed)",
       "competitiveMoat": "Zero-bloat architecture outranking bloated WordPress sites on Google Maps"
+    },
+    {
+      "id": "sh_06",
+      "name": "Competitor Marketing Forensics & Teardown Service",
+      "targetAudience": "Dentists, Dermatologists, Gyms, High-Ticket Service Businesses",
+      "status": "Operational Pipeline (REM Stack)",
+      "monthlyRetainer": "₹5,000–₹12,000 per audit dossier",
+      "capacityTarget": "10 Audits/month = ₹50,000 / month",
+      "automationLeveragePercent": 95,
+      "timeToFirstRupee": "Under 48 Hours",
+      "zeroCostStack": "REM (npx reverse-engineer-marketing) + Crawl4AI + Antigravity Report Generator",
+      "competitiveMoat": "Exposes competitor paid ad libraries, search keywords, and review deficits with verified proof"
+    },
+    {
+      "id": "sh_07",
+      "name": "Turnkey OTT Hardware Setup & Media Player (Fire TV / Android Box)",
+      "targetAudience": "Local residential cord-cutters, expats, and TV repair clients in Thane West",
+      "status": "Operational Pipeline",
+      "monthlyRetainer": "₹1,500–₹2,500 setup service per device",
+      "capacityTarget": "15–20 Devices/month = ₹30,000 / month",
+      "automationLeveragePercent": 80,
+      "timeToFirstRupee": "Same-Day Delivery",
+      "zeroCostStack": "IPVIO Stream (Downloader 4200542) + Curated M3U configs ( Software Cost)",
+      "competitiveMoat": "In-person local setup + remote troubleshooting support in Thane West"
     }
   ]
 }
