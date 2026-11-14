@@ -391,8 +391,8 @@
 
     /* D-Pad Controller */
     .dpad-container {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       position: relative;
       border-radius: 50%;
       background: #090d16;
@@ -409,25 +409,29 @@
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: color 0.15s;
+      border-radius: 50%;
+      transition: all 0.15s;
     }
 
-    .dpad-btn:hover {
+    .dpad-btn:hover, .dpad-btn:active {
       color: var(--brand-primary);
+      background: rgba(56, 189, 248, 0.1);
     }
 
-    .dpad-up { top: 10px; }
-    .dpad-down { bottom: 10px; }
-    .dpad-left { left: 14px; }
-    .dpad-right { right: 14px; }
+    .dpad-up { top: 6px; }
+    .dpad-down { bottom: 6px; }
+    .dpad-left { left: 6px; }
+    .dpad-right { right: 6px; }
 
     .dpad-ok {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       background: var(--bg-card);
       border: 2px solid var(--brand-primary);
@@ -442,7 +446,7 @@
       transition: all 0.2s;
     }
 
-    .dpad-ok:hover {
+    .dpad-ok:hover, .dpad-ok:active {
       background: var(--brand-primary);
       color: #000;
     }
@@ -515,15 +519,23 @@
     }
 
     .savings-counter-box {
-      background: rgba(16, 185, 129, 0.1);
+      background: rgba(16, 185, 129, 0.08);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 12px;
-      padding: 0.85rem;
+      border-radius: 14px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .savings-primary-row {
       text-align: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
     }
 
     .savings-num {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--accent-green);
       font-family: var(--font-mono);
@@ -531,9 +543,35 @@
     }
 
     .savings-sub {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 0.25rem;
+    }
+
+    .savings-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      text-align: center;
+    }
+
+    .metric-sub-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    .metric-sub-val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--brand-primary);
+      font-family: var(--font-mono);
+    }
+
+    .metric-sub-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
     }
 
     .slider-group {
@@ -616,23 +654,27 @@
     @media (max-width: 1024px) {
       .dual-pane-layout {
         grid-template-columns: 1fr;
+        max-width: 100%;
+      }
+      .controls-pane {
+        max-width: 540px;
+        margin: 0 auto;
+        width: 100%;
       }
       .remote-wrapper {
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 1rem;
-      }
-      .dpad-container {
-        width: 130px;
-        height: 130px;
-      }
-      .dpad-ok {
-        width: 48px;
-        height: 48px;
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.25rem;
       }
     }
 
     @media (max-width: 768px) {
+      main {
+        padding: 1rem 0.5rem 2.5rem;
+      }
       .nav-container {
         flex-direction: column;
         align-items: stretch;
@@ -647,7 +689,13 @@
         font-size: 1rem;
       }
       .remote-wrapper {
+        width: 100%;
+        max-width: 100%;
         flex-direction: column;
+        padding: 1rem 0.5rem;
+      }
+      .savings-metrics-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -691,7 +739,7 @@
                   <span class="channel-number" id="osdChanNum">101</span>
                   <div>
                     <div class="channel-name">
-                      <span id="osdChanName">NASA TV HD (Live)</span>
+                      <span id="osdChanName">DW English HD</span>
                       <span class="resolution-pill" id="osdChanRes">1080p</span>
                     </div>
                   </div>
@@ -701,7 +749,7 @@
 
               <div class="osd-program-info">
                 <span>🔴 NOW:</span>
-                <strong id="osdNowPlaying" style="color: #fff;">International Space Station Live Downlink</strong>
+                <strong id="osdNowPlaying" style="color: #fff;">DW News: Global Analysis & In-Depth Reporting</strong>
               </div>
 
               <div class="osd-progress-track">
@@ -709,7 +757,7 @@
               </div>
 
               <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-dim);">
-                <span>NEXT: <span id="osdNextPlaying" style="color: #94a3b8;">Space Operations & Earth Views from Orbit</span></span>
+                <span>NEXT: <span id="osdNextPlaying" style="color: #94a3b8;">Conflict Zone & European Perspectives</span></span>
                 <span>Stereo AAC 128k</span>
               </div>
             </div>
@@ -792,8 +840,20 @@
           </div>
 
           <div class="savings-counter-box">
-            <div class="savings-num" id="calcNetSavings">₹6,301</div>
-            <div class="savings-sub">Net Money Kept in Your Pocket (Year 1)</div>
+            <div class="savings-primary-row">
+              <div class="savings-num" id="calcNetSavings">₹6,301</div>
+              <div class="savings-sub">Net Money Kept in Your Pocket (Year 1)</div>
+            </div>
+            <div class="savings-metrics-grid">
+              <div class="metric-sub-card">
+                <div class="metric-sub-val" id="calc3YearSavings">₹21,901</div>
+                <div class="metric-sub-label">3-Year Net Savings</div>
+              </div>
+              <div class="metric-sub-card">
+                <div class="metric-sub-val" id="calcPaybackDays">69 Days</div>
+                <div class="metric-sub-label">Full Payback Period</div>
+              </div>
+            </div>
           </div>
 
           <div class="package-radio-group">
@@ -827,12 +887,12 @@
       {
         id: "ch-101",
         num: 101,
-        name: "NASA TV HD (Live)",
-        group: "Science & Tech",
-        res: "1080p 60fps",
-        url: "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",
-        now: "International Space Station Live Earth Views",
-        next: "Artemis Lunar Operations & Orbit Briefing"
+        name: "DW English HD",
+        group: "News & World",
+        res: "1080p",
+        url: "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
+        now: "DW News: Global Analysis & In-Depth Reporting",
+        next: "Conflict Zone & European Perspectives"
       },
       {
         id: "ch-102",
@@ -847,12 +907,12 @@
       {
         id: "ch-103",
         num: 103,
-        name: "DW English HD",
-        group: "News & Business",
+        name: "France 24 English HD",
+        group: "International News",
         res: "1080p",
-        url: "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
-        now: "DW News: Global Analysis & In-Depth Reporting",
-        next: "Conflict Zone & European Perspectives"
+        url: "https://static.france24.com/live/F24_EN_LO_HLS/live_tv.m3u8",
+        now: "France 24 Live: International Headlines & Debates",
+        next: "The 51 Percent & Eye on Africa"
       },
       {
         id: "ch-201",
@@ -1049,7 +1109,13 @@
 
       const annualCurrent = monthly * 12;
       const netSavingsYear1 = Math.max(0, annualCurrent - selectedPackagePrice);
+      const threeYearSavings = Math.max(0, (monthly * 36) - selectedPackagePrice);
+      const dailyExpense = Math.max(1, monthly / 30);
+      const paybackDays = Math.ceil(selectedPackagePrice / dailyExpense);
+
       document.getElementById('calcNetSavings').innerText = `₹${netSavingsYear1.toLocaleString('en-IN')}`;
+      document.getElementById('calc3YearSavings').innerText = `₹${threeYearSavings.toLocaleString('en-IN')}`;
+      document.getElementById('calcPaybackDays').innerText = `${paybackDays} Days`;
     }
 
     function selectPackage(pkgNum, price) {
