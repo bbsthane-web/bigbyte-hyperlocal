@@ -1,0 +1,47 @@
+{
+  "total_duration": 103.63,
+  "scenes": [
+    {
+      "id": "line_1_pooja",
+      "speaker": "Pooja (Big Byte Advisor)",
+      "start": 0.0,
+      "duration": 15.07,
+      "end": 15.07
+    },
+    {
+      "id": "line_2_sharma",
+      "speaker": "Dr. Sharma (Senior Implantologist)",
+      "start": 15.07,
+      "duration": 18.29,
+      "end": 33.36
+    },
+    {
+      "id": "line_3_ananya",
+      "speaker": "Dr. Ananya (Aesthetic Dentist)",
+      "start": 33.36,
+      "duration": 16.94,
+      "end": 50.3
+    },
+    {
+      "id": "line_4_pooja",
+      "speaker": "Pooja (Big Byte Advisor)",
+      "start": 50.3,
+      "duration": 16.46,
+      "end": 66.77
+    },
+    {
+      "id": "line_5_sharma",
+      "speaker": "Dr. Sharma (Senior Implantologist)",
+      "start": 66.77,
+      "duration": 7.1,
+      "end": 73.87
+    },
+    {
+      "id": "line_6_pooja",
+      "speaker": "Pooja (Big Byte Advisor)",
+      "start": 73.87,
+      "duration": 29.76,
+      "end": 103.63
+    }
+  ]
+}

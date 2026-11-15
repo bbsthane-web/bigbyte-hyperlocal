@@ -649,79 +649,68 @@
       <p>Zero camera awkwardness. Zero video editing. Zero tech headaches. Watch the 90-second animated explainer below.</p>
     </div>
 
-    <!-- Animated Explainer Video Player -->
-    <div class="player-card">
-      <div class="stage" id="stageScreen">
-        <!-- Scene 1: The Local Dilemma -->
-        <div class="scene-view active" id="scene-1">
-          <div class="scene-icon-wrap" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.15); box-shadow: 0 0 24px rgba(239, 68, 68, 0.3);">
-            🚨
-          </div>
-          <span class="scene-tag" style="color: #f87171;">Scene 1 • The Empty Chair Dilemma</span>
-          <h3 class="scene-title">10,000+ Thane Patients Search Daily</h3>
-          <div class="scene-metric-box">
-            "Over 10,000 residents in Thane search Google & Instagram monthly for teeth whitening, RCT & aligners. If your clinic isn't answering with video reels, they are walking into a competitor's clinic across the street."
-          </div>
+    <!-- 3-Speaker Conversational Explainer Video Player -->
+    <div class="player-card" style="padding: 16px;">
+      <!-- Player Header Pill Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px;">
+            🎬 3-SPEAKER CONVERSATIONAL MASTER
+          </span>
+          <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">Full 6-Scene Case Study</span>
         </div>
-
-        <!-- Scene 2: What You Get -->
-        <div class="scene-view" id="scene-2">
-          <div class="scene-icon-wrap" style="border-color: #10b981;">
-            ✨
-          </div>
-          <span class="scene-tag" style="color: #34d399;">Scene 2 • What You Get</span>
-          <h3 class="scene-title">The 3 Automated Growth Pillars</h3>
-          <div class="scene-metric-box">
-            🎬 <strong>4K Daily Clinical Reels:</strong> Ultrasonic scaling, invisible aligners, laser RCT with natural Indian voiceovers.<br>
-            📍 <strong>Google Maps 3-Pack:</strong> Rank #1 in your local enclave.<br>
-            💬 <strong>WhatsApp Inquiries:</strong> Patients book consultations directly.
-          </div>
-        </div>
-
-        <!-- Scene 3: The 30-Second Routine -->
-        <div class="scene-view" id="scene-3">
-          <div class="scene-icon-wrap" style="border-color: #38bdf8;">
-            📲
-          </div>
-          <span class="scene-tag" style="color: #38bdf8;">Scene 3 • Your Daily Effort</span>
-          <h3 class="scene-title">Exactly 30 Seconds Every Morning</h3>
-          <div class="scene-metric-box">
-            <strong>10:00 AM:</strong> Receive ready clinical post preview on WhatsApp.<br>
-            <strong>Review in 30s:</strong> Reply "1" to approve between appointments.<br>
-            <strong>Done:</strong> We publish across YouTube Shorts, Instagram & Google Maps!
-          </div>
-        </div>
-
-        <!-- Scene 4: 3-Day Zero Risk Pilot -->
-        <div class="scene-view" id="scene-4">
-          <div class="scene-icon-wrap" style="border-color: #f59e0b;">
-            🎁
-          </div>
-          <span class="scene-tag" style="color: #fbbf24;">Scene 4 • Zero-Risk Pilot</span>
-          <h3 class="scene-title">3-Day Free Trial (Zero Setup Fee)</h3>
-          <div class="scene-metric-box">
-            Test drive 3 full days of clinical reels and local Google SEO at zero cost. No contracts. Keep all patient inquiries.
-          </div>
+        <div style="display: flex; gap: 6px;">
+          <span style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 3px 8px; border-radius: 6px;">
+            ⚡ FastStart H.264
+          </span>
+          <span style="font-size: 11px; color: #f59e0b; font-weight: 700; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 3px 8px; border-radius: 6px;">
+            -14 LUFS Audio
+          </span>
         </div>
       </div>
 
-      <!-- Subtitles Display -->
-      <div class="subtitle-bar" id="subtitlesDisplay">
-        "Namaste Doctor! Watch how our 30-second daily routine grows your dental practice..."
+      <!-- Centered 9:16 Video Player Stage -->
+      <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+        <div style="position: relative; width: 100%; max-width: 420px; aspect-ratio: 9/16; border-radius: 18px; overflow: hidden; background: #020617; border: 2px solid #1e293b; box-shadow: 0 15px 45px rgba(0,0,0,0.8), 0 0 25px rgba(56, 189, 248, 0.15);">
+          <video id="dentistVideoPlayer" src="/dentist/dentist_explainer_video.mp4" controls playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover; display: block;" poster="/dentist/scenes_3speaker/scene_1.jpg"></video>
+        </div>
       </div>
 
-      <!-- Controls Bar -->
-      <div class="controls-bar">
-        <div class="controls-left">
-          <button type="button" class="btn-play-explainer" id="btnPlayExplainer" onclick="togglePlayExplainer()">
-            <span id="playIcon">▶</span> <span id="playText">Play Explainer Video</span>
+      <!-- Dynamic Live Subtitles Bar -->
+      <div class="subtitle-bar" id="subtitlesDisplay" style="border-radius: 12px; margin-bottom: 14px;">
+        "Namaste Doctor Sharma! Over ten thousand patients in Thane search Google Maps and Instagram every single month for dental implants..."
+      </div>
+
+      <!-- Interactive 6-Scene Jump Navigator -->
+      <div style="margin-bottom: 10px;">
+        <span style="font-size: 11.5px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
+          📍 Jump Directly to Dialogue Scene:
+        </span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px;">
+          <button type="button" class="btn-nav-scene" onclick="seekScene(0)" style="text-align: left; padding: 8px;">
+            <span style="color: #38bdf8; font-size: 10px; font-weight: 800; display: block;">SCENE 1 • 0:00</span>
+            <strong>👩‍💼 Pooja (Advisor)</strong>
           </button>
-          <button type="button" class="btn-nav-scene" onclick="prevScene()">◀ Prev</button>
-          <button type="button" class="btn-nav-scene" onclick="nextScene()">Next ▶</button>
-        </div>
-        <div class="voice-badge-pill">
-          <span class="pulse-dot"></span>
-          <span>🎙️ Neerja Neural Voice (-14 LUFS Broadcast)</span>
+          <button type="button" class="btn-nav-scene" onclick="seekScene(15.07)" style="text-align: left; padding: 8px;">
+            <span style="color: #10b981; font-size: 10px; font-weight: 800; display: block;">SCENE 2 • 0:15</span>
+            <strong>👨‍⚕️ Dr. Sharma</strong>
+          </button>
+          <button type="button" class="btn-nav-scene" onclick="seekScene(33.36)" style="text-align: left; padding: 8px;">
+            <span style="color: #f43f5e; font-size: 10px; font-weight: 800; display: block;">SCENE 3 • 0:33</span>
+            <strong>👩‍⚕️ Dr. Ananya</strong>
+          </button>
+          <button type="button" class="btn-nav-scene" onclick="seekScene(50.3)" style="text-align: left; padding: 8px;">
+            <span style="color: #f59e0b; font-size: 10px; font-weight: 800; display: block;">SCENE 4 • 0:50</span>
+            <strong>⚡ Growth Suite Demo</strong>
+          </button>
+          <button type="button" class="btn-nav-scene" onclick="seekScene(66.77)" style="text-align: left; padding: 8px;">
+            <span style="color: #a855f7; font-size: 10px; font-weight: 800; display: block;">SCENE 5 • 1:06</span>
+            <strong>❓ Doctor Questions</strong>
+          </button>
+          <button type="button" class="btn-nav-scene" onclick="seekScene(73.87)" style="text-align: left; padding: 8px;">
+            <span style="color: #25d366; font-size: 10px; font-weight: 800; display: block;">SCENE 6 • 1:14</span>
+            <strong>🎁 Free Pilot CTA</strong>
+          </button>
         </div>
       </div>
     </div>
@@ -811,135 +800,35 @@
     </div>
   </div>
 
-  <!-- Audio Controller Script -->
+  <!-- 3-Speaker Video & Dialogue Controller Script -->
   <script>
-    const sceneAudioMap = {
-      1: '/dentist/audio/scene1_dilemma.mp3',
-      2: '/dentist/audio/scene2_what_you_get.mp3',
-      3: '/dentist/audio/scene3_daily_routine.mp3',
-      4: '/dentist/audio/scene4_pilot_offer.mp3'
-    };
+    const video = document.getElementById('dentistVideoPlayer');
+    const subBox = document.getElementById('subtitlesDisplay');
 
-    const sceneSubtitles = {
-      1: [
-        "Namaste Doctor! You have spent years mastering surgical precision, root canals, and cosmetic smile makeovers.",
-        "Over 10,000 patients in Thane search Google Maps & Instagram every month for dental care.",
-        "If your clinic isn't answering with daily video reels, they walk into a competitor's clinic across the street."
-      ],
-      2: [
-        "Here is what Big Byte Social Studio deploys for your practice:",
-        "First: 4K clinical video reels and YouTube Shorts with natural, reassuring voiceovers.",
-        "Second: Google Maps 3-Pack optimization that ranks your clinic at the top of local searches.",
-        "Third: High-intent patient inquiries arriving directly on your clinic WhatsApp desk."
-      ],
-      3: [
-        "Now, what do you actually have to do daily? Exactly thirty seconds of effort.",
-        "You do NOT need to stand in front of a camera. You do NOT need to learn video editing.",
-        "At 10:00 AM, our AI prepares your daily clinical reel and sends a preview to your WhatsApp.",
-        "You review it between patient appointments, reply '1' to approve, and we publish it everywhere."
-      ],
-      4: [
-        "Test drive three full days of daily clinical reels and Google SEO at zero cost.",
-        "Zero setup fee, no long-term contracts.",
-        "Tap the WhatsApp button right now to activate your three-day pilot."
-      ]
-    };
+    const DIALOGUE_CUES = [
+      { start: 0.0, end: 15.07, text: "👩‍💼 Pooja (Advisor): \"Namaste Doctor Sharma! Over ten thousand patients in Thane search Google Maps and Instagram every single month for dental implants, root canals, and smile makeovers. But where are they actually booking?\"" },
+      { start: 15.07, end: 33.36, text: "👨‍⚕️ Dr. Sharma (Implantologist): \"They're walking straight into the big corporate chains on Ghodbunder Road. We have fifteen years of surgical trust here in Panch Pakhadi, but our website barely converts five patient calls a week. Patients think all dental clinics are the same.\"" },
+      { start: 33.36, end: 50.30, text: "👩‍⚕️ Dr. Ananya (Aesthetic Dentist): \"Because patients today don't read text websites! When people have tooth pain or want invisible aligners, they want thirty-second video answers from real doctors explaining the painless procedure, transparent pricing, and real patient smiles.\"" },
+      { start: 50.30, end: 66.77, text: "👩‍💼 Pooja (Advisor): \"Exactly! That is what the Big Byte Autonomous Clinic Growth Suite automates for Dr. Sharma Dental Clinic. Daily studio-quality 4K clinical reels, one-tap WhatsApp patient booking, and top Google Three-Pack local ranking.\"" },
+      { start: 66.77, end: 73.87, text: "👨‍⚕️ Dr. Sharma (Implantologist): \"What is our daily routine, and will other dental clinics in Thane get our exact same reels?\"" },
+      { start: 73.87, end: 104.0, text: "👩‍💼 Pooja (Advisor): \"Zero duplicate templates. Every reel features your clinic branding, your team, and your Panch Pakhadi location. Exactly thirty seconds daily on WhatsApp. Tap the button below to activate your three-day pilot at zero cost.\"" }
+    ];
 
-    let currentScene = 1;
-    let isPlaying = false;
-    let audio = new Audio();
-    let subtitleTimer = null;
-
-    function jumpToScene(sceneNum) {
-      currentScene = sceneNum;
-      document.querySelectorAll('.scene-view').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.scene-tab-btn').forEach(t => t.classList.remove('active'));
-
-      const targetScene = document.getElementById(`scene-${sceneNum}`);
-      const targetTab = document.getElementById(`tab-scene-${sceneNum}`);
-      if (targetScene) targetScene.classList.add('active');
-      if (targetTab) targetTab.classList.add('active');
-
-      audio.src = sceneAudioMap[sceneNum];
-      audio.load();
-
-      const subBox = document.getElementById('subtitlesDisplay');
-      if (subBox && sceneSubtitles[sceneNum]) {
-        subBox.textContent = `"${sceneSubtitles[sceneNum][0]}"`;
-      }
-
-      if (isPlaying) {
-        audio.play().catch(e => console.log('Audio playback notice:', e));
-        startSubtitleCycle(sceneNum);
-      }
+    function seekScene(seconds) {
+      if (!video) return;
+      video.currentTime = seconds;
+      video.play().catch(e => console.log('Autoplay handled:', e));
     }
 
-    function togglePlayExplainer() {
-      const icon = document.getElementById('playIcon');
-      const text = document.getElementById('playText');
-
-      if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
-        if (icon) icon.textContent = '▶';
-        if (text) text.textContent = 'Play Explainer Video';
-        clearInterval(subtitleTimer);
-      } else {
-        if (!audio.src) {
-          audio.src = sceneAudioMap[currentScene];
+    if (video) {
+      video.addEventListener('timeupdate', () => {
+        const ct = video.currentTime;
+        const matched = DIALOGUE_CUES.find(cue => ct >= cue.start && ct < cue.end);
+        if (matched && subBox) {
+          subBox.innerHTML = matched.text;
         }
-        audio.play().then(() => {
-          isPlaying = true;
-          if (icon) icon.textContent = '⏸';
-          if (text) text.textContent = 'Pause Video';
-          startSubtitleCycle(currentScene);
-        }).catch(err => {
-          console.warn('Playback error:', err);
-        });
-      }
+      });
     }
-
-    function startSubtitleCycle(sceneNum) {
-      clearInterval(subtitleTimer);
-      const lines = sceneSubtitles[sceneNum] || [];
-      if (lines.length === 0) return;
-      let idx = 0;
-      const subBox = document.getElementById('subtitlesDisplay');
-      subBox.textContent = `"${lines[0]}"`;
-
-      subtitleTimer = setInterval(() => {
-        idx = (idx + 1) % lines.length;
-        subBox.textContent = `"${lines[idx]}"`;
-      }, 4500);
-    }
-
-    audio.onended = () => {
-      clearInterval(subtitleTimer);
-      if (currentScene < 4) {
-        jumpToScene(currentScene + 1);
-      } else {
-        isPlaying = false;
-        const icon = document.getElementById('playIcon');
-        const text = document.getElementById('playText');
-        if (icon) icon.textContent = '▶';
-        if (text) text.textContent = 'Replay Explainer';
-      }
-    };
-
-    function nextScene() {
-      if (currentScene < 4) jumpToScene(currentScene + 1);
-      else jumpToScene(1);
-    }
-
-    function prevScene() {
-      if (currentScene > 1) jumpToScene(currentScene - 1);
-      else jumpToScene(4);
-    }
-
-    // Preload scene 1
-    window.addEventListener('DOMContentLoaded', () => {
-      jumpToScene(1);
-    });
   </script>
 </body>
 </html>
