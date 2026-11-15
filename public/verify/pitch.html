@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ChatGPT & AI Search Official Verification | Big Byte Systems</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,108 +12,144 @@
       50% { opacity: 0.8; }
     }
     .glow-pulse { animation: pulseGlow 3s ease-in-out infinite; }
+    
+    /* Live Studio Waveform Animation */
+    @keyframes barBounce {
+      0%, 100% { height: 4px; }
+      50% { height: 18px; }
+    }
+    .wave-bar {
+      width: 3px;
+      background: #10b981;
+      border-radius: 2px;
+      animation: barBounce 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.1s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.3s; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-emerald-400 p-0.5 flex items-center justify-center shadow-lg shadow-sky-500/20">
+  <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-3.5 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-emerald-400 p-0.5 flex items-center justify-center shadow-lg shadow-sky-500/20 shrink-0">
           <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
             <i class="fa-solid fa-certificate text-sky-400 text-sm"></i>
           </div>
         </div>
         <div>
-          <div class="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
-            Big Byte Systems <span class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono font-normal">AI Grounding Lab</span>
+          <div class="text-xs sm:text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+            Big Byte Systems <span class="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono font-normal">AI Grounding Lab</span>
           </div>
-          <p class="text-[11px] text-slate-400">Official ChatGPT &amp; Generative AI Search Verification</p>
+          <p id="headerSubtitle" class="text-[10px] sm:text-[11px] text-slate-400">Official ChatGPT &amp; Generative AI Search Verification</p>
         </div>
       </div>
-      <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20I%20want%20to%20lock%20my%20business%20AI%20verification." target="_blank" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-950/60">
-        <i class="fa-brands fa-whatsapp text-sm"></i> Contact Us
+      <a id="headerContactBtn" href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20I%20want%20to%20lock%20my%20business%20AI%20verification." target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shadow-emerald-950/60 shrink-0">
+        <i class="fa-brands fa-whatsapp text-sm"></i> <span class="hidden sm:inline">Contact</span> Us
       </a>
     </div>
   </header>
 
   <!-- Main Hero -->
-  <main class="flex-1 max-w-4xl mx-auto px-4 py-8 space-y-8 w-full">
+  <main class="flex-1 max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-5 sm:space-y-6 w-full">
 
     <!-- Top Alert Banner -->
-    <div class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-sky-950/60 border border-amber-500/30 text-xs text-amber-200 flex items-start sm:items-center gap-3 shadow-lg">
-      <i class="fa-solid fa-triangle-exclamation text-amber-400 text-lg shrink-0 mt-0.5 sm:mt-0"></i>
-      <div id="alertBannerText">
+    <div class="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-950/70 via-slate-900 to-sky-950/70 border border-amber-500/40 text-xs text-amber-200 flex items-start sm:items-center gap-2.5 sm:gap-3 shadow-lg">
+      <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base sm:text-lg shrink-0 mt-0.5 sm:mt-0"></i>
+      <div id="alertBannerText" class="leading-relaxed text-[11px] sm:text-xs">
         <strong>Critical 2026 Shift:</strong> Patients and affluent clients in Thane are searching directly inside <strong>ChatGPT Search</strong> and <strong>Perplexity</strong>. Unverified businesses are completely invisible to AI search algorithms.
       </div>
     </div>
 
     <!-- Video Explainer Section -->
-    <div class="bg-slate-900/90 rounded-2xl p-6 border border-slate-800 shadow-2xl space-y-4">
+    <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-6 border border-slate-800 shadow-2xl space-y-4">
       
-      <!-- Multi-Language Voice Selector -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
-        <span class="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
-          <i class="fa-solid fa-language text-sky-400 text-sm"></i> Choose Video &amp; Voice Language:
+      <!-- Multi-Language Voice Selector (Prominent Mobile Buttons) -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 border-b border-slate-800/80 pb-3">
+        <span class="text-xs text-slate-300 flex items-center gap-1.5 font-semibold">
+          <i class="fa-solid fa-language text-sky-400 text-sm"></i> <span id="chooseLangLabel">Choose Video &amp; Voice Language:</span>
         </span>
-        <div class="flex items-center gap-1.5 p-1 bg-black/50 rounded-xl border border-slate-800">
-          <button id="langBtnEn" onclick="switchLanguage('en')" class="px-3 py-1 rounded-lg text-xs font-bold bg-sky-600 text-white transition flex items-center gap-1">
+        <div class="grid grid-cols-3 gap-1.5 w-full sm:w-auto p-1 bg-black/60 rounded-xl border border-slate-800">
+          <button id="langBtnEn" onclick="switchLanguage('en')" class="py-2 px-3 rounded-lg text-xs font-bold bg-sky-600 text-white transition flex items-center justify-center gap-1 shadow-md shadow-sky-950/60">
             🇬🇧 English
           </button>
-          <button id="langBtnHi" onclick="switchLanguage('hi')" class="px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1">
+          <button id="langBtnHi" onclick="switchLanguage('hi')" class="py-2 px-3 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
             🇮🇳 हिंदी
           </button>
-          <button id="langBtnMr" onclick="switchLanguage('mr')" class="px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1">
+          <button id="langBtnMr" onclick="switchLanguage('mr')" class="py-2 px-3 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-1">
             🚩 मराठी
           </button>
         </div>
       </div>
 
       <div class="text-center space-y-1">
-        <span id="badgeText" class="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
+        <span id="badgeText" class="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
           30-Second Clinical Explainer
         </span>
-        <h1 id="videoTitle" class="text-xl sm:text-2xl font-black text-white pt-2">
+        <h1 id="videoTitle" class="text-lg sm:text-2xl font-black text-white pt-1 sm:pt-2 leading-snug">
           Why AI Platforms Cannot Recommend Your Practice Today
         </h1>
-        <p id="videoDesc" class="text-xs text-slate-400 max-w-xl mx-auto">
+        <p id="videoDesc" class="text-xs text-slate-400 max-w-xl mx-auto leading-relaxed">
           Watch Dr. Ananya explain how OpenAI's official Blue Checkmark and domain authority tokens protect your clinic from losing patients to competitors.
         </p>
       </div>
 
-      <!-- Centered Video Player -->
-      <div class="rounded-xl overflow-hidden border border-slate-700 bg-black flex justify-center relative shadow-2xl max-w-md mx-auto">
-        <video id="pitchVideo" controls playsinline preload="metadata" poster="ananya_pitch_plate.jpg" class="w-full rounded-lg" style="max-height: 520px; object-fit: contain;">
+      <!-- Studio Live Podcast Video Container (Mobile Full-Bleed) -->
+      <div class="rounded-xl overflow-hidden border border-slate-700 bg-black relative shadow-2xl w-full max-w-md mx-auto">
+        
+        <!-- Live Studio Header Bar -->
+        <div class="bg-slate-950/90 border-b border-slate-800 px-3 py-2 flex items-center justify-between z-10 text-[10px]">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/40 font-mono font-bold animate-pulse">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> ON AIR
+            </span>
+            <span class="text-slate-300 font-semibold">Dr. Ananya Rao • Clinical Studio</span>
+          </div>
+          <div class="flex items-center gap-1 h-3.5">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+
+        <!-- Video Player -->
+        <video id="pitchVideo" controls playsinline preload="metadata" poster="ananya_pitch_plate.jpg" class="w-full bg-black aspect-[9/16] object-contain max-h-[65vh] sm:max-h-[540px]">
           <source id="videoSource" src="ananya_pitch_video.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
+
       </div>
 
-      <div class="flex items-center justify-between text-xs text-slate-400 max-w-md mx-auto px-2">
+      <div class="flex items-center justify-between text-[11px] text-slate-400 max-w-md mx-auto px-1">
         <span id="audioTrackBadge"><i class="fa-solid fa-volume-high text-emerald-400 mr-1"></i> Audio: English (NeerjaNeural • -14 LUFS)</span>
-        <span><i class="fa-solid fa-shield-check text-sky-400 mr-1"></i> Verified AI Grounding Spec</span>
+        <span><i class="fa-solid fa-shield-check text-sky-400 mr-1"></i> Verified Spec</span>
       </div>
     </div>
 
     <!-- Live AI Search Knowledge Card Preview -->
-    <div class="bg-slate-900/90 rounded-2xl p-6 border border-sky-500/30 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between">
+    <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-6 border border-sky-500/30 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between gap-2">
         <div>
-          <span class="text-[10px] font-mono uppercase tracking-wider text-sky-400 font-bold bg-sky-950/60 px-2.5 py-0.5 rounded-full border border-sky-500/30">
+          <span id="simBadge" class="text-[10px] font-mono uppercase tracking-wider text-sky-400 font-bold bg-sky-950/60 px-2.5 py-0.5 rounded-full border border-sky-500/30">
             Live AI Simulation
           </span>
-          <h2 class="text-lg font-bold text-white pt-1">
+          <h2 id="simTitle" class="text-base sm:text-lg font-bold text-white pt-1">
             Your Business in ChatGPT Search (Post-Verification)
           </h2>
         </div>
-        <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold flex items-center gap-1">
+        <span id="simCheck" class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold flex items-center gap-1 shrink-0">
           <i class="fa-solid fa-circle-check"></i> Blue Checkmark Ready
         </span>
       </div>
 
       <!-- ChatGPT Card Visual -->
-      <div class="p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-3.5">
+      <div class="p-4 sm:p-5 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
         <div class="flex items-start justify-between gap-3">
           <div>
             <div class="flex items-center gap-2">
@@ -129,8 +165,10 @@
           </span>
         </div>
 
-        <div class="text-xs text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-800/80 italic leading-relaxed">
-          "Based on verified domain credentials and structured clinic records, <strong id="displayQuoteName" class="text-white">this practice</strong> is officially verified in Thane West with certified facilities, transparent patient hours, and direct hotline access."
+        <div id="simQuoteContainer" class="text-xs text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-800/80 italic leading-relaxed">
+          <span id="simQuotePrefix">"Based on verified domain credentials and structured clinic records,</span>
+          <strong id="displayQuoteName" class="text-white">this practice</strong>
+          <span id="simQuoteSuffix">is officially verified in Thane West with certified facilities, transparent patient hours, and direct hotline access."</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-400 pt-1">
@@ -147,77 +185,77 @@
     </div>
 
     <!-- 4 Value Pillars -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
       <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
-        <div class="text-sky-400 text-sm font-bold flex items-center gap-2">
+        <div id="pillar1Title" class="text-sky-400 text-sm font-bold flex items-center gap-2">
           <i class="fa-solid fa-ranking-star"></i> First-Mover Ranking Advantage
         </div>
-        <p class="text-xs text-slate-400 leading-relaxed">
+        <p id="pillar1Desc" class="text-xs text-slate-400 leading-relaxed">
           OpenAI only highlights 2 to 3 businesses per pincode. Locking your verification now secures your position before competitors claim your locality.
         </p>
       </div>
 
       <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
-        <div class="text-emerald-400 text-sm font-bold flex items-center gap-2">
+        <div id="pillar2Title" class="text-emerald-400 text-sm font-bold flex items-center gap-2">
           <i class="fa-solid fa-globe"></i> Works On Any Website Or Handle
         </div>
-        <p class="text-xs text-slate-400 leading-relaxed">
+        <p id="pillar2Desc" class="text-xs text-slate-400 leading-relaxed">
           Whether you own a custom .com domain, a GetSite / Wix page, or just an Instagram profile, our AI Authority Bridge provides instant verification.
         </p>
       </div>
 
       <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
-        <div class="text-amber-400 text-sm font-bold flex items-center gap-2">
+        <div id="pillar3Title" class="text-amber-400 text-sm font-bold flex items-center gap-2">
           <i class="fa-solid fa-shield-halved"></i> 100% GMB Suspension-Safe
         </div>
-        <p class="text-xs text-slate-400 leading-relaxed">
+        <p id="pillar3Desc" class="text-xs text-slate-400 leading-relaxed">
           We never alter your Google Business Profile primary URL, keeping your Google ranking completely untouched and 100% safe from Google spam audits.
         </p>
       </div>
 
       <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1.5">
-        <div class="text-purple-400 text-sm font-bold flex items-center gap-2">
+        <div id="pillar4Title" class="text-purple-400 text-sm font-bold flex items-center gap-2">
           <i class="fa-solid fa-handshake"></i> Verified DNS Propagation Proof
         </div>
-        <p class="text-xs text-slate-400 leading-relaxed">
+        <p id="pillar4Desc" class="text-xs text-slate-400 leading-relaxed">
           We perform a live test on global root nameservers to prove your cryptographic token is active worldwide before finalizing your setup.
         </p>
       </div>
     </div>
 
     <!-- Offer & Call to Action -->
-    <div class="bg-gradient-to-br from-emerald-950/80 via-slate-900 to-sky-950/80 rounded-2xl p-6 sm:p-8 border border-emerald-500/50 shadow-2xl text-center space-y-5">
+    <div class="bg-gradient-to-br from-emerald-950/80 via-slate-900 to-sky-950/80 rounded-2xl p-5 sm:p-8 border border-emerald-500/50 shadow-2xl text-center space-y-4 sm:space-y-5">
       <div class="space-y-2">
-        <span class="text-xs font-mono uppercase tracking-wider text-emerald-300 font-bold bg-emerald-950 px-3 py-1 rounded-full border border-emerald-500/40">
+        <span id="offerBadge" class="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-emerald-300 font-bold bg-emerald-950 px-3 py-1 rounded-full border border-emerald-500/40">
           Limited Local Territory Allocation
         </span>
-        <h2 class="text-2xl sm:text-3xl font-black text-white">
+        <h2 id="offerTitle" class="text-xl sm:text-3xl font-black text-white">
           Lock Your Practice's AI Verification Today
         </h2>
-        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto">
+        <p id="offerDesc" class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
           Complete turnkey setup: OpenAI Cryptographic Token, Schema.org Local Entity JSON-LD, /llms.txt AI Grounding Manifest, and Global DNS injection.
         </p>
       </div>
 
-      <div class="py-2">
+      <div class="py-1 sm:py-2">
         <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono">
-          ₹3,499 <span class="text-xs font-normal text-slate-400 font-sans">one-time setup fee • Zero monthly software subscriptions</span>
+          ₹3,499 <span id="offerPriceSub" class="text-xs font-normal text-slate-400 font-sans block sm:inline">one-time setup fee • Zero monthly subscriptions</span>
         </div>
-        <p class="text-[11px] text-slate-400 pt-1">
+        <p id="offerGuarantee" class="text-[11px] text-slate-400 pt-1">
           Flexible 50/50 Payment Available: 50% Activation Deposit, 50% only after live DNS verification test passes.
         </p>
       </div>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-        <a id="btnClaimWhatsApp" href="https://wa.me/919167463807?text=Namaste!%20I%20want%20to%20lock%20my%20business%20AI%20verification%20today." target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-950/60 transition flex items-center justify-center gap-2">
-          <i class="fa-brands fa-whatsapp text-lg"></i> Lock Verification on WhatsApp
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-2">
+        <a id="btnClaimWhatsApp" href="https://wa.me/919167463807?text=Namaste!%20I%20want%20to%20lock%20my%20business%20AI%20verification%20today." target="_blank" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-950/60 transition flex items-center justify-center gap-2 min-h-[48px]">
+          <i class="fa-brands fa-whatsapp text-lg"></i> <span id="ctaLockText">Lock Verification on WhatsApp</span>
         </a>
-        <a href="tel:09054790592" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-phone text-xs"></i> Call 090547 90592
+        <a id="btnCallHotline" href="tel:09054790592" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition flex items-center justify-center gap-2 min-h-[48px]">
+          <i class="fa-solid fa-phone text-xs"></i> <span id="ctaCallText">Call 090547 90592</span>
         </a>
       </div>
 
-      <p class="text-[10px] text-slate-400">
+      <p id="footerTagText" class="text-[10px] text-slate-400">
         Engineered by Big Byte Systems • Panch Pakhadi, Thane West, MH - 400602.
       </p>
     </div>
@@ -252,67 +290,163 @@
     document.getElementById('displayLocation').textContent = clientLocation;
     document.getElementById('displayPhone').textContent = clientPhone;
 
-    // Personalize WhatsApp link
     let currentLang = params.get('lang') || 'en';
-    const waText = encodeURIComponent(`Namaste Big Byte Systems! I am interested in locking official AI verification for ${clientName}. Please send the activation steps.`);
-    document.getElementById('btnClaimWhatsApp').href = `https://wa.me/919167463807?text=${waText}`;
 
-    const translations = {
+    const fullTranslations = {
       en: {
+        chooseLang: "Choose Video & Voice Language:",
+        headerSub: "Official ChatGPT & Generative AI Search Verification",
+        alert: "<strong>Critical 2026 Shift:</strong> Patients and affluent clients in Thane are searching directly inside <strong>ChatGPT Search</strong> and <strong>Perplexity</strong>. Unverified businesses are completely invisible to AI search algorithms.",
         badge: "30-Second Clinical Explainer",
         title: "Why AI Platforms Cannot Recommend Your Practice Today",
         desc: "Watch Dr. Ananya explain how OpenAI's official Blue Checkmark and domain authority tokens protect your clinic from losing patients to competitors.",
         video: "ananya_pitch_video.mp4",
         audioBadge: '<i class="fa-solid fa-volume-high text-emerald-400 mr-1"></i> Audio: English (NeerjaNeural • -14 LUFS)',
-        cta: '<i class="fa-brands fa-whatsapp text-lg"></i> Lock Verification on WhatsApp',
-        alert: "<strong>Critical 2026 Shift:</strong> Patients and affluent clients in Thane are searching directly inside <strong>ChatGPT Search</strong> and <strong>Perplexity</strong>. Unverified businesses are completely invisible to AI search algorithms."
+        simBadge: "Live AI Simulation",
+        simTitle: "Your Business in ChatGPT Search (Post-Verification)",
+        simCheck: '<i class="fa-solid fa-circle-check"></i> Blue Checkmark Ready',
+        simQuotePrefix: '"Based on verified domain credentials and structured clinic records, ',
+        simQuoteSuffix: ' is officially verified in Thane West with certified facilities, transparent patient hours, and direct hotline access."',
+        pillar1Title: '<i class="fa-solid fa-ranking-star"></i> First-Mover Ranking Advantage',
+        pillar1Desc: "OpenAI only highlights 2 to 3 businesses per pincode. Locking your verification now secures your position before competitors claim your locality.",
+        pillar2Title: '<i class="fa-solid fa-globe"></i> Works On Any Website Or Handle',
+        pillar2Desc: "Whether you own a custom .com domain, a GetSite / Wix page, or just an Instagram profile, our AI Authority Bridge provides instant verification.",
+        pillar3Title: '<i class="fa-solid fa-shield-halved"></i> 100% GMB Suspension-Safe',
+        pillar3Desc: "We never alter your Google Business Profile primary URL, keeping your Google ranking completely untouched and 100% safe from Google spam audits.",
+        pillar4Title: '<i class="fa-solid fa-handshake"></i> Verified DNS Propagation Proof',
+        pillar4Desc: "We perform a live test on global root nameservers to prove your cryptographic token is active worldwide before finalizing your setup.",
+        offerBadge: "Limited Local Territory Allocation",
+        offerTitle: "Lock Your Practice's AI Verification Today",
+        offerDesc: "Complete turnkey setup: OpenAI Cryptographic Token, Schema.org Local Entity JSON-LD, /llms.txt AI Grounding Manifest, and Global DNS injection.",
+        offerPriceSub: "one-time setup fee • Zero monthly software subscriptions",
+        offerGuarantee: "Flexible 50/50 Payment Available: 50% Activation Deposit, 50% only after live DNS verification test passes.",
+        ctaLock: "Lock Verification on WhatsApp",
+        ctaCall: "Call 090547 90592",
+        footerTag: "Engineered by Big Byte Systems • Panch Pakhadi, Thane West, MH - 400602.",
+        waMsg: `Namaste Big Byte Systems! I am interested in locking official AI verification for ${clientName}. Please send the activation steps.`
       },
       hi: {
+        chooseLang: "वीडियो व ऑडियो भाषा चुनें:",
+        headerSub: "ऑफिशियल चैट-जीपीटी व जनरेटिव एआई सर्च वेरिफिकेशन",
+        alert: "<strong>महत्वपूर्ण 2026 बदलाव:</strong> ठाणे के मरीज व संपन्न ग्राहक अब गूगल मैप्स के बजाय सीधे <strong>चैट-जीपीटी</strong> और <strong>परप्लेक्सिटी</strong> पर क्लिनिक सर्च कर रहे हैं। बिना वेरिफिकेशन आपकी क्लिनिक एआई को दिखाई नहीं देती।",
         badge: "30-सेकंड डॉक्टर एक्सप्लेनर वीडियो",
         title: "एआई सर्च इंजन आपकी क्लिनिक को रेकमेंड क्यों नहीं कर पा रहे हैं?",
         desc: "डॉ. अनन्या से सुनिए कि कैसे चैटजीपीटी का ऑफिशियल ब्लू टिक और एआई अथॉरिटी टोकन आपकी क्लिनिक को हाई-टिकट मरीज दिलाता है।",
         video: "ananya_pitch_video_hi.mp4",
         audioBadge: '<i class="fa-solid fa-volume-high text-emerald-400 mr-1"></i> ऑडियो: हिंदी (SwaraNeural • -14 LUFS)',
-        cta: '<i class="fa-brands fa-whatsapp text-lg"></i> व्हाट्सएप पर वेरिफिकेशन लॉक करें',
-        alert: "<strong>महत्वपूर्ण 2026 बदलाव:</strong> ठाणे के मरीज अब गूगल के बजाय सीधे <strong>चैट-जीपीटी</strong> और <strong>परप्लेक्सिटी</strong> पर क्लिनिक सर्च कर रहे हैं। बिना वेरिफिकेशन आपकी क्लिनिक एआई को दिखाई नहीं देती।"
+        simBadge: "लाइव एआई सिमुलेशन",
+        simTitle: "चैट-जीपीटी सर्च में आपका क्लिनिक (वेरिफिकेशन के बाद)",
+        simCheck: '<i class="fa-solid fa-circle-check"></i> ब्लू टिक एक्टिव',
+        simQuotePrefix: '"वेरिफाइड डोमेन क्रेडेंशियल्स और क्लिनिकल रिकॉर्ड्स के आधार पर, ',
+        simQuoteSuffix: ' ठाणे वेस्ट में अधिकृत रूप से सत्यापित है, जहाँ प्रमाणित सुविधाएँ और डायरेक्ट हेल्पलाइन उपलब्ध है।"',
+        pillar1Title: '<i class="fa-solid fa-ranking-star"></i> फर्स्ट-मूवर रैंकिंग का बड़ा फ़ायदा',
+        pillar1Desc: "ओपन-एआई प्रत्येक पिनकोड में केवल शीर्ष 2 से 3 क्लिनिक्स को हाइलाइट करता है। अभी लॉक करने से आपके कॉम्पिटिटर्स आपके इलाके में आगे नहीं निकल पाएंगे।",
+        pillar2Title: '<i class="fa-solid fa-globe"></i> किसी भी वेबसाइट या हैंडल पर कार्यरत',
+        pillar2Desc: "चाहे आपका अपना .com डोमेन हो, GetSite/Wix पेज हो या सिर्फ इंस्टाग्राम प्रोफाइल, हमारा AI अथॉरिटी ब्रिज तुरंत वेरिफिकेशन प्रदान करता है।",
+        pillar3Title: '<i class="fa-solid fa-shield-halved"></i> गूगल सस्पेंशन से 100% सुरक्षित',
+        pillar3Desc: "हम आपके गूगल बिजनेस प्रोफाइल (GMB) के मुख्य URL को कभी नहीं बदलते, जिससे आपकी गूगल मैप्स रैंकिंग पूरी तरह सुरक्षित रहती है।",
+        pillar4Title: '<i class="fa-solid fa-handshake"></i> लाइव DNS प्रोपेगेशन का ठोस प्रमाण',
+        pillar4Desc: "हम ग्लोबल रूट नेम-सर्वर्स पर लाइव टेस्ट करके साबित करते हैं कि आपका क्रिप्टोग्राफिक टोकन पूरे विश्व में सक्रिय हो चुका है।",
+        offerBadge: "सीमित स्थानीय टेरिटरी आवंटन",
+        offerTitle: "आज ही अपनी क्लिनिक का एआई वेरिफिकेशन लॉक करें",
+        offerDesc: "कम्प्लीट टर्नकी सेटअप: ओपन-एआई टोकन, Schema.org लोकल एंटिटी कोड, /llms.txt AI मेनिफेस्ट, और ग्लोबल DNS ऑथेंटिकेशन।",
+        offerPriceSub: "एकमुश्त सेटअप फीस • कोई मासिक सॉफ्टवेयर शुल्क नहीं",
+        offerGuarantee: "सुलभ 50/50 भुगतान: 50% एक्टिवेशन डिपॉजिट, बाकी 50% केवल लाइव DNS टेस्ट पास होने के बाद।",
+        ctaLock: "व्हाट्सएप पर वेरिफिकेशन लॉक करें",
+        ctaCall: "कॉल करें: 090547 90592",
+        footerTag: "बिग बाइट सिस्टम्स द्वारा निर्मित • पंच पखाड़ी, ठाणे वेस्ट, महाराष्ट्र - 400602.",
+        waMsg: `नमस्ते बिग बाइट सिस्टम्स! मैं ${clientName} के लिए ऑफिशियल एआई वेरिफिकेशन लॉक करना चाहता हूँ। कृपया एक्टिवेशन डिटेल्स भेजें।`
       },
       mr: {
+        chooseLang: "व्हिडिओ व ऑडिओ भाषा निवडा:",
+        headerSub: "अधिकृत चॅट-जीपीटी आणि जनरेटिव्ह एआय सर्च व्हेरिफिकेशन",
+        alert: "<strong>महत्त्वाचा 2026 बदल:</strong> ठाण्यातील रुग्ण आता गुगल ऐवजी थेट <strong>चॅट-जीपीटी</strong> आणि <strong>परप्लेक्सिटी</strong>वर क्लिनिक शोधत आहेत. अधिकृत व्हेरिफिकेशन नसल्यास क्लिनिक एआयला दिसतच नाही.",
         badge: "30-सेकंद डॉक्टर एक्सप्लेनर व्हिडिओ",
         title: "एआय सर्च इंजिन्स तुमच्या क्लिनिकची शिफारस का करत नाहीत?",
         desc: "डॉ. अनन्या यांच्याकडून ऐका की अधिकृत चॅटजीपीटी ब्लू टिक आणि एआय टोकन तुमच्या क्लिनिकचे रुग्ण कसे सुरक्षित ठेवतात.",
         video: "ananya_pitch_video_mr.mp4",
         audioBadge: '<i class="fa-solid fa-volume-high text-emerald-400 mr-1"></i> ऑडिओ: मराठी (AarohiNeural • -14 LUFS)',
-        cta: '<i class="fa-brands fa-whatsapp text-lg"></i> व्हॉट्सॲपवर व्हेरिफिकेशन लॉक करा',
-        alert: "<strong>महत्त्वाचा 2026 बदल:</strong> ठाण्यातील रुग्ण आता गुगल ऐवजी थेट <strong>चॅट-जीपीटी</strong> आणि <strong>परप्लेक्सिटी</strong>वर क्लिनिक शोधत आहेत. व्हेरिफिकेशन नसल्यास क्लिनिक एआयला दिसतच नाही."
+        simBadge: "थेट एआय सिम्युलेशन",
+        simTitle: "चॅट-जीपीटी सर्चमध्ये तुमचे क्लिनिक (व्हेरिफिकेशन नंतर)",
+        simCheck: '<i class="fa-solid fa-circle-check"></i> ब्लू टिक सक्रिय',
+        simQuotePrefix: '"प्रमाणित डोमेन क्रेडेंशियल्स आणि क्लिनिक नोंदींच्या आधारे, ',
+        simQuoteSuffix: ' ठाणे पश्चिमेत अधिकृतपणे प्रमाणित आहे, जिथे रुग्ण सेवेसाठी थेट संपर्क उपलब्ध आहे."',
+        pillar1Title: '<i class="fa-solid fa-ranking-star"></i> प्रथम-क्रमांक रँकिंगचा मोठा फायदा',
+        pillar1Desc: "ओपन-एआई प्रत्येक पिनकोडमध्ये केवळ 2 ते 3 क्लिनिक्सची शिफारस करते. आत्ताच लॉक केल्याने स्पर्धक तुमच्या पुढे जाऊ शकणार नाहीत.",
+        pillar2Title: '<i class="fa-solid fa-globe"></i> कोणत्याही वेबसाइट किंवा प्रोफाइलवर कार्यरत',
+        pillar2Desc: "तुमच्याकडे स्वतःचे .com डोमेन असो, GetSite/Wix पेज असो किंवा फक्त इंस्टाग्राम, आमचा AI ब्रिज तत्काळ व्हेरिफिकेशन देतो.",
+        pillar3Title: '<i class="fa-solid fa-shield-halved"></i> गुगल सस्पेंशनपासून 100% सुरक्षित',
+        pillar3Desc: "आम्ही तुमच्या गुगल बिझनेस प्रोफाइलचा मुख्य URL कधीही बदलत नाही, ज्यामुळे गुगल मॅप्स रँकिंग 100% सुरक्षित राहते.",
+        pillar4Title: '<i class="fa-solid fa-handshake"></i> थेट DNS व्हेरिफिकेशनचा पुरावा',
+        pillar4Desc: "आम्ही ग्लोबल रूट नेम-सर्व्हरवर थेट चाचणी करून दाखवतो की तुमचा टोकन जगभरात सक्रिय झाला आहे.",
+        offerBadge: "मर्यादित स्थानिक जागा",
+        offerTitle: "आजच तुमच्या क्लिनिकचे एआय व्हेरिफिकेशन सुरक्षित करा",
+        offerDesc: "संपूर्ण टर्नकी सेटअप: ओपन-एआय टोकन, Schema.org लोकल कोड, /llms.txt AI मॅनिफेस्ट, आणि ग्लोबल DNS ऑथेंटिकेशन.",
+        offerPriceSub: "एकवेळ सेटअप शुल्क • कोणतीही मासिक फी नाही",
+        offerGuarantee: "सुलभ 50/50 पेमेंट: 50% ॲक्टिव्हेशन डिपॉझिट, उर्वरित 50% फक्त थेट DNS टेस्ट पास झाल्यानंतर.",
+        ctaLock: "व्हॉट्सॲपवर व्हेरिफिकेशन लॉक करा",
+        ctaCall: "कॉल करा: 090547 90592",
+        footerTag: "बिग बाइट सिस्टीम्स निर्मित • पाचपाखाडी, ठाणे पश्चिम, महाराष्ट्र - 400602.",
+        waMsg: `नमस्कार बिग बाइट सिस्टीम्स! मला ${clientName} साठी अधिकृत एआय व्हेरिफिकेशन लॉक करायचे आहे. कृपया पुढील माहिती पाठवा.`
       }
     };
 
     function switchLanguage(lang) {
       currentLang = lang;
-      const t = translations[lang] || translations.en;
+      const t = fullTranslations[lang] || fullTranslations.en;
 
       // Update buttons
       ['en', 'hi', 'mr'].forEach(l => {
         const btn = document.getElementById(`langBtn${l.charAt(0).toUpperCase() + l.slice(1)}`);
         if (l === lang) {
-          btn.className = "px-3 py-1 rounded-lg text-xs font-bold bg-sky-600 text-white transition flex items-center gap-1 shadow-md shadow-sky-950/60";
+          btn.className = "py-2 px-3 rounded-lg text-xs font-bold bg-sky-600 text-white transition flex items-center justify-center gap-1 shadow-md shadow-sky-950/60";
         } else {
-          btn.className = "px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1";
+          btn.className = "py-2 px-3 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center justify-center gap-1";
         }
       });
 
-      // Update text
+      // Update All Page Text
+      document.getElementById('chooseLangLabel').textContent = t.chooseLang;
+      document.getElementById('headerSubtitle').textContent = t.headerSub;
+      document.getElementById('alertBannerText').innerHTML = t.alert;
       document.getElementById('badgeText').textContent = t.badge;
       document.getElementById('videoTitle').textContent = t.title;
       document.getElementById('videoDesc').textContent = t.desc;
       document.getElementById('audioTrackBadge').innerHTML = t.audioBadge;
-      document.getElementById('alertBannerText').innerHTML = t.alert;
-      document.getElementById('btnClaimWhatsApp').innerHTML = t.cta;
+      
+      document.getElementById('simBadge').textContent = t.simBadge;
+      document.getElementById('simTitle').textContent = t.simTitle;
+      document.getElementById('simCheck').innerHTML = t.simCheck;
+      document.getElementById('simQuotePrefix').textContent = t.simQuotePrefix;
+      document.getElementById('simQuoteSuffix').textContent = t.simQuoteSuffix;
 
-      // Update video source & play state
+      document.getElementById('pillar1Title').innerHTML = t.pillar1Title;
+      document.getElementById('pillar1Desc').textContent = t.pillar1Desc;
+      document.getElementById('pillar2Title').innerHTML = t.pillar2Title;
+      document.getElementById('pillar2Desc').textContent = t.pillar2Desc;
+      document.getElementById('pillar3Title').innerHTML = t.pillar3Title;
+      document.getElementById('pillar3Desc').textContent = t.pillar3Desc;
+      document.getElementById('pillar4Title').innerHTML = t.pillar4Title;
+      document.getElementById('pillar4Desc').textContent = t.pillar4Desc;
+
+      document.getElementById('offerBadge').textContent = t.offerBadge;
+      document.getElementById('offerTitle').textContent = t.offerTitle;
+      document.getElementById('offerDesc').textContent = t.offerDesc;
+      document.getElementById('offerPriceSub').textContent = t.offerPriceSub;
+      document.getElementById('offerGuarantee').textContent = t.offerGuarantee;
+
+      document.getElementById('ctaLockText').textContent = t.ctaLock;
+      document.getElementById('ctaCallText').textContent = t.ctaCall;
+      document.getElementById('footerTagText').textContent = t.footerTag;
+
+      // Update WhatsApp links with translated message
+      const encodedWa = encodeURIComponent(t.waMsg);
+      document.getElementById('btnClaimWhatsApp').href = `https://wa.me/919167463807?text=${encodedWa}`;
+      document.getElementById('headerContactBtn').href = `https://wa.me/919167463807?text=${encodedWa}`;
+
+      // Update Video
       const video = document.getElementById('pitchVideo');
-      const wasPlaying = !video.paused;
-      const currentTime = video.currentTime;
+      const wasPlaying = !video.paused && video.currentTime > 0;
       video.src = t.video;
       video.load();
       if (wasPlaying) {
@@ -326,7 +460,7 @@
     }
 
     // Auto-init language from query param
-    if (currentLang && translations[currentLang]) {
+    if (currentLang && fullTranslations[currentLang]) {
       switchLanguage(currentLang);
     }
   </script>
