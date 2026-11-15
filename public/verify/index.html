@@ -406,8 +406,16 @@
                     <i class="fa-brands fa-whatsapp text-sm"></i> Send WhatsApp Pitch (1-Click)
                   </button>
                 </div>
+                <div class="flex flex-wrap items-center gap-2 pt-0.5">
+                  <button onclick="openClientPitchPreview()" class="px-3 py-1.5 rounded-lg bg-sky-600/30 hover:bg-sky-600/50 text-sky-300 text-xs font-semibold border border-sky-500/30 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview Customer Landing Page
+                  </button>
+                  <button onclick="copyClientPitchLink(this)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition flex items-center gap-1.5">
+                    <i class="fa-regular fa-copy"></i> Copy Customer Page URL
+                  </button>
+                </div>
                 <p class="text-[10px] text-slate-400 flex items-center gap-1.5">
-                  <i class="fa-solid fa-circle-info text-sky-400"></i> Opens official WhatsApp with personalized text, live AI card link, and streaming pitch video.
+                  <i class="fa-solid fa-circle-info text-sky-400"></i> The customer page shows ONLY Dr. Ananya's video, live Knowledge Card, and ₹3,499 lock button — hiding all admin/DNS tools.
                 </p>
               </div>
 
@@ -753,14 +761,13 @@
       document.getElementById('llmsCode').textContent = llmsText;
 
       // WhatsApp Pitch Script with Video & Preview links
-      const videoUrl = "https://most-earned-bits-question.trycloudflare.com/verify/ananya_pitch_video.mp4";
-      const hubUrl = "https://most-earned-bits-question.trycloudflare.com/verify/";
+      const pitchPageUrl = getClientPitchUrl(name, category, phone);
       
       let pitchText = "";
       if (currentMode === 'getsite' || currentMode === 'bridge') {
-        pitchText = `Namaste ${name}! 🙏\n\nDid you know that patients and clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nEven without a custom domain, we can get your business officially verified with the ChatGPT Blue Checkmark using our AI Search Bridge.\n\n🎬 Watch Dr. Ananya's 30s Explainer: ${videoUrl}\n\n🔍 Preview your live AI Knowledge Card: ${hubUrl}\n\nWe configure your complete AI Search presence for just ₹3,499. Would you like to lock your verification today?`;
+        pitchText = `Namaste ${name}! 🙏\n\nDid you know that patients and clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nEven without a custom domain, we can get your business officially verified with the ChatGPT Blue Checkmark using our AI Search Bridge.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWe configure your complete AI Search presence for just ₹3,499. Would you like to lock your verification today?`;
       } else {
-        pitchText = `Namaste Dr. / Team ${name}! 🙏\n\nDid you know affluent patients & clients in Thane are now searching directly inside ChatGPT instead of Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card. Would you like us to lock your verification today for ₹3,499?\n\n🎬 Watch Dr. Ananya's 30s Explainer: ${videoUrl}\n\n🔍 Preview your live AI listing here: ${hubUrl}\n\nReply 'YES' to activate it in 15 minutes!`;
+        pitchText = `Namaste Dr. / Team ${name}! 🙏\n\nDid you know affluent patients & clients in Thane are now searching directly inside ChatGPT instead of Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nReply 'YES' to activate it in 15 minutes!`;
       }
       document.getElementById('pitchCode').textContent = pitchText;
 
@@ -769,6 +776,26 @@
       if (dispatchInput && (!dispatchInput.value || dispatchInput.value === '9167463807' || dispatchInput.value.length < 10)) {
         dispatchInput.value = whatsapp || "919167463807";
       }
+    }
+
+    function getClientPitchUrl(customName = null, customCategory = null, customPhone = null) {
+      const name = customName || document.getElementById('bizName').value.trim() || "Your Business";
+      const cat = customCategory || document.getElementById('bizCategory').value.trim() || "Healthcare Clinic";
+      const ph = customPhone || document.getElementById('bizPhone').value.trim() || "09054790592";
+      return `https://most-earned-bits-question.trycloudflare.com/verify/pitch.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&phone=${encodeURIComponent(ph)}`;
+    }
+
+    function openClientPitchPreview() {
+      window.open(getClientPitchUrl(), '_blank');
+    }
+
+    function copyClientPitchLink(btn) {
+      const url = getClientPitchUrl();
+      navigator.clipboard.writeText(url).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Copied Link!`;
+        setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      });
     }
 
     // Toggle Single vs Batch Dispatch
@@ -803,10 +830,9 @@
       }
 
       const clientName = customName || document.getElementById('bizName').value.trim() || "Local Practice";
-      const videoUrl = "https://most-earned-bits-question.trycloudflare.com/verify/ananya_pitch_video.mp4";
-      const hubUrl = "https://most-earned-bits-question.trycloudflare.com/verify/";
+      const pitchPageUrl = getClientPitchUrl(clientName);
 
-      const message = `Namaste Dr. / Team ${clientName}! 🙏\n\nDid you know affluent patients & clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer: ${videoUrl}\n\n🔍 Preview your live AI listing here: ${hubUrl}\n\nWould you like us to lock your verification today for ₹3,499? Reply 'YES' to activate it in 15 minutes!`;
+      const message = `Namaste Dr. / Team ${clientName}! 🙏\n\nDid you know affluent patients & clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWould you like us to lock your verification today for ₹3,499? Reply 'YES' to activate it in 15 minutes!`;
 
       const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
