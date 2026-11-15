@@ -354,7 +354,7 @@
     "clientName": "Big Byte Systems",
     "day": 21,
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-15",
     "time": "11:30",
     "title": "📍 Overheating Thermal Servicing, Thane",
@@ -363,7 +363,9 @@
     "auditPassed": true,
     "auditIssues": [],
     "auditWarnings": [],
-    "mediaUrl": "/assets/reel_fan_cleaning.jpg"
+    "mediaUrl": "/assets/reel_fan_cleaning.jpg",
+    "publishedAt": "2026-11-15T09:44:24.190Z",
+    "cloudDispatched": true
   },
   {
     "id": "post_bb_17",
