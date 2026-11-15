@@ -32,7 +32,7 @@ DIALOGUE_LINES = [
         "voice": "en-IN-PrabhatNeural",
         "rate": "+1%",
         "pitch": "-2Hz",
-        "text": "They're walking straight into the big corporate chains on Ghodbunder Road. We have fifteen years of surgical trust here in Panch Pakhadi, but our website barely converts five patient calls a week. Patients think all dental clinics are the same."
+        "text": "They're walking straight into the big corporate chains on Ghod-bundur Road. We have fifteen years of surgical trust here in Paanch Pakhaadi, but our website barely converts five patient calls a week. Patients think all dental clinics are the same."
     },
     {
         "id": "line_3_ananya",
@@ -64,7 +64,7 @@ DIALOGUE_LINES = [
         "voice": "en-IN-NeerjaExpressiveNeural",
         "rate": "+2%",
         "pitch": "+0Hz",
-        "text": "Zero duplicate templates. Every reel features your clinic branding, your team, and your Panch Pakhadi location. Your daily routine? Exactly thirty seconds: we send today's reel preview to your WhatsApp at ten a.m. You review it, reply 'One' to approve, and our system publishes it everywhere while you treat patients. Tap the WhatsApp button to activate your three-day pilot at zero cost."
+        "text": "Zero duplicate templates. Every reel features your clinic branding, your team, and your Paanch Pakhaadi location. Your daily routine? Exactly thirty seconds: we send today's reel preview to your WhatsApp at ten a.m. You review it, reply 'One' to approve, and our system publishes it everywhere while you treat patients. Tap the WhatsApp button to activate your three-day pilot at zero cost."
     }
 ]
 

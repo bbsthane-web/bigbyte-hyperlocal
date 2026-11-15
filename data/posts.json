@@ -878,7 +878,7 @@
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-14",
     "time": "10:30",
     "title": "📍 Clicking Hard Drive & Cleanroom Head Transplantation",
@@ -888,14 +888,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-14T05:18:31.337Z"
   },
   {
     "id": "post_20261114_yt",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-14",
     "time": "11:30",
     "title": "▶ [Shorts] Hear a clicking or buzzing sound from your hard drive? #Shorts",
@@ -908,14 +909,15 @@
     "mediaFormat": "VIDEO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-14T06:00:02.226Z"
   },
   {
     "id": "post_20261114_fb",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-14",
     "time": "12:00",
     "title": "Clicking Hard Drive & Cleanroom Head Transplantation",
@@ -927,14 +929,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-14T06:31:47.987Z"
   },
   {
     "id": "post_20261114_ig",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-14",
     "time": "14:00",
     "title": "Clicking Hard Drive & Cleanroom Head Transplantation",
@@ -946,7 +949,8 @@
     "mediaFormat": "REELS",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-14T08:30:01.561Z"
   },
   {
     "id": "post_20261115_gmb",

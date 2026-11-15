@@ -1,7 +1,7 @@
 file 'scene_1.jpg'
 duration 15.07
 file 'scene_2.jpg'
-duration 18.29
+duration 18.38
 file 'scene_3.jpg'
 duration 16.94
 file 'scene_4.jpg'
@@ -9,5 +9,5 @@ duration 16.46
 file 'scene_5.jpg'
 duration 7.1
 file 'scene_6.jpg'
-duration 29.76
+duration 29.83
 file 'scene_6.jpg'

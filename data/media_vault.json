@@ -147,6 +147,34 @@
       "fileName": "plate_20261113_ig.jpg",
       "date": "2026-11-13",
       "lastPublished": "2026-11-13T08:30:09.980Z"
+    },
+    "4ba89d22cff6bfe88fd5ca5d52fd069fb2440579133a18abb4b0e0f650066b83": {
+      "postId": "post_20261114_gmb",
+      "platform": "gmb",
+      "fileName": "plate_20261114_gmb.jpg",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T05:18:33.681Z"
+    },
+    "b9d969c1843c5174f7d156a9fc8b3dcdbdcf859471d68c6d4737b2d7455c4f63": {
+      "postId": "post_20261114_yt",
+      "platform": "youtube",
+      "fileName": "plate_20261114_yt.jpg",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T06:00:02.269Z"
+    },
+    "ca9807d7b8939e848eb2beaa054f0e0e80047c8a5e902f3ab144fb321e47f7f9": {
+      "postId": "post_20261114_fb",
+      "platform": "facebook",
+      "fileName": "plate_20261114_fb.jpg",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T06:31:50.747Z"
+    },
+    "51d8bfbecc9f3d7d96eda2a518b7f34573aaad157d679e83d947669dd35923f1": {
+      "postId": "post_20261114_ig",
+      "platform": "instagram",
+      "fileName": "plate_20261114_ig.jpg",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T08:30:01.575Z"
     }
   },
   "hooks": {
@@ -415,6 +443,34 @@
       "snippet": "🔥 Lab Triage POV: Spilled water or coffee on your laptop? N",
       "date": "2026-11-13",
       "lastPublished": "2026-11-13T08:30:09.980Z"
+    },
+    "062240e7454effed43025a59fc3e20e8df3286d6f447f1e579623139f9528010": {
+      "postId": "post_20261114_gmb",
+      "platform": "gmb",
+      "snippet": "📍 Clicking Hard Drive & Cleanroom Head Transplantation",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T05:18:33.681Z"
+    },
+    "246db3759a789993db58df2e550acfcb1b136c4ac3ae38bf47d1bb5ce6348894": {
+      "postId": "post_20261114_yt",
+      "platform": "youtube",
+      "snippet": "▶ [Shorts] Hear a clicking or buzzing sound from your hard d",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T06:00:02.269Z"
+    },
+    "017a2aeeca89c20edecd306b0b1ff1ba58081faeec9fe84f99edc04031f1e083": {
+      "postId": "post_20261114_fb",
+      "platform": "facebook",
+      "snippet": "⚠️ Thane Tech Alert: Hear a clicking or buzzing sound from y",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T06:31:50.747Z"
+    },
+    "fb0bb0b5e5c8168b269af0f6e28b85b9ac6a36a5c75ad64c59cd7337592a3c3b": {
+      "postId": "post_20261114_ig",
+      "platform": "instagram",
+      "snippet": "🔥 Lab Triage POV: Hear a clicking or buzzing sound from you",
+      "date": "2026-11-14",
+      "lastPublished": "2026-11-14T08:30:01.575Z"
     }
   }
 }
