@@ -27,21 +27,14 @@
     .verified-glow {
       box-shadow: 0 0 25px -5px rgba(2, 132, 199, 0.4);
     }
-    .badge-pulse {
-      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse-ring {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.75; transform: scale(1.05); }
-    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
   <!-- Top Announcement Bar -->
   <div class="bg-gradient-to-r from-sky-900/60 via-slate-900 to-emerald-950/60 border-b border-sky-800/30 px-4 py-2.5 text-xs sm:text-sm text-center text-sky-200 flex items-center justify-center gap-2">
-    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">NEW PROTOCOL</span>
-    <span>OpenAI Business Hub &amp; Google Local Verification Grounding Engine • Live on Production VPS</span>
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">VERSION 2.0</span>
+    <span>No Domain / No GMB Engine • Social Handle Extractor • GetSite Snippets • Big Byte Hosted Bridge</span>
   </div>
 
   <!-- Header -->
@@ -54,7 +47,7 @@
             <div class="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
               BIG BYTE SYSTEMS <span class="text-xs px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">AI Verification Hub</span>
             </div>
-            <div class="text-[11px] text-slate-400">Thane West • Google &amp; ChatGPT Local Grounding</div>
+            <div class="text-[11px] text-slate-400">Thane West • Universal Social &amp; Domain AI Grounding</div>
           </div>
         </a>
       </div>
@@ -62,7 +55,7 @@
         <a href="/dentist/" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
           <i class="fa-solid fa-tooth text-emerald-400"></i> Dental Suite
         </a>
-        <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20I%20want%20to%20verify%20my%20business%20on%20ChatGPT%20and%20Google" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 transition">
+        <a href="https://wa.me/919167463807?text=Hi%20Big%20Byte%20Systems,%20I%20want%20to%20verify%20my%20business%20on%20ChatGPT" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 transition">
           <i class="fa-brands fa-whatsapp text-sm"></i> <span>Get Verified ₹3,499</span>
         </a>
       </div>
@@ -75,50 +68,83 @@
     <!-- Hero Section -->
     <div class="text-center max-w-3xl mx-auto space-y-3">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/80 border border-sky-500/30 text-sky-400 text-xs font-bold">
-        <i class="fa-solid fa-certificate"></i> OFFICIAL CHATGPT BLUE CHECKMARK &amp; GMB GROUNDING
+        <i class="fa-solid fa-wand-magic-sparkles"></i> UNIVERSAL INGESTION: DOMAIN, SOCIAL HANDLE OR GETSITE
       </div>
       <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-        Claim, Verify &amp; Lock Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">AI Search Monopoly</span>
+        Verify Any Business on <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">ChatGPT &amp; AI Search</span>
       </h1>
       <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-        Affluent customers don't just browse Google Maps anymore — they ask <strong class="text-slate-200">ChatGPT, Perplexity &amp; Siri</strong>. Generate your official DNS TXT verification token, <code class="font-mono text-sky-300">llms.txt</code> agent specification, and Schema.org structured data in 10 seconds.
+        No verified Google Business Profile? No custom domain? Running on <strong class="text-slate-200">GetSite, Instagram or Facebook</strong>? Paste your link below — our engine extracts your business identity and generates the exact injection code or hosted AI bridge.
       </p>
     </div>
 
-    <!-- Quick Presets -->
-    <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
-      <span class="text-xs text-slate-400 font-medium mr-1">One-Click Presets:</span>
-      <button onclick="loadPreset('bbs')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800/90 hover:bg-slate-700 text-sky-300 border border-slate-700/80 transition flex items-center gap-1.5">
-        <i class="fa-solid fa-laptop-medical"></i> Big Byte Systems (Thane)
-      </button>
-      <button onclick="loadPreset('sharma')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800/90 hover:bg-slate-700 text-emerald-300 border border-slate-700/80 transition flex items-center gap-1.5">
-        <i class="fa-solid fa-tooth"></i> Dr. Sharma Dental (Panch Pakhadi)
-      </button>
-      <button onclick="loadPreset('diagnostic')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800/90 hover:bg-slate-700 text-amber-300 border border-slate-700/80 transition flex items-center gap-1.5">
-        <i class="fa-solid fa-vial"></i> Thane Diagnostic &amp; MRI
-      </button>
+    <!-- Smart URL / Social Extractor Bar -->
+    <div class="glass-card rounded-2xl p-4 sm:p-5 max-w-4xl mx-auto border-2 border-sky-500/30 verified-glow space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold text-sky-300 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-amber-400"></i> Smart Link &amp; Social Handle Extractor
+        </span>
+        <span class="text-[11px] text-slate-400">Supports Instagram, Facebook, GetSite, Google Sites &amp; Custom Domains</span>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-link"></i>
+          </div>
+          <input type="text" id="extractUrlInput" placeholder="Paste link e.g. instagram.com/dr_sharma_dental or clinic.getsite.in" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+        </div>
+        <button onclick="extractFromUrl()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Extract &amp; Auto-Fill</span>
+        </button>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-400">
+        <span class="font-medium text-slate-300">Quick Test Links:</span>
+        <button onclick="testLink('instagram.com/dr_sharma_implants')" class="hover:text-sky-300 underline">Instagram Profile</button>
+        <span>•</span>
+        <button onclick="testLink('facebook.com/sharmadentalclinic')" class="hover:text-sky-300 underline">Facebook Page</button>
+        <span>•</span>
+        <button onclick="testLink('sharmadental.getsite.in')" class="hover:text-sky-300 underline">GetSite Subdomain</button>
+        <span>•</span>
+        <button onclick="testLink('bigbytesystems.co.in')" class="hover:text-sky-300 underline">Big Byte Custom Domain</button>
+      </div>
     </div>
 
     <!-- Main 2-Column Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-      <!-- Left Column: Business Configuration Form (5 cols) -->
+      <!-- Left Column: Business Parameters (5 cols) -->
       <div class="lg:col-span-5 glass-card rounded-2xl p-6 space-y-5">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <h2 class="text-base font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-sliders text-sky-400"></i> Business Parameters
+            <i class="fa-solid fa-sliders text-sky-400"></i> Business Grounding Details
           </h2>
-          <span class="text-xs text-slate-400 font-mono">Live Sync</span>
+          <span class="text-xs text-emerald-400 font-mono">Live Ingest</span>
         </div>
 
-        <div class="space-y-4 text-xs">
+        <!-- Infrastructure Mode Selector Tabs -->
+        <div>
+          <label class="block text-slate-300 font-semibold text-xs mb-1.5">Hosting &amp; Domain Setup</label>
+          <div class="grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[11px] font-semibold text-center">
+            <button id="modeBtnCustom" onclick="setInfraMode('custom')" class="py-1.5 rounded-lg bg-sky-600 text-white transition">
+              Own Domain
+            </button>
+            <button id="modeBtnGetsite" onclick="setInfraMode('getsite')" class="py-1.5 rounded-lg text-slate-400 hover:text-white transition">
+              GetSite / No Domain
+            </button>
+            <button id="modeBtnBridge" onclick="setInfraMode('bridge')" class="py-1.5 rounded-lg text-slate-400 hover:text-white transition">
+              Big Byte Bridge
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-3.5 text-xs">
           <div>
-            <label class="block text-slate-300 font-semibold mb-1">Business Name</label>
+            <label class="block text-slate-300 font-semibold mb-1">Business / Brand Name</label>
             <input type="text" id="bizName" value="Big Byte Systems" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">
           </div>
 
           <div>
-            <label class="block text-slate-300 font-semibold mb-1">Official Domain (No https://)</label>
+            <label class="block text-slate-300 font-semibold mb-1" id="domainLabel">Official Domain or Handle URL</label>
             <input type="text" id="bizDomain" value="bigbytesystems.co.in" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">
           </div>
 
@@ -128,7 +154,7 @@
           </div>
 
           <div>
-            <label class="block text-slate-300 font-semibold mb-1">Micro-Location &amp; Address</label>
+            <label class="block text-slate-300 font-semibold mb-1">Address / Micro-Location</label>
             <input type="text" id="bizAddress" value="Shop No. 4, Panch Pakhadi, Opposite TMC Ward Office, Thane West, MH - 400602" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">
           </div>
 
@@ -149,41 +175,37 @@
           </div>
 
           <div>
-            <label class="block text-slate-300 font-semibold mb-1">Core Specializations (Comma-Separated)</label>
+            <label class="block text-slate-300 font-semibold mb-1">Services / Specialties</label>
             <textarea id="bizServices" rows="2" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">MacBook Logic Board Repair, Laptop Screen &amp; Hinge Replacement, Corporate Printer AMC, 4K Vintage Photo Restoration, VHS Tape Remastering</textarea>
           </div>
         </div>
 
         <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-          <span><i class="fa-solid fa-shield-halved text-emerald-400"></i> Zero External Data Leak</span>
-          <span class="text-sky-400 font-mono">100% Local Browser Engine</span>
+          <span><i class="fa-solid fa-shield-halved text-emerald-400"></i> Client Data Isolated</span>
+          <span class="text-sky-400 font-mono">Instant Injection Code</span>
         </div>
       </div>
 
-      <!-- Right Column: Interactive Dual Preview & Technical Assets (7 cols) -->
+      <!-- Right Column: Dual AI Search Preview & Technical Outputs (7 cols) -->
       <div class="lg:col-span-7 space-y-6">
 
-        <!-- Preview Card Box -->
+        <!-- Live Simulation Card Box -->
         <div class="glass-card rounded-2xl p-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live AI Search Card Simulation</span>
-            </div>
-            <!-- Tabs -->
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live AI Search Simulation</span>
             <div class="flex items-center bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs font-semibold">
               <button id="tabChatgpt" onclick="setPreviewTab('chatgpt')" class="px-3 py-1 rounded-md bg-sky-600 text-white transition flex items-center gap-1.5">
                 <i class="fa-solid fa-sparkles text-sky-200"></i> ChatGPT Search
               </button>
               <button id="tabGoogle" onclick="setPreviewTab('google')" class="px-3 py-1 rounded-md text-slate-400 hover:text-white transition flex items-center gap-1.5">
-                <i class="fa-brands fa-google text-red-400"></i> Google 3-Pack
+                <i class="fa-brands fa-google text-red-400"></i> Google Local
               </button>
             </div>
           </div>
 
-          <!-- Tab Content 1: ChatGPT Knowledge Card -->
+          <!-- View 1: ChatGPT Knowledge Card -->
           <div id="viewChatgpt" class="space-y-4">
             <div class="p-5 rounded-xl bg-slate-900/90 border-2 border-sky-500/50 verified-glow relative space-y-3">
-              <!-- Top Row: Verified Badge & Domain -->
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-400/50">
@@ -193,10 +215,9 @@
                     <i class="fa-solid fa-lock text-[10px] text-emerald-400"></i> bigbytesystems.co.in
                   </span>
                 </div>
-                <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">OpenAI Business Hub</span>
+                <span id="previewBadgeSource" class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">OpenAI Business Hub</span>
               </div>
 
-              <!-- Title & Category -->
               <div>
                 <h3 id="previewTitle" class="text-lg font-bold text-white flex items-center gap-2">
                   Big Byte Systems <i class="fa-solid fa-certificate text-sky-400 text-sm"></i>
@@ -204,19 +225,10 @@
                 <div id="previewCategory" class="text-xs text-sky-300/90 font-medium">Computer, Laptop, MacBook &amp; Printer Repair Services</div>
               </div>
 
-              <!-- Grounded Summary Text -->
-              <div id="previewSummary" class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-800">
-                Officially verified service center in Panch Pakhadi, Thane West. Specializes in chip-level logic board diagnostics, liquid damage restoration, and corporate hardware servicing with 15+ years institutional trust.
-              </div>
+              <div id="previewSummary" class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-800"></div>
 
-              <!-- Services Chips -->
-              <div id="previewChips" class="flex flex-wrap gap-1.5 pt-1">
-                <span class="text-[11px] px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">MacBook Logic Board</span>
-                <span class="text-[11px] px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Laptop Screen Repair</span>
-                <span class="text-[11px] px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Printer AMC</span>
-              </div>
+              <div id="previewChips" class="flex flex-wrap gap-1.5 pt-1"></div>
 
-              <!-- Action Bar -->
               <div class="grid grid-cols-2 gap-3 pt-2">
                 <a id="btnCall" href="tel:09054790592" class="flex items-center justify-center gap-2 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition">
                   <i class="fa-solid fa-phone"></i> Call Hotline
@@ -227,16 +239,15 @@
               </div>
             </div>
 
-            <!-- Comparison Toggle Note -->
-            <div class="text-[11px] text-slate-400 flex items-center justify-between bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/80">
+            <div id="infraNote" class="text-[11px] text-slate-400 flex items-center justify-between bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/80">
               <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-circle-info text-sky-400"></i> Unverified businesses show plain un-badged text with zero direct action buttons.
+                <i class="fa-solid fa-circle-info text-sky-400"></i> Direct DNS verification active for root domain.
               </span>
-              <span class="text-emerald-400 font-semibold">Blue Checkmark Advantage</span>
+              <span class="text-emerald-400 font-semibold">Blue Checkmark Eligible</span>
             </div>
           </div>
 
-          <!-- Tab Content 2: Google 3-Pack Knowledge Card -->
+          <!-- View 2: Google Local Card -->
           <div id="viewGoogle" class="hidden space-y-4">
             <div class="p-5 rounded-xl bg-white text-slate-900 border border-slate-200 shadow-xl space-y-3">
               <div class="flex items-start justify-between">
@@ -247,7 +258,7 @@
                     <div class="flex text-amber-500 text-[10px]">
                       <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <span class="text-slate-500 font-normal">(184 reviews) • Computer repair service</span>
+                    <span class="text-slate-500 font-normal">(184 reviews)</span>
                   </div>
                 </div>
                 <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg border border-blue-200">
@@ -255,81 +266,78 @@
                 </div>
               </div>
               <div class="text-xs text-slate-600 space-y-1 border-t border-slate-100 pt-2">
-                <div id="gmbAddress"><i class="fa-solid fa-location-dot text-slate-400 mr-1.5"></i> Panch Pakhadi, Thane West, Maharashtra 400602</div>
+                <div id="gmbAddress"><i class="fa-solid fa-location-dot text-slate-400 mr-1.5"></i> Panch Pakhadi, Thane West</div>
                 <div id="gmbHours"><i class="fa-solid fa-clock text-slate-400 mr-1.5"></i> Open • Closes 9:00 PM</div>
                 <div id="gmbPhone"><i class="fa-solid fa-phone text-slate-400 mr-1.5"></i> 090547 90592</div>
               </div>
               <div class="grid grid-cols-3 gap-2 pt-1">
-                <div class="text-center py-1.5 rounded border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-50 cursor-pointer">Website</div>
-                <div class="text-center py-1.5 rounded border border-blue-600 text-blue-600 text-xs font-semibold hover:bg-blue-50 cursor-pointer">Directions</div>
-                <div class="text-center py-1.5 rounded bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 cursor-pointer">Call</div>
+                <div class="text-center py-1.5 rounded border border-blue-600 text-blue-600 text-xs font-semibold">Website</div>
+                <div class="text-center py-1.5 rounded border border-blue-600 text-blue-600 text-xs font-semibold">Directions</div>
+                <div class="text-center py-1.5 rounded bg-blue-600 text-white text-xs font-semibold">Call</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Technical Output Artifacts Tabs -->
+        <!-- Dynamic Output Artifacts depending on Infrastructure Mode -->
         <div class="glass-card rounded-2xl p-6 space-y-4">
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <i class="fa-solid fa-code text-emerald-400"></i> Instant Deployment Assets ($0 Stack)
+              <i class="fa-solid fa-code text-emerald-400"></i> <span id="assetTitle">Instant Deployment Snippets</span>
             </h2>
-            <span class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-bolt"></i> Ready to Inject</span>
+            <span class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-bolt"></i> $0 Zero Marginal Cost</span>
           </div>
 
-          <!-- Accordion / Subcards for DNS, llms.txt, Schema -->
           <div class="space-y-3">
 
-            <!-- Asset 1: DNS TXT Record -->
-            <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2">
+            <!-- Dynamic Box 1: DNS TXT or GetSite Custom Code or Bridge Link -->
+            <div id="boxDynamic" class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2">
               <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 text-xs font-bold text-sky-300">
-                  <i class="fa-solid fa-network-wired"></i> 1. DNS TXT Verification Record (ChatGPT Business Hub)
+                <div class="flex items-center gap-2 text-xs font-bold text-sky-300" id="boxDynamicLabel">
+                  <i class="fa-solid fa-network-wired"></i> 1. DNS TXT Verification Record (cPanel / GoDaddy)
                 </div>
-                <button onclick="copyToClipboard('dnsCode', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
-                  <i class="fa-regular fa-copy"></i> Copy Record
+                <button onclick="copyToClipboard('codeDynamic', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
+                  <i class="fa-regular fa-copy"></i> Copy Code
                 </button>
               </div>
-              <p class="text-[11px] text-slate-400">Add this record in your Cloudflare, GoDaddy, Namecheap, or cPanel DNS Manager.</p>
-              <div id="dnsCode" class="p-3 rounded-lg bg-black/60 font-mono text-xs text-emerald-400 overflow-x-auto select-all">
-                Host: @ | Type: TXT | TTL: 300 | Value: openai-domain-verification=openai_bbs_90592_thane_chk_2026
-              </div>
+              <p class="text-[11px] text-slate-400" id="boxDynamicDesc">Add this TXT record to your domain's DNS Zone Editor.</p>
+              <pre id="codeDynamic" class="p-3 rounded-lg bg-black/60 font-mono text-xs text-emerald-400 overflow-x-auto select-all max-h-36 whitespace-pre-wrap"></pre>
             </div>
 
-            <!-- Asset 2: llms.txt Manifest -->
+            <!-- Box 2: Schema.org JSON-LD (Universal for all setups) -->
             <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 text-xs font-bold text-amber-300">
-                  <i class="fa-solid fa-file-code"></i> 2. /llms.txt Specification (AI SearchBot Manifest)
-                </div>
-                <div class="flex items-center gap-2">
-                  <button onclick="copyToClipboard('llmsCode', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
-                    <i class="fa-regular fa-copy"></i> Copy
-                  </button>
-                  <button onclick="downloadLlmsTxt()" class="px-2.5 py-1 rounded bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 text-xs font-semibold border border-amber-500/30 transition">
-                    <i class="fa-solid fa-download"></i> Download
-                  </button>
-                </div>
-              </div>
-              <p class="text-[11px] text-slate-400">Upload to root of your website (<code class="text-slate-300">https://yourdomain.com/llms.txt</code>).</p>
-              <pre id="llmsCode" class="p-3 rounded-lg bg-black/60 font-mono text-[11px] text-slate-300 overflow-x-auto max-h-36 select-all"></pre>
-            </div>
-
-            <!-- Asset 3: Schema.org JSON-LD -->
-            <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 text-xs font-bold text-sky-300">
-                  <i class="fa-solid fa-diagram-project"></i> 3. Schema.org JSON-LD (Header Structured Data)
+                  <i class="fa-solid fa-diagram-project"></i> 2. Schema.org JSON-LD (Header Structured Data)
                 </div>
                 <button onclick="copyToClipboard('schemaCode', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
                   <i class="fa-regular fa-copy"></i> Copy JSON-LD
                 </button>
               </div>
-              <p class="text-[11px] text-slate-400">Inject into the <code class="text-slate-300">&lt;head&gt;</code> tag of your website.</p>
-              <pre id="schemaCode" class="p-3 rounded-lg bg-black/60 font-mono text-[11px] text-sky-300 overflow-x-auto max-h-36 select-all"></pre>
+              <p class="text-[11px] text-slate-400">Paste into the &lt;head&gt; section of GetSite, WordPress, Wix, or your website builder.</p>
+              <pre id="schemaCode" class="p-3 rounded-lg bg-black/60 font-mono text-[11px] text-amber-300 overflow-x-auto max-h-36 select-all"></pre>
             </div>
 
-            <!-- Asset 4: WhatsApp Pitch Script (Playbook 18) -->
+            <!-- Box 3: /llms.txt Specification -->
+            <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-xs font-bold text-sky-300">
+                  <i class="fa-solid fa-file-code"></i> 3. /llms.txt AI Grounding Manifest
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="copyToClipboard('llmsCode', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition">
+                    <i class="fa-regular fa-copy"></i> Copy
+                  </button>
+                  <button onclick="downloadLlmsTxt()" class="px-2.5 py-1 rounded bg-sky-600/30 hover:bg-sky-600/50 text-sky-300 text-xs font-semibold border border-sky-500/30 transition">
+                    <i class="fa-solid fa-download"></i> Download
+                  </button>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400">Save as <code class="text-slate-300">llms.txt</code> in the root folder of your website.</p>
+              <pre id="llmsCode" class="p-3 rounded-lg bg-black/60 font-mono text-[11px] text-slate-300 overflow-x-auto max-h-36 select-all"></pre>
+            </div>
+
+            <!-- Box 4: WhatsApp Pitch Script -->
             <div class="bg-gradient-to-br from-emerald-950/60 to-slate-900 rounded-xl p-4 border border-emerald-500/30 space-y-2">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2 text-xs font-bold text-emerald-300">
@@ -339,7 +347,7 @@
                   <i class="fa-regular fa-copy"></i> Copy Script
                 </button>
               </div>
-              <p class="text-[11px] text-slate-400">Send directly to Dr. Sharma or any local Thane clinic/business owner.</p>
+              <p class="text-[11px] text-slate-400">Ready-to-send message for businesses on GetSite or Instagram who lack a domain.</p>
               <div id="pitchCode" class="p-3 rounded-lg bg-black/60 font-sans text-xs text-slate-200 whitespace-pre-line leading-relaxed select-all"></div>
             </div>
 
@@ -369,54 +377,94 @@
 
   <!-- Interactive JavaScript Engine -->
   <script>
-    const presets = {
-      bbs: {
-        name: "Big Byte Systems",
-        domain: "bigbytesystems.co.in",
-        category: "Computer, Laptop, MacBook & Printer Repair Services",
-        address: "Shop No. 4, Panch Pakhadi, Opposite TMC Ward Office, Thane West, MH - 400602",
-        phone: "090547 90592",
-        whatsapp: "9167463807",
-        hours: "Mon-Sat: 10:00 AM - 9:00 PM (Sunday by Appointment)",
-        services: "MacBook Logic Board Repair, Laptop Screen & Hinge Replacement, Corporate Printer AMC, 4K Vintage Photo Restoration, VHS Tape Remastering",
-        summary: "Officially verified service center in Panch Pakhadi, Thane West. Specializes in chip-level logic board diagnostics, liquid damage restoration, and corporate hardware servicing with 15+ years institutional trust."
-      },
-      sharma: {
-        name: "Dr. Sharma Dental Clinic",
-        domain: "sharmadentalclinic.in",
-        category: "Dental Clinic, Advanced Implantology & Clear Aligners",
-        address: "102 Royal Arcade, Near Service Road, Panch Pakhadi, Thane West, MH - 400602",
-        phone: "+91 91674 63807",
-        whatsapp: "9167463807",
-        hours: "Mon-Sat: 10:00 AM - 8:30 PM",
-        services: "Painless Dental Implants, Clear Invisible Aligners, Laser Root Canal, Cosmetic Smile Makeovers, Pediatric Dentistry",
-        summary: "Leading dental implantology & smile design clinic in Panch Pakhadi, Thane West. 15+ years surgical experience, 3D digital intraoral scanning, transparent pricing, and 30-second patient video answers."
-      },
-      diagnostic: {
-        name: "Thane Diagnostic & MRI Imaging",
-        domain: "thanediagnostics.com",
-        category: "Diagnostic Center & Medical Imaging Laboratory",
-        address: "Ground Floor, Sunrise Tower, Gokhale Road, Naupada, Thane West, MH - 400602",
-        phone: "+91 91674 63807",
-        whatsapp: "9167463807",
-        hours: "Open 24/7 (Emergency Scans Available)",
-        services: "3 Tesla MRI Scans, 128-Slice CT Angiography, Digital X-Ray, Pathology Blood Tests, 4D Ultrasound",
-        summary: "NABL & NABH accredited 24/7 diagnostic and MRI center in Thane West. Same-day digital report delivery on WhatsApp and AI-assisted radiological precision."
-      }
-    };
+    let currentMode = 'custom'; // 'custom', 'getsite', 'bridge'
 
-    function loadPreset(key) {
-      const data = presets[key];
-      if (!data) return;
-      document.getElementById('bizName').value = data.name;
-      document.getElementById('bizDomain').value = data.domain;
-      document.getElementById('bizCategory').value = data.category;
-      document.getElementById('bizAddress').value = data.address;
-      document.getElementById('bizPhone').value = data.phone;
-      document.getElementById('bizWhatsapp').value = data.whatsapp;
-      document.getElementById('bizHours').value = data.hours;
-      document.getElementById('bizServices').value = data.services;
+    function setInfraMode(mode) {
+      currentMode = mode;
+      const btnCustom = document.getElementById('modeBtnCustom');
+      const btnGetsite = document.getElementById('modeBtnGetsite');
+      const btnBridge = document.getElementById('modeBtnBridge');
+      const domainLabel = document.getElementById('domainLabel');
+
+      [btnCustom, btnGetsite, btnBridge].forEach(b => {
+        b.className = "py-1.5 rounded-lg text-slate-400 hover:text-white transition";
+      });
+
+      if (mode === 'custom') {
+        btnCustom.className = "py-1.5 rounded-lg bg-sky-600 text-white transition";
+        domainLabel.textContent = "Official Domain (e.g. yourdomain.com)";
+      } else if (mode === 'getsite') {
+        btnGetsite.className = "py-1.5 rounded-lg bg-amber-600 text-white transition";
+        domainLabel.textContent = "GetSite / Website URL (e.g. clinic.getsite.in)";
+      } else {
+        btnBridge.className = "py-1.5 rounded-lg bg-emerald-600 text-white transition";
+        domainLabel.textContent = "Social Media Handle or WhatsApp Link";
+      }
+
       updateAll();
+    }
+
+    function extractFromUrl() {
+      const rawUrl = document.getElementById('extractUrlInput').value.trim();
+      if (!rawUrl) return;
+
+      let clean = rawUrl.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+      let detectedName = "";
+      let detectedCategory = "";
+      let detectedDomain = clean;
+
+      if (clean.includes('instagram.com/')) {
+        const handle = clean.split('instagram.com/')[1].split('/')[0].replace(/[._]/g, ' ');
+        detectedName = formatCapitalize(handle);
+        detectedCategory = guessCategoryFromName(detectedName);
+        setInfraMode('bridge');
+      } else if (clean.includes('facebook.com/')) {
+        const page = clean.split('facebook.com/')[1].split('/')[0].replace(/[._-]/g, ' ');
+        detectedName = formatCapitalize(page);
+        detectedCategory = guessCategoryFromName(detectedName);
+        setInfraMode('bridge');
+      } else if (clean.includes('getsite.in') || clean.includes('site') || clean.includes('wix') || clean.includes('page')) {
+        const sub = clean.split('.')[0].replace(/[._-]/g, ' ');
+        detectedName = formatCapitalize(sub);
+        detectedCategory = guessCategoryFromName(detectedName);
+        setInfraMode('getsite');
+      } else {
+        const domainBase = clean.split('.')[0].replace(/[._-]/g, ' ');
+        detectedName = formatCapitalize(domainBase);
+        detectedCategory = guessCategoryFromName(detectedName);
+        setInfraMode('custom');
+      }
+
+      document.getElementById('bizName').value = detectedName || "Local Business";
+      document.getElementById('bizDomain').value = clean;
+      document.getElementById('bizCategory').value = detectedCategory || "Local Professional Healthcare & Services";
+      updateAll();
+    }
+
+    function testLink(url) {
+      document.getElementById('extractUrlInput').value = url;
+      extractFromUrl();
+    }
+
+    function formatCapitalize(str) {
+      return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+
+    function guessCategoryFromName(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes('dent') || lower.includes('smile') || lower.includes('tooth')) {
+        return "Dental Clinic, Advanced Implantology & Clear Aligners";
+      }
+      if (lower.includes('repair') || lower.includes('byte') || lower.includes('laptop') || lower.includes('computer')) {
+        return "Computer, Laptop, MacBook & Printer Repair Services";
+      }
+      if (lower.includes('clinic') || lower.includes('dr') || lower.includes('care') || lower.includes('health')) {
+        return "Speciality Healthcare Clinic & Diagnostic Services";
+      }
+      if (lower.includes('salon') || lower.includes('beauty') || lower.includes('spa')) {
+        return "Luxury Hair, Skin & Aesthetic Beauty Studio";
+      }
+      return "Local Professional Services & Retail";
     }
 
     function setPreviewTab(tab) {
@@ -440,7 +488,7 @@
 
     function updateAll() {
       const name = document.getElementById('bizName').value.trim() || "Big Byte Systems";
-      const domain = document.getElementById('bizDomain').value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '') || "bigbytesystems.co.in";
+      let domain = document.getElementById('bizDomain').value.trim().replace(/^https?:\/\//i, '').replace(/\/.*$/, '') || "bigbytesystems.co.in";
       const category = document.getElementById('bizCategory').value.trim();
       const address = document.getElementById('bizAddress').value.trim();
       const phone = document.getElementById('bizPhone').value.trim();
@@ -448,11 +496,30 @@
       const hours = document.getElementById('bizHours').value.trim();
       const services = document.getElementById('bizServices').value.trim();
 
+      const cleanSlug = name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      const token = `openai_${cleanSlug}_thane_chk_2026`;
+
+      // Infrastructure Mode adjustments
+      let displayDomain = domain;
+      let badgeSource = "OpenAI Business Hub";
+      let infraText = "Direct DNS verification active for root domain.";
+
+      if (currentMode === 'bridge') {
+        displayDomain = `bigbytesystems.co.in/v/${cleanSlug}`;
+        badgeSource = "Big Byte Hosted AI Bridge";
+        infraText = `Zero Domain Needed: Verified under Big Byte Systems trusted domain network.`;
+      } else if (currentMode === 'getsite') {
+        badgeSource = "GetSite Meta & Schema Injection";
+        infraText = `Meta-tag & Schema injection verified for site-builder subdomain.`;
+      }
+
       // Update ChatGPT preview
-      document.getElementById('previewDomain').innerHTML = `<i class="fa-solid fa-lock text-[10px] text-emerald-400"></i> ${domain}`;
+      document.getElementById('previewDomain').innerHTML = `<i class="fa-solid fa-lock text-[10px] text-emerald-400"></i> ${displayDomain}`;
+      document.getElementById('previewBadgeSource').textContent = badgeSource;
       document.getElementById('previewTitle').innerHTML = `${name} <i class="fa-solid fa-certificate text-sky-400 text-sm"></i>`;
       document.getElementById('previewCategory').textContent = category;
-      document.getElementById('previewSummary').textContent = `Officially verified business in ${address}. Primary services include: ${services}. Verified contact hotline: ${phone}. Direct WhatsApp assistance available.`;
+      document.getElementById('previewSummary').textContent = `Verified local listing in ${address}. Grounded specializations: ${services}. Official contact hotline: ${phone}. Direct WhatsApp available.`;
+      document.getElementById('infraNote').innerHTML = `<span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-sky-400"></i> ${infraText}</span><span class="text-emerald-400 font-semibold">Blue Checkmark Eligible</span>`;
 
       const chipsContainer = document.getElementById('previewChips');
       chipsContainer.innerHTML = '';
@@ -465,7 +532,7 @@
       });
 
       document.getElementById('btnCall').href = `tel:${phone.replace(/\s+/g, '')}`;
-      document.getElementById('btnWa').href = `https://wa.me/${whatsapp}?text=Hi%20${encodeURIComponent(name)},%20I%20found%20your%20verified%20listing%20on%20ChatGPT.`;
+      document.getElementById('btnWa').href = `https://wa.me/${whatsapp}?text=Hi%20${encodeURIComponent(name)},%20I%20found%20your%20verified%20profile%20on%20ChatGPT.`;
 
       // Update Google GMB preview
       document.getElementById('gmbTitle').textContent = name;
@@ -473,24 +540,32 @@
       document.getElementById('gmbHours').innerHTML = `<i class="fa-solid fa-clock text-slate-400 mr-1.5"></i> ${hours}`;
       document.getElementById('gmbPhone').innerHTML = `<i class="fa-solid fa-phone text-slate-400 mr-1.5"></i> ${phone}`;
 
-      // Generate Clean Token based on domain
-      const cleanSlug = domain.replace(/[^a-zA-Z0-9]/g, '_');
-      const token = `openai_${cleanSlug}_thane_chk_2026`;
+      // Dynamic Box 1 content based on mode
+      const boxLabel = document.getElementById('boxDynamicLabel');
+      const boxDesc = document.getElementById('boxDynamicDesc');
+      const codeDynamic = document.getElementById('codeDynamic');
 
-      // 1. DNS Record
-      document.getElementById('dnsCode').textContent = `Host: @ (or ${domain}) | Type: TXT | TTL: 300 | Value: openai-domain-verification=${token}`;
+      if (currentMode === 'custom') {
+        boxLabel.innerHTML = `<i class="fa-solid fa-network-wired"></i> 1. DNS TXT Verification Record (cPanel / GoDaddy)`;
+        boxDesc.textContent = `Add this TXT record to your domain's DNS Zone Editor.`;
+        codeDynamic.textContent = `Host: @ (or ${domain}.) | Type: TXT | TTL: 14400 | Value: openai-domain-verification=${token}`;
+      } else if (currentMode === 'getsite') {
+        boxLabel.innerHTML = `<i class="fa-solid fa-code"></i> 1. GetSite / Website Builder Header Injection Code`;
+        boxDesc.textContent = `Copy and paste this into GetSite > Settings > Custom Code > Header Code.`;
+        codeDynamic.textContent = `<!-- ChatGPT & AI Search Authority Verification -->\n<meta name="openai-domain-verification" content="${token}">\n<meta name="ai-search-bot-authority" content="verified">\n<link rel="canonical" href="https://${domain}">\n<meta name="business:contact_number" content="${phone}">\n<meta name="business:whatsapp" content="+${whatsapp}">`;
+      } else {
+        boxLabel.innerHTML = `<i class="fa-solid fa-bridge"></i> 1. Big Byte Hosted AI Bridge URL (Zero Domain Needed)`;
+        boxDesc.textContent = `Give this verified AI landing URL to client or link it in their Instagram/Facebook bio.`;
+        codeDynamic.textContent = `Hosted AI Bridge: https://bigbytesystems.co.in/v/${cleanSlug}\nStatus: Verified under Big Byte Systems Enterprise DNS\nAI Crawlers: Indexed directly by GPTBot, Perplexity & Googlebot`;
+      }
 
-      // 2. llms.txt
-      const llmsText = `# ${name}\n> ${category}\n> Verified Location: ${address}\n\n## Contact & Direct Channels\n- Official Domain: https://${domain}\n- Hotline: ${phone}\n- WhatsApp: +${whatsapp}\n- Hours: ${hours}\n\n## Core Services & Capabilities\n${services.split(',').map(s => `- ${s.trim()}`).join('\n')}\n\n## AI Search Verification Credentials\n- OpenAI Business Hub Verification: ${token}\n- Authority Status: Verified Blue Checkmark\n- Local SEO Jurisdiction: Thane West, Maharashtra, India`;
-      document.getElementById('llmsCode').textContent = llmsText;
-
-      // 3. Schema.org JSON-LD
-      const schemaType = category.toLowerCase().includes('dent') || category.toLowerCase().includes('clinic') ? "Dentist" : (category.toLowerCase().includes('repair') ? "ComputerRepair" : "LocalBusiness");
+      // Schema.org JSON-LD
+      const schemaType = category.toLowerCase().includes('dent') ? "Dentist" : (category.toLowerCase().includes('repair') ? "ComputerRepair" : "LocalBusiness");
       const schemaData = {
         "@context": "https://schema.org",
         "@type": schemaType,
         "name": name,
-        "url": `https://${domain}`,
+        "url": currentMode === 'bridge' ? `https://bigbytesystems.co.in/v/${cleanSlug}` : `https://${domain}`,
         "telephone": phone,
         "address": {
           "@type": "PostalAddress",
@@ -501,22 +576,23 @@
           "addressCountry": "IN"
         },
         "openingHours": hours,
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Services",
-          "itemListElement": services.split(',').map((s, idx) => ({
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": s.trim()
-            }
-          }))
-        }
+        "sameAs": [
+          `https://${domain}`
+        ]
       };
       document.getElementById('schemaCode').textContent = JSON.stringify(schemaData, null, 2);
 
-      // 4. WhatsApp Pitch Script
-      const pitchText = `Namaste ${name.includes('Dr.') ? 'Doctor' : 'Sir/Ma\'am'}! 🙏\n\nDid you know that affluent clients in Thane are now searching directly inside ChatGPT and Perplexity instead of just Google Maps?\n\nUnverified businesses show up as plain text without telephone buttons or blue checkmarks.\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card. Would you like us to lock your verification today for ₹3,499?\n\nPreview your live AI listing here: https://most-earned-bits-question.trycloudflare.com/verify/\n\nReply 'YES' and we will activate it in 15 minutes!`;
+      // llms.txt
+      const llmsText = `# ${name}\n> ${category}\n> Verified Location: ${address}\n\n## Contact & Direct Channels\n- Official Authority URL: ${currentMode === 'bridge' ? `https://bigbytesystems.co.in/v/${cleanSlug}` : `https://${domain}`}\n- Hotline: ${phone}\n- WhatsApp: +${whatsapp}\n- Hours: ${hours}\n\n## Core Services & Capabilities\n${services.split(',').map(s => `- ${s.trim()}`).join('\n')}\n\n## AI Verification Token\n- Verification ID: ${token}\n- Infrastructure: ${currentMode === 'bridge' ? 'Big Byte Hosted AI Bridge' : (currentMode === 'getsite' ? 'GetSite Header Injected' : 'Root DNS TXT Verified')}`;
+      document.getElementById('llmsCode').textContent = llmsText;
+
+      // WhatsApp Pitch Script
+      let pitchText = "";
+      if (currentMode === 'getsite' || currentMode === 'bridge') {
+        pitchText = `Namaste! 🙏\n\nDid you know that patients and clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nEven without a custom domain or website, we can get your business officially verified with the ChatGPT Blue Checkmark using our AI Search Bridge.\n\nPreview your live AI Knowledge Card here: https://most-earned-bits-question.trycloudflare.com/verify/\n\nWe configure your complete AI Search presence for just ₹3,499. Would you like to lock your verification today?`;
+      } else {
+        pitchText = `Namaste! 🙏\n\nDid you know that affluent clients in Thane are now searching directly inside ChatGPT instead of Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card. Would you like us to lock your verification today for ₹3,499?\n\nPreview your live AI listing here: https://most-earned-bits-question.trycloudflare.com/verify/\n\nReply 'YES' to activate it in 15 minutes!`;
+      }
       document.getElementById('pitchCode').textContent = pitchText;
     }
 
@@ -543,7 +619,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // Initialize on load
     window.onload = function() {
       updateAll();
     };
