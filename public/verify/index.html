@@ -785,7 +785,14 @@
       const name = customName || document.getElementById('bizName').value.trim() || "Your Business";
       const cat = customCategory || document.getElementById('bizCategory').value.trim() || "Healthcare Clinic";
       const ph = customPhone || document.getElementById('bizPhone').value.trim() || "09054790592";
-      return `https://most-earned-bits-question.trycloudflare.com/verify/pitch.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&phone=${encodeURIComponent(ph)}`;
+      
+      // Dynamic origin detection with fallback to official domain
+      let baseOrigin = window.location.origin;
+      if (baseOrigin.includes('localhost') || baseOrigin.includes('127.0.0.1')) {
+        baseOrigin = "https://bigbytesystems.co.in";
+      }
+      const pathPrefix = window.location.pathname.includes('/verify') ? '/verify' : '';
+      return `${baseOrigin}${pathPrefix}/pitch.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&phone=${encodeURIComponent(ph)}`;
     }
 
     function openClientPitchPreview() {
