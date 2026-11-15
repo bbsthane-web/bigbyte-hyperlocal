@@ -406,6 +406,16 @@
                     <i class="fa-brands fa-whatsapp text-sm"></i> Send WhatsApp Pitch (1-Click)
                   </button>
                 </div>
+                <!-- Language Selector for Pitch Script -->
+                <div class="flex items-center gap-2 pt-1 pb-1">
+                  <span class="text-[11px] text-slate-400 font-medium"><i class="fa-solid fa-language text-sky-400"></i> Pitch Language:</span>
+                  <div class="flex items-center gap-1 p-0.5 bg-black/40 rounded-lg border border-slate-800 text-[11px]">
+                    <button id="pitchLangEn" onclick="setPitchLanguage('en')" class="px-2 py-0.5 rounded bg-sky-600 text-white font-bold transition">🇬🇧 English</button>
+                    <button id="pitchLangHi" onclick="setPitchLanguage('hi')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold transition">🇮🇳 हिंदी</button>
+                    <button id="pitchLangMr" onclick="setPitchLanguage('mr')" class="px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold transition">🚩 मराठी</button>
+                  </div>
+                </div>
+
                 <div class="flex flex-wrap items-center gap-2 pt-0.5">
                   <button onclick="openClientPitchPreview()" class="px-3 py-1.5 rounded-lg bg-sky-600/30 hover:bg-sky-600/50 text-sky-300 text-xs font-semibold border border-sky-500/30 transition flex items-center gap-1.5">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i> Preview Customer Landing Page
@@ -767,10 +777,16 @@
       const pitchPageUrl = getClientPitchUrl(name, category, phone);
       
       let pitchText = "";
-      if (currentMode === 'getsite' || currentMode === 'bridge') {
-        pitchText = `Namaste ${name}! 🙏\n\nDid you know that patients and clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nEven without a custom domain, we can get your business officially verified with the ChatGPT Blue Checkmark using our AI Search Bridge.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWe configure your complete AI Search presence for just ₹3,499. Would you like to lock your verification today?`;
+      if (selectedPitchLang === 'hi') {
+        pitchText = `नमस्ते Dr. / Team ${name}! 🙏\n\nक्या आप जानते हैं कि ठाणे के हाई-टिकट मरीज अब गूगल मैप्स के बजाय सीधे चैट-जीपीटी और परप्लेक्सिटी पर क्लिनिक सर्च कर रहे हैं?\n\n🎬 डॉ. अनन्या का 30-सेकंड वीडियो और अपना लाइव चैट-जीपीटी नॉलेज कार्ड यहाँ देखें:\n👉 ${pitchPageUrl}\n\nआज ही अपनी क्लिनिक का ऑफिशियल चैट-जीपीटी ब्लू टिक लॉक करने के लिए सिर्फ ₹3,499 में एक्टिवेट करें। एक्टिवेट करने के लिए 'YES' रिप्लाई करें!`;
+      } else if (selectedPitchLang === 'mr') {
+        pitchText = `नमस्कार Dr. / Team ${name}! 🙏\n\nतुम्हाला माहिती आहे का की ठाण्यातील हाय-तिकीट रुग्ण आता गुगल ऐवजी थेट चॅट-जीपीटी आणि परप्लेक्सिटीवर क्लिनिक शोधत आहेत?\n\n🎬 डॉ. अनन्या यांचा 30-सेकंद व्हिडिओ आणि तुमचे थेट चॅट-जीपीटी नॉलेज कार्ड येथे पहा:\n👉 ${pitchPageUrl}\n\nआजच तुमच्या क्लिनिकचा अधिकृत चॅट-जीपीटी ब्लू टिक फक्त ₹3,499 मध्ये सुरक्षित करा. सक्रिय करण्यासाठी 'YES' उत्तर द्या!`;
       } else {
-        pitchText = `Namaste Dr. / Team ${name}! 🙏\n\nDid you know affluent patients & clients in Thane are now searching directly inside ChatGPT instead of Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nReply 'YES' to activate it in 15 minutes!`;
+        if (currentMode === 'getsite' || currentMode === 'bridge') {
+          pitchText = `Namaste ${name}! 🙏\n\nDid you know patients in Thane are now asking ChatGPT & Perplexity for clinic recommendations instead of Google Maps?\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live ChatGPT Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWe configure your complete AI presence for just ₹3,499. Would you like to lock your verification today?`;
+        } else {
+          pitchText = `Namaste Dr. / Team ${name}! 🙏\n\nDid you know affluent patients in Thane are searching directly inside ChatGPT instead of Google Maps?\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWe lock your official ChatGPT Blue Checkmark today for ₹3,499. Reply 'YES' to activate in 15 minutes!`;
+        }
       }
       document.getElementById('pitchCode').textContent = pitchText;
 
@@ -779,6 +795,23 @@
       if (dispatchInput && (!dispatchInput.value || dispatchInput.value === '9167463807' || dispatchInput.value.length < 10)) {
         dispatchInput.value = whatsapp || "919167463807";
       }
+    }
+
+    let selectedPitchLang = 'en';
+
+    function setPitchLanguage(lang) {
+      selectedPitchLang = lang;
+      ['en', 'hi', 'mr'].forEach(l => {
+        const btn = document.getElementById(`pitchLang${l.charAt(0).toUpperCase() + l.slice(1)}`);
+        if (btn) {
+          if (l === lang) {
+            btn.className = "px-2 py-0.5 rounded bg-sky-600 text-white font-bold transition";
+          } else {
+            btn.className = "px-2 py-0.5 rounded text-slate-400 hover:text-white font-bold transition";
+          }
+        }
+      });
+      updateAll();
     }
 
     function getClientPitchUrl(customName = null, customCategory = null, customPhone = null) {
@@ -792,7 +825,7 @@
         baseOrigin = "https://bigbytesystems.co.in";
       }
       const pathPrefix = window.location.pathname.includes('/verify') ? '/verify' : '';
-      return `${baseOrigin}${pathPrefix}/pitch.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&phone=${encodeURIComponent(ph)}`;
+      return `${baseOrigin}${pathPrefix}/pitch.html?name=${encodeURIComponent(name)}&category=${encodeURIComponent(cat)}&phone=${encodeURIComponent(ph)}&lang=${selectedPitchLang}`;
     }
 
     function openClientPitchPreview() {
@@ -842,7 +875,14 @@
       const clientName = customName || document.getElementById('bizName').value.trim() || "Local Practice";
       const pitchPageUrl = getClientPitchUrl(clientName);
 
-      const message = `Namaste Dr. / Team ${clientName}! 🙏\n\nDid you know affluent patients & clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWould you like us to lock your verification today for ₹3,499? Reply 'YES' to activate it in 15 minutes!`;
+      let message = "";
+      if (selectedPitchLang === 'hi') {
+        message = `नमस्ते Dr. / Team ${clientName}! 🙏\n\nक्या आप जानते हैं कि ठाणे के हाई-टिकट मरीज अब गूगल मैप्स के बजाय सीधे चैट-जीपीटी और परप्लेक्सिटी पर क्लिनिक सर्च कर रहे हैं?\n\n🎬 डॉ. अनन्या का 30-सेकंड वीडियो और अपना लाइव चैट-जीपीटी नॉलेज कार्ड यहाँ देखें:\n👉 ${pitchPageUrl}\n\nआज ही अपनी क्लिनिक का ऑफिशियल चैट-जीपीटी ब्लू टिक लॉक करने के लिए सिर्फ ₹3,499 में एक्टिवेट करें। एक्टिवेट करने के लिए 'YES' रिप्लाई करें!`;
+      } else if (selectedPitchLang === 'mr') {
+        message = `नमस्कार Dr. / Team ${clientName}! 🙏\n\nतुम्हाला माहिती आहे का की ठाण्यातील हाय-तिकीट रुग्ण आता गुगल ऐवजी थेट चॅट-जीपीटी आणि परप्लेक्सिटीवर क्लिनिक शोधत आहेत?\n\n🎬 डॉ. अनन्या यांचा 30-सेकंद व्हिडिओ आणि तुमचे थेट चॅट-जीपीटी नॉलेज कार्ड येथे पहा:\n👉 ${pitchPageUrl}\n\nआजच तुमच्या क्लिनिकचा अधिकृत चॅट-जीपीटी ब्लू टिक फक्त ₹3,499 मध्ये सुरक्षित करा. सक्रिय करण्यासाठी 'YES' उत्तर द्या!`;
+      } else {
+        message = `Namaste Dr. / Team ${clientName}! 🙏\n\nDid you know affluent patients & clients in Thane are now asking ChatGPT and Perplexity for recommendations instead of just Google Maps?\n\nWe have generated your clinic's official ChatGPT Business Blue Checkmark token and AI Knowledge Card.\n\n🎬 Watch Dr. Ananya's 30s Explainer & Preview your live AI Knowledge Card here:\n👉 ${pitchPageUrl}\n\nWould you like us to lock your verification today for ₹3,499? Reply 'YES' to activate it in 15 minutes!`;
+      }
 
       const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
       window.open(waUrl, '_blank');
