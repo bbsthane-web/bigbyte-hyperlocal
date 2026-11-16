@@ -2700,7 +2700,16 @@ const server = http.createServer((req, res) => {
       const match = clientRange.match(/bytes=(\d+)-(\d*)/);
       if (match) {
         const startPos = parseInt(match[1], 10);
-        const endPos = match[2] ? parseInt(match[2], 10) : totalBytes - 1;
+        let endPos = match[2] ? parseInt(match[2], 10) : totalBytes - 1;
+        if (endPos >= totalBytes) endPos = totalBytes - 1;
+
+        if (startPos >= totalBytes || startPos > endPos) {
+          res.writeHead(416, {
+            'Content-Range': `bytes */${totalBytes}`
+          });
+          return res.end();
+        }
+
         const sliceLength = endPos - startPos + 1;
 
         res.writeHead(206, {
