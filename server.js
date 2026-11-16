@@ -1129,6 +1129,7 @@ function extractMetadataFromScrapedHtml(html, hostname) {
   let name = "";
   let telephone = "";
   let address = "";
+  let hours = "";
   let category = "";
   let services = [];
 
@@ -1142,6 +1143,9 @@ function extractMetadataFromScrapedHtml(html, hostname) {
       for (const item of items) {
         if (item.name && !name) name = item.name;
         if (item.telephone && !telephone) telephone = item.telephone;
+        if (item.openingHours && !hours) {
+          hours = Array.isArray(item.openingHours) ? item.openingHours.join(', ') : item.openingHours;
+        }
         if (item.address && !address) {
           if (typeof item.address === 'string') {
             address = item.address;
@@ -1192,7 +1196,22 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     }
   }
 
-  // 6. Category & Service mapping
+  // 6. Hours search from HTML text & 24/7 detection
+  if (!hours) {
+    const hoursBlockMatch = html.match(/(?:Business Hours|Operating Hours|Opening Hours)[\s\S]{0,120}?(?:<\/h\d>|<\/div>)[\s\S]{0,120}?<p>([\s\S]*?)<\/p>/i);
+    if (hoursBlockMatch) {
+      let rawH = hoursBlockMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (rawH) hours = rawH;
+    }
+  }
+
+  if (!hours || /24\s*(?:hours|hrs|hr)/i.test(html)) {
+    if (/monday\s*-\s*sunday\s*24\s*hours/i.test(html) || /24\s*hours/i.test(hours) || /open\s*24\s*hours/i.test(html) || /24\s*x\s*7/i.test(html)) {
+      hours = "Open 24 Hours (Monday - Sunday)";
+    }
+  }
+
+  // 7. Category & Service mapping
   const fullText = (name + ' ' + html.slice(0, 5000)).toLowerCase();
   if (fullText.includes('dent') || fullText.includes('smile') || fullText.includes('tooth')) {
     category = "Dental Clinic, Advanced Implantology & Clear Aligners";
@@ -1215,6 +1234,7 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     category: category,
     address: address || "Thane West, Maharashtra - 400602",
     telephone: telephone || "098200 00000",
+    hours: hours || "Open 24 Hours (Monday - Sunday)",
     services: services.join(', ')
   };
 }

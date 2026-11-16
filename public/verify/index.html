@@ -786,6 +786,12 @@
         waInput.value = "9820000000";
       }
 
+      // Reset hours if currently showing Big Byte Systems default data
+      const hoursInput = document.getElementById('bizHours');
+      if (hoursInput && hoursInput.value.includes('10:00 AM')) {
+        hoursInput.value = "Open 24 Hours (Monday - Sunday)";
+      }
+
       // De-select Big Byte presets since this is now an external client
       document.querySelectorAll('.preset-btn').forEach(btn => {
         btn.classList.remove('bg-sky-600', 'text-white', 'border-sky-400', 'shadow-sm');
@@ -813,6 +819,7 @@
               }
               if (data.category) document.getElementById('bizCategory').value = data.category;
               if (data.services) document.getElementById('bizServices').value = data.services;
+              if (data.hours) document.getElementById('bizHours').value = data.hours;
               updateAll();
             }
           })
