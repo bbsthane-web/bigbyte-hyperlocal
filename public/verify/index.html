@@ -846,15 +846,27 @@
               if (data.telephone) {
                 document.getElementById('bizPhone').value = data.telephone;
               }
-              // Prioritize real extracted WhatsApp URL & phone from live website!
-              if (data.whatsappPhone) {
+              // STRICT PRIVACY: If client uses a masked shortlink, NEVER put unmasked personal phone in the field!
+              if (data.whatsappMasked || (data.whatsappUrl && (data.whatsappUrl.includes('wa.link') || data.whatsappUrl.includes('bit.ly')))) {
+                document.getElementById('bizWhatsapp').value = '';
+                document.getElementById('bizWhatsapp').placeholder = 'Masked Shortlink Preserved: ' + data.whatsappUrl;
+              } else if (data.whatsappPhone) {
                 document.getElementById('bizWhatsapp').value = data.whatsappPhone.replace(/\D/g, '').slice(-10);
               } else if (data.telephone) {
                 const cleanPhone = data.telephone.replace(/\D/g, '');
                 if (cleanPhone) document.getElementById('bizWhatsapp').value = cleanPhone.slice(-10);
+              } else {
+                document.getElementById('bizWhatsapp').value = '';
               }
               if (data.category) document.getElementById('bizCategory').value = data.category;
-              if (data.services) document.getElementById('bizServices').value = data.services;
+              if (Array.isArray(data.services) && data.services.length > 0) {
+                document.getElementById('bizServices').value = data.services.join(', ');
+              } else if (data.services) {
+                document.getElementById('bizServices').value = data.services;
+              } else {
+                document.getElementById('bizServices').value = '';
+                document.getElementById('bizServices').placeholder = 'Unlisted on website';
+              }
               if (data.hours) document.getElementById('bizHours').value = data.hours;
               updateAll();
 
@@ -1250,7 +1262,10 @@ Hotline: 090547 90592 | WhatsApp: 9167463807`;
       } else if (currentMode === 'getsite') {
         boxLabel.innerHTML = `<i class="fa-solid fa-code"></i> 1. GetSite / Website Builder Header Injection Code`;
         boxDesc.textContent = `Copy and paste this into GetSite > Settings > Custom Code > Header Code.`;
-        codeDynamic.textContent = `<!-- ChatGPT & AI Search Authority Verification -->\n<meta name="openai-domain-verification" content="${token}">\n<meta name="ai-search-bot-authority" content="verified">\n<meta name="keywords" content="${serviceList.join(', ')}">\n<link rel="canonical" href="https://${domain}">\n<meta name="business:contact_number" content="${phone}">\n<meta name="business:whatsapp" content="+${whatsapp}">`;
+        const waMetaTag = (activeAuditData && activeAuditData.meta && activeAuditData.meta.whatsappUrl)
+          ? `<meta name="business:whatsapp" content="${activeAuditData.meta.whatsappUrl}">`
+          : (whatsapp ? `<meta name="business:whatsapp" content="+${whatsapp}">` : '');
+        codeDynamic.textContent = `<!-- ChatGPT & AI Search Authority Verification -->\n<meta name="openai-domain-verification" content="${token}">\n<meta name="ai-search-bot-authority" content="verified">\n<meta name="keywords" content="${serviceList.join(', ')}">\n<link rel="canonical" href="https://${domain}">\n<meta name="business:contact_number" content="${phone}">\n${waMetaTag}`.trim();
       } else {
         boxLabel.innerHTML = `<i class="fa-solid fa-bridge"></i> 1. Big Byte Hosted AI Bridge URL (Zero Domain Needed)`;
         boxDesc.textContent = `Give this verified AI landing URL to client or link it in their Instagram/Facebook bio.`;
@@ -1261,28 +1276,26 @@ Hotline: 090547 90592 | WhatsApp: 9167463807`;
       const isDental = category.toLowerCase().includes('dent');
       const isRepair = category.toLowerCase().includes('repair');
       const schemaType = isDental ? "Dentist" : (isRepair ? "ComputerRepair" : ["LocalBusiness", "ProfessionalService"]);
+      const pinMatch = address ? address.match(/\b(400\d{3})\b/) : null;
+      const extractedPincode = pinMatch ? pinMatch[1] : "";
+
       const schemaData = {
         "@context": "https://schema.org",
         "@type": schemaType,
         "name": name,
         "url": currentMode === 'bridge' ? `https://bigbytesystems.co.in/v/${cleanSlug}` : `https://${domain}`,
-        "description": `Official verified local business entity in ${address}. Grounded core capabilities: ${serviceList.join(', ')}.`,
-        "telephone": phone,
+        "description": `Official verified local business entity: ${name}. Verified capabilities: ${serviceList.join(', ')}.`,
+        "telephone": phone || undefined,
         "priceRange": "$$",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": address,
           "addressLocality": "Thane West",
           "addressRegion": "Maharashtra",
-          "postalCode": "400602",
+          "postalCode": extractedPincode || undefined,
           "addressCountry": "IN"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "19.1868",
-          "longitude": "72.9723"
-        },
-        "openingHours": hours,
+        "openingHours": hours || undefined,
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": `${name} Service Catalog`,

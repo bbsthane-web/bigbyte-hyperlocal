@@ -1138,19 +1138,13 @@ function scrapeBusinessSite(targetUrl, callback) {
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         let result = extractMetadataFromScrapedHtml(data, urlObj.hostname);
-        if (result.whatsappUrl && result.whatsappUrl.includes('wa.link')) {
-          https.get(result.whatsappUrl, (rRes) => {
-            const loc = rRes.headers.location;
-            if (loc) {
-              const pm = loc.match(/phone=([0-9]+)/);
-              if (pm) result.whatsappPhone = pm[1];
-              result.whatsappResolvedUrl = loc;
-            }
-            callback(null, result);
-          }).on('error', () => callback(null, result));
-        } else {
-          callback(null, result);
+        // STRICT PRIVACY INVARIANT (Rule 8): NEVER resolve or unmask masked shortlinks (e.g. wa.link/*).
+        // Personal numbers behind shortlinks MUST remain completely private and unexposed.
+        if (result.whatsappUrl && (result.whatsappUrl.includes('wa.link') || result.whatsappUrl.includes('bit.ly'))) {
+          result.whatsappPhone = ""; // Explicitly blank out
+          result.whatsappMasked = true;
         }
+        callback(null, result);
       });
     });
 
@@ -1251,20 +1245,42 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     }
   }
 
-  // 7. Category & Service mapping
-  const fullText = (name + ' ' + html.slice(0, 5000)).toLowerCase();
-  if (fullText.includes('dent') || fullText.includes('smile') || fullText.includes('tooth')) {
-    category = "Dental Clinic, Advanced Implantology & Clear Aligners";
-    services = ["Dental Implants & All-on-4", "Painless Root Canal", "Teeth Whitening & Cleaning", "Invisible Clear Aligners", "Smile Makeover & Veneers", "Emergency Dental Care"];
-  } else if (fullText.includes('laptop') || fullText.includes('macbook') || fullText.includes('computer') || fullText.includes('repair')) {
-    category = "Computer, Laptop, MacBook & Enterprise Hardware Services";
-    services = ["Doorstep Laptop & MacBook Repair", "Screen & Display Replacement", "Motherboard Chip-Level Repair", "Battery & Hinge Replacement", "SSD & RAM Speed Upgrade", "Data Recovery & OS Installation"];
-  } else if (fullText.includes('salon') || fullText.includes('beauty') || fullText.includes('spa')) {
-    category = "Luxury Hair, Skin & Aesthetic Beauty Studio";
-    services = ["Bridal Makeup & Styling", "Keratin & Hair Spa", "Hydra Facial & Skin Rejuvenation", "Pedicure & Manicure"];
+  // 7. Authentic Service Extraction (ZERO Hallucination / Zero Synthetic Assumption)
+  // Extracts ONLY services physically present in HTML service cards or headings
+  const extractedServices = [];
+  const serviceCardRegex = /(?:class=["'][^"']*(?:service|treatment|offering|feature)[^"']*["'])[\s\S]{0,300}?<h[3-5][^>]*>([^<]+)<\/h[3-5]>/gi;
+  let scm;
+  while ((scm = serviceCardRegex.exec(html)) !== null) {
+    const sTitle = scm[1].trim();
+    if (sTitle && !/^(our\s+)?services?$/i.test(sTitle) && !extractedServices.includes(sTitle) && sTitle.length < 50) {
+      extractedServices.push(sTitle);
+    }
+  }
+
+  if (extractedServices.length === 0) {
+    const secMatch = html.match(/(?:Our Services|Services|What We Do|Our Treatments)[\s\S]{0,2500}?(?:<\/section>|<\/div>\s*<\/div>)/i);
+    if (secMatch) {
+      const hMatches = secMatch[0].match(/<h[3-5][^>]*>([^<]+)<\/h[3-5]>/gi) || [];
+      hMatches.forEach(h => {
+        const clean = h.replace(/<[^>]+>/g, '').trim();
+        if (clean && !/^(our\s+)?services?$/i.test(clean) && !extractedServices.includes(clean) && clean.length < 50) {
+          extractedServices.push(clean);
+        }
+      });
+    }
+  }
+
+  services = extractedServices;
+
+  // Category extracted from meta description or page title (never synthetic generic presets)
+  const metaDescMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i);
+  if (metaDescMatch && metaDescMatch[1].trim()) {
+    category = metaDescMatch[1].trim().split('.')[0].trim();
+    if (category.length > 70) category = category.substring(0, 67) + '...';
+  } else if (name) {
+    category = name;
   } else {
-    category = "Local Professional Services & Retail";
-    services = ["In-Store Consultations", "Rapid Service Delivery", "Official Warranty & Support"];
+    category = "Local Business";
   }
 
   // 8. Social Profiles and Maps Detection
