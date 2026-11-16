@@ -166,10 +166,12 @@
         </div>
 
         <div id="simQuoteContainer" class="text-xs text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-800/80 italic leading-relaxed">
-          <span id="simQuotePrefix">"Based on verified domain credentials and structured clinic records,</span>
+          <span id="simQuotePrefix">"Based on verified domain credentials and structured records,</span>
           <strong id="displayQuoteName" class="text-white">this practice</strong>
-          <span id="simQuoteSuffix">is officially verified in Thane West with certified facilities, transparent patient hours, and direct hotline access."</span>
+          <span id="simQuoteSuffix">is officially verified in Thane West with certified facilities, transparent hours, and direct hotline access."</span>
         </div>
+
+        <div id="displayChips" class="flex flex-wrap gap-1.5 pt-1"></div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-400 pt-1">
           <div class="flex items-center gap-2">
@@ -283,12 +285,28 @@
     const clientCategory = params.get('category') || "Speciality Healthcare & Diagnostic Services";
     const clientPhone = params.get('phone') || "090547 90592";
     const clientLocation = params.get('city') || "Thane West, Maharashtra";
+    const clientServices = params.get('services') || "";
 
     document.getElementById('displayBizName').textContent = clientName;
     document.getElementById('displayBizCategory').textContent = clientCategory;
     document.getElementById('displayQuoteName').textContent = clientName;
     document.getElementById('displayLocation').textContent = clientLocation;
     document.getElementById('displayPhone').textContent = clientPhone;
+
+    // Render verified service chips
+    const chipsContainer = document.getElementById('displayChips');
+    if (chipsContainer) {
+      chipsContainer.innerHTML = '';
+      const sList = clientServices ? clientServices.split(',').map(s => s.trim()).filter(Boolean) : [
+        "Generative Engine Optimization (GEO)", "ChatGPT Search Verification", "OpenAI Blue Checkmark", "llms.txt AI Grounding"
+      ];
+      sList.forEach(s => {
+        const chip = document.createElement('span');
+        chip.className = "text-[11px] px-2.5 py-1 rounded-lg bg-sky-950/70 text-sky-300 border border-sky-500/30 flex items-center gap-1 font-medium";
+        chip.innerHTML = `<i class="fa-solid fa-circle-check text-[10px] text-emerald-400"></i> ${s}`;
+        chipsContainer.appendChild(chip);
+      });
+    }
 
     let currentLang = params.get('lang') || 'en';
 
