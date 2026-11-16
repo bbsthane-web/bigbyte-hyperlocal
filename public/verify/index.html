@@ -840,7 +840,14 @@
     }
 
     function formatCapitalize(str) {
-      return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      if (!str) return "";
+      const spaced = str
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/(laptop|repair|service|computer|clinic|dental|studio|center|care|media|tech)/gi, ' $1 ')
+        .replace(/[._-]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return spaced.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
     }
 
     function guessCategoryFromName(name) {
@@ -848,25 +855,25 @@
       if (lower.includes('dent') || lower.includes('smile') || lower.includes('tooth')) {
         return "Dental Clinic, Advanced Implantology & Clear Aligners";
       }
-      if (lower.includes('reel') || lower.includes('video') || lower.includes('media') || lower.includes('social') || lower.includes('studio')) {
-        return "Autonomous Social Media Video & Content Engine";
-      }
-      if (lower.includes('geo') || lower.includes('ai') || lower.includes('verify') || lower.includes('search')) {
-        return "Generative Engine Optimization (GEO) & AI Search Authority";
-      }
-      if (lower.includes('photo') || lower.includes('tape') || lower.includes('vhs') || lower.includes('remaster')) {
-        return "4K AI Tape Remastering & Archival Photo Restoration";
-      }
-      if (lower.includes('repair') || lower.includes('byte') || lower.includes('laptop') || lower.includes('macbook') || lower.includes('computer')) {
+      if (lower.includes('laptop') || lower.includes('macbook') || lower.includes('computer') || lower.includes('repair') || lower.includes('hardware')) {
         return "Computer, Laptop, MacBook & Enterprise Hardware Services";
       }
       if (lower.includes('printer') || lower.includes('amc') || lower.includes('toner')) {
         return "Corporate Printer AMC & Enterprise IT Infrastructure";
       }
+      if (lower.includes('photo') || lower.includes('tape') || lower.includes('vhs') || lower.includes('remaster')) {
+        return "4K AI Tape Remastering & Archival Photo Restoration";
+      }
+      if (lower.includes('reel') || lower.includes('video') || lower.includes('media') || lower.includes('social')) {
+        return "Autonomous Social Media Video & Content Engine";
+      }
+      if (/\b(ai|geo|aeo)\b/.test(lower) || lower.includes('artificial intelligence') || lower.includes('ai search') || lower.includes('verify')) {
+        return "Generative Engine Optimization (GEO) & AI Search Authority";
+      }
       if (lower.includes('clinic') || lower.includes('dr') || lower.includes('care') || lower.includes('health') || lower.includes('skin') || lower.includes('derma')) {
         return "Speciality Healthcare Clinic & Diagnostic Services";
       }
-      if (lower.includes('salon') || lower.includes('beauty') || lower.includes('spa')) {
+      if (lower.includes('salon') || lower.includes('beauty') || lower.includes('spa') || lower.includes('hair')) {
         return "Luxury Hair, Skin & Aesthetic Beauty Studio";
       }
       return "Local Professional Services & Retail";
