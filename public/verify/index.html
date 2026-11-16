@@ -868,6 +868,7 @@
                 document.getElementById('bizServices').placeholder = 'Unlisted on website';
               }
               if (data.hours) document.getElementById('bizHours').value = data.hours;
+              activeAuditData = { audit: data.audit, meta: data };
               updateAll();
 
               if (data.audit) {

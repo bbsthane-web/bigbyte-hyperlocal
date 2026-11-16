@@ -1283,18 +1283,49 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     category = "Local Business";
   }
 
-  // 8. Social Profiles and Maps Detection
+  // 8. Social Profiles and Maps Detection (Direct links & Embedded iframes)
   const fbMatch = html.match(/href=["'](https?:\/\/(?:www\.)?facebook\.com\/[^"'\s#]+)["']/i);
   const igMatch = html.match(/href=["'](https?:\/\/(?:www\.)?instagram\.com\/[^"'\s#]+)["']/i);
   const ytMatch = html.match(/href=["'](https?:\/\/(?:www\.)?youtube\.com\/[^"'\s#]+)["']/i);
-  const mapMatch = html.match(/href=["'](https?:\/\/(?:maps\.google\.com|goo\.gl\/maps|www\.google\.com\/maps)[^"'\s#]+)["']/i);
+  const mapHrefMatch = html.match(/href=["'](https?:\/\/(?:maps\.google\.com|goo\.gl\/maps|www\.google\.com\/maps)[^"'\s#]+)["']/i);
   const waMatch = html.match(/href=["'](https?:\/\/(?:wa\.link|wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)[^"'\s#]+)["']/i);
+
+  // Extract from Google Maps iframe embed if present (common in GetSite / WordPress)
+  const iframeMapMatch = html.match(/<iframe[^>]+src=["'](https?:\/\/(?:www\.)?google\.com\/maps\/embed[^"']+)["']/i);
+  let googleMapsUrl = mapHrefMatch ? mapHrefMatch[1] : null;
+  let gmbCid = null;
+  let detectedCoordinates = null;
+
+  if (iframeMapMatch) {
+    const embedSrc = iframeMapMatch[1];
+    // Extract hex CID: !1s0x...%3A0x([0-9a-fA-F]+)
+    const cidMatch = embedSrc.match(/!1s0x[0-9a-fA-F]+(?:%3A|:)0x([0-9a-fA-F]+)/i);
+    if (cidMatch && cidMatch[1]) {
+      try {
+        gmbCid = BigInt('0x' + cidMatch[1]).toString(10);
+        if (!googleMapsUrl) googleMapsUrl = `https://www.google.com/maps?cid=${gmbCid}`;
+      } catch(e) {}
+    }
+    // Extract coordinates: !2d([0-9.-]+)!3d([0-9.-]+)
+    const geoMatch = embedSrc.match(/!2d([0-9.-]+)!3d([0-9.-]+)/);
+    if (geoMatch) {
+      detectedCoordinates = { latitude: parseFloat(geoMatch[2]), longitude: parseFloat(geoMatch[1]) };
+    }
+    if (!googleMapsUrl) {
+      const nameMatch = embedSrc.match(/!2s([^!&]+)/);
+      if (nameMatch) {
+        googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(decodeURIComponent(nameMatch[1]))}`;
+      } else {
+        googleMapsUrl = embedSrc;
+      }
+    }
+  }
 
   const socialProfiles = {
     facebook: fbMatch ? fbMatch[1] : null,
     instagram: igMatch ? igMatch[1] : null,
     youtube: ytMatch ? ytMatch[1] : null,
-    googleMaps: mapMatch ? mapMatch[1] : null,
+    googleMaps: googleMapsUrl,
     whatsapp: waMatch ? waMatch[1] : null
   };
 
@@ -1311,12 +1342,13 @@ function extractMetadataFromScrapedHtml(html, hostname) {
   if (hasAddress) score += 15;
   if (hasHours) score += 10;
   if (fbMatch || igMatch) score += 10;
+  if (googleMapsUrl) score += 5;
 
   const deficiencies = [];
   if (!isCustomDomain) deficiencies.push({ title: "Free Subdomain Penalty", desc: "Shared subdomain (getsite.online) suppresses Google 3-Pack authority and AI trust score.", severity: "high" });
   if (!hasJsonLd) deficiencies.push({ title: "Missing Schema.org JSON-LD", desc: "ChatGPT, Perplexity & Google AI Overviews cannot ingest your structured services & pricing.", severity: "critical" });
   if (!fbMatch && !igMatch) deficiencies.push({ title: "Zero Social Media Integration", desc: "No verified Facebook or Instagram profiles linked to website for Google entity triangulation.", severity: "high" });
-  if (!mapMatch) deficiencies.push({ title: "Unlinked Google Maps Location", desc: "Missing direct Google Maps CID directions anchor for local mobile routing.", severity: "medium" });
+  if (!googleMapsUrl) deficiencies.push({ title: "Unlinked Google Maps Location", desc: "Missing direct Google Maps CID directions anchor for local mobile routing.", severity: "medium" });
   if (!hasHours) deficiencies.push({ title: "Machine-Readable Schedule Missing", desc: "AI bots cannot confirm whether shop is open now without structured openingHours.", severity: "medium" });
 
   const steps = [
@@ -1337,6 +1369,9 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     telephone: telephone || "",
     whatsappPhone: null,
     whatsappUrl: waMatch ? waMatch[1] : null,
+    googleMaps: googleMapsUrl,
+    gmbCid: gmbCid,
+    coordinates: detectedCoordinates,
     hours: hours || "",
     services: services.join(', '),
     audit: {
