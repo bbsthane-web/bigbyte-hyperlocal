@@ -91,7 +91,7 @@
           <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
             <i class="fa-solid fa-link"></i>
           </div>
-          <input type="text" id="extractUrlInput" placeholder="Paste link e.g. instagram.com/dr_sharma_dental or clinic.getsite.in" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none">
+          <input type="text" id="extractUrlInput" placeholder="Paste link e.g. friendslaptop.com, instagram.com/friends_laptop or clinic.getsite.in" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();extractFromUrl();}">
         </div>
         <button onclick="extractFromUrl()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg">
           <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Extract &amp; Auto-Fill</span>
@@ -99,6 +99,8 @@
       </div>
       <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-400">
         <span class="font-medium text-slate-300">Quick Test Links:</span>
+        <button onclick="testLink('friendslaptoprepair.com')" class="hover:text-emerald-300 underline font-semibold text-emerald-400">💻 Friends Laptop Demo</button>
+        <span>•</span>
         <button onclick="testLink('instagram.com/dr_sharma_implants')" class="hover:text-sky-300 underline">Instagram Profile</button>
         <span>•</span>
         <button onclick="testLink('facebook.com/sharmadentalclinic')" class="hover:text-sky-300 underline">Facebook Page</button>
@@ -140,12 +142,12 @@
         <div class="space-y-3.5 text-xs">
           <div>
             <label class="block text-slate-300 font-semibold mb-1">Business / Brand Name</label>
-            <input type="text" id="bizName" value="Big Byte Systems" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">
+            <input type="text" id="bizName" value="Big Byte Systems" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()" onchange="handleNameChange()">
           </div>
 
           <div>
             <label class="block text-slate-300 font-semibold mb-1" id="domainLabel">Official Domain or Handle URL</label>
-            <input type="text" id="bizDomain" value="bigbytesystems.co.in" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()">
+            <input type="text" id="bizDomain" value="bigbytesystems.co.in" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:ring-2 focus:ring-sky-500 focus:outline-none" oninput="updateAll()" onchange="handleDomainChange()">
           </div>
 
           <div>
@@ -686,46 +688,150 @@
       updateAll();
     }
 
+    function guessServicesFromCategory(category, contextString = "") {
+      const catLower = (category || '').toLowerCase();
+      const ctxLower = (contextString || '').toLowerCase();
+      
+      if (catLower.includes('dent') || ctxLower.includes('smile') || ctxLower.includes('tooth')) {
+        return "Dental Implants & All-on-4, Painless Root Canal, Teeth Whitening & Cleaning, Invisible Clear Aligners, Smile Makeover & Veneers, 24/7 Emergency Dental Care";
+      }
+      if (catLower.includes('laptop') || catLower.includes('computer') || catLower.includes('hardware') || catLower.includes('repair') || ctxLower.includes('laptop') || ctxLower.includes('pc') || ctxLower.includes('macbook')) {
+        return "Laptop Screen & Battery Replacement, Motherboard Chip-Level Repair, Broken Hinge & Body Fabrication, Liquid Damage Recovery, SSD & RAM Speed Upgrade, Windows & Mac OS Installation";
+      }
+      if (catLower.includes('printer') || ctxLower.includes('toner')) {
+        return "LaserJet Printer Repair, Copier AMC & Servicing, Toner Cartridge Refilling, Network Printer Configuration, Paper Jam & Roller Replacement";
+      }
+      if (catLower.includes('salon') || catLower.includes('beauty') || catLower.includes('spa')) {
+        return "Bridal Makeup & Hair Styling, Keratin & Hair Spa, Hydra Facial & Skin Rejuvenation, Pedicure & Manicure, Precision Haircuts";
+      }
+      if (catLower.includes('health') || catLower.includes('clinic') || catLower.includes('derma') || catLower.includes('doctor')) {
+        return "OPD Doctor Consultation, Preventive Health Checkups, Diagnostic Blood Tests & Pathology, Chronic Disease Management, Specialized Clinic Care";
+      }
+      if (catLower.includes('reel') || catLower.includes('video') || catLower.includes('media')) {
+        return "Viral Short-Form Reels & Shorts, High-Definition Avatar Video Production, Studio-Mastered Audio Voiceovers, Daily Multi-Platform Social Dispatch";
+      }
+      if (catLower.includes('seo') || catLower.includes('geo') || catLower.includes('ai search')) {
+        return "ChatGPT Search Verification, OpenAI Domain Authority Grounding, Perplexity AI Ingestion, Google AI Overviews Visibility, llms.txt Grounding Manifest";
+      }
+      return "Local In-Store Consultations, Express Delivery & Appointments, Official Business Warranty, Customer Support";
+    }
+
     function extractFromUrl() {
       const rawUrl = document.getElementById('extractUrlInput').value.trim();
       if (!rawUrl) return;
 
-      let clean = rawUrl.replace(/^https?:\/\//i, '').replace(/\/$/, '');
-      let detectedName = "";
-      let detectedCategory = "";
-      let detectedDomain = clean;
-
-      if (clean.includes('bigbytesystems.co.in')) {
+      const fullUrlLower = rawUrl.toLowerCase();
+      if (fullUrlLower.includes('bigbytesystems.co.in')) {
         loadServicesPreset('all');
         return;
       }
 
-      if (clean.includes('instagram.com/')) {
-        const handle = clean.split('instagram.com/')[1].split('/')[0].replace(/[._]/g, ' ');
-        detectedName = formatCapitalize(handle);
-        detectedCategory = guessCategoryFromName(detectedName);
+      let clean = rawUrl
+        .replace(/^https?:\/\//i, '')
+        .replace(/\/.*$/, '')
+        .replace(/\/$/, '')
+        .trim();
+
+      let detectedName = "";
+      let detectedCategory = "";
+      let detectedServices = "";
+
+      if (fullUrlLower.includes('instagram.com/')) {
+        const parts = rawUrl.split(/instagram\.com\//i)[1].split('/')[0].split('?')[0];
+        detectedName = formatCapitalize(parts.replace(/[._]/g, ' '));
         setInfraMode('bridge');
-      } else if (clean.includes('facebook.com/')) {
-        const page = clean.split('facebook.com/')[1].split('/')[0].replace(/[._-]/g, ' ');
-        detectedName = formatCapitalize(page);
-        detectedCategory = guessCategoryFromName(detectedName);
+      } else if (fullUrlLower.includes('facebook.com/')) {
+        const parts = rawUrl.split(/facebook\.com\//i)[1].split('/')[0].split('?')[0];
+        detectedName = formatCapitalize(parts.replace(/[._-]/g, ' '));
         setInfraMode('bridge');
-      } else if (clean.includes('getsite.in') || clean.includes('site') || clean.includes('wix') || clean.includes('page')) {
-        const sub = clean.split('.')[0].replace(/[._-]/g, ' ');
-        detectedName = formatCapitalize(sub);
-        detectedCategory = guessCategoryFromName(detectedName);
+      } else if (fullUrlLower.includes('getsite.in') || fullUrlLower.includes('wixsite') || fullUrlLower.includes('site')) {
+        let base = clean.split('.')[0];
+        if (base.toLowerCase() === 'www') {
+          base = clean.split('.')[1] || base;
+        }
+        detectedName = formatCapitalize(base.replace(/[._-]/g, ' '));
         setInfraMode('getsite');
       } else {
-        const domainBase = clean.split('.')[0].replace(/[._-]/g, ' ');
-        detectedName = formatCapitalize(domainBase);
-        detectedCategory = guessCategoryFromName(detectedName);
+        // Strip www. if present so domainBase is not 'www'
+        let parts = clean.split('.');
+        if (parts[0].toLowerCase() === 'www') {
+          parts.shift();
+        }
+        let domainBase = parts[0] || clean;
+        detectedName = formatCapitalize(domainBase.replace(/[._-]/g, ' '));
         setInfraMode('custom');
       }
+
+      detectedCategory = guessCategoryFromName(detectedName + ' ' + clean);
+      detectedServices = guessServicesFromCategory(detectedCategory, detectedName + ' ' + clean);
 
       document.getElementById('bizName').value = detectedName || "Local Business";
       document.getElementById('bizDomain').value = clean;
       document.getElementById('bizCategory').value = detectedCategory || "Local Professional Healthcare & Services";
+      document.getElementById('bizServices').value = detectedServices;
+
+      // Reset address and phone if currently showing Big Byte Systems default data
+      const addrInput = document.getElementById('bizAddress');
+      if (addrInput.value.includes('Panch Pakhadi') || addrInput.value.includes('Shop No. 4')) {
+        addrInput.value = "Thane West, Maharashtra - 400602";
+      }
+
+      const phoneInput = document.getElementById('bizPhone');
+      if (phoneInput.value.includes('090547 90592') || phoneInput.value.includes('09054790592')) {
+        phoneInput.value = "098200 00000";
+      }
+
+      const waInput = document.getElementById('bizWhatsapp');
+      if (waInput.value.includes('9167463807')) {
+        waInput.value = "9820000000";
+      }
+
+      // De-select Big Byte presets since this is now an external client
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.classList.remove('bg-sky-600', 'text-white', 'border-sky-400', 'shadow-sm');
+        btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      });
+
       updateAll();
+    }
+
+    function handleDomainChange() {
+      const domainVal = document.getElementById('bizDomain').value.trim();
+      if (!domainVal) return;
+      if (domainVal.toLowerCase().includes('bigbytesystems.co.in')) {
+        loadServicesPreset('all');
+        return;
+      }
+      
+      const currentName = document.getElementById('bizName').value.trim();
+      if (currentName === "Big Byte Systems" || currentName === "Local Business" || !currentName) {
+        document.getElementById('extractUrlInput').value = domainVal;
+        extractFromUrl();
+      } else {
+        updateAll();
+      }
+    }
+
+    function handleNameChange() {
+      const name = document.getElementById('bizName').value.trim();
+      if (!name) return;
+      if (name.toLowerCase() === 'big byte systems') {
+        loadServicesPreset('all');
+        return;
+      }
+      const currentCat = document.getElementById('bizCategory').value.trim();
+      if (currentCat.includes('Autonomous Media Studio') || currentCat === 'Computer, Laptop, MacBook & Printer Repair Services') {
+        const guessedCat = guessCategoryFromName(name);
+        document.getElementById('bizCategory').value = guessedCat;
+        document.getElementById('bizServices').value = guessServicesFromCategory(guessedCat, name);
+        
+        // Reset address/phone if still BBS defaults
+        const addrInput = document.getElementById('bizAddress');
+        if (addrInput.value.includes('Panch Pakhadi') || addrInput.value.includes('Shop No. 4')) {
+          addrInput.value = "Thane West, Maharashtra - 400602";
+        }
+        updateAll();
+      }
     }
 
     function testLink(url) {
