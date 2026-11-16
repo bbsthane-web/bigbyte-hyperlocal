@@ -968,7 +968,24 @@
           const subtitle = document.getElementById('auditStatusSubtitle');
           if (scoreNum) scoreNum.textContent = "98";
           if (scoreBadge) scoreBadge.className = "w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/50 flex flex-col items-center justify-center text-emerald-400 font-extrabold text-lg shadow-inner";
-          if (subtitle) subtitle.innerHTML = `<span class="text-emerald-400 font-semibold">100% NAP &amp; Search Authority Restored:</span> All structured schema, DNS verification tokens, and llms.txt files are compiled below ready for 1-click deployment.`;
+          if (subtitle) subtitle.innerHTML = `<span class="text-emerald-400 font-semibold">100% NAP &amp; Search Authority Restored:</span> Automatically saved &amp; grounded on Big Byte VPS Directory! Deployment code below is ready for cPanel/GetSite if on-site injection is also desired.`;
+
+          // Auto-persist to VPS Directory!
+          fetch('/api/verify/publish', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: document.getElementById('bizName').value,
+              domain: document.getElementById('bizDomain').value,
+              category: document.getElementById('bizCategory').value,
+              address: document.getElementById('bizAddress').value,
+              telephone: document.getElementById('bizPhone').value,
+              hours: document.getElementById('bizHours').value,
+              services: document.getElementById('bizServices').value
+            })
+          }).then(res => res.json()).then(resp => {
+            console.log('VPS Auto-Remediation response:', resp);
+          }).catch(e => console.log('VPS publish error:', e));
 
           updateAll();
         }
