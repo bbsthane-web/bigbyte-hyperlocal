@@ -331,8 +331,11 @@ function dispatchDirectToInstagram(post, igConfig, publicImageUrl, caption) {
     }
 
     if (localFile && fs.existsSync(localFile)) {
-      console.log(`🌐 [DIRECT INSTAGRAM] Uploading local ${isVideo ? 'video Reel' : 'graphic'} "${filename}" to zero-cost fast CDN relay...`);
-      targetMediaUrl = await uploadToFreeCdn(localFile);
+      let rel = path.relative(PUBLIC_DIR, localFile).replace(/\\/g, '/');
+      if (rel.startsWith('/')) rel = rel.slice(1);
+      // Directly serve from our dedicated Oracle VPS Cloudflare Tunnel (100% self-hosted, $0, ultra-fast)
+      targetMediaUrl = `https://most-earned-bits-question.trycloudflare.com/${rel}`;
+      console.log(`🌐 [DIRECT INSTAGRAM] Using self-hosted Oracle VPS asset URL: ${targetMediaUrl}`);
     }
 
     if (!targetMediaUrl) {
@@ -859,7 +862,7 @@ function dispatchToWebhook(post, client) {
       }
 
       if (publicImageUrl.startsWith('/')) {
-        publicImageUrl = 'https://bigbytesystems.co.in' + publicImageUrl;
+        publicImageUrl = 'https://most-earned-bits-question.trycloudflare.com' + publicImageUrl;
       }
 
       // 2. Unconditional Compliance Sanitization for Google Business Profile (GBP)
