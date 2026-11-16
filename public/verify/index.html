@@ -765,32 +765,15 @@
       detectedCategory = guessCategoryFromName(detectedName + ' ' + clean);
       detectedServices = guessServicesFromCategory(detectedCategory, detectedName + ' ' + clean);
 
-      document.getElementById('bizName').value = detectedName || "Local Business";
+      // Clean wipe: never leak previous entity data or inject fake dummy defaults!
+      document.getElementById('bizName').value = detectedName || "";
       document.getElementById('bizDomain').value = clean;
-      document.getElementById('bizCategory').value = detectedCategory || "Local Professional Healthcare & Services";
-      document.getElementById('bizServices').value = detectedServices;
-
-      // Reset address and phone if currently showing Big Byte Systems default data
-      const addrInput = document.getElementById('bizAddress');
-      if (addrInput.value.includes('Panch Pakhadi') || addrInput.value.includes('Shop No. 4')) {
-        addrInput.value = "Thane West, Maharashtra - 400602";
-      }
-
-      const phoneInput = document.getElementById('bizPhone');
-      if (phoneInput.value.includes('090547 90592') || phoneInput.value.includes('09054790592')) {
-        phoneInput.value = "098200 00000";
-      }
-
-      const waInput = document.getElementById('bizWhatsapp');
-      if (waInput.value.includes('9167463807')) {
-        waInput.value = "9820000000";
-      }
-
-      // Reset hours if currently showing Big Byte Systems default data
-      const hoursInput = document.getElementById('bizHours');
-      if (hoursInput && hoursInput.value.includes('10:00 AM')) {
-        hoursInput.value = "Open 24 Hours (Monday - Sunday)";
-      }
+      document.getElementById('bizCategory').value = detectedCategory || "";
+      document.getElementById('bizServices').value = detectedServices || "";
+      document.getElementById('bizAddress').value = "";
+      document.getElementById('bizPhone').value = "";
+      document.getElementById('bizWhatsapp').value = "";
+      document.getElementById('bizHours').value = "";
 
       // De-select Big Byte presets since this is now an external client
       document.querySelectorAll('.preset-btn').forEach(btn => {
@@ -968,20 +951,34 @@
       document.getElementById('previewTitle').innerHTML = `${name} <i class="fa-solid fa-certificate text-sky-400 text-sm"></i>`;
       document.getElementById('previewCategory').textContent = category;
       
-      const serviceList = services.split(',').map(s => s.trim()).filter(Boolean);
+      const serviceList = services ? services.split(',').map(s => s.trim()).filter(Boolean) : [];
       
+      const addrHtml = address 
+        ? `<div class="text-white font-medium flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-rose-400"></i> ${address}</div>`
+        : `<div class="text-amber-400 font-medium text-xs flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> <span class="bg-amber-950/80 px-2 py-0.5 rounded border border-amber-600/50">Address Missing on Website</span></div>`;
+      
+      const phoneHtml = phone 
+        ? `<span><i class="fa-solid fa-phone text-sky-400 mr-1"></i> ${phone}</span>`
+        : `<span class="text-rose-400 font-medium"><i class="fa-solid fa-circle-xmark mr-1"></i> [Phone Missing]</span>`;
+      
+      const waHtml = whatsapp 
+        ? `<span><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> +${whatsapp}</span>`
+        : `<span class="text-slate-500">[No WhatsApp]</span>`;
+        
+      const hoursHtml = hours 
+        ? `<span><i class="fa-solid fa-clock text-amber-400 mr-1"></i> ${hours}</span>`
+        : `<span class="text-amber-400 font-medium"><i class="fa-solid fa-clock mr-1"></i> [Operating Hours Missing]</span>`;
+
       document.getElementById('previewSummary').innerHTML = `
         <div class="space-y-1.5">
-          <div class="text-white font-medium flex items-center gap-1.5">
-            <i class="fa-solid fa-location-dot text-rose-400"></i> ${address}
-          </div>
-          <div class="text-slate-300 leading-relaxed">
-            <strong class="text-sky-300">Grounded Portfolio:</strong> ${serviceList.join(' • ')}
+          ${addrHtml}
+          <div class="text-slate-300 leading-relaxed text-xs sm:text-sm">
+            <strong class="text-sky-300">Grounded Portfolio:</strong> ${serviceList.length ? serviceList.join(' • ') : '<span class="text-amber-400 text-xs">[Services Catalog Missing in Schema]</span>'}
           </div>
           <div class="text-slate-400 text-[11px] flex flex-wrap items-center gap-x-4 gap-y-1 pt-1.5 border-t border-slate-800/80">
-            <span><i class="fa-solid fa-phone text-sky-400 mr-1"></i> ${phone}</span>
-            <span><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> +${whatsapp}</span>
-            <span><i class="fa-solid fa-clock text-amber-400 mr-1"></i> ${hours}</span>
+            ${phoneHtml}
+            ${waHtml}
+            ${hoursHtml}
           </div>
         </div>
       `;
@@ -1004,9 +1001,9 @@
       document.getElementById('gmbTitle').textContent = name;
       const gmbCat = document.getElementById('gmbCategory');
       if (gmbCat) gmbCat.textContent = category;
-      document.getElementById('gmbAddress').innerHTML = `<i class="fa-solid fa-location-dot text-slate-400 mr-1.5"></i> ${address}`;
-      document.getElementById('gmbHours').innerHTML = `<i class="fa-solid fa-clock text-slate-400 mr-1.5"></i> ${hours}`;
-      document.getElementById('gmbPhone').innerHTML = `<i class="fa-solid fa-phone text-slate-400 mr-1.5"></i> ${phone}`;
+      document.getElementById('gmbAddress').innerHTML = address ? `<i class="fa-solid fa-location-dot text-slate-400 mr-1.5"></i> ${address}` : `<span class="text-amber-600 font-medium">[Address Missing]</span>`;
+      document.getElementById('gmbHours').innerHTML = hours ? `<i class="fa-solid fa-clock text-slate-400 mr-1.5"></i> ${hours}` : `<span class="text-amber-600 font-medium">[Hours Missing]</span>`;
+      document.getElementById('gmbPhone').innerHTML = phone ? `<i class="fa-solid fa-phone text-slate-400 mr-1.5"></i> ${phone}` : `<span class="text-red-600 font-medium">[Phone Missing]</span>`;
 
       const gmbChips = document.getElementById('gmbChips');
       if (gmbChips) {

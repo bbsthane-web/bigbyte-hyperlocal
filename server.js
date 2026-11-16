@@ -1232,10 +1232,17 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     name: name || hostname,
     domain: hostname,
     category: category,
-    address: address || "Thane West, Maharashtra - 400602",
-    telephone: telephone || "098200 00000",
-    hours: hours || "Open 24 Hours (Monday - Sunday)",
-    services: services.join(', ')
+    address: address || "",
+    telephone: telephone || "",
+    hours: hours || "",
+    services: services.join(', '),
+    audit: {
+      hasJsonLd: /<script[^>]*type=["']application\/ld\+json["']/i.test(html),
+      hasName: Boolean(name),
+      hasAddress: Boolean(address),
+      hasTelephone: Boolean(telephone),
+      hasHours: Boolean(hours)
+    }
   };
 }
 
