@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Byte Systems // Master Portfolio & Command Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+    }
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-black text-lg">
+          BB
+        </div>
+        <div>
+          <h1 class="text-base font-extrabold tracking-tight text-white flex items-center gap-2">
+            Big Byte Systems <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/30">Command Center</span>
+          </h1>
+          <p class="text-xs text-slate-400">Universal Project Portfolio, Version Mapping & Operational Hub</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="/verify/index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i> Verification Hub
+        </a>
+        <a href="/" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-clapperboard text-sky-400"></i> Social Studio
+        </a>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Systems Synced
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-8 space-y-8">
+    
+    <!-- Hero & Overview Header -->
+    <div class="space-y-4">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-950/80 border border-sky-700/50 text-sky-300 text-xs font-semibold mb-2">
+            <i class="fa-solid fa-layer-group text-sky-400"></i> Local & VPS Infrastructure Catalog
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Active Workspaces & System Matrix</h2>
+          <p class="text-slate-400 text-sm max-w-2xl mt-1">
+            Complete inventory of all 8 core projects across <code class="text-sky-300 bg-slate-900 px-1.5 py-0.5 rounded text-xs">C:\Users\BBS\Projects</code>. Track repository health, live deployment URLs, execution scripts, and version tags in one unified view.
+          </p>
+        </div>
+
+        <!-- Quick Stats Pill Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
+            <div class="text-xs text-slate-400 font-medium">Total Projects</div>
+            <div class="text-lg font-black text-white" id="statTotal">8</div>
+          </div>
+          <div class="px-3.5 py-2 rounded-xl bg-emerald-950/40 border border-emerald-700/40 text-center">
+            <div class="text-xs text-emerald-400 font-medium">Production Live</div>
+            <div class="text-lg font-black text-emerald-300">2</div>
+          </div>
+          <div class="px-3.5 py-2 rounded-xl bg-sky-950/40 border border-sky-700/40 text-center">
+            <div class="text-xs text-sky-400 font-medium">Local Tools</div>
+            <div class="text-lg font-black text-sky-300">3</div>
+          </div>
+          <div class="px-3.5 py-2 rounded-xl bg-purple-950/40 border border-purple-700/40 text-center">
+            <div class="text-xs text-purple-400 font-medium">Archived / Won</div>
+            <div class="text-lg font-black text-purple-300">3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Search Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto" id="filterGroup">
+          <button onclick="setFilter('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white transition shadow-sm" data-filter="all">All (8)</button>
+          <button onclick="setFilter('production')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition shadow-sm" data-filter="production">🟢 Production Live (2)</button>
+          <button onclick="setFilter('tools')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition shadow-sm" data-filter="tools">🛠️ Local Tools & Daemons (3)</button>
+          <button onclick="setFilter('archived')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition shadow-sm" data-filter="archived">📦 Archived / Completed (3)</button>
+        </div>
+
+        <div class="relative w-full sm:w-72">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="searchInput" placeholder="Search projects, stack, or path..." class="w-full pl-9 pr-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="projectsContainer">
+      <!-- Dynamic cards rendered by JS -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-slate-900/40 px-6 py-4 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div>
+        <span>Big Byte Systems Architecture Matrix</span> &bull; <span>Thane West, MH</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Oracle Cloud VPS: <strong class="text-slate-400">129.80.152.233</strong></span>
+        <span>Local Machine: <strong class="text-slate-400">127.0.0.1:3000</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Catalog Data & Logic Script -->
+  <script>
+    const projects = [
+      {
+        id: "01_website",
+        name: "01_BigByte_Live_Website",
+        title: "Big Byte Systems Official Live Portal",
+        category: "production",
+        badge: "Production Live",
+        badgeClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+        path: "C:\\Users\\BBS\\Projects\\01_BigByte_Live_Website",
+        liveUrl: "https://bigbytesystems.co.in/",
+        port: "80 / 443 (LiteSpeed Live)",
+        git: {
+          branch: "Standalone Release Dir",
+          remote: "Hostinger Production cPanel",
+          commit: "Zip Release: website_upload_ready.zip"
+        },
+        stack: ["HTML5", "TailwindCSS", "LiteSpeed Cache", "Python SEO Engine", "Schema.org JSON-LD"],
+        launcher: "preview_website.bat",
+        description: "Official customer-facing website with 85+ hyperlocal neighborhood repair landing pages, 100/100 PageSpeed optimization, dynamic case studies, and strict anti-suspension safeguards.",
+        actions: [
+          { label: "Visit Live Site", icon: "fa-solid fa-arrow-up-right-from-square", url: "https://bigbytesystems.co.in/", primary: true },
+          { label: "Run Overseer QA", icon: "fa-solid fa-clipboard-check", script: "node preflight_overseer.js" }
+        ]
+      },
+      {
+        id: "02_social_studio",
+        name: "02_BigByte_Social_Studio",
+        title: "Social Studio & AEO Verification Hub",
+        category: "production",
+        badge: "Active Production Engine",
+        badgeClass: "bg-sky-500/10 text-sky-400 border-sky-500/30",
+        path: "C:\\Users\\BBS\\Projects\\02_BigByte_Social_Studio",
+        liveUrl: "https://most-earned-bits-question.trycloudflare.com/verify/index.html",
+        localUrl: "http://localhost:3000/verify/index.html",
+        port: "3000 (Local + VPS PM2: 15)",
+        git: {
+          branch: "social-studio",
+          remote: "bbsthane-web/bigbyte-hyperlocal.git",
+          commit: "4411ffc - Client Privacy Mandate Rule 8"
+        },
+        stack: ["Node.js", "Express", "Tailwind CSS", "Edge-TTS", "Cloudflare Tunnel", "Meta & YouTube Graph APIs"],
+        launcher: "launch_social_studio.bat",
+        description: "The core orchestration powerhouse. Houses the 1-Click Verification Hub, authentic live website scraper, automated NAP audit diagnostic, and autonomous Reel/Video publisher.",
+        actions: [
+          { label: "Verification Hub", icon: "fa-solid fa-shield-halved", url: "/verify/index.html", primary: true },
+          { label: "Studio Dashboard", icon: "fa-solid fa-clapperboard", url: "/" }
+        ]
+      },
+      {
+        id: "03_market_terminal",
+        name: "03_Market_Watch_Quant_Terminal",
+        title: "Market Watch & Quant Terminal",
+        category: "tools",
+        badge: "Operational Local Tool",
+        badgeClass: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+        path: "C:\\Users\\BBS\\Projects\\03_Market_Watch_Quant_Terminal",
+        port: "Local Loopback Terminal UI",
+        git: {
+          branch: "Local Workspace",
+          remote: "Private Local Engine",
+          commit: "Active Terminal Release v1.0"
+        },
+        stack: ["Python", "FastAPI / WebSocket", "HTML5 Canvas", "Trading Engine"],
+        launcher: "Launch-Market-Terminal.bat",
+        description: "Algorithmic market watch and quantitative trading terminal built for high-density financial asset tracking, technical signals, and real-time order-book analytics.",
+        actions: [
+          { label: "Launcher Script", icon: "fa-solid fa-play", script: "Launch-Market-Terminal.bat" }
+        ]
+      },
+      {
+        id: "04_ott_navigator",
+        name: "04_OTT_Navigator_Windows",
+        title: "OTT Navigator Windows Native",
+        category: "tools",
+        badge: "Windows Desktop App",
+        badgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+        path: "C:\\Users\\BBS\\Projects\\04_OTT_Navigator_Windows",
+        port: "Native EXE / IPC",
+        git: {
+          branch: "Local Workspace",
+          remote: "Standalone Desktop Build",
+          commit: "v1.2 - Compiled OTTNavigator.exe"
+        },
+        stack: ["C# (.NET)", "Python Backend", "WebView2", "IPTV / Stream Engine"],
+        launcher: "Launch-OTT-Navigator.bat",
+        description: "Desktop media and IPTV streaming navigator for Windows. Bundles a native C# shell with an embedded Python streaming bridge and shortcut launcher.",
+        actions: [
+          { label: "Launch App", icon: "fa-solid fa-play", script: "Launch-OTT-Navigator.bat" }
+        ]
+      },
+      {
+        id: "05_autonomous_quant",
+        name: "autonomous_quant_agent",
+        title: "Autonomous Quant Daemon",
+        category: "tools",
+        badge: "Background Agent Daemon",
+        badgeClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/30",
+        path: "C:\\Users\\BBS\\Projects\\autonomous_quant_agent",
+        port: "Background Daemon / VPS",
+        git: {
+          branch: "Standalone Daemon",
+          remote: "Deploy_To_Oracle_VPS.sh",
+          commit: "trades.db v1.4"
+        },
+        stack: ["Python 3.11", "SQLite3", "Chrome Extension IPC", "VPS Automation"],
+        launcher: "Launch_Quant_Daemon.bat",
+        description: "Autonomous background algorithmic trading daemon with persistent trade database, trade performance logging, and dedicated Oracle VPS deploy pipeline.",
+        actions: [
+          { label: "Start Daemon", icon: "fa-solid fa-bolt", script: "Launch_Quant_Daemon.bat" }
+        ]
+      },
+      {
+        id: "06_ampere_sniper",
+        name: "oci_ampere_sniper",
+        title: "Oracle Cloud Ampere Sniper",
+        category: "archived",
+        badge: "Mission Accomplished",
+        badgeClass: "bg-emerald-950 text-emerald-400 border-emerald-800/40",
+        path: "C:\\Users\\BBS\\Projects\\oci_ampere_sniper",
+        git: {
+          branch: "Standalone Utility",
+          remote: "OCI API Script",
+          commit: "4 OCPU / 24GB VPS Secured"
+        },
+        stack: ["Python", "OCI SDK / REST", "Automated Retry Loop"],
+        launcher: "Launch_Ampere_Sniper.bat",
+        description: "High-frequency resource provisioner built to bypass Out-of-Capacity errors on Oracle Cloud Free Tier. Successfully provisioned the live 4-core Ampere VPS (129.80.152.233).",
+        actions: [
+          { label: "View Log", icon: "fa-solid fa-file-lines", script: "type sniper_activity.log" }
+        ]
+      },
+      {
+        id: "07_incubator_repo",
+        name: "install openclaw and boost antigrav",
+        title: "Architectural Incubator & Early Pages",
+        category: "archived",
+        badge: "Incubator / Merged",
+        badgeClass: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        path: "C:\\Users\\BBS\\Projects\\install openclaw and boost antigrav",
+        git: {
+          branch: "master",
+          remote: "bbsthane-web/bigbyte-hyperlocal.git",
+          commit: "074ffdc - Deploy website prototype (2026-11-06)"
+        },
+        stack: ["Python", "GitHub Pages", "Dialogue Harvester"],
+        launcher: "Deploy-To-GitHub.bat",
+        description: "Early research incubator workspace where the initial audio generation, PDF lead harvesting, and first GitHub Pages deployment were prototyped before being refactored into Social Studio.",
+        actions: [
+          { label: "Open Folder", icon: "fa-regular fa-folder" }
+        ]
+      },
+      {
+        id: "08_publish_prototype",
+        name: "05_Archived_Publlish_Prototype",
+        title: "Legacy Auto-Publisher Prototype",
+        category: "archived",
+        badge: "Archived / Superseded",
+        badgeClass: "bg-slate-800 text-slate-400 border-slate-700",
+        path: "C:\\Users\\BBS\\Projects\\05_Archived_Publlish_Prototype",
+        git: {
+          branch: "Legacy Prototype",
+          remote: "Pre-Git Local Mockup",
+          commit: "Superseded by Social Studio v2"
+        },
+        stack: ["Node.js", "Express", "HTML5", "JSON Database"],
+        launcher: "npm start",
+        description: "Early prototype for auto-pasting and social scheduling. Superseded and replaced by the production-ready Social Studio multi-platform architecture.",
+        actions: [
+          { label: "Open Folder", icon: "fa-regular fa-folder" }
+        ]
+      }
+    ];
+
+    let currentFilter = 'all';
+
+    function renderProjects() {
+      const container = document.getElementById('projectsContainer');
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      const filtered = projects.filter(p => {
+        const matchesFilter = (currentFilter === 'all') || (p.category === currentFilter);
+        const matchesSearch = !search || 
+          p.name.toLowerCase().includes(search) || 
+          p.title.toLowerCase().includes(search) || 
+          p.description.toLowerCase().includes(search) ||
+          p.stack.some(s => s.toLowerCase().includes(search));
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-500">
+            <i class="fa-solid fa-folder-open text-3xl mb-3 block"></i>
+            <p class="text-sm font-semibold">No matching projects found.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => `
+        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between transition-all duration-300">
+          <div class="space-y-3.5">
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-md border ${p.badgeClass}">
+                ${p.badge}
+              </span>
+              <span class="text-[11px] font-mono text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-code-branch text-sky-400"></i> ${p.git.branch}
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-base font-bold text-white tracking-tight">${p.title}</h3>
+              <p class="text-xs font-mono text-sky-300/80 mt-0.5 truncate" title="${p.name}">
+                <i class="fa-regular fa-folder text-slate-400"></i> ${p.name}
+              </p>
+            </div>
+
+            <p class="text-xs text-slate-300/90 leading-relaxed">${p.description}</p>
+
+            <div class="space-y-1.5 pt-1 text-[11px] text-slate-400 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800/80">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">Latest Commit:</span>
+                <span class="text-slate-300 truncate max-w-[180px]" title="${p.git.commit}">${p.git.commit}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">Runtime / Port:</span>
+                <span class="text-emerald-400 font-semibold">${p.port || 'Standalone'}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-500">Launcher:</span>
+                <span class="text-sky-300 font-semibold">${p.launcher || 'Direct Script'}</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${p.stack.map(s => `
+                <span class="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60">
+                  ${s}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pt-5 mt-4 border-t border-slate-800/80 flex items-center gap-2">
+            ${p.liveUrl ? `
+              <a href="${p.liveUrl}" target="_blank" class="flex-1 text-center py-2 px-3 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live
+              </a>
+            ` : ''}
+            ${p.localUrl ? `
+              <a href="${p.localUrl}" target="_blank" class="flex-1 text-center py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-desktop"></i> Local UI
+              </a>
+            ` : ''}
+            <button onclick="copyPath('${p.path.replace(/\\/g, '\\\\')}')" title="Copy Windows Absolute Path" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs transition flex items-center gap-1">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filter) {
+          btn.className = "filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white transition shadow-sm";
+        } else {
+          btn.className = "filter-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition shadow-sm";
+        }
+      });
+      renderProjects();
+    }
+
+    function copyPath(path) {
+      navigator.clipboard.writeText(path).then(() => {
+        alert("Path copied to clipboard:\n" + path);
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderProjects);
+    renderProjects();
+  </script>
+</body>
+</html>
