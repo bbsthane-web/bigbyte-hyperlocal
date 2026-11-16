@@ -93,7 +93,7 @@
           </div>
           <input type="text" id="extractUrlInput" placeholder="Paste link e.g. friendslaptop.com, instagram.com/friends_laptop or clinic.getsite.in" class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs sm:text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none" onkeydown="if(event.key==='Enter'){event.preventDefault();extractFromUrl();}">
         </div>
-        <button onclick="extractFromUrl()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg">
+        <button id="btnExtractUrl" onclick="extractFromUrl()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg">
           <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Extract &amp; Auto-Fill</span>
         </button>
       </div>
@@ -793,6 +793,36 @@
       });
 
       updateAll();
+
+      // Live Scrape: Fetch real site metadata from backend if external website
+      if (!fullUrlLower.includes('instagram.com') && !fullUrlLower.includes('facebook.com')) {
+        const btnExtract = document.getElementById('btnExtractUrl');
+        if (btnExtract) {
+          btnExtract.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Reading Site...</span>`;
+        }
+        fetch(`/api/verify/scrape?url=${encodeURIComponent(rawUrl)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data && data.success) {
+              if (data.name) document.getElementById('bizName').value = data.name;
+              if (data.address) document.getElementById('bizAddress').value = data.address;
+              if (data.telephone) {
+                document.getElementById('bizPhone').value = data.telephone;
+                const cleanPhone = data.telephone.replace(/\D/g, '');
+                if (cleanPhone) document.getElementById('bizWhatsapp').value = cleanPhone.slice(-10);
+              }
+              if (data.category) document.getElementById('bizCategory').value = data.category;
+              if (data.services) document.getElementById('bizServices').value = data.services;
+              updateAll();
+            }
+          })
+          .catch(e => console.log('Live scrape fallback:', e))
+          .finally(() => {
+            if (btnExtract) {
+              btnExtract.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span>Extract &amp; Auto-Fill</span>`;
+            }
+          });
+      }
     }
 
     function handleDomainChange() {
