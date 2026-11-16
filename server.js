@@ -1110,7 +1110,19 @@ function scrapeBusinessSite(targetUrl, callback) {
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         let result = extractMetadataFromScrapedHtml(data, urlObj.hostname);
-        callback(null, result);
+        if (result.whatsappUrl && result.whatsappUrl.includes('wa.link')) {
+          https.get(result.whatsappUrl, (rRes) => {
+            const loc = rRes.headers.location;
+            if (loc) {
+              const pm = loc.match(/phone=([0-9]+)/);
+              if (pm) result.whatsappPhone = pm[1];
+              result.whatsappResolvedUrl = loc;
+            }
+            callback(null, result);
+          }).on('error', () => callback(null, result));
+        } else {
+          callback(null, result);
+        }
       });
     });
 
@@ -1232,7 +1244,7 @@ function extractMetadataFromScrapedHtml(html, hostname) {
   const igMatch = html.match(/href=["'](https?:\/\/(?:www\.)?instagram\.com\/[^"'\s#]+)["']/i);
   const ytMatch = html.match(/href=["'](https?:\/\/(?:www\.)?youtube\.com\/[^"'\s#]+)["']/i);
   const mapMatch = html.match(/href=["'](https?:\/\/(?:maps\.google\.com|goo\.gl\/maps|www\.google\.com\/maps)[^"'\s#]+)["']/i);
-  const waMatch = html.match(/href=["'](https?:\/\/(?:wa\.me|api\.whatsapp\.com)[^"'\s#]+)["']/i);
+  const waMatch = html.match(/href=["'](https?:\/\/(?:wa\.link|wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)[^"'\s#]+)["']/i);
 
   const socialProfiles = {
     facebook: fbMatch ? fbMatch[1] : null,
@@ -1279,6 +1291,8 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     category: category,
     address: address || "",
     telephone: telephone || "",
+    whatsappPhone: null,
+    whatsappUrl: waMatch ? waMatch[1] : null,
     hours: hours || "",
     services: services.join(', '),
     audit: {
