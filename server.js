@@ -150,11 +150,20 @@ const { checkDuplicate, recordAsset } = require('./scripts/media_vault.js');
 function resolveLocalAssetPath(imageUrl) {
   if (!imageUrl) return null;
   let clean = imageUrl.trim().split('?')[0];
+  clean = clean.replace(/^https?:\/\/[^\/]+/, '');
   if (clean.startsWith('/')) clean = clean.slice(1);
-  const candidate1 = path.join(PUBLIC_DIR, clean);
-  if (fs.existsSync(candidate1)) return candidate1;
-  const candidate2 = path.join(PUBLIC_DIR, 'assets', path.basename(clean));
-  if (fs.existsSync(candidate2)) return candidate2;
+
+  const candidates = [
+    path.join(PUBLIC_DIR, clean),
+    path.join(PUBLIC_DIR, 'assets', clean),
+    path.join(PUBLIC_DIR, 'assets', 'generated', path.basename(clean)),
+    path.join(PUBLIC_DIR, 'assets', 'reels', path.basename(clean)),
+    path.join(PUBLIC_DIR, 'assets', path.basename(clean))
+  ];
+
+  for (const c of candidates) {
+    if (fs.existsSync(c)) return c;
+  }
   return null;
 }
 
@@ -1052,18 +1061,34 @@ setInterval(() => {
 
         console.log(`⏰ [TRIGGER] Scheduled time reached for: ${p.title} (${p.platform.toUpperCase()})`);
         const client = allClients.find(c => c.id === p.clientId) || allClients[0];
-        dispatchToWebhook(p, client);
-        p.status = 'Published';
-        p.publishedAt = now.toISOString();
-        recordAsset(p);
-        updated = true;
+        dispatchToWebhook(p, client).then(dispatchRes => {
+          if (dispatchRes && dispatchRes.success) {
+            const currentPosts = readJson(POSTS_FILE, []);
+            const targetP = currentPosts.find(item => item.id === p.id);
+            if (targetP) {
+              targetP.status = 'Published';
+              targetP.publishedAt = new Date().toISOString();
+              const pubId = dispatchRes.postId || dispatchRes.id;
+              if (pubId) targetP.publishedId = pubId;
+              if (targetP.platform === 'facebook' && pubId) {
+                const cleanId = String(pubId).split('_').pop();
+                targetP.publishedUrl = `https://www.facebook.com/122128630917461791/posts/${cleanId}`;
+              } else if (targetP.platform === 'youtube' && pubId) {
+                targetP.publishedUrl = `https://youtube.com/shorts/${pubId}`;
+              }
+              recordAsset(targetP);
+              writeJson(POSTS_FILE, currentPosts);
+              console.log(`✅ [SCHEDULER PERSISTED] Post ${targetP.id} marked Published with URL: ${targetP.publishedUrl || 'Direct'}`);
+            }
+          } else {
+            console.warn(`⚠️ [SCHEDULER DISPATCH NOTICE] Post ${p.id} dispatch result:`, dispatchRes?.error || 'unconfirmed');
+          }
+        }).catch(e => {
+          console.error(`❌ [SCHEDULER DISPATCH ERROR] Post ${p.id}:`, e.message);
+        });
       }
     }
   });
-
-  if (updated) {
-    writeJson(POSTS_FILE, posts);
-  }
 }, (config.checkIntervalSeconds || 15) * 1000);
 
 // MIME Types

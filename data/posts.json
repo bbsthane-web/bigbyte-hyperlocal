@@ -1069,7 +1069,7 @@
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-16",
     "time": "12:00",
     "title": "Epson EcoTank Waste Ink Sponge Reset & Flushing",
@@ -1081,7 +1081,10 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-16T07:58:21.000Z",
+    "publishedId": "1310878978775789_122130844881461791",
+    "publishedUrl": "https://www.facebook.com/122128630917461791/posts/122130844881461791"
   },
   {
     "id": "post_20261116_ig",
