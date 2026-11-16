@@ -1227,6 +1227,51 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     services = ["In-Store Consultations", "Rapid Service Delivery", "Official Warranty & Support"];
   }
 
+  // 8. Social Profiles and Maps Detection
+  const fbMatch = html.match(/href=["'](https?:\/\/(?:www\.)?facebook\.com\/[^"'\s#]+)["']/i);
+  const igMatch = html.match(/href=["'](https?:\/\/(?:www\.)?instagram\.com\/[^"'\s#]+)["']/i);
+  const ytMatch = html.match(/href=["'](https?:\/\/(?:www\.)?youtube\.com\/[^"'\s#]+)["']/i);
+  const mapMatch = html.match(/href=["'](https?:\/\/(?:maps\.google\.com|goo\.gl\/maps|www\.google\.com\/maps)[^"'\s#]+)["']/i);
+  const waMatch = html.match(/href=["'](https?:\/\/(?:wa\.me|api\.whatsapp\.com)[^"'\s#]+)["']/i);
+
+  const socialProfiles = {
+    facebook: fbMatch ? fbMatch[1] : null,
+    instagram: igMatch ? igMatch[1] : null,
+    youtube: ytMatch ? ytMatch[1] : null,
+    googleMaps: mapMatch ? mapMatch[1] : null,
+    whatsapp: waMatch ? waMatch[1] : null
+  };
+
+  const isCustomDomain = !hostname.includes('getsite') && !hostname.includes('wixsite') && !hostname.includes('blogspot') && !hostname.includes('wordpress.com');
+  const hasJsonLd = /<script[^>]*type=["']application\/ld\+json["']/i.test(html);
+  const hasPhone = Boolean(telephone);
+  const hasAddress = Boolean(address);
+  const hasHours = Boolean(hours);
+
+  let score = 0;
+  if (isCustomDomain) score += 20;
+  if (hasJsonLd) score += 25;
+  if (hasPhone) score += 20;
+  if (hasAddress) score += 15;
+  if (hasHours) score += 10;
+  if (fbMatch || igMatch) score += 10;
+
+  const deficiencies = [];
+  if (!isCustomDomain) deficiencies.push({ title: "Free Subdomain Penalty", desc: "Shared subdomain (getsite.online) suppresses Google 3-Pack authority and AI trust score.", severity: "high" });
+  if (!hasJsonLd) deficiencies.push({ title: "Missing Schema.org JSON-LD", desc: "ChatGPT, Perplexity & Google AI Overviews cannot ingest your structured services & pricing.", severity: "critical" });
+  if (!fbMatch && !igMatch) deficiencies.push({ title: "Zero Social Media Integration", desc: "No verified Facebook or Instagram profiles linked to website for Google entity triangulation.", severity: "high" });
+  if (!mapMatch) deficiencies.push({ title: "Unlinked Google Maps Location", desc: "Missing direct Google Maps CID directions anchor for local mobile routing.", severity: "medium" });
+  if (!hasHours) deficiencies.push({ title: "Machine-Readable Schedule Missing", desc: "AI bots cannot confirm whether shop is open now without structured openingHours.", severity: "medium" });
+
+  const steps = [
+    { step: 1, title: "Inject Schema.org LocalBusiness & 24/7 Schedule", status: "ready", detail: "Embeds JSON-LD into website header with exact coordinates and services catalog." },
+    { step: 2, title: "Deploy OpenAI & AI Engine DNS Verification Record", status: "ready", detail: "Proves domain ownership to OpenAI Search, ChatGPT bot, and Perplexity crawler." },
+    { step: 3, title: "Sync NAP Consistency with Google Business Profile", status: "ready", detail: "Harmonizes exact name, address, and verified phone across Google Maps & live site." },
+    { step: 4, title: "Link Verified Meta Social Footprint", status: "ready", detail: "Triangulates Facebook & Instagram profiles into Schema sameAs markup." },
+    { step: 5, title: "Publish /llms.txt Semantic Knowledge Base", status: "ready", detail: "Feeds ChatGPT and Gemini a direct Markdown briefing of emergency repair capabilities." },
+    { step: 6, title: "Deploy Sticky Floating WhatsApp & Click-to-Call CTA", status: "ready", detail: "Captures high-intent mobile visitors instantly, converting visits to calls." }
+  ];
+
   return {
     success: true,
     name: name || hostname,
@@ -1237,11 +1282,16 @@ function extractMetadataFromScrapedHtml(html, hostname) {
     hours: hours || "",
     services: services.join(', '),
     audit: {
-      hasJsonLd: /<script[^>]*type=["']application\/ld\+json["']/i.test(html),
+      score,
+      isCustomDomain,
+      hasJsonLd,
       hasName: Boolean(name),
-      hasAddress: Boolean(address),
-      hasTelephone: Boolean(telephone),
-      hasHours: Boolean(hours)
+      hasAddress,
+      hasTelephone: hasPhone,
+      hasHours,
+      socialProfiles,
+      deficiencies,
+      steps
     }
   };
 }

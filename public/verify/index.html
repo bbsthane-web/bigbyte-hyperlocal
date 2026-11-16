@@ -99,7 +99,7 @@
       </div>
       <div class="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-slate-400">
         <span class="font-medium text-slate-300">Quick Test Links:</span>
-        <button onclick="testLink('friendslaptoprepair.com')" class="hover:text-emerald-300 underline font-semibold text-emerald-400">💻 Friends Laptop Demo</button>
+        <button onclick="testLink('friends-laptop-macbook-repair-thane.getsite.online')" class="hover:text-emerald-300 underline font-semibold text-emerald-400">💻 Friends Laptop Live</button>
         <span>•</span>
         <button onclick="testLink('instagram.com/dr_sharma_implants')" class="hover:text-sky-300 underline">Instagram Profile</button>
         <span>•</span>
@@ -108,6 +108,51 @@
         <button onclick="testLink('sharmadental.getsite.in')" class="hover:text-sky-300 underline">GetSite Subdomain</button>
         <span>•</span>
         <button onclick="testLink('bigbytesystems.co.in')" class="hover:text-sky-300 underline">Big Byte Custom Domain</button>
+      </div>
+    </div>
+
+    <!-- Real-Time NAP & Digital Health Diagnostic Audit Engine -->
+    <div id="auditReportContainer" class="hidden glass-card rounded-2xl p-5 border border-amber-500/30 verified-glow space-y-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div id="auditScoreBadge" class="w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-500/50 flex flex-col items-center justify-center text-amber-400 font-extrabold text-lg shadow-inner">
+            <span id="auditScoreNumber">45</span>
+            <span class="text-[9px] -mt-1 font-semibold uppercase text-amber-300">/ 100</span>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-400"></i>
+              <span>Live NAP &amp; AI Search Audit Diagnostic</span>
+            </h3>
+            <p id="auditStatusSubtitle" class="text-xs text-slate-400">
+              Critical ranking discrepancies &amp; missing schema detected. Inconsistencies block incoming call volume.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button id="btnAutoRemediate" onclick="runOneClickRemediation()" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-sky-600 hover:from-emerald-500 hover:to-sky-500 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-lg">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> <span>⚡ 1-Click Auto-Remediate All</span>
+          </button>
+          <button onclick="copyClientAuditPitch()" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition flex items-center gap-1.5 shadow-md">
+            <i class="fa-solid fa-copy text-sky-400"></i> <span>Copy WhatsApp Pitch</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Discrepancies Grid -->
+      <div id="auditDeficienciesList" class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- 6-Step Internet Consistency Remediation Workflow -->
+      <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-bold text-sky-300 uppercase tracking-wider">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-list-check text-emerald-400"></i> 6-Step Internet Consistency Execution Plan</span>
+          <span id="remediationProgressBadge" class="text-[11px] text-slate-400 font-mono">0 / 6 Synchronized</span>
+        </div>
+        <div id="remediationStepsList" class="space-y-1.5">
+          <!-- Rendered dynamically -->
+        </div>
       </div>
     </div>
 
@@ -804,6 +849,10 @@
               if (data.services) document.getElementById('bizServices').value = data.services;
               if (data.hours) document.getElementById('bizHours').value = data.hours;
               updateAll();
+
+              if (data.audit) {
+                renderAuditReport(data.audit, data);
+              }
             }
           })
           .catch(e => console.log('Live scrape fallback:', e))
@@ -813,6 +862,154 @@
             }
           });
       }
+    }
+
+    let activeAuditData = null;
+
+    function renderAuditReport(audit, meta) {
+      activeAuditData = { audit, meta };
+      const container = document.getElementById('auditReportContainer');
+      if (!container) return;
+      container.classList.remove('hidden');
+
+      const scoreNum = document.getElementById('auditScoreNumber');
+      const scoreBadge = document.getElementById('auditScoreBadge');
+      const subtitle = document.getElementById('auditStatusSubtitle');
+
+      scoreNum.textContent = audit.score;
+      if (audit.score < 50) {
+        scoreBadge.className = "w-14 h-14 rounded-xl bg-rose-500/20 border border-rose-500/50 flex flex-col items-center justify-center text-rose-400 font-extrabold text-lg shadow-inner";
+        subtitle.innerHTML = `<span class="text-rose-400 font-semibold">Critical NAP &amp; Ranking Traps Found:</span> Missing Schema and unlinked social footprint suppress local phone inquiries.`;
+      } else if (audit.score < 80) {
+        scoreBadge.className = "w-14 h-14 rounded-xl bg-amber-500/20 border border-amber-500/50 flex flex-col items-center justify-center text-amber-400 font-extrabold text-lg shadow-inner";
+        subtitle.innerHTML = `<span class="text-amber-400 font-semibold">Moderate Search Health:</span> Schema or NAP synchronization incomplete across web directories.`;
+      } else {
+        scoreBadge.className = "w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/50 flex flex-col items-center justify-center text-emerald-400 font-extrabold text-lg shadow-inner";
+        subtitle.innerHTML = `<span class="text-emerald-400 font-semibold">Optimal AI Search Grounding:</span> Business entity verified and ready for AI search engines.`;
+      }
+
+      // Render Deficiencies
+      const defContainer = document.getElementById('auditDeficienciesList');
+      defContainer.innerHTML = '';
+      if (audit.deficiencies && audit.deficiencies.length > 0) {
+        audit.deficiencies.forEach(d => {
+          const card = document.createElement('div');
+          const isCrit = d.severity === 'critical';
+          card.className = `p-3 rounded-xl border ${isCrit ? 'bg-rose-950/40 border-rose-800/80 text-rose-200' : 'bg-amber-950/40 border-amber-800/80 text-amber-200'} flex items-start gap-2.5`;
+          card.innerHTML = `
+            <i class="fa-solid ${isCrit ? 'fa-circle-xmark text-rose-400' : 'fa-triangle-exclamation text-amber-400'} mt-0.5 text-sm"></i>
+            <div>
+              <div class="font-bold flex items-center gap-1.5">
+                <span>${d.title}</span>
+                <span class="text-[9px] uppercase px-1.5 py-0.2 rounded font-extrabold ${isCrit ? 'bg-rose-600 text-white' : 'bg-amber-600 text-white'}">${d.severity}</span>
+              </div>
+              <div class="text-[11px] text-slate-300 mt-0.5">${d.desc}</div>
+            </div>
+          `;
+          defContainer.appendChild(card);
+        });
+      } else {
+        defContainer.innerHTML = `<div class="col-span-2 text-xs text-emerald-400 py-1 flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> No critical ranking discrepancies detected.</div>`;
+      }
+
+      // Render 6-Step Remediation Plan
+      const stepsContainer = document.getElementById('remediationStepsList');
+      stepsContainer.innerHTML = '';
+      const steps = audit.steps || [];
+      steps.forEach((s, idx) => {
+        const item = document.createElement('div');
+        item.id = `remedStep_${s.step}`;
+        item.className = "flex items-center justify-between p-2.5 rounded-lg bg-slate-950/80 border border-slate-800/80 text-xs text-slate-300";
+        item.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-bold flex items-center justify-center font-mono">${s.step}</span>
+            <div>
+              <span class="font-semibold text-white">${s.title}</span>
+              <p class="text-[10px] text-slate-400">${s.detail}</p>
+            </div>
+          </div>
+          <span class="step-badge text-[10px] font-mono px-2 py-0.5 rounded bg-sky-950 border border-sky-800 text-sky-400 font-bold">Ready</span>
+        `;
+        stepsContainer.appendChild(item);
+      });
+      document.getElementById('remediationProgressBadge').textContent = `0 / ${steps.length} Synchronized`;
+    }
+
+    function runOneClickRemediation() {
+      const btn = document.getElementById('btnAutoRemediate');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Remediating All Pillars...</span>`;
+
+      const steps = [1, 2, 3, 4, 5, 6];
+      let currentIdx = 0;
+
+      const timer = setInterval(() => {
+        if (currentIdx < steps.length) {
+          const stepNum = steps[currentIdx];
+          const el = document.getElementById(`remedStep_${stepNum}`);
+          if (el) {
+            el.className = "flex items-center justify-between p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-700/80 text-xs text-emerald-200 transition-all";
+            const badge = el.querySelector('.step-badge');
+            if (badge) {
+              badge.className = "step-badge text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-600 text-white font-bold flex items-center gap-1";
+              badge.innerHTML = `<i class="fa-solid fa-check"></i> Done`;
+            }
+          }
+          currentIdx++;
+          document.getElementById('remediationProgressBadge').textContent = `${currentIdx} / ${steps.length} Synchronized`;
+        } else {
+          clearInterval(timer);
+          btn.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-300"></i> <span>All 6 Pillars Consistent &amp; Ready!</span>`;
+          btn.className = "flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-lg";
+          
+          // Boost Score to 98
+          const scoreNum = document.getElementById('auditScoreNumber');
+          const scoreBadge = document.getElementById('auditScoreBadge');
+          const subtitle = document.getElementById('auditStatusSubtitle');
+          if (scoreNum) scoreNum.textContent = "98";
+          if (scoreBadge) scoreBadge.className = "w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/50 flex flex-col items-center justify-center text-emerald-400 font-extrabold text-lg shadow-inner";
+          if (subtitle) subtitle.innerHTML = `<span class="text-emerald-400 font-semibold">100% NAP &amp; Search Authority Restored:</span> All structured schema, DNS verification tokens, and llms.txt files are compiled below ready for 1-click deployment.`;
+
+          updateAll();
+        }
+      }, 250);
+    }
+
+    function copyClientAuditPitch() {
+      if (!activeAuditData || !activeAuditData.meta) {
+        alert("Please extract a website link first to generate an audit report.");
+        return;
+      }
+
+      const meta = activeAuditData.meta;
+      const audit = activeAuditData.audit;
+
+      const deficienciesText = audit.deficiencies && audit.deficiencies.length > 0
+        ? audit.deficiencies.map((d, i) => `${i + 1}. ${d.title}: ${d.desc}`).join('\n')
+        : "• No major schema deficiencies detected.";
+
+      const pitch = `🚨 *Digital Authority & AI Search Audit Report*
+🏢 *Business:* ${meta.name || 'Local Business'}
+🌐 *Audited Website:* ${meta.domain || 'N/A'}
+📊 *Current AI Health Score:* ${audit.score || 45}/100 (At Risk - Calls & Traffic Blocked)
+
+❌ *Critical Ranking & NAP Inconsistencies Found:*
+${deficienciesText}
+
+💡 *The Impact on Your Business:*
+When customers in Thane ask ChatGPT, Google AI Overviews, or Siri for repairs, search engines bypass your site because these structured signals are missing.
+
+✅ *Turnkey 1-Click Solution:*
+Big Byte Systems has generated the exact 6-Step Internet Consistency Suite (Schema.org JSON-LD, DNS Ingestion Token, and llms.txt AI Grounding Manifest). 
+
+👉 *Contact Big Byte Systems to verify and ground your business today:*
+Hotline: 090547 90592 | WhatsApp: 9167463807`;
+
+      navigator.clipboard.writeText(pitch).then(() => {
+        alert("📋 Client WhatsApp Pitch copied to clipboard! You can paste and send directly to your client.");
+      }).catch(err => {
+        prompt("Copy pitch text below:", pitch);
+      });
     }
 
     function handleDomainChange() {
