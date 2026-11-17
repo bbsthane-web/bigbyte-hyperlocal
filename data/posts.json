@@ -957,7 +957,7 @@
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-15",
     "time": "10:30",
     "title": "📍 Broken Laptop Hinge & Chassis Structural Epoxy Anchoring",
@@ -967,14 +967,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-17T02:52:07.299Z"
   },
   {
     "id": "post_20261115_yt",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-15",
     "time": "11:30",
     "title": "▶ [Shorts] Screen popping out or hinge cracking the plastic body? #Shorts",
@@ -987,14 +988,17 @@
     "mediaFormat": "VIDEO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-16T13:36:51.330Z",
+    "publishedId": "vmjZRla0IjU",
+    "publishedUrl": "https://youtube.com/shorts/vmjZRla0IjU"
   },
   {
     "id": "post_20261115_fb",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-15",
     "time": "12:00",
     "title": "Broken Laptop Hinge & Chassis Structural Epoxy Anchoring",
@@ -1006,7 +1010,10 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-16T13:36:50.755Z",
+    "publishedId": "1310878978775789_122130908439461791",
+    "publishedUrl": "https://www.facebook.com/122128630917461791/posts/122130908439461791"
   },
   {
     "id": "post_20261115_ig",
@@ -1032,7 +1039,7 @@
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "gmb",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-16",
     "time": "10:30",
     "title": "📍 Epson EcoTank Waste Ink Sponge Reset & Flushing",
@@ -1042,14 +1049,15 @@
     "mediaFormat": "PHOTO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-17T02:52:07.301Z"
   },
   {
     "id": "post_20261116_yt",
     "clientId": "client_bigbyte",
     "clientName": "Big Byte Systems",
     "platform": "youtube",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-16",
     "time": "11:30",
     "title": "▶ [Shorts] Alternating red lights on your Epson EcoTank? What \"Se #Shorts",
@@ -1062,7 +1070,10 @@
     "mediaFormat": "VIDEO",
     "auditPassed": true,
     "auditIssues": [],
-    "auditWarnings": []
+    "auditWarnings": [],
+    "publishedAt": "2026-11-16T13:36:50.892Z",
+    "publishedId": "_bxOTJ9ksjY",
+    "publishedUrl": "https://youtube.com/shorts/_bxOTJ9ksjY"
   },
   {
     "id": "post_20261116_fb",

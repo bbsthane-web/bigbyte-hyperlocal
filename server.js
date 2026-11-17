@@ -957,7 +957,7 @@ function dispatchToWebhook(post, client) {
       function sendWebhookPayload() {
         if (!targetUrl || !targetUrl.startsWith('http')) {
           console.log(`✅ [LOCAL POSTIZ ENGINE] Post "${post.title}" [${post.platform.toUpperCase()}] dispatched via native engine (100% Free, zero middleware).`);
-          return resolve(true);
+          return resolve({ success: true, localOnly: true });
         }
 
         try {
@@ -1014,24 +1014,24 @@ function dispatchToWebhook(post, client) {
             }
           }, (res) => {
             console.log(`📡 [AUTOPILOT DISPATCH] Post "${post.title}" [${post.platform.toUpperCase()}] delivered with mediaUrl: ${publicImageUrl} (${res.statusCode})`);
-            resolve(true);
+            resolve({ success: res.statusCode >= 200 && res.statusCode < 300, statusCode: res.statusCode });
           });
 
           req.on('error', (err) => {
             console.error(`❌ [DISPATCH ERROR] Optional relay failed: ${err.message}`);
-            resolve(false);
+            resolve({ success: false, error: err.message });
           });
 
           req.write(payload);
           req.end();
         } catch (err) {
           console.error(`❌ [DISPATCH ERROR] ${err.message}`);
-          resolve(false);
+          resolve({ success: false, error: err.message });
         }
       }
     } catch (err) {
       console.error(`❌ [DISPATCH EXCEPTION] ${err.message}`);
-      resolve(false);
+      resolve({ success: false, error: err.message });
     }
   });
 }
@@ -1063,6 +1063,10 @@ setInterval(() => {
         }
 
         console.log(`⏰ [TRIGGER] Scheduled time reached for: ${p.title} (${p.platform.toUpperCase()})`);
+        // Immediate Execution Lock: prevent race condition on subsequent 15s interval ticks
+        p.status = 'Publishing';
+        writeJson(POSTS_FILE, posts);
+
         const client = allClients.find(c => c.id === p.clientId) || allClients[0];
         dispatchToWebhook(p, client).then(dispatchRes => {
           if (dispatchRes && dispatchRes.success) {
@@ -1085,6 +1089,13 @@ setInterval(() => {
             }
           } else {
             console.warn(`⚠️ [SCHEDULER DISPATCH NOTICE] Post ${p.id} dispatch result:`, dispatchRes?.error || 'unconfirmed');
+            const currentPosts = readJson(POSTS_FILE, []);
+            const targetP = currentPosts.find(item => item.id === p.id);
+            if (targetP && targetP.status === 'Publishing') {
+              targetP.status = 'Failed';
+              targetP.auditIssues = [dispatchRes?.error || 'Dispatch unconfirmed'];
+              writeJson(POSTS_FILE, currentPosts);
+            }
           }
         }).catch(e => {
           console.error(`❌ [SCHEDULER DISPATCH ERROR] Post ${p.id}:`, e.message);
