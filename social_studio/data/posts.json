@@ -476,14 +476,17 @@
     "clientName": "Big Byte Systems",
     "day": 19,
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-19",
     "time": "11:30",
     "title": "🔧 Broken Hinge Fixed For Good: Structural Epoxy Reconstruction",
     "content": "Say no to cracked screens! When laptop hinges snap their plastic chassis anchors, our reinforced structural epoxy fabrication creates a bond 3X stronger than factory plastic.\n\n📍 Khewra Cir Marg, Manpada, Thane West\n📞 090547 90592\n\n#LaptopHinge #HardwareRepair #ThaneWest #LaptopCare #BigByteSystems #ScreenProtection",
     "image": "/assets/reel_hinge_repair.jpg",
     "mediaUrl": "/assets/reel_hinge_repair.jpg",
-    "mediaFormat": "REELS"
+    "mediaFormat": "REELS",
+    "publishedAt": "2026-11-19T18:29:51.067Z",
+    "cloudDispatched": true,
+    "publishedId": "17931313386183335"
   },
   {
     "id": "post_bb_24",
