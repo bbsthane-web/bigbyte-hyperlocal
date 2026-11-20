@@ -494,14 +494,17 @@
     "clientName": "Big Byte Systems",
     "day": 22,
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-20",
     "time": "11:30",
     "title": "🖨️ EcoTank Printing Sharp & Vivid: Full Maintenance Sponge Service",
     "content": "Nozzle check 100% clear! Certified printer maintenance sponges, laser fuser overhauls, and optical alignment for Thane offices and students.\n\n📍 Manpada, Thane West\n📞 090547 90592\n\n#EpsonEcoTank #PrinterRepair #LaserJet #OfficeTech #ThanePrinters #PrintService",
     "image": "/assets/reel_printer_repair.jpg",
     "mediaUrl": "/assets/reel_printer_repair.jpg",
-    "mediaFormat": "REELS"
+    "mediaFormat": "REELS",
+    "publishedAt": "2026-11-20T17:06:58.146Z",
+    "cloudDispatched": true,
+    "publishedId": "18053824388818203"
   },
   {
     "id": "post_bb_25",
