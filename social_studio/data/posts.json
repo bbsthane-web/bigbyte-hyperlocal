@@ -512,14 +512,17 @@
     "clientName": "Big Byte Systems",
     "day": 25,
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-21",
     "time": "11:30",
     "title": "🛡️ Liquid Spill Rescue Protocol: The 3 Golden Rules",
     "content": "Spilled water on your keyboard? 1️⃣ Turn off immediately. 2️⃣ Unplug charger. 3️⃣ Bring to an ultrasonic decontamination lab. Rice won't stop corrosion!\n\n📍 Big Byte Systems, Manpada, Thane West\n📞 090547 90592\n\n#SpillEmergency #LaptopRescue #TechTips #ThaneCity #AppleRepair #MacBookCare",
     "image": "/assets/reel_liquid_spill.jpg",
     "mediaUrl": "/assets/reel_liquid_spill.jpg",
-    "mediaFormat": "REELS"
+    "mediaFormat": "REELS",
+    "publishedAt": "2026-11-21T19:55:22.672Z",
+    "cloudDispatched": true,
+    "publishedId": "18651454462032890"
   },
   {
     "id": "post_bb_26",
