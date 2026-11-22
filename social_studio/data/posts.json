@@ -530,14 +530,17 @@
     "clientName": "Big Byte Systems",
     "day": 30,
     "platform": "instagram",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-22",
     "time": "11:30",
     "title": "🎮 Clean Rigs, Cool Temps: Custom Workstations & Gaming PC Builds",
     "content": "Cable management perfection meets whisper-quiet positive airflow. Custom builds, GPU thermals, and memory tuning right here in Thane.\n\n📍 Shop 1, Khewra Cir Marg, Manpada\n📞 Custom Build Hotline: 090547 90592\n\n#CustomPC #GamingRig #ThaneGamers #PCBuild #CableManagement #RTX4070",
     "image": "/assets/reel_fan_cleaning.jpg",
     "mediaUrl": "/assets/reel_fan_cleaning.jpg",
-    "mediaFormat": "REELS"
+    "mediaFormat": "REELS",
+    "publishedAt": "2026-11-22T07:15:53.299Z",
+    "cloudDispatched": true,
+    "publishedId": "17905315638655975"
   },
   {
     "id": "post_bb_27",
