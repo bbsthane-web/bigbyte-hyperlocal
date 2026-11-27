@@ -699,7 +699,7 @@
     "clientName": "Big Byte Systems",
     "day": 16,
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-27",
     "time": "11:30",
     "title": "🔧 Broken Laptop Hinge? Don't Force It Or Screen Will Crack!",
@@ -713,7 +713,10 @@
     "script": "Laptop manufacturers overtighten metal hinges, and over time, leverage snaps the fragile plastic screw bosses inside your chassis. We rebuild chassis anchors with industrial-grade epoxy fabrication and recalibrate hinge tension for lifetime durability. Visit Big Byte Systems, Thane.",
     "content": "Hear a loud snap when opening your laptop lid? Over-tightened metal hinges rip fragile plastic screw anchors out of the chassis.\n\nWe rebuild structural chassis anchors using industrial-grade high-tensile epoxy and brass threaded inserts, recalibrating hinge torque for lifetime smooth movement.\n\n📍 Big Byte Systems, Manpada, Thane West.\n📞 Hotline: 090547 90592\n💬 Direct WhatsApp: https://bigbytesystems.co.in/chat\n\n#LaptopHingeRepair #HardwareFix #ThaneWest #GhodbunderRoad #ComputerRepair",
     "image": "/assets/blog_pcb_micro_repair.jpg",
-    "mediaUrl": "/assets/blog_pcb_micro_repair.jpg"
+    "mediaUrl": "/assets/blog_pcb_micro_repair.jpg",
+    "publishedAt": "2026-11-27T14:41:22.578Z",
+    "cloudDispatched": true,
+    "publishedId": "1310878978775789_122133539673461791"
   },
   {
     "id": "post_fb_06",
