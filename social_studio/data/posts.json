@@ -724,7 +724,7 @@
     "clientName": "Big Byte Systems",
     "day": 20,
     "platform": "facebook",
-    "status": "Scheduled",
+    "status": "Published",
     "date": "2026-11-28",
     "time": "11:30",
     "title": "🔬 Chip-Level Logic Board Repair: Save 70% Over Replacement",
@@ -738,6 +738,9 @@
     "script": "Never assume a dead laptop means an expensive motherboard replacement! Authorized centers usually swap entire boards, but chip-level laboratory diagnostics can isolate a single shorted tiny capacitor. Save your hardware and data. Big Byte Systems, Manpada, Thane West.",
     "content": "Told by authorized service centers that your laptop motherboard is dead and must be replaced for 35,000? 🛑\n\nMost motherboards fail due to a single 50-paise shorted capacitor or PWM regulator on the power rail. Our micro-soldering lab isolates and replaces only the damaged micro-components under microscope.\n\n📍 Shop No 1, Khewra Circle Marg, Manpada, Thane West.\n📞 Lab Hotline: 090547 90592\n💬 WhatsApp: https://bigbytesystems.co.in/chat\n\n#ChipLevelRepair #MacBookRepair #MotherboardDiagnostics #ThaneWest #TechSavings",
     "image": "/assets/blog_macbook_repair.jpg",
-    "mediaUrl": "/assets/blog_macbook_repair.jpg"
+    "mediaUrl": "/assets/blog_macbook_repair.jpg",
+    "publishedAt": "2026-11-28T13:52:30.508Z",
+    "cloudDispatched": true,
+    "publishedId": "1310878978775789_122133765645461791"
   }
 ]
